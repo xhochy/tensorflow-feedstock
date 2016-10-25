@@ -21,11 +21,11 @@ requirements:
     - numpy >=1.11.0
     - protobuf ==3.0.0
     - six >=1.10.0
-    - wheel
+    - wheel >=0.26
   run:
     - python
     - mock >=2.0.0
-    - numpy >=1.10.0
+    - numpy >=1.11.0
     - protobuf ==3.0.0
     - six >=1.10.0
 
