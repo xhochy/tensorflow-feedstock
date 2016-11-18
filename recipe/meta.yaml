@@ -1,6 +1,6 @@
 package:
   name: tensorflow
-  version: "0.11.0rc2"
+  version: "0.11.0"
 
 build:
   number: 0
