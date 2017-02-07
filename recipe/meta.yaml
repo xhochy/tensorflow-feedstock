@@ -5,8 +5,8 @@ package:
 build:
   number: 1
   #  Google supplies whl files for:
-  # - Linux: Python 2.7, 3.4 and 3.5
-  # - OS X: Python 2.7, 3.4 and 3.5
+  # - Linux: Python 2.7, 3.3, 3.4, 3.5 and 3.6
+  # - OS X: Python 2.7, 3.5 and 3.6
   # - Win-64: Python 3.5
   skip: True  # [win32]
   skip: True  # [win64 and not py35]
