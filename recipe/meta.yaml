@@ -26,9 +26,10 @@ requirements:
     - six >=1.10.0
     - wheel
     - werkzeug >=0.11.10
-    - markdown >=2.2.0
+    - markdown >=2.6.8
     - bleach ==1.5.0
     - backports.weakref ==1.0rc1
+    - html5lib ==0.9999999
   run:
     - python
     - mock >=2.0.0
@@ -36,9 +37,10 @@ requirements:
     - protobuf >=3.2.0
     - six >=1.10.0
     - werkzeug >=0.11.10
-    - markdown >=2.2.0
+    - markdown >=2.6.8
     - bleach ==1.5.0
     - backports.weakref ==1.0rc1
+    - html5lib ==0.9999999
 
 test:
   imports:
