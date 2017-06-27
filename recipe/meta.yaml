@@ -26,7 +26,7 @@ requirements:
     - six >=1.10.0
     - wheel
     - werkzeug >=0.11.10
-    - markdown ==2.2.0
+    - markdown >=2.2.0
     - bleach ==1.5.0
     - backports.weakref ==1.0rc1
   run:
@@ -36,7 +36,7 @@ requirements:
     - protobuf >=3.2.0
     - six >=1.10.0
     - werkzeug >=0.11.10
-    - markdown ==2.2.0
+    - markdown >=2.2.0
     - bleach ==1.5.0
     - backports.weakref ==1.0rc1
 
