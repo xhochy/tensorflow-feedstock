@@ -21,18 +21,22 @@ requirements:
     - python
     - pip
     - mock >=2.0.0
-    - numpy >=1.11.0
+    - numpy >=1.12.0
     - protobuf >=3.2.0
     - six >=1.10.0
     - wheel
     - werkzeug >=0.11.10
+    - markdown >=2.2.0
+    - backports.weakref >=1.0rc1
   run:
     - python
     - mock >=2.0.0
-    - numpy >=1.11.0
+    - numpy >=1.12.0
     - protobuf >=3.2.0
     - six >=1.10.0
     - werkzeug >=0.11.10
+    - markdown >=2.2.0
+    - backports.weakref >=1.0rc1
 
 test:
   imports:
