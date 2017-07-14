@@ -1,15 +1,15 @@
 package:
   name: tensorflow
-  version: "1.1.0"
+  version: "1.2.0"
 
 build:
   number: 0
   #  Google supplies whl files on PyPI for:
   # - Linux: Python 2.7, 3.3, 3.4, 3.5 and 3.6
   # - OS X: Python 2.7, 3.5 and 3.6
-  # - Win-64: Python 3.5
+  # - Win-64: Python 3.5 and 3.6
   skip: True  # [win32]
-  skip: True  # [win64 and not py35]
+  skip: True  # [win64 and py<35]
   skip: True  # [osx and py34]
   skip: True  # [py26]
   skip: True  # [py33]
@@ -20,12 +20,6 @@ requirements:
   build:
     - python
     - pip
-    - mock >=2.0.0
-    - numpy >=1.11.0
-    - protobuf >=3.2.0
-    - six >=1.10.0
-    - wheel
-    - werkzeug >=0.11.10
   run:
     - python
     - mock >=2.0.0
@@ -33,6 +27,10 @@ requirements:
     - protobuf >=3.2.0
     - six >=1.10.0
     - werkzeug >=0.11.10
+    - markdown >=2.6.8
+    - bleach ==1.5.0
+    - backports.weakref ==1.0rc1
+    - html5lib ==0.9999999
 
 test:
   imports:
