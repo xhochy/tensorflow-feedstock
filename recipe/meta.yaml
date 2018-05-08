@@ -33,7 +33,7 @@ requirements:
     - grpcio
     - termcolor
     - gast
-    - tensorboard ==1.8.0
+    - tensorboard >=1.7.0
 
 
 test:
