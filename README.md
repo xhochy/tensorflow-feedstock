@@ -14,14 +14,16 @@ Summary: TensorFlow helps the tensors flow
 Current build status
 ====================
 
-Linux: [![Circle CI](https://circleci.com/gh/conda-forge/tensorflow-feedstock.svg?style=shield)](https://circleci.com/gh/conda-forge/tensorflow-feedstock)
-OSX: [![TravisCI](https://travis-ci.org/conda-forge/tensorflow-feedstock.svg?branch=master)](https://travis-ci.org/conda-forge/tensorflow-feedstock)
-Windows: [![AppVeyor](https://ci.appveyor.com/api/projects/status/github/conda-forge/tensorflow-feedstock?svg=True)](https://ci.appveyor.com/project/conda-forge/tensorflow-feedstock/branch/master)
+[![Linux](https://img.shields.io/circleci/project/github/conda-forge/tensorflow-feedstock/master.svg?label=Linux)](https://circleci.com/gh/conda-forge/tensorflow-feedstock)
+[![OSX](https://img.shields.io/travis/conda-forge/tensorflow-feedstock/master.svg?label=macOS)](https://travis-ci.org/conda-forge/tensorflow-feedstock)
+[![Windows](https://img.shields.io/appveyor/ci/conda-forge/tensorflow-feedstock/master.svg?label=Windows)](https://ci.appveyor.com/project/conda-forge/tensorflow-feedstock/branch/master)
 
 Current release info
 ====================
-Version: [![Anaconda-Server Badge](https://anaconda.org/conda-forge/tensorflow/badges/version.svg)](https://anaconda.org/conda-forge/tensorflow)
-Downloads: [![Anaconda-Server Badge](https://anaconda.org/conda-forge/tensorflow/badges/downloads.svg)](https://anaconda.org/conda-forge/tensorflow)
+
+| Name | Downloads | Version | Platforms |
+| --- | --- | --- | --- |
+| [![Conda Recipe](https://img.shields.io/badge/recipe-tensorflow-green.svg)](https://anaconda.org/conda-forge/tensorflow) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/tensorflow.svg)](https://anaconda.org/conda-forge/tensorflow) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/tensorflow.svg)](https://anaconda.org/conda-forge/tensorflow) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/tensorflow.svg)](https://anaconda.org/conda-forge/tensorflow) |
 
 Installing tensorflow
 =====================
