@@ -33,7 +33,7 @@ requirements:
     - six >=1.10.0
     - tensorboard >=1.6.0,<1.7.0
     - termcolor >=1.1.0
-    - backports.weakref >=1.0rc1
+    - backports.weakref >=1.0rc1  # [py2k]
 
 test:
   imports:
