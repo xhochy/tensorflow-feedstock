@@ -32,7 +32,7 @@ requirements:
     - termcolor >=1.1.0
     - grpcio >=1.8.6
     - enum34 >=1.1.6              # [py<34]
-    - backports.weakref >=1.0rc1  # [py<34]
+    - backports.weakref >=1.0rc1  # [py2k]
 
 test:
   imports:
