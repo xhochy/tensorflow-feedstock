@@ -27,7 +27,7 @@ requirements:
     - enum34 >=1.1.6  # [py<34]
     - gast >=0.2.0
     - grpcio >=1.8.6
-    - mock >=2.0.0    # [py27]
+    - mock >=2.0.0    # [py2k]
     - numpy >=1.13.3
     - protobuf >=3.4.0
     - six >=1.10.0
