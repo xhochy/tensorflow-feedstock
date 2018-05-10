@@ -47,10 +47,11 @@ test:
     # version of GLIBC++ than the VM used to build and test package.
     - tensorflow  # [not linux]
   commands:
-    - tensorboard --help |grep USAGE         # [osx]
-    - freeze_graph --help                    # [osx]
-    - toco_from_protos --help                # [osx]
-    - saved_model_cli --help                 # [osx]
+    - tensorboard --help | grep USAGE        # [osx]
+    - tensorboard --help | findstr USAGE     # [win]
+    - freeze_graph --help                    # [not linux]
+    - toco_from_protos --help                # [not linux]
+    - saved_model_cli --help                 # [not linux]
 
 about:
   home: http://tensorflow.org/
