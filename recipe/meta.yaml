@@ -50,7 +50,7 @@ test:
     - tensorboard --help | grep USAGE        # [osx]
     - tensorboard --help | findstr USAGE     # [win]
     - freeze_graph --help                    # [not linux]
-    - toco_from_protos --help                # [not linux]
+    - toco_from_protos --help                # [osx]
     - saved_model_cli --help                 # [not linux]
 
 about:
