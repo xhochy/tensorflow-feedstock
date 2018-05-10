@@ -18,10 +18,6 @@ build:
     - toco_from_protos = tensorflow.contrib.lite.toco.python.toco_from_protos:main
     - toco = tensorflow.contrib.lite.toco.python.toco_wrapper:main
     - saved_model_cli = tensorflow.python.tools.saved_model_cli:main
-    # We need to keep the TensorBoard command, even though the console script
-    # is now declared by the tensorboard pip package. If we remove the
-    # TensorBoard command, pip will inappropriately remove it during install,
-    # even though the command is not removed, just moved to a different wheel.
     - tensorboard = tensorboard.main:run_main
 
 
