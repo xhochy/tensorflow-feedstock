@@ -15,8 +15,8 @@ build:
   skip: True  # [py33]
   entry_points:
     - freeze_graph = tensorflow.python.tools.freeze_graph:run_main
-    - toco_from_protos = tensorflow.contrib.lite.toco.python.toco_from_protos:main
-    - toco = tensorflow.contrib.lite.toco.python.toco_wrapper:main
+    - toco_from_protos = tensorflow.contrib.lite.toco.python.toco_from_protos:main  # [not win]
+    - toco = tensorflow.contrib.lite.toco.python.toco_wrapper:main                  # [not win]
     - saved_model_cli = tensorflow.python.tools.saved_model_cli:main
     - tensorboard = tensorboard.main:run_main
 
@@ -51,6 +51,7 @@ test:
     - tensorboard --help | findstr USAGE     # [win]
     - freeze_graph --help                    # [not linux]
     - toco_from_protos --help                # [osx]
+    - toco --help | grep usage               # [osx]
     - saved_model_cli --help                 # [not linux]
 
 about:
