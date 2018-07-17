@@ -1,12 +1,12 @@
 package:
   name: tensorflow
-  version: "1.8.0"
+  version: "1.9.0"
 
 build:
-  number: 1
+  number: 0
   #  Google supplies whl files on PyPI for:
   # - Linux: Python 2.7, 3.3, 3.4, 3.5 and 3.6
-  # - OS X: Python 2.7, 3.5 and 3.6
+  # - OS X: Python 2.7, 3.3, 3.4, 3.5 and 3.6
   # - Win-64: Python 3.5 and 3.6
   skip: True  # [win32]
   skip: True  # [win64 and py<35]
@@ -16,6 +16,8 @@ build:
   entry_points:
     - freeze_graph = tensorflow.python.tools.freeze_graph:run_main
     - toco_from_protos = tensorflow.contrib.lite.toco.python.toco_from_protos:main  # [not win]
+    - tflite_convert = tensorflow.contrib.lite.python.tflite_convert:main  # [not win]
+    - toco = tensorflow.contrib.lite.python.tflite_convert:main  # [not win]
     - saved_model_cli = tensorflow.python.tools.saved_model_cli:main
     - tensorboard = tensorboard.main:run_main
 
@@ -32,11 +34,11 @@ requirements:
     - numpy >=1.13.3
     - six >=1.10.0
     - protobuf >=3.4.0
-    - tensorboard >=1.8.0, <1.9.0
+    - tensorboard >=1.9.0, <1.10.0
     - termcolor >=1.1.0
     - grpcio >=1.8.6
     - enum34 >=1.1.6              # [py<34]
-    - backports.weakref >=1.0rc1  # [py2k]
+    - backports.weakref >=1.0rc1  # [py<34]
     - mock >=2.0.0                # [py2k]
 
 test:
@@ -49,6 +51,7 @@ test:
     - tensorboard --help | findstr USAGE     # [win]
     - freeze_graph --help                    # [not linux]
     - toco_from_protos --help                # [osx]
+    - toco --help                            # [osx]
     - saved_model_cli --help                 # [not linux]
 
 about:
@@ -65,4 +68,5 @@ extra:
     - hajapy
     - dhirschfeld
     - gilbertfrancois
-    - dougalsutherland 
+    - dougalsutherland
+    - farhantejani
