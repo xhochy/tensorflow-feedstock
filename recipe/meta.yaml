@@ -19,6 +19,7 @@ build:
     - tflite_convert = tensorflow.contrib.lite.python.tflite_convert:main  # [not win]
     - toco = tensorflow.contrib.lite.python.tflite_convert:main  # [not win]
     - saved_model_cli = tensorflow.python.tools.saved_model_cli:main
+    - tensorboard = tensorboard.main:run_main  # seems necessary on:  # [win]
 
 requirements:
   build:
@@ -32,7 +33,7 @@ requirements:
     - numpy >=1.13.3
     - six >=1.10.0
     - protobuf >=3.4.0
-    - tensorboard 1.9
+    - tensorboard 1.9.*
     - termcolor >=1.1.0
     - grpcio >=1.8.6
     - enum34 >=1.1.6              # [py<34]
