@@ -41,10 +41,13 @@ requirements:
     - mock >=2.0.0                # [py2k]
 
 test:
-  imports:
+
+  # imports:
     # Skip the import test on Linux as wheel file require a more recent
     # version of GLIBC++ than the VM used to build and test package.
-    - tensorflow  # [not linux]
+    # Also skip on OSX due to OSX version requirements, see
+    # https://github.com/conda-forge/tensorflow-feedstock/pull/62
+    # - tensorflow  # [not linux]
   commands:
     - tensorboard --help | grep USAGE        # [osx]
     - tensorboard --help | findstr USAGE     # [win]
