@@ -1,6 +1,6 @@
 package:
   name: tensorflow
-  version: "1.9.0"
+  version: "1.10.0"
 
 build:
   number: 0
@@ -32,8 +32,8 @@ requirements:
     - gast >=0.2.0
     - numpy >=1.13.3
     - six >=1.10.0
-    - protobuf >=3.4.0
-    - tensorboard 1.9.*
+    - protobuf >=3.6.0
+    - tensorboard 1.10.*
     - termcolor >=1.1.0
     - grpcio >=1.8.6
     - enum34 >=1.1.6              # [py<34]
@@ -41,17 +41,20 @@ requirements:
     - mock >=2.0.0                # [py2k]
 
 test:
+
   imports:
     # Skip the import test on Linux as wheel file require a more recent
     # version of GLIBC++ than the VM used to build and test package.
-    - tensorflow  # [not linux]
+    # Also skip on OSX due to OSX version requirements, see
+    # https://github.com/conda-forge/tensorflow-feedstock/pull/62
+     - tensorflow  # [win]
   commands:
-    - tensorboard --help | grep USAGE        # [osx]
-    - tensorboard --help | findstr USAGE     # [win]
-    - freeze_graph --help                    # [not linux]
-    - toco_from_protos --help                # [osx]
-    - toco --help                            # [osx]
-    - saved_model_cli --help                 # [not linux]
+    # - tensorboard --help | grep USAGE       # [osx]
+    - tensorboard --help                      # [win]
+    - freeze_graph --help                     # [win]
+    #- toco_from_protos --help                # [osx]
+    #- toco --help                            # [osx]
+    - saved_model_cli --help                  # [win]
 
 about:
   home: http://tensorflow.org/
