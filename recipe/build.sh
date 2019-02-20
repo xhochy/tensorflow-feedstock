@@ -16,7 +16,7 @@ if [ `uname` == Linux ]; then
     elif [ "$PY_VER" == "3.6" ]; then
         WHL_FILE=https://pypi.org/packages/cp36/t/tensorflow/tensorflow-${PKG_VERSION}-cp36-cp36m-manylinux1_x86_64.whl
     elif [ "$PY_VER" == "3.7" ]; then
-        WHL_FILE=https://pypi.org/packages/cp36/t/tensorflow/tensorflow-${PKG_VERSION}-cp37-cp37m-manylinux1_x86_64.whl
+        WHL_FILE=https://pypi.org/packages/cp37/t/tensorflow/tensorflow-${PKG_VERSION}-cp37-cp37m-manylinux1_x86_64.whl
     fi
 fi
 
