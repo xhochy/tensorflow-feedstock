@@ -39,7 +39,7 @@ requirements:
     - enum34 >=1.1.6              # [py<34]
     - backports.weakref >=1.0rc1  # [py<34]
     - mock >=2.0.0                # [py2k]
-    - keras_applications
+    - keras-applications
 
 test:
 
