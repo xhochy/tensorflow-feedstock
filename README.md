@@ -123,4 +123,3 @@ Feedstock Maintainers
 * [@hajapy](https://github.com/hajapy/)
 * [@jjhelmus](https://github.com/jjhelmus/)
 * [@waitingkuo](https://github.com/waitingkuo/)
-
