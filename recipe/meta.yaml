@@ -1,6 +1,6 @@
 package:
   name: tensorflow
-  version: "1.10.0"
+  version: "1.13.1"
 
 build:
   number: 0
@@ -8,6 +8,7 @@ build:
   # - Linux: Python 2.7, 3.3, 3.4, 3.5 and 3.6
   # - OS X: Python 2.7, 3.3, 3.4, 3.5 and 3.6
   # - Win-64: Python 3.5 and 3.6
+  skip: true  # [win]  # Skip all windows for now due to numpy/scipy version pinning issues
   skip: True  # [win32]
   skip: True  # [win64 and py<35]
   skip: True  # [osx and py34]
@@ -30,15 +31,18 @@ requirements:
     - absl-py >=0.1.6
     - astor >=0.6.0
     - gast >=0.2.0
-    - numpy >=1.13.3
+    - numpy >=1.16.1
     - six >=1.10.0
-    - protobuf >=3.6.0
-    - tensorboard 1.10.*
+    - protobuf >=3.6.1
+    - tensorboard 1.13.*  # NB: tensorboard is now bundled in the tensorflow wheel.
     - termcolor >=1.1.0
     - grpcio >=1.8.6
     - enum34 >=1.1.6              # [py<34]
     - backports.weakref >=1.0rc1  # [py<34]
     - mock >=2.0.0                # [py2k]
+    - keras-applications >=1.0.6
+    - keras-preprocessing >=1.0.5
+    - tensorflow-estimator >=1.13.0,<1.14.0rc0
 
 test:
 
