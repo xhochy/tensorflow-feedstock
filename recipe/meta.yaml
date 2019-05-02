@@ -50,8 +50,8 @@ requirements:
     - absl-py >=0.1.6
     - astor >=0.6.0
     - gast >=0.2.0
-    #- keras-applications >=1.0.6
-    #- keras-preprocessing >=1.0.5
+    - keras-applications >=1.0.6
+    - keras-preprocessing >=1.0.5
     - numpy 1.13.3  # [py<37]
     # The requirement is numpy >=1.13 but no builds of numPy 1.13 are
     # available for Python 3.7
