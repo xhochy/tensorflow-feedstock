@@ -1,69 +1,110 @@
+{% set version = "1.13.1" %}
+
 package:
   name: tensorflow
-  version: "1.13.1"
+  version: {{ version }}
+
+source:
+  fn: tensorflow-{{ version }}.tar.gz
+  url: https://github.com/tensorflow/tensorflow/archive/v{{ version }}.tar.gz
+  sha256: 7cd19978e6bc7edc2c847bce19f95515a742b34ea5e28e4389dade35348f58ed
+  patches:
+    - 0001-add-rt-to-linkopts.patch                                     # [linux]
+    - 0002-stable-image-rotate-test.patch                               # [linux]
+    - 0003-relax-tolerence-in-special_math_test.patch                   # [linux]
+    - 0004-skip-read-only-debugger_cli_common-test.patch                # [linux]
+    - 0005-fix-lookup_ops-test.patch                                    # [linux]
+    - 0006-relax-precision-in-matrix_log_op_test.patch                  # [linux]
+    - 0007-Add-init-symbol-names-prefixed-with-an-underscore.patch      # [osx]
+    - 0008-Add-alternate-clock_gettime-implementation-for-macOS.patch   # [osx]
 
 build:
   number: 0
-  #  Google supplies whl files on PyPI for:
-  # - Linux: Python 2.7, 3.3, 3.4, 3.5 and 3.6
-  # - OS X: Python 2.7, 3.3, 3.4, 3.5 and 3.6
-  # - Win-64: Python 3.5 and 3.6
-  skip: true  # [win]  # Skip all windows for now due to numpy/scipy version pinning issues
-  skip: True  # [win32]
-  skip: True  # [win64 and py<35]
-  skip: True  # [osx and py34]
-  skip: True  # [py26]
-  skip: True  # [py33]
+  skip: True  # [not x86_64]
+  skip: True  # [win and vc<14]
   entry_points:
     - freeze_graph = tensorflow.python.tools.freeze_graph:run_main
-    - toco_from_protos = tensorflow.contrib.lite.toco.python.toco_from_protos:main  # [not win]
-    - tflite_convert = tensorflow.contrib.lite.python.tflite_convert:main  # [not win]
-    - toco = tensorflow.contrib.lite.python.tflite_convert:main  # [not win]
+    - toco_from_protos = tensorflow.lite.toco.python.toco_from_protos:main
+    - tflite_convert = tensorflow.lite.python.tflite_convert:main
+    - toco = tensorflow.lite.python.tflite_convert:main
     - saved_model_cli = tensorflow.python.tools.saved_model_cli:main
-    - tensorboard = tensorboard.main:run_main  # seems necessary on:  # [win]
+    - tf_upgrade_v2 = tensorflow.tools.compatibility.tf_upgrade_v2_main:main
+    - tensorboard = tensorboard.main:run_main
 
 requirements:
   build:
-    - python
+    - {{ compiler('c') }}
+    - {{ compiler('cxx') }}
+    - bazel >=0.19.0,<=0.21.0
+  host:
+    - bazel >=0.19.0,<=0.21.0  # [win]
+    # conda build requirements
+    - posix  # [win]
+    - m2-patch  # [win]
     - pip
+    - setuptools <=39.1.0
+    - python
+    - swig
+    - zlib
+    # requirements specified by the package itself
+    - absl-py >=0.1.6
+    - astor >=0.6.0
+    - gast >=0.2.0
+    - keras-applications >=1.0.6
+    - keras-preprocessing >=1.0.5
+    - numpy 1.13.3  # [py<37]
+    # The requirement is numpy >=1.13 but no builds of numPy 1.13 are
+    # available for Python 3.7
+    - numpy 1.14.6  # [py==37]
+    - six >=1.10.0
+    - protobuf >=3.6.1
+    - termcolor >=1.1.0
+    - grpcio >=1.8.6
+    - wheel >=0.26
+    - mock >=2.0.0                # [py2k]
+    - backports.weakref >=1.0rc1  # [py2k]
+    - enum34 >=1.1.6              # [py2k]
+    - tensorflow-estimator >=1.13.0,<1.14.0a0
   run:
     - python
     - absl-py >=0.1.6
     - astor >=0.6.0
     - gast >=0.2.0
-    - numpy >=1.16.1
-    - six >=1.10.0
-    - protobuf >=3.6.1
-    - tensorboard 1.13.*  # NB: tensorboard is now bundled in the tensorflow wheel.
-    - termcolor >=1.1.0
-    - grpcio >=1.8.6
-    - enum34 >=1.1.6              # [py<34]
-    - backports.weakref >=1.0rc1  # [py<34]
-    - mock >=2.0.0                # [py2k]
     - keras-applications >=1.0.6
     - keras-preprocessing >=1.0.5
-    - tensorflow-estimator >=1.13.0,<1.14.0rc0
+    - {{ pin_compatible('numpy') }}
+    - six >=1.10.0
+    - protobuf >=3.6.1
+    - termcolor >=1.1.0
+    - grpcio >=1.8.6
+    - mock >=2.0.0                # [py2k]
+    - backports.weakref >=1.0rc1  # [py2k]
+    - enum34 >=1.1.6              # [py2k]
+    - tensorflow-estimator >=1.13.0,<1.14.0a0
+    - tensorboard >=1.13.0,<1.14.0a0
 
 test:
-
   imports:
-    # Skip the import test on Linux as wheel file require a more recent
-    # version of GLIBC++ than the VM used to build and test package.
-    # Also skip on OSX due to OSX version requirements, see
-    # https://github.com/conda-forge/tensorflow-feedstock/pull/62
-     - tensorflow  # [win]
+    - tensorflow
   commands:
-    # - tensorboard --help | grep USAGE       # [osx]
-    - tensorboard --help                      # [win]
-    - freeze_graph --help                     # [win]
-    #- toco_from_protos --help                # [osx]
-    #- toco --help                            # [osx]
-    - saved_model_cli --help                  # [win]
+    - freeze_graph --help
+    - saved_model_cli --help
+    - tflite_convert --help     # [not win]
+    - toco_from_protos --help   # [not win]
+    - toco --help               # [not win]
 
 about:
   home: http://tensorflow.org/
   license: Apache 2.0
-  summary: TensorFlow helps the tensors flow
+  license_family: Apache
+  summary: TensorFlow is an open source machine learning framework for everyone.
+  description: |
+    TensorFlow provides multiple APIs.The lowest level API, TensorFlow Core
+    provides you with complete programming control.
+    Base package contains only tensorflow, not tensorflow-tensorboard.
+  dev_url: https://github.com/tensorflow/tensorflow
+  doc_url: https://www.tensorflow.org/get_started/get_started
+  doc_source_url: https://github.com/tensorflow/tensorflow/tree/master/tensorflow/docs_src
 
 extra:
   recipe-maintainers:
