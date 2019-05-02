@@ -19,7 +19,7 @@ source:
     - 0008-Add-alternate-clock_gettime-implementation-for-macOS.patch   # [osx]
 
 build:
-  number: 0
+  number: 1
   skip: True  # [not x86_64]
   skip: True  # [win and vc<14]
   entry_points:
