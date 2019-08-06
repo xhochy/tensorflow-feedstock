@@ -1,27 +1,41 @@
 {% set version = "1.13.1" %}
 
+{% set pyver = "cp{}{}".format(PY_VER[0], PY_VER[2]) %}
+{% set platform = "macosx_10_11_x86_64" %}  # [osx]
+{% set platform = "win_amd64" %}  # [win]
+{% set fn = "{}-{}-{}-{}m-{}.whl".format("tensorflow", version, pyver, pyver, platform) %}  # [not linux]
+{% set fn = "tensorflow-{{ version }}.tar.gz" %}  # [linux]
+
 package:
   name: tensorflow
   version: {{ version }}
 
 source:
-  fn: tensorflow-{{ version }}.tar.gz
-  url: https://github.com/tensorflow/tensorflow/archive/v{{ version }}.tar.gz
-  sha256: 7cd19978e6bc7edc2c847bce19f95515a742b34ea5e28e4389dade35348f58ed
+  fn: {{ fn }}
+  url: https://github.com/tensorflow/tensorflow/archive/v{{ version }}.tar.gz  # [linux]
+  sha256: 7cd19978e6bc7edc2c847bce19f95515a742b34ea5e28e4389dade35348f58ed  # [linux]
+
+  url: https://pypi.io/packages/{{ pyver }}/t/tensorflow/{{ fn }}  # [not linux]
+  sha256: 46fc216db780b1a7b7a28cf6536d6ec0a171ef2fa546a24934ffe077c734c891  # [osx and py27]
+  sha256: a3851118d2cc5e9e697503753c2d247dca0e98d5a85b5ea091103f27d9e57a38  # [osx and py36]
+  sha256: 2fc989a5d3be9f3dc96c20deaa3d5cc66d2bf76fe069c202c2914a7f4b5a9a35  # [osx and py37]
+
+  sha256: d7341617aedd73c2c847755e87697e9c19eb625c73da26d6cd669220c5565119  # [win and py36]
+  sha256: a4f154fa98cde5974117e05af444e0bed84cf431b8129c78a2de03a1ff7201c9  # [win and py37]
+
   patches:
-    - 0001-add-rt-to-linkopts.patch                                     # [linux]
-    - 0002-stable-image-rotate-test.patch                               # [linux]
-    - 0003-relax-tolerence-in-special_math_test.patch                   # [linux]
-    - 0004-skip-read-only-debugger_cli_common-test.patch                # [linux]
-    - 0005-fix-lookup_ops-test.patch                                    # [linux]
-    - 0006-relax-precision-in-matrix_log_op_test.patch                  # [linux]
-    - 0007-Add-init-symbol-names-prefixed-with-an-underscore.patch      # [osx]
-    - 0008-Add-alternate-clock_gettime-implementation-for-macOS.patch   # [osx]
+    - patches/0001-add-rt-to-linkopts.patch  # [linux]
+    - patches/0002-stable-image-rotate-test.patch  # [linux]
+    - patches/0003-relax-tolerence-in-special_math_test.patch  # [linux]
+    - patches/0004-skip-read-only-debugger_cli_common-test.patch  # [linux]
+    - patches/0005-fix-lookup_ops-test.patch  # [linux]
+    - patches/0006-relax-precision-in-matrix_log_op_test.patch  # [linux]
 
 build:
   number: 1
   skip: True  # [not x86_64]
   skip: True  # [win and vc<14]
+  script: "{{ PYTHON }} -m pip install --no-deps -vv {{ fn }}"  # [win]
   entry_points:
     - freeze_graph = tensorflow.python.tools.freeze_graph:run_main
     - toco_from_protos = tensorflow.lite.toco.python.toco_from_protos:main
@@ -33,19 +47,16 @@ build:
 
 requirements:
   build:
-    - {{ compiler('c') }}
-    - {{ compiler('cxx') }}
-    - bazel >=0.19.0,<=0.21.0
+    - {{ compiler('c') }}  # [linux]
+    - {{ compiler('cxx') }}  # [linux]
+    - bazel >=0.19.0,<=0.21.0  # [linux]
   host:
-    - bazel >=0.19.0,<=0.21.0  # [win]
     # conda build requirements
-    - posix  # [win]
-    - m2-patch  # [win]
+    - python
     - pip
     - setuptools <=39.1.0
-    - python
-    - swig
-    - zlib
+    - swig  # [linux]
+    - zlib  # [linux]
     # requirements specified by the package itself
     - absl-py >=0.1.6
     - astor >=0.6.0
@@ -60,10 +71,10 @@ requirements:
     - protobuf >=3.6.1
     - termcolor >=1.1.0
     - grpcio >=1.8.6
-    - wheel >=0.26
-    - mock >=2.0.0                # [py2k]
+    - wheel >=0.26  # [linux]
+    - mock >=2.0.0  # [py2k]
     - backports.weakref >=1.0rc1  # [py2k]
-    - enum34 >=1.1.6              # [py2k]
+    - enum34 >=1.1.6              # [py2k ]
     - tensorflow-estimator >=1.13.0,<1.14.0a0
   run:
     - python
@@ -72,14 +83,14 @@ requirements:
     - gast >=0.2.0
     - keras-applications >=1.0.6
     - keras-preprocessing >=1.0.5
-    - {{ pin_compatible('numpy') }}
+    - {{ pin_compatible('numpy') }}  # [linux]
     - six >=1.10.0
     - protobuf >=3.6.1
     - termcolor >=1.1.0
     - grpcio >=1.8.6
-    - mock >=2.0.0                # [py2k]
+    - mock >=2.0.0  # [py2k]
     - backports.weakref >=1.0rc1  # [py2k]
-    - enum34 >=1.1.6              # [py2k]
+    - enum34 >=1.1.6              # [py2k ]
     - tensorflow-estimator >=1.13.0,<1.14.0a0
     - tensorboard >=1.13.0,<1.14.0a0
 
@@ -96,6 +107,7 @@ test:
 about:
   home: http://tensorflow.org/
   license: Apache 2.0
+  license_file: LICENSE
   license_family: Apache
   summary: TensorFlow is an open source machine learning framework for everyone.
   description: |
