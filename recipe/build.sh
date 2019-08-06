@@ -62,6 +62,4 @@ if [[ "$target_platform" == linux* ]]; then
 
     # The tensorboard package has the proper entrypoint
     rm -f ${PREFIX}/bin/tensorboard
-else
-  $PYTHON -m pip install --no-deps -vv $fn
 fi
