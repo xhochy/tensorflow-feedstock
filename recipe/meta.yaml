@@ -84,6 +84,7 @@ requirements:
     - keras-applications >=1.0.6
     - keras-preprocessing >=1.0.5
     - {{ pin_compatible('numpy') }}  # [linux]
+    - numpy >=1.13.3  # [not linux]
     - six >=1.10.0
     - protobuf >=3.6.1
     - termcolor >=1.1.0
