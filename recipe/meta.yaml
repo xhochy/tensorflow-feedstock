@@ -36,8 +36,7 @@ build:
   skip: True  # [not x86_64]
   skip: True  # [win and vc<14]
   script:
-    - "{{ PYTHON }} -m pip install --no-deps -vv {{ fn }}"  # [not linux]
-    - build_linux.sh  # [linux]
+    - "{{ PYTHON }} -m pip install --no-deps -vv {{ fn }}"  # [win]
   entry_points:
     - freeze_graph = tensorflow.python.tools.freeze_graph:run_main
     - toco_from_protos = tensorflow.lite.toco.python.toco_from_protos:main
