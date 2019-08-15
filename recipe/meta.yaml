@@ -7,7 +7,7 @@
 {% set fn = "tensorflow-{{ version }}.tar.gz" %}  # [linux]
 
 package:
-    name: tensorflow-split
+  name: tensorflow-split
   version: {{ version }}
 
 source:
@@ -35,7 +35,6 @@ build:
   number: 2
   skip: True  # [not x86_64]
   skip: True  # [win and vc<14]
-  script: "{{ PYTHON }} -m pip install --no-deps -vv {{ fn }}"  # [win]
 
 requirements:
   build:
@@ -71,6 +70,8 @@ requirements:
 
 outputs:
   - name: tensorflow
+    script: build_pkg.sh  # [unix]
+    script: build_pkg.bat # [win]
     build:
       entry_points:
         - freeze_graph = tensorflow.python.tools.freeze_graph:run_main
@@ -80,10 +81,33 @@ outputs:
         - saved_model_cli = tensorflow.python.tools.saved_model_cli:main
         - tf_upgrade_v2 = tensorflow.tools.compatibility.tf_upgrade_v2_main:main
         - tensorboard = tensorboard.main:run_main
-    files:
-      - lib/python{{ python }}/site-packages/tensorflow
-      - lib/python{{ python }}/site-packages/tensorflow-{{ version }}.dist-info
     requirements:
+      host:
+        # conda build requirements
+        - python
+        - pip
+        - setuptools <=39.1.0
+        - swig  # [linux]
+        - zlib  # [linux]
+        # requirements specified by the package itself
+        - absl-py >=0.1.6
+        - astor >=0.6.0
+        - gast >=0.2.0
+        - keras-applications >=1.0.6
+        - keras-preprocessing >=1.0.5
+        - numpy 1.13.3  # [py<37]
+        # The requirement is numpy >=1.13 but no builds of numPy 1.13 are
+        # available for Python 3.7
+        - numpy 1.14.6  # [py==37]
+        - six >=1.10.0
+        - protobuf >=3.6.1
+        - termcolor >=1.1.0
+        - grpcio >=1.8.6
+        - wheel >=0.26  # [linux]
+        - mock >=2.0.0  # [py2k]
+        - backports.weakref >=1.0rc1  # [py2k]
+        - enum34 >=1.1.6  # [py2k]
+        - tensorflow-estimator >=1.13.0,<1.14.0a0
       run:
         - python
         - absl-py >=0.1.6
