@@ -32,19 +32,10 @@ source:
     - patches/0006-relax-precision-in-matrix_log_op_test.patch  # [linux]
 
 build:
-  number: 1
+  number: 2
   skip: True  # [not x86_64]
   skip: True  # [win and vc<14]
-  script:
-    - "{{ PYTHON }} -m pip install --no-deps -vv {{ fn }}"  # [win]
-  entry_points:
-    - freeze_graph = tensorflow.python.tools.freeze_graph:run_main
-    - toco_from_protos = tensorflow.lite.toco.python.toco_from_protos:main
-    - tflite_convert = tensorflow.lite.python.tflite_convert:main
-    - toco = tensorflow.lite.python.tflite_convert:main
-    - saved_model_cli = tensorflow.python.tools.saved_model_cli:main
-    - tf_upgrade_v2 = tensorflow.tools.compatibility.tf_upgrade_v2_main:main
-    - tensorboard = tensorboard.main:run_main
+  script: "{{ PYTHON }} -m pip install --no-deps -vv {{ fn }}"  # [win]
 
 requirements:
   build:
@@ -53,11 +44,11 @@ requirements:
     - bazel >=0.19.0,<=0.21.0  # [linux]
   host:
     # conda build requirements
+    - swig  # [linux]
+    - zlib  # [linux]
     - python
     - pip
     - setuptools <=39.1.0
-    - swig  # [linux]
-    - zlib  # [linux]
     # requirements specified by the package itself
     - absl-py >=0.1.6
     - astor >=0.6.0
@@ -77,34 +68,70 @@ requirements:
     - backports.weakref >=1.0rc1  # [py2k]
     - enum34 >=1.1.6  # [py2k]
     - tensorflow-estimator >=1.13.0,<1.14.0a0
-  run:
-    - python
-    - absl-py >=0.1.6
-    - astor >=0.6.0
-    - gast >=0.2.0
-    - keras-applications >=1.0.6
-    - keras-preprocessing >=1.0.5
-    - {{ pin_compatible('numpy') }}  # [linux]
-    - numpy >=1.13.3  # [not linux]
-    - six >=1.10.0
-    - protobuf >=3.6.1
-    - termcolor >=1.1.0
-    - grpcio >=1.8.6
-    - mock >=2.0.0  # [py2k]
-    - backports.weakref >=1.0rc1  # [py2k]
-    - enum34 >=1.1.6  # [py2k]
-    - tensorflow-estimator >=1.13.0,<1.14.0a0
-    - tensorboard >=1.13.0,<1.14.0a0
 
-test:
-  imports:
-    - tensorflow
-  commands:
-    - freeze_graph --help
-    - saved_model_cli --help
-    - tflite_convert --help  # [not win]
-    - toco_from_protos --help  # [not win]
-    - toco --help  # [not win]
+outputs:
+  - name: tensorflow
+    files:
+      - lib/python{{ python }}/site-packages/tensorflow
+      - lib/python{{ python }}/site-packages/tensorflow-{{ version }}.dist-info
+    requirements:
+      run:
+        - python
+        - absl-py >=0.1.6
+        - astor >=0.6.0
+        - gast >=0.2.0
+        - keras-applications >=1.0.6
+        - keras-preprocessing >=1.0.5
+        - {{ pin_compatible('numpy') }}  # [linux]
+        - numpy >=1.13.3  # [not linux]
+        - six >=1.10.0
+        - protobuf >=3.6.1
+        - termcolor >=1.1.0
+        - grpcio >=1.8.6
+        - mock >=2.0.0  # [py2k]
+        - backports.weakref >=1.0rc1  # [py2k]
+        - enum34 >=1.1.6  # [py2k]
+        - tensorflow-estimator >=1.13.0,<1.14.0a0
+        - tensorboard >=1.13.0,<1.14.0a0
+    test:
+      imports:
+        - tensorflow
+      commands:
+        - freeze_graph --help
+        - saved_model_cli --help
+        - tflite_convert --help  # [not win]
+        - toco_from_protos --help  # [not win]
+        - toco --help  # [not win]
+    entry_points:
+      - freeze_graph = tensorflow.python.tools.freeze_graph:run_main
+      - toco_from_protos = tensorflow.lite.toco.python.toco_from_protos:main
+      - tflite_convert = tensorflow.lite.python.tflite_convert:main
+      - toco = tensorflow.lite.python.tflite_convert:main
+      - saved_model_cli = tensorflow.python.tools.saved_model_cli:main
+      - tf_upgrade_v2 = tensorflow.tools.compatibility.tf_upgrade_v2_main:main
+      - tensorboard = tensorboard.main:run_main
+
+  - name: libtensorflow
+    script: cp_libtensorflow.sh  # [unix]
+    build:
+      skip: true  # [not linux]
+    test:
+      commands:
+        - test -f $PREFIX/lib/libtensorflow.so  # [not win]
+
+  - name: libtensorflow_cc
+    script: cp_libtensorflow_cc.sh  # [unix]
+    build:
+      skip: true  # [not linux]
+    requirements:
+      run:
+        - libprotobuf
+        - eigen
+        - nsync
+        - abseil-cpp
+    test:
+      commands:
+        - test -f $PREFIX/lib/libtensorflow_cc.so  # [not win]
 
 about:
   home: http://tensorflow.org/
@@ -131,3 +158,4 @@ extra:
     - gilbertfrancois
     - dougalsutherland
     - farhantejani
+    - njzjz

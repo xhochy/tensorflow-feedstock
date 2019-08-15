@@ -51,7 +51,7 @@ if [[ "$target_platform" == linux* ]]; then
     ./configure
 
     # build using bazel
-    bazel ${BAZEL_OPTS} build ${BUILD_OPTS} //tensorflow/tools/pip_package:build_pip_package
+    bazel ${BAZEL_OPTS} build ${BUILD_OPTS} //tensorflow/tools/pip_package:build_pip_package //tensorflow:libtensorflow.so //tensorflow:libtensorflow_cc.so
 
     # build a whl file
     mkdir -p $SRC_DIR/tensorflow_pkg
