@@ -32,14 +32,28 @@ export BAZEL_MKL_OPT=""
 mkdir -p ./bazel_output_base
 export BAZEL_OPTS="--batch "
 
-# Linux
-# the following arguments are useful for debugging
-#    --logging=6
-#    --subcommands
+# do not build with MKL support
+export TF_NEED_MKL=0
+export BAZEL_MKL_OPT=""
 
-# Set compiler and linker flags as bazel does not account for CFLAGS,
-# CXXFLAGS and LDFLAGS.
-BUILD_OPTS="
+mkdir -p ./bazel_output_base
+export BAZEL_OPTS="--batch "
+
+if [[ "${target_platform}" == osx* ]]; then
+    BUILD_OPTS="
+        --verbose_failures
+        ${BAZEL_MKL_OPT}
+        --config=opt"
+    export TF_ENABLE_XLA=0
+else
+    # Linux
+    # the following arguments are useful for debugging
+    #    --logging=6
+    #    --subcommands
+
+    # Set compiler and linker flags as bazel does not account for CFLAGS,
+    # CXXFLAGS and LDFLAGS.
+    BUILD_OPTS="
     --copt=-march=nocona
     --copt=-mtune=haswell
     --copt=-ftree-vectorize
@@ -53,8 +67,8 @@ BUILD_OPTS="
     --verbose_failures
     ${BAZEL_MKL_OPT}
     --config=opt"
-
-export TF_ENABLE_XLA=1
+    export TF_ENABLE_XLA=1
+fi
 
 # Python settings
 export PYTHON_BIN_PATH=${PYTHON}
