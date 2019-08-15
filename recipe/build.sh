@@ -16,6 +16,7 @@ export INCLUDEDIR=$PREFIX/include
 echo "#!/bin/bash"                                > compiler-wrapper
 echo "export C_INCLUDE_PATH=$PREFIX/include"     >> compiler-wrapper
 echo "export CPLUS_INCLUDE_PATH=$PREFIX/include" >> compiler-wrapper
+echo "export CONDA_BUILD_SYSROOT=$CONDA_BUILD_SYSROOT"  >> compiler-wrapper
 chmod +x "compiler-wrapper"
 cp compiler-wrapper $CC
 cp compiler-wrapper $CXX
