@@ -23,7 +23,7 @@ cp compiler-wrapper $CXX
 echo "exec $BUILD_PREFIX/bin/$CC -L$PREFIX/lib \"\$@\""   >> $CC
 echo "exec $BUILD_PREFIX/bin/$CXX -L$PREFIX/lib \"\$@\""  >> $CXX
 
-export TF_SYSTEM_LIBS="llvm,zlib_archive,com_google_protobuf,com_google_protobuf_cc,png_archive,curl"
+export TF_SYSTEM_LIBS="llvm,zlib_archive,com_google_protobuf,com_google_protobuf_cc,curl"
 
 # do not build with MKL support
 export TF_NEED_MKL=0
