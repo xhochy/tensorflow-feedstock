@@ -30,6 +30,7 @@ source:
     - patches/0004-skip-read-only-debugger_cli_common-test.patch  # [linux]
     - patches/0005-fix-lookup_ops-test.patch  # [linux]
     - patches/0006-relax-precision-in-matrix_log_op_test.patch  # [linux]
+    - patches/unbundle_llvm.patch  # [linux]
 
 build:
   number: 1
@@ -65,6 +66,7 @@ requirements:
     - keras-applications >=1.0.6
     - keras-preprocessing >=1.0.5
     - numpy 1.13.3  # [py<37]
+    - llvmdev   # [linux]
     # The requirement is numpy >=1.13 but no builds of numPy 1.13 are
     # available for Python 3.7
     - numpy 1.14.6  # [py==37]

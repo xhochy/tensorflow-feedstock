@@ -1,6 +1,23 @@
 #!/bin/bash
 
 set -ex
+export PATH="$PWD:$PATH"
+export CC=$(basename $CC)
+export CXX=$(basename $CXX)
+export LIBDIR=$PREFIX/lib
+export INCLUDEDIR=$PREFIX/include
+
+echo "#!/bin/bash"                                > compiler-wrapper
+echo "export C_INCLUDE_PATH=$PREFIX/include"     >> compiler-wrapper
+echo "export CPLUS_INCLUDE_PATH=$PREFIX/include" >> compiler-wrapper
+chmod +x "compiler-wrapper"
+
+cp compiler-wrapper $CC
+cp compiler-wrapper $CXX
+echo "exec $BUILD_PREFIX/bin/$CC -L$PREFIX/lib \"\$@\""   >> $CC
+echo "exec $BUILD_PREFIX/bin/$CXX -L$PREFIX/lib \"\$@\""  >> $CXX
+
+export TF_SYSTEM_LIBS="llvm"
 
 if [[ "$target_platform" == linux* ]]; then
     # do not build with MKL support
