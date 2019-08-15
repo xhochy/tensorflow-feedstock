@@ -7,7 +7,7 @@
 {% set fn = "tensorflow-{{ version }}.tar.gz" %}  # [linux]
 
 package:
-  name: tensorflow
+    name: tensorflow-split
   version: {{ version }}
 
 source:
@@ -44,11 +44,11 @@ requirements:
     - bazel >=0.19.0,<=0.21.0  # [linux]
   host:
     # conda build requirements
-    - swig  # [linux]
-    - zlib  # [linux]
     - python
     - pip
     - setuptools <=39.1.0
+    - swig  # [linux]
+    - zlib  # [linux]
     # requirements specified by the package itself
     - absl-py >=0.1.6
     - astor >=0.6.0
