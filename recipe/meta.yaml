@@ -71,7 +71,7 @@ requirements:
 outputs:
   - name: tensorflow
     script: build_pkg.sh  # [unix]
-    script: build_pkg.bat # [win]
+    script: build_pkg.bat  # [win]
     build:
       entry_points:
         - freeze_graph = tensorflow.python.tools.freeze_graph:run_main
