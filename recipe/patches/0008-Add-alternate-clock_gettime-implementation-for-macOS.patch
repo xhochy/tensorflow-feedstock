@@ -41,7 +41,7 @@ index 59a67b1..88f8a6c 100644
  
    uint64 NowNanos() override {
      struct timespec ts;
-+#if defined __APPLE__ && __MAC_OS_X_VERSION_MIN_REQUIRED < 101200 // less than macOS 10.12
++#if defined __APPLE__
 +    alt_clock_gettime(CALENDAR_CLOCK, &ts);
 +#else
      clock_gettime(CLOCK_REALTIME, &ts);
