@@ -17,6 +17,7 @@ echo "#!/bin/bash"                                > compiler-wrapper
 echo "export C_INCLUDE_PATH=$PREFIX/include"     >> compiler-wrapper
 echo "export CPLUS_INCLUDE_PATH=$PREFIX/include" >> compiler-wrapper
 echo "export CONDA_BUILD_SYSROOT=$CONDA_BUILD_SYSROOT"  >> compiler-wrapper
+echo "export MACOSX_DEPLOYMENT_TARGET=$MACOSX_DEPLOYMENT_TARGET" >> compiler-wrapper
 chmod +x "compiler-wrapper"
 cp compiler-wrapper $CC
 cp compiler-wrapper $CXX
@@ -40,8 +41,25 @@ mkdir -p ./bazel_output_base
 export BAZEL_OPTS="--batch "
 
 if [[ "${target_platform}" == osx* ]]; then
+    export BAZEL_USE_CPP_ONLY_TOOLCHAIN=1
     BUILD_OPTS="
         --verbose_failures
+        --copt=-march=core2
+        --copt=-mtune=haswell
+        --copt=-mssse3
+        --copt=-ftree-vectorize
+        --copt=-fPIC
+        --copt=-fPIE
+        --copt=-fstack-protector-strong
+        --copt=-O2
+        --copt=-pipe
+        --linkopt=-pie
+        --cxxopt=-stdlib=libc++
+        --cxxopt=-fvisibility-inlines-hidden
+        --cxxopt=-fmessage-length=0
+        --linkopt=-headerpad_max_install_names
+        --action_env CC=$PWD/$CC
+        --action_env CXX=$PWD/$CXX
         ${BAZEL_MKL_OPT}
         --config=opt"
     export TF_ENABLE_XLA=0
