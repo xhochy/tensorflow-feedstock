@@ -21,8 +21,8 @@ echo "export MACOSX_DEPLOYMENT_TARGET=$MACOSX_DEPLOYMENT_TARGET" >> compiler-wra
 chmod +x "compiler-wrapper"
 cp compiler-wrapper $CC
 cp compiler-wrapper $CXX
-echo "exec $BUILD_PREFIX/bin/$CC -L$PREFIX/lib \"\$@\""   >> $CC
-echo "exec $BUILD_PREFIX/bin/$CXX -L$PREFIX/lib \"\$@\""  >> $CXX
+echo "exec $BUILD_PREFIX/bin/$CC -L$PREFIX/lib  \"\$@\" -Wno-unused-command-line-argument"   >> $CC
+echo "exec $BUILD_PREFIX/bin/$CXX -L$PREFIX/lib \"\$@\" -Wno-unused-command-line-argument"  >> $CXX
 
 export TF_SYSTEM_LIBS="llvm,zlib_archive,com_google_protobuf,com_google_protobuf_cc,curl"
 
