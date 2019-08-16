@@ -13,17 +13,6 @@ export CXX=$(basename $CXX)
 export LIBDIR=$PREFIX/lib
 export INCLUDEDIR=$PREFIX/include
 
-echo "#!/bin/bash"                                > compiler-wrapper
-echo "export C_INCLUDE_PATH=$PREFIX/include"     >> compiler-wrapper
-echo "export CPLUS_INCLUDE_PATH=$PREFIX/include" >> compiler-wrapper
-echo "export CONDA_BUILD_SYSROOT=$CONDA_BUILD_SYSROOT"  >> compiler-wrapper
-echo "export MACOSX_DEPLOYMENT_TARGET=$MACOSX_DEPLOYMENT_TARGET" >> compiler-wrapper
-chmod +x "compiler-wrapper"
-cp compiler-wrapper $CC
-cp compiler-wrapper $CXX
-echo "exec $BUILD_PREFIX/bin/$CC -L$PREFIX/lib  \"\$@\" -Wno-unused-command-line-argument"   >> $CC
-echo "exec $BUILD_PREFIX/bin/$CXX -L$PREFIX/lib \"\$@\" -Wno-unused-command-line-argument"  >> $CXX
-
 export TF_SYSTEM_LIBS="llvm,zlib_archive,com_google_protobuf,com_google_protobuf_cc,curl"
 
 # do not build with MKL support
@@ -40,26 +29,34 @@ export BAZEL_MKL_OPT=""
 mkdir -p ./bazel_output_base
 export BAZEL_OPTS="--batch "
 
-if [[ "${target_platform}" == osx* ]]; then
+echo "#!/bin/bash"                                > compiler-wrapper
+echo "export C_INCLUDE_PATH=$PREFIX/include"     >> compiler-wrapper
+echo "export CPLUS_INCLUDE_PATH=$PREFIX/include" >> compiler-wrapper
+echo "export CONDA_BUILD_SYSROOT=$CONDA_BUILD_SYSROOT"  >> compiler-wrapper
+echo "export MACOSX_DEPLOYMENT_TARGET=$MACOSX_DEPLOYMENT_TARGET" >> compiler-wrapper
+chmod +x "compiler-wrapper"
+cp compiler-wrapper $CC
+cp compiler-wrapper $CXX
+echo "exec $BUILD_PREFIX/bin/$CC -L$PREFIX/lib  \"\$@\" -Wno-unused-command-line-argument"  >> $CC
+echo "exec $BUILD_PREFIX/bin/$CXX -L$PREFIX/lib \"\$@\" -Wno-unused-command-line-argument"  >> $CXX
+
+if [[ "$target_platform" == "osx-64" ]]; then
+    # set up bazel config file for conda provided clang toolchain
+    cp -r ${RECIPE_DIR}/custom_clang_toolchain .
+    pushd custom_clang_toolchain
+    cp  ../$CC cc_wrapper.sh
+    sed -e "s:\${PREFIX}:${BUILD_PREFIX}:" \
+        -e "s:\${LD}:${LD}:" \
+        -e "s:\${NM}:${NM}:" \
+        -e "s:\${STRIP}:${STRIP}:" \
+        -e "s:\${LIBTOOL}:${LIBTOOL}:" \
+        -e "s:\${CONDA_BUILD_SYSROOT}:${CONDA_BUILD_SYSROOT}:" \
+        CROSSTOOL.template > CROSSTOOL
+    popd
     export BAZEL_USE_CPP_ONLY_TOOLCHAIN=1
     BUILD_OPTS="
+        --crosstool_top=//custom_clang_toolchain:toolchain
         --verbose_failures
-        --copt=-march=core2
-        --copt=-mtune=haswell
-        --copt=-mssse3
-        --copt=-ftree-vectorize
-        --copt=-fPIC
-        --copt=-fPIE
-        --copt=-fstack-protector-strong
-        --copt=-O2
-        --copt=-pipe
-        --linkopt=-pie
-        --cxxopt=-stdlib=libc++
-        --cxxopt=-fvisibility-inlines-hidden
-        --cxxopt=-fmessage-length=0
-        --linkopt=-headerpad_max_install_names
-        --action_env CC=$PWD/$CC
-        --action_env CXX=$PWD/$CXX
         ${BAZEL_MKL_OPT}
         --config=opt"
     export TF_ENABLE_XLA=0
