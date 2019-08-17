@@ -12,7 +12,19 @@ cxx_compiler_version:
 - '5.4'
 docker_image:
 - condaforge/linux-anvil-comp7
+libcurl:
+- '7.64'
+libpng:
+- '1.6'
+libprotobuf:
+- '3.8'
 pin_run_as_build:
+  libcurl:
+    max_pin: x
+  libpng:
+    max_pin: x.x
+  libprotobuf:
+    max_pin: x.x
   python:
     min_pin: x.x
     max_pin: x.x
