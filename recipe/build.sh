@@ -80,6 +80,7 @@ else
     --cxxopt=-fmessage-length=0
     --linkopt=-zrelro
     --linkopt=-znow
+    --linkopt=-lrt
     --verbose_failures
     ${BAZEL_MKL_OPT}
     --config=opt"
