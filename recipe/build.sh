@@ -2,6 +2,9 @@
 
 set -ex
 
+if [[ "$target_platform" == linux* ]]; then	
+# revert osx
+
 if [[ "$target_platform" == "osx-64" ]]; then
   export CC=clang
   export CXX=clang++
@@ -111,3 +114,5 @@ bazel ${BAZEL_OPTS} build ${BUILD_OPTS} ${BUILD_TARGET}
 # build a whl file
 mkdir -p $SRC_DIR/tensorflow_pkg
 bazel-bin/tensorflow/tools/pip_package/build_pip_package $SRC_DIR/tensorflow_pkg
+
+fi
