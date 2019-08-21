@@ -1,7 +1,7 @@
 {% set version = "1.13.1" %}
 
 {% set pyver = "cp{}{}".format(PY_VER[0], PY_VER[2]) %}
-{% set platform = "macosx_10_11_x86_64" %}  # [osx]
+{% set platform = "macosx_10_11_x86_64" %}  # [osx] 
 {% set platform = "win_amd64" %}  # [win]
 {% set fn = "{}-{}-{}-{}m-{}.whl".format("tensorflow", version, pyver, pyver, platform) %}  # [not linux]
 {% set fn = "tensorflow-{{ version }}.tar.gz" %}  # [linux]
@@ -14,50 +14,41 @@ source:
   fn: {{ fn }}
   url: https://github.com/tensorflow/tensorflow/archive/v{{ version }}.tar.gz  # [linux]
   sha256: 7cd19978e6bc7edc2c847bce19f95515a742b34ea5e28e4389dade35348f58ed  # [linux]
-
   url: https://pypi.io/packages/{{ pyver }}/t/tensorflow/{{ fn }}  # [not linux]
-  sha256: 0f305f3c461ed2ce5e0b65fccc7b7452f483c7935dd8a52a466d622e642fdea8  # [osx and py27]
-  sha256: ba29e66331cd2a8f824e0fa937ce44bd624bc37739f2f083694e473051d89ace  # [osx and py36]
+  sha256: 0f305f3c461ed2ce5e0b65fccc7b7452f483c7935dd8a52a466d622e642fdea8  # [osx and py27]    
+  sha256: ba29e66331cd2a8f824e0fa937ce44bd624bc37739f2f083694e473051d89ace  # [osx and py36]  
   sha256: 2fc989a5d3be9f3dc96c20deaa3d5cc66d2bf76fe069c202c2914a7f4b5a9a35  # [osx and py37]
-
   sha256: d7341617aedd73c2c847755e87697e9c19eb625c73da26d6cd669220c5565119  # [win and py36]
   sha256: a4f154fa98cde5974117e05af444e0bed84cf431b8129c78a2de03a1ff7201c9  # [win and py37]
 
   patches:
-    - patches/0001-add-rt-to-linkopts.patch  # [linux]
-    - patches/0002-stable-image-rotate-test.patch  # [linux]
-    - patches/0003-relax-tolerence-in-special_math_test.patch  # [linux]
-    - patches/0004-skip-read-only-debugger_cli_common-test.patch  # [linux]
-    - patches/0005-fix-lookup_ops-test.patch  # [linux]
-    - patches/0006-relax-precision-in-matrix_log_op_test.patch  # [linux]
+    - patches/0001-add-rt-to-linkopts.patch                                     # [linux]
+    - patches/0002-stable-image-rotate-test.patch                               # [linux]
+    - patches/0003-relax-tolerence-in-special_math_test.patch                   # [linux]
+    - patches/0004-skip-read-only-debugger_cli_common-test.patch                # [linux]
+    - patches/0005-fix-lookup_ops-test.patch                                    # [linux]
+    - patches/0006-relax-precision-in-matrix_log_op_test.patch                  # [linux]
+    #- patches/0007-Add-init-symbol-names-prefixed-with-an-underscore.patch      # [osx]
+    #- patches/0008-Add-alternate-clock_gettime-implementation-for-macOS.patch   # [osx]
+    - patches/unbundle_llvm.patch                                               # [linux]
 
 build:
-  number: 1
+  number: 2
   skip: True  # [not x86_64]
   skip: True  # [win and vc<14]
-  script:
-    - "{{ PYTHON }} -m pip install --no-deps -vv {{ fn }}"  # [win]
-  entry_points:
-    - freeze_graph = tensorflow.python.tools.freeze_graph:run_main
-    - toco_from_protos = tensorflow.lite.toco.python.toco_from_protos:main
-    - tflite_convert = tensorflow.lite.python.tflite_convert:main
-    - toco = tensorflow.lite.python.tflite_convert:main
-    - saved_model_cli = tensorflow.python.tools.saved_model_cli:main
-    - tf_upgrade_v2 = tensorflow.tools.compatibility.tf_upgrade_v2_main:main
-    - tensorboard = tensorboard.main:run_main
 
 requirements:
   build:
-    - {{ compiler('c') }}  # [linux]
-    - {{ compiler('cxx') }}  # [linux]
-    - bazel >=0.19.0,<=0.21.0  # [linux]
+    - {{ compiler('c') }}       # [linux]
+    - {{ compiler('cxx') }}     # [linux]
+    - bazel >=0.19.0,<=0.21.0   # [linux]
+    - nasm                      # [linux]
   host:
     # conda build requirements
     - python
     - pip
     - setuptools <=39.1.0
-    - swig  # [linux]
-    - zlib  # [linux]
+    - swig                      # [linux]
     # requirements specified by the package itself
     - absl-py >=0.1.6
     - astor >=0.6.0
@@ -65,6 +56,11 @@ requirements:
     - keras-applications >=1.0.6
     - keras-preprocessing >=1.0.5
     - numpy 1.13.3  # [py<37]
+    - llvmdev                   # [linux]
+    - zlib                      # [linux]
+    - libprotobuf               # [linux]
+    - libpng                    # [linux]
+    - libcurl                   # [linux]
     # The requirement is numpy >=1.13 but no builds of numPy 1.13 are
     # available for Python 3.7
     - numpy 1.14.6  # [py==37]
@@ -72,39 +68,106 @@ requirements:
     - protobuf >=3.6.1
     - termcolor >=1.1.0
     - grpcio >=1.8.6
-    - wheel >=0.26  # [linux]
+    - wheel >=0.26              # [linux]
     - mock >=2.0.0  # [py2k]
     - backports.weakref >=1.0rc1  # [py2k]
     - enum34 >=1.1.6  # [py2k]
     - tensorflow-estimator >=1.13.0,<1.14.0a0
   run:
-    - python
-    - absl-py >=0.1.6
-    - astor >=0.6.0
-    - gast >=0.2.0
-    - keras-applications >=1.0.6
-    - keras-preprocessing >=1.0.5
-    - {{ pin_compatible('numpy') }}  # [linux]
-    - numpy >=1.13.3  # [not linux]
-    - six >=1.10.0
-    - protobuf >=3.6.1
-    - termcolor >=1.1.0
-    - grpcio >=1.8.6
-    - mock >=2.0.0  # [py2k]
-    - backports.weakref >=1.0rc1  # [py2k]
-    - enum34 >=1.1.6  # [py2k]
-    - tensorflow-estimator >=1.13.0,<1.14.0a0
-    - tensorboard >=1.13.0,<1.14.0a0
+    - tensorflow-base
 
-test:
-  imports:
-    - tensorflow
-  commands:
-    - freeze_graph --help
-    - saved_model_cli --help
-    - tflite_convert --help  # [not win]
-    - toco_from_protos --help  # [not win]
-    - toco --help  # [not win]
+outputs:
+  - name: tensorflow-base
+    script: build_pkg.sh  # [linux]
+    script: build_pkg_osx.sh  # [osx]
+    script: build_pkg.bat  # [win]
+    build:
+      entry_points:
+        - freeze_graph = tensorflow.python.tools.freeze_graph:run_main
+        - toco_from_protos = tensorflow.lite.toco.python.toco_from_protos:main
+        - tflite_convert = tensorflow.lite.python.tflite_convert:main
+        - toco = tensorflow.lite.python.tflite_convert:main
+        - saved_model_cli = tensorflow.python.tools.saved_model_cli:main
+        - tf_upgrade_v2 = tensorflow.tools.compatibility.tf_upgrade_v2_main:main
+        - tensorboard = tensorboard.main:run_main
+    requirements:
+      host:
+        # conda build requirements
+        - python
+        - pip
+        - setuptools <=39.1.0
+        # requirements specified by the package itself
+        - absl-py >=0.1.6
+        - astor >=0.6.0
+        - gast >=0.2.0
+        - keras-applications >=1.0.6
+        - keras-preprocessing >=1.0.5
+        - numpy 1.13.3  # [py<37]
+        # The requirement is numpy >=1.13 but no builds of numPy 1.13 are
+        # available for Python 3.7
+        - numpy 1.14.6  # [py==37]
+        - six >=1.10.0
+        - protobuf >=3.6.1
+        - termcolor >=1.1.0
+        - grpcio >=1.8.6
+        - wheel >=0.26              # [unix]
+        - mock >=2.0.0  # [py2k]
+        - backports.weakref >=1.0rc1  # [py2k]
+        - enum34 >=1.1.6  # [py2k]
+        - tensorflow-estimator >=1.13.0,<1.14.0a0
+      run:
+        - python
+        - absl-py >=0.1.6
+        - astor >=0.6.0
+        - gast >=0.2.0
+        - keras-applications >=1.0.6
+        - keras-preprocessing >=1.0.5
+        - {{ pin_compatible('numpy') }}  # [linux]
+        - numpy >=1.13.3            # [not linux]
+        - six >=1.10.0
+        - zlib                      # [linux]
+        - libprotobuf               # [linux]
+        - libpng                    # [linux]
+        - libcurl                   # [linux]
+        - protobuf >=3.6.1
+        - termcolor >=1.1.0
+        - grpcio >=1.8.6
+        - mock >=2.0.0  # [py2k]
+        - backports.weakref >=1.0rc1  # [py2k]
+        - enum34 >=1.1.6  # [py2k]
+        - tensorflow-estimator >=1.13.0,<1.14.0a0
+        - tensorboard >=1.13.0,<1.14.0a0
+    test:
+      imports:
+        - tensorflow
+      commands:
+        - freeze_graph --help
+        - saved_model_cli --help
+        - tflite_convert --help  # [not win]
+        - toco_from_protos --help  # [not win]
+        - toco --help  # [not win]
+
+  - name: libtensorflow
+    script: cp_libtensorflow.sh  # [unix]
+    build:
+      skip: true  # [not linux]
+    test:
+      commands:
+        - test -f $PREFIX/lib/libtensorflow.so  # [not win]
+
+  - name: libtensorflow_cc
+    script: cp_libtensorflow_cc.sh  # [unix]
+    build:
+      skip: true  # [not linux]
+    requirements:
+      run:
+        - libprotobuf
+        - eigen
+        - nsync
+        - abseil-cpp
+    test:
+      commands:
+        - test -f $PREFIX/lib/libtensorflow_cc.so  # [not win]
 
 about:
   home: http://tensorflow.org/
@@ -130,3 +193,4 @@ extra:
     - gilbertfrancois
     - dougalsutherland
     - farhantejani
+    - njzjz
