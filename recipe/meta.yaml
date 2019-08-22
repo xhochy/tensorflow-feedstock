@@ -33,7 +33,7 @@ source:
     - patches/unbundle_llvm.patch                                               # [linux]
 
 build:
-  number: 2
+  number: 3
   skip: True  # [not x86_64]
   skip: True  # [win and vc<14]
 
@@ -74,7 +74,7 @@ requirements:
     - enum34 >=1.1.6  # [py2k]
     - tensorflow-estimator >=1.13.0,<1.14.0a0
   run:
-    - tensorflow-base
+    - {{ pin_subpackage('tensorflow-base', min_pin='x.x', max_pin='x.x') }}
 
 outputs:
   - name: tensorflow-base
@@ -115,6 +115,11 @@ outputs:
         - backports.weakref >=1.0rc1  # [py2k]
         - enum34 >=1.1.6  # [py2k]
         - tensorflow-estimator >=1.13.0,<1.14.0a0
+        # pin
+        - zlib                      # [linux]
+        - libprotobuf               # [linux]
+        - libpng                    # [linux]
+        - libcurl                   # [linux]
       run:
         - python
         - absl-py >=0.1.6
@@ -125,10 +130,10 @@ outputs:
         - {{ pin_compatible('numpy') }}  # [linux]
         - numpy >=1.13.3            # [not linux]
         - six >=1.10.0
-        - zlib                      # [linux]
-        - libprotobuf               # [linux]
-        - libpng                    # [linux]
-        - libcurl                   # [linux]
+        - {{ pin_compatible('zlib') }}  # [linux]
+        - {{ pin_compatible('libprotobuf') }}  # [linux]
+        - {{ pin_compatible('libpng') }}   # [linux]
+        - {{ pin_compatible('libcurl') }}  # [linux]
         - protobuf >=3.6.1
         - termcolor >=1.1.0
         - grpcio >=1.8.6
