@@ -33,7 +33,7 @@ source:
     - patches/unbundle_llvm.patch                                               # [linux]
 
 build:
-  number: 2
+  number: 3
   skip: True  # [not x86_64]
   skip: True  # [win and vc<14]
 
@@ -125,10 +125,10 @@ outputs:
         - {{ pin_compatible('numpy') }}  # [linux]
         - numpy >=1.13.3            # [not linux]
         - six >=1.10.0
-        - zlib                      # [linux]
-        - libprotobuf               # [linux]
-        - libpng                    # [linux]
-        - libcurl                   # [linux]
+        - {{ pin_compatible('zlib') }}  # [linux]
+        - {{ pin_compatible('libprotobuf') }}  # [linux]
+        - {{ pin_compatible('libpng') }}   # [linux]
+        - {{ pin_compatible('libcurl') }}  # [linux]
         - protobuf >=3.6.1
         - termcolor >=1.1.0
         - grpcio >=1.8.6
