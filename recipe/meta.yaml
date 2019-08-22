@@ -74,7 +74,7 @@ requirements:
     - enum34 >=1.1.6  # [py2k]
     - tensorflow-estimator >=1.13.0,<1.14.0a0
   run:
-    - {{ pin_subpackage('tensorflow-base'), min_pin='x.x', max_pin='x.x' }}
+    - {{ pin_subpackage('tensorflow-base', min_pin='x.x', max_pin='x.x') }}
 
 outputs:
   - name: tensorflow-base
