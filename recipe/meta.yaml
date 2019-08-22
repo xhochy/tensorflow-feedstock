@@ -74,7 +74,7 @@ requirements:
     - enum34 >=1.1.6  # [py2k]
     - tensorflow-estimator >=1.13.0,<1.14.0a0
   run:
-    - tensorflow-base
+    - {{ pin_subpackage('tensorflow-base'), min_pin='x.x', max_pin='x.x' }}
 
 outputs:
   - name: tensorflow-base
@@ -122,13 +122,13 @@ outputs:
         - gast >=0.2.0
         - keras-applications >=1.0.6
         - keras-preprocessing >=1.0.5
-        - {{ pin_compatible('numpy') }}  # [linux]
+        - {{ pin_subpackage('numpy') }}  # [linux]
         - numpy >=1.13.3            # [not linux]
         - six >=1.10.0
-        - {{ pin_compatible('zlib') }}  # [linux]
-        - {{ pin_compatible('libprotobuf') }}  # [linux]
-        - {{ pin_compatible('libpng') }}   # [linux]
-        - {{ pin_compatible('libcurl') }}  # [linux]
+        - {{ pin_subpackage('zlib') }}  # [linux]
+        - {{ pin_subpackage('libprotobuf') }}  # [linux]
+        - {{ pin_subpackage('libpng') }}   # [linux]
+        - {{ pin_subpackage('libcurl') }}  # [linux]
         - protobuf >=3.6.1
         - termcolor >=1.1.0
         - grpcio >=1.8.6
