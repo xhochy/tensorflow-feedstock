@@ -116,7 +116,7 @@ outputs:
         - enum34 >=1.1.6  # [py2k]
         - tensorflow-estimator >=1.13.0,<1.14.0a0
         # pin
-        - zlib                      # [linux]
+        - zlib                     # [linux]
         - libprotobuf               # [linux]
         - libpng                    # [linux]
         - libcurl                   # [linux]
