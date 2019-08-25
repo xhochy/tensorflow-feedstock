@@ -167,8 +167,8 @@ outputs:
         - {{ compiler('cxx') }}     # [linux]
       # host requirements to pick up run_exports
       host:
-        - libz  # [linux]
         - libcurl  # [linux]
+        - zlib  # [linux]
 
     test:
       commands:
@@ -185,8 +185,8 @@ outputs:
         - {{ compiler('cxx') }}     # [linux]
       # host requirements to pick up run_exports
       host:
-        - libz  # [linux]
         - libcurl  # [linux]
+        - zlib  # [linux]
       run:
         - libprotobuf
         - eigen
