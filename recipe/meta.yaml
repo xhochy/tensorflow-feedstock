@@ -61,6 +61,8 @@ requirements:
     - libprotobuf               # [linux]
     - libpng                    # [linux]
     - libcurl                   # [linux]
+    - nsync  # [linux]
+    - abseil-cpp  # [linux]
     # The requirement is numpy >=1.13 but no builds of numPy 1.13 are
     # available for Python 3.7
     - numpy 1.14.6  # [py==37]
@@ -189,9 +191,7 @@ outputs:
         - zlib  # [linux]
       run:
         - libprotobuf
-        - eigen
         - nsync
-        - abseil-cpp
     test:
       commands:
         - test -f $PREFIX/lib/libtensorflow_cc.so  # [not win]
