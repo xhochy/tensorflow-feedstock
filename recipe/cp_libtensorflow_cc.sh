@@ -15,3 +15,7 @@ cp -r bazel-genfiles/* ${PREFIX}/include/
 cp -r tensorflow/cc ${PREFIX}/include/tensorflow
 cp -r tensorflow/core ${PREFIX}/include/tensorflow
 cp -r third_party ${PREFIX}/include
+
+cp -r bazel-bin/external/com_google_absl/absl ${PREFIX}/include
+cp -r third_party/eigen3/Eigen ${PREFIX}/include
+cp -r third_party/eigen3/unsupported ${PREFIX}/include

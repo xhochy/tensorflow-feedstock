@@ -33,7 +33,7 @@ source:
     - patches/unbundle_llvm.patch                                               # [linux]
 
 build:
-  number: 4
+  number: 5
   skip: True  # [not x86_64]
   skip: True  # [win and vc<14]
 
@@ -61,6 +61,7 @@ requirements:
     - libprotobuf               # [linux]
     - libpng                    # [linux]
     - libcurl                   # [linux]
+    - nsync  # [linux]
     # The requirement is numpy >=1.13 but no builds of numPy 1.13 are
     # available for Python 3.7
     - numpy 1.14.6  # [py==37]
@@ -189,9 +190,7 @@ outputs:
         - zlib  # [linux]
       run:
         - libprotobuf
-        - eigen
         - nsync
-        - abseil-cpp
     test:
       commands:
         - test -f $PREFIX/lib/libtensorflow_cc.so  # [not win]
