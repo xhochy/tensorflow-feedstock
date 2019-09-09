@@ -18,5 +18,5 @@ cp -r tensorflow/core ${PREFIX}/include/tensorflow
 cp -r third_party ${PREFIX}/include
 
 cp -r bazel-tensorflow/external/com_google_absl/absl ${PREFIX}/include
-cp -r third_party/eigen3/Eigen ${PREFIX}/include
-cp -r third_party/eigen3/unsupported ${PREFIX}/include
+cp -r bazel-tensorflow/external/eigen_archive/Eigen ${PREFIX}/include
+cp -r bazel-tensorflow/external/eigen_archive/unsupported ${PREFIX}/include
