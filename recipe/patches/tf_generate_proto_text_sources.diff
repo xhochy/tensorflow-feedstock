@@ -6,7 +6,7 @@ index d93e0df..6dc0f59 100644
          outs = out_hdrs + out_srcs,
          visibility = visibility,
          cmd =
-+            "LD_LIBRARY_PATH=@CONFIG_LIBRARY_PATH@ " +
++            "LD_LIBRARY_PATH=$PREFIX/lib " +
              "$(location //tensorflow/tools/proto_text:gen_proto_text_functions) " +
              "$(@D) " + srcs_relative_dir + " $(SRCS)",
          tools = [
