@@ -193,6 +193,7 @@ outputs:
       host:
         - libcurl  # [linux]
         - zlib  # [linux]
+        - libprotobuf
       run:
         - libprotobuf
         - nsync
