@@ -33,7 +33,7 @@ source:
     - patches/unbundle_llvm.patch                                               # [linux]
 
 build:
-  number: 5
+  number: 6
   skip: True  # [not x86_64]
   skip: True  # [win and vc<14]
 
@@ -172,8 +172,13 @@ outputs:
         - zlib  # [linux]
 
     test:
+      files:
+        - test_c.c
+      requires:
+        - {{ compiler('c') }}
       commands:
         - test -f $PREFIX/lib/libtensorflow.so  # [not win]
+        - $CC -o test_c -L${PREFIX}/lib/ -ltensorflow -I${PREFIX}/include/ test_c.c  # [not win]
 
   - name: libtensorflow_cc
     script: cp_libtensorflow_cc.sh  # [unix]
@@ -188,12 +193,18 @@ outputs:
       host:
         - libcurl  # [linux]
         - zlib  # [linux]
+        - libprotobuf
       run:
         - libprotobuf
         - nsync
     test:
+      files:
+        - test_cc.cc
+      requires:
+        - {{ compiler('cxx') }}
       commands:
         - test -f $PREFIX/lib/libtensorflow_cc.so  # [not win]
+        - $CXX -std=c++11 -o test_cc -L${PREFIX}/lib/ -ltensorflow_cc -ltensorflow_framework -lrt -I${PREFIX}/include/ test_cc.cc  # [not win]
 
 about:
   home: http://tensorflow.org/
