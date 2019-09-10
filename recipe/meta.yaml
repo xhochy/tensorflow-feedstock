@@ -204,7 +204,7 @@ outputs:
         - {{ compiler('cxx') }}
       commands:
         - test -f $PREFIX/lib/libtensorflow_cc.so  # [not win]
-        - $CXX -std=c++11 -o test_cc -L${PREFIX}/lib/ -ltensorflow_cc -ltensorflow_framework -I${PREFIX}/include/ test_cc.cc  # [not win]
+        - $CXX -std=c++11 -o test_cc -L${PREFIX}/lib/ -ltensorflow_cc -ltensorflow_framework -lrt -I${PREFIX}/include/ test_cc.cc  # [not win]
 
 about:
   home: http://tensorflow.org/
