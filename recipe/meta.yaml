@@ -175,7 +175,7 @@ outputs:
         - {{ compiler('c') }}
       commands:
         - test -f $PREFIX/lib/libtensorflow.so  # [not win]
-        - $CC -o test_c -L${PREFIX}/lib/ -ltensorflow -I${PREFIX}/include/ test_c.c  # [not win]
+        - $CC -o test_c -L${PREFIX}/lib/ -ltensorflow -I${PREFIX}/include/ test_c.c && ./test_c  # [not win]
 
   - name: libtensorflow_cc
     script: cp_libtensorflow_cc.sh  # [unix]
@@ -200,7 +200,7 @@ outputs:
         - {{ compiler('cxx') }}
       commands:
         - test -f $PREFIX/lib/libtensorflow_cc.so  # [not win]
-        - $CXX -std=c++11 -o test_cc -L${PREFIX}/lib/ -ltensorflow_cc -ltensorflow_framework -lrt -I${PREFIX}/include/ test_cc.cc  # [not win]
+        - $CXX -std=c++11 -o test_cc -L${PREFIX}/lib/ -ltensorflow_cc -ltensorflow_framework -lrt -I${PREFIX}/include/ test_cc.cc && ./test_cc  # [not win]
 
 about:
   home: http://tensorflow.org/
