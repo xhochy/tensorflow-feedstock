@@ -16,7 +16,7 @@ export CXX=$(basename $CXX)
 export LIBDIR=$PREFIX/lib
 export INCLUDEDIR=$PREFIX/include
 
-export TF_SYSTEM_LIBS="llvm,zlib_archive,com_google_protobuf,com_google_protobuf_cc,curl,nsync"
+export TF_SYSTEM_LIBS="llvm,zlib_archive,curl,nsync"
 
 # do not build with MKL support
 export TF_NEED_MKL=0
