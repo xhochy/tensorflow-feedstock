@@ -19,7 +19,7 @@ source:
   sha256: a3851118d2cc5e9e697503753c2d247dca0e98d5a85b5ea091103f27d9e57a38  # [osx and py==36]  
   sha256: 2fc989a5d3be9f3dc96c20deaa3d5cc66d2bf76fe069c202c2914a7f4b5a9a35  # [osx and py==37]
   sha256: e84f2c8c7f23ad546076b1e73cec85706da19910b9a89c29cba3b64e297b2eb0  # [win and py==36]
-  sha256: a4f154fa98cde5974117e05af444e0bed84cf431b8129c78a2de03a1ff7201c9  # [win and py==37]
+  sha256:   # [win and py37]
 
   patches:
     - patches/0001-add-rt-to-linkopts.patch                                     # [linux]
@@ -101,7 +101,7 @@ outputs:
         - absl-py >=0.7.0
         - astor >=0.6.0
         - gast >=0.2.0
-        - google_pasta >=0.1.6
+        - google-pasta >=0.1.6
         - keras-applications >=1.0.6
         - keras-preprocessing >=1.0.5
         - numpy 1.16.1
@@ -124,7 +124,7 @@ outputs:
         - absl-py >=0.7.0
         - astor >=0.6.0
         - gast >=0.2.0
-        - google_pasta >=0.1.6
+        - google-pasta >=0.1.6
         - keras-applications >=1.0.6
         - keras-preprocessing >=1.0.5
         - {{ pin_compatible('numpy') }}  # [linux]
