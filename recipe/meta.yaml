@@ -17,9 +17,9 @@ source:
   url: https://pypi.io/packages/{{ pyver }}/t/tensorflow/{{ fn }}  # [not linux]
   sha256: 0f305f3c461ed2ce5e0b65fccc7b7452f483c7935dd8a52a466d622e642fdea8  # [osx and py27]    
   sha256: ba29e66331cd2a8f824e0fa937ce44bd624bc37739f2f083694e473051d89ace  # [osx and py36]  
-  sha256: 2fc989a5d3be9f3dc96c20deaa3d5cc66d2bf76fe069c202c2914a7f4b5a9a35  # [osx and py37]
+  sha256: 0de5887495c20e1130ae4d9bcfaf80cec87f579a9c27a84141a588a46e5aa853  # [osx and py37]
   sha256: d7341617aedd73c2c847755e87697e9c19eb625c73da26d6cd669220c5565119  # [win and py36]
-  sha256: a4f154fa98cde5974117e05af444e0bed84cf431b8129c78a2de03a1ff7201c9  # [win and py37]
+  sha256: 4325f20b5a703b80a5f7a8807f07ad8735025bd2a947093ffff1c26fbdc7980b  # [win and py37]
 
   patches:
     - patches/0001-add-rt-to-linkopts.patch                                     # [linux]
