@@ -19,8 +19,7 @@ source:
   sha256: a3851118d2cc5e9e697503753c2d247dca0e98d5a85b5ea091103f27d9e57a38  # [osx and py==36]  
   sha256: 2fc989a5d3be9f3dc96c20deaa3d5cc66d2bf76fe069c202c2914a7f4b5a9a35  # [osx and py==37]
   sha256: e84f2c8c7f23ad546076b1e73cec85706da19910b9a89c29cba3b64e297b2eb0  # [win and py==36]
-  sha256:   # [win and py37]
-
+  sha256: a4f154fa98cde5974117e05af444e0bed84cf431b8129c78a2de03a1ff7201c9  # [win and py==37]
   patches:
     - patches/0001-add-rt-to-linkopts.patch                                     # [linux]
     - patches/0002-stable-image-rotate-test.patch                               # [linux]
@@ -50,26 +49,28 @@ requirements:
     - setuptools <=39.1.0
     - swig                      # [linux]
     # requirements specified by the package itself
-    - absl-py >=0.1.6
+    - absl-py >=0.7.0
     - astor >=0.6.0
     - gast >=0.2.0
+    - google-pasta >=0.1.6
     - keras-applications >=1.0.6
     - keras-preprocessing >=1.0.5
     - llvmdev >=8.0.0,<9.0.0    # [linux]
     - zlib                      # [linux]
     - libpng                    # [linux]
     - libcurl                   # [linux]
-    - nsync  # [linux]
+    - nsync                     # [linux]
     - numpy 1.16.1
     - six >=1.10.0
     - protobuf >=3.6.1
     - termcolor >=1.1.0
+    - wrapt >=1.11.1
     - grpcio >=1.8.6
     - wheel >=0.26              # [linux]
     - mock >=2.0.0  # [py==27]
     - backports.weakref >=1.0rc1  # [py==27]
     - enum34 >=1.1.6  # [py==27]
-    - tensorflow-estimator >=1.13.0,<1.14.0a0
+    - tensorflow-estimator >=1.14.0rc0,<1.15.0a0
   run:
     - {{ pin_subpackage('tensorflow-base', exact=True) }}
 
