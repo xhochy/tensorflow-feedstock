@@ -13,7 +13,7 @@ package:
 source:
   fn: {{ fn }}
   url: https://github.com/tensorflow/tensorflow/archive/v{{ version }}.tar.gz  # [linux]
-  sha256: abe3bf0c47845a628b7df4c57646f41a10ee70f914f1b018a5c761be75e1f1a9  # [linux]
+  sha256: aa2a6a1daafa3af66807cfe0bc77bfe1144a9a53df9a96bab52e3e575b3047ed  # [linux]
   url: https://pypi.io/packages/{{ pyver }}/t/tensorflow/{{ fn }}  # [not linux]
   sha256: 46fc216db780b1a7b7a28cf6536d6ec0a171ef2fa546a24934ffe077c734c891  # [osx and py==27]    
   sha256: a3851118d2cc5e9e697503753c2d247dca0e98d5a85b5ea091103f27d9e57a38  # [osx and py==36]  
