@@ -56,7 +56,7 @@ requirements:
     - keras-applications >=1.0.6
     - keras-preprocessing >=1.0.5
     - numpy 1.13.3  # [py<37]
-    - llvmdev                   # [linux]
+    - llvmdev >=8.0.0,<9.0.0    # [linux]
     - zlib                      # [linux]
     - libpng                    # [linux]
     - libcurl                   # [linux]
