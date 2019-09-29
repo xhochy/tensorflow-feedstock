@@ -129,7 +129,7 @@ outputs:
         - keras-applications >=1.0.6
         - keras-preprocessing >=1.0.5
         - {{ pin_compatible('numpy') }}  # [linux]
-        - numpy >=1.16.1,<2.0.0a0            # [not linux]
+        - numpy >=1.16.1,<2.0.0a0        # [not linux]
         - six >=1.10.0
         - zlib  # [linux]
         - libpng  # [linux]
