@@ -1,4 +1,4 @@
-{% set version = "1.13.2" %}
+{% set version = "2.2.0" %}
 
 {% set pyver = "cp{}{}".format(PY_VER[0], PY_VER[2]) %}
 {% set platform = "macosx_10_11_x86_64" %}  # [osx] 
@@ -13,42 +13,42 @@ package:
 source:
   fn: {{ fn }}
   url: https://github.com/tensorflow/tensorflow/archive/v{{ version }}.tar.gz  # [linux]
-  sha256: abe3bf0c47845a628b7df4c57646f41a10ee70f914f1b018a5c761be75e1f1a9  # [linux]
+  sha256: 69cd836f87b8c53506c4f706f655d423270f5a563b76dc1cfa60fbc3184185a3  # [linux]
   url: https://pypi.io/packages/{{ pyver }}/t/tensorflow/{{ fn }}  # [not linux]
-  sha256: ffff3545f0ade3c1d2919dfb8c9399a923d929d221e349fcd4ae5f69774996e1  # [osx and py==27]
-  sha256: 8e02c7fab31a02396cd926412762f8fd9cae3cb653be3c57797b85a95834be79  # [osx and py==36]
-  sha256: ef1566863acdfb84924e8bbfcafc8da90933ba4313f094a74086b083c7a4f776  # [osx and py==37]
-  sha256: 1e6ab2b4e2ece7747b787a5e85d01aeb8b47677fa15453417a485cde904635f7  # [win and py==36]
-  sha256: 0beda4bf6a5af64905b93988e3b878e91b13e44b42d16df439fbd3112062754d  # [win and py==37]
+  sha256: 6735486ee9c3cb0807476e2b36ef7a4cd6c597cb24abf496e66b703360e1e54e  # [osx and py==36]
+  sha256: c332c7fc5cfd54cb86d5da99787c9693e3a924848097c54df1b71ee595a39c93  # [osx and py==37]
+  sha256: bbcfb04738099bd46822db91584db74703fdddacf4cd0a76acfc5e086956b5ba  # [osx and py==38]
+  sha256: 3ee8819732d8594913b7d22ded7b22e48a49aa015050d8dd8464eaa010ba2e41  # [win and py==36]
+  sha256: 68ea22aee9c269a6a0c1061c141f1ec1cd1b1be7569390519c1bf4773f434a40  # [win and py==37]
+  sha256: 784ab8217e4b0eb4d121c28430c6cdc2ce56c02634a9720d84fb30598b338b8c  # [win and py==38]
 
   patches:
-    - patches/0001-add-rt-to-linkopts.patch                                     # [linux]
-    - patches/0002-stable-image-rotate-test.patch                               # [linux]
-    - patches/0003-relax-tolerence-in-special_math_test.patch                   # [linux]
-    - patches/0004-skip-read-only-debugger_cli_common-test.patch                # [linux]
-    - patches/0005-fix-lookup_ops-test.patch                                    # [linux]
-    - patches/0006-relax-precision-in-matrix_log_op_test.patch                  # [linux]
+    #- patches/0001-add-rt-to-linkopts.patch                                     # [linux]
+    #- patches/0002-stable-image-rotate-test.patch                               # [linux]
+    #- patches/0003-relax-tolerence-in-special_math_test.patch                   # [linux]
+    #- patches/0004-skip-read-only-debugger_cli_common-test.patch                # [linux]
+    #- patches/0005-fix-lookup_ops-test.patch                                    # [linux]
+    #- patches/0006-relax-precision-in-matrix_log_op_test.patch                  # [linux]
     #- patches/0007-Add-init-symbol-names-prefixed-with-an-underscore.patch      # [osx]
     #- patches/0008-Add-alternate-clock_gettime-implementation-for-macOS.patch   # [osx]
-    - patches/unbundle_llvm.patch                                               # [linux]
+    #- patches/unbundle_llvm.patch                                               # [linux]
 
 build:
   number: 0
   skip: True  # [not x86_64]
-  skip: True  # [win and vc<14]
 
 requirements:
   build:
     - {{ compiler('c') }}       # [linux]
     - {{ compiler('cxx') }}     # [linux]
-    - bazel >=0.19.0,<=0.21.0   # [linux]
+    #- bazel ==2.0.0   # [linux]
     - nasm                      # [linux]
+    - swig                      # [linux]
   host:
     # conda build requirements
     - python
     - pip
-    - setuptools <=39.1.0
-    - swig                      # [linux]
+    #- setuptools <=39.1.0
     # requirements specified by the package itself
     - absl-py >=0.1.6
     - astor >=0.6.0
@@ -59,17 +59,17 @@ requirements:
     - zlib                      # [linux]
     - libpng                    # [linux]
     - libcurl                   # [linux]
+    - unzip  # [linux]
+    - zip  # [linux]
+    - openjdk >=8  # [linux]
     - nsync  # [linux]
-    - numpy 1.16.1
+    - numpy >=1.16.1
     - six >=1.10.0
     - protobuf >=3.6.1
     - termcolor >=1.1.0
     - grpcio >=1.8.6
     - wheel >=0.26              # [linux]
-    - mock >=2.0.0  # [py==27]
-    - backports.weakref >=1.0rc1  # [py==27]
-    - enum34 >=1.1.6  # [py==27]
-    - tensorflow-estimator >=1.13.0,<1.14.0a0
+    - tensorflow-estimator >=2.2.0,<2.3.0a0
   run:
     - {{ pin_subpackage('tensorflow-base', exact=True) }}
 
@@ -96,23 +96,19 @@ outputs:
         # conda build requirements
         - python
         - pip
-        - setuptools <=39.1.0
         # requirements specified by the package itself
         - absl-py >=0.1.6
         - astor >=0.6.0
         - gast >=0.2.0
         - keras-applications >=1.0.6
         - keras-preprocessing >=1.0.5
-        - numpy 1.16.1
+        - numpy >=1.16.1
         - six >=1.10.0
         - protobuf >=3.6.1
         - termcolor >=1.1.0
         - grpcio >=1.8.6
         - wheel >=0.26              # [unix]
-        - mock >=2.0.0  # [py==27]
-        - backports.weakref >=1.0rc1  # [py==27]
-        - enum34 >=1.1.6  # [py==27]
-        - tensorflow-estimator >=1.13.0,<1.14.0a0
+        - tensorflow-estimator >=2.2.0,<2.3.0a0
         # pin
         - zlib                     # [linux]
         - libpng                    # [linux]
@@ -121,6 +117,7 @@ outputs:
         - python
         - absl-py >=0.1.6
         - astor >=0.6.0
+        - astunparse
         - gast >=0.2.0
         - keras-applications >=1.0.6
         - keras-preprocessing >=1.0.5
@@ -133,11 +130,8 @@ outputs:
         - protobuf >=3.6.1
         - termcolor >=1.1.0
         - grpcio >=1.8.6
-        - mock >=2.0.0  # [py==27]
-        - backports.weakref >=1.0rc1  # [py==27]
-        - enum34 >=1.1.6  # [py==27]
-        - tensorflow-estimator >=1.13.0,<1.14.0a0
-        - tensorboard >=1.13.0,<1.14.0a0
+        - tensorflow-estimator >=2.2.0,<2.3.0a0
+        - tensorboard >=2.2.0,<2.3.0a0
     test:
       imports:
         - tensorflow
@@ -198,7 +192,7 @@ outputs:
 
 about:
   home: http://tensorflow.org/
-  license: Apache 2.0
+  license: Apache-2.0
   license_file: LICENSE
   license_family: Apache
   summary: TensorFlow is an open source machine learning framework for everyone.
@@ -218,3 +212,4 @@ extra:
     - gilbertfrancois
     - farhantejani
     - njzjz
+    - jschueller

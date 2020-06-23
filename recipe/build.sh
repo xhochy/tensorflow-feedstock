@@ -16,15 +16,6 @@ export CXX=$(basename $CXX)
 export LIBDIR=$PREFIX/lib
 export INCLUDEDIR=$PREFIX/include
 
-export TF_SYSTEM_LIBS="llvm,zlib_archive,curl,nsync"
-
-# do not build with MKL support
-export TF_NEED_MKL=0
-export BAZEL_MKL_OPT=""
-
-mkdir -p ./bazel_output_base
-export BAZEL_OPTS="--batch "
-
 # do not build with MKL support
 export TF_NEED_MKL=0
 export BAZEL_MKL_OPT=""
@@ -86,10 +77,23 @@ else
     --linkopt=-lrt
     --verbose_failures
     ${BAZEL_MKL_OPT}
-    --config=opt"
+    --config=opt
+    --jobs=${CPU_COUNT}"
     export TF_ENABLE_XLA=1
 	export BUILD_TARGET="//tensorflow/tools/pip_package:build_pip_package //tensorflow:libtensorflow.so //tensorflow:libtensorflow_cc.so"
 fi
+
+# TODO: publish 2.0 branch in bazel-feedstock
+export BAZEL_VERSION=2.0.0
+export EXTRA_BAZEL_ARGS="--host_javabase=@local_jdk//:jdk"
+mkdir bazel_local
+cd bazel_local
+curl -sSOL https://github.com/bazelbuild/bazel/releases/download/${BAZEL_VERSION}/bazel-${BAZEL_VERSION}-dist.zip
+unzip bazel-${BAZEL_VERSION}-dist.zip
+./compile.sh
+cd ..
+export PATH="$PWD/bazel_local/output:$PATH"
+bazel version
 
 # Python settings
 export PYTHON_BIN_PATH=${PYTHON}
