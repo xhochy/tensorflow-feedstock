@@ -77,13 +77,14 @@ outputs:
   - name: tensorflow-base
     build:
       entry_points:
-        - freeze_graph = tensorflow.python.tools.freeze_graph:run_main
         - toco_from_protos = tensorflow.lite.toco.python.toco_from_protos:main
         - tflite_convert = tensorflow.lite.python.tflite_convert:main
         - toco = tensorflow.lite.python.tflite_convert:main
         - saved_model_cli = tensorflow.python.tools.saved_model_cli:main
+        # The tensorboard package adds this entry point.
+        # - tensorboard = tensorboard.main:run_main
         - tf_upgrade_v2 = tensorflow.tools.compatibility.tf_upgrade_v2_main:main
-        #- tensorboard = tensorboard.main:run_main
+        - estimator_ckpt_converter = tensorflow_estimator.python.estimator.tools.checkpoint_converter:main
     requirements:
       # build requirements needs to pick up the compiler run_exports
       build:
