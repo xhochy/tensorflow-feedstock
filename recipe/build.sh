@@ -2,12 +2,17 @@
 
 set -ex
 
-if [[ "$target_platform" == linux* ]]; then	
-# revert osx
-
 if [[ "$target_platform" == "osx-64" ]]; then
   export CC=clang
   export CXX=clang++
+
+  # install the whl using pip
+  pip install --no-deps *.whl
+
+  # The tensorboard package has the proper entrypoint
+  rm -f ${PREFIX}/bin/tensorboard
+
+  exit 0
 fi
 
 export PATH="$PWD:$PATH"
@@ -118,4 +123,8 @@ bazel ${BAZEL_OPTS} build ${BUILD_OPTS} ${BUILD_TARGET}
 mkdir -p $SRC_DIR/tensorflow_pkg
 bazel-bin/tensorflow/tools/pip_package/build_pip_package $SRC_DIR/tensorflow_pkg
 
-fi
+# install the whl using pip
+pip install --no-deps $SRC_DIR/tensorflow_pkg/*.whl
+
+# The tensorboard package has the proper entrypoint
+rm -f ${PREFIX}/bin/tensorboard

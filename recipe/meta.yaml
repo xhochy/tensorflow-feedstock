@@ -75,9 +75,6 @@ requirements:
 
 outputs:
   - name: tensorflow-base
-    script: build_pkg.sh  # [linux]
-    script: build_pkg_osx.sh  # [osx]
-    script: build_pkg.bat  # [win]
     build:
       entry_points:
         - freeze_graph = tensorflow.python.tools.freeze_graph:run_main
