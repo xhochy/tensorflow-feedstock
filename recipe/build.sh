@@ -77,8 +77,7 @@ else
     --linkopt=-lrt
     --verbose_failures
     ${BAZEL_MKL_OPT}
-    --config=opt
-    --jobs=${CPU_COUNT}"
+    --config=opt"
     export TF_ENABLE_XLA=1
 	export BUILD_TARGET="//tensorflow/tools/pip_package:build_pip_package //tensorflow:libtensorflow.so //tensorflow:libtensorflow_cc.so"
 fi

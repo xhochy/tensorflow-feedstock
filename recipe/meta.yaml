@@ -99,8 +99,10 @@ outputs:
         # requirements specified by the package itself
         - absl-py >=0.1.6
         - astor >=0.6.0
+        - astunparse
         - gast >=0.2.0
-        - keras-applications >=1.0.6
+        - google-pasta
+        - h5py
         - keras-preprocessing >=1.0.5
         - numpy >=1.16.1
         - six >=1.10.0
@@ -109,24 +111,22 @@ outputs:
         - grpcio >=1.8.6
         - wheel >=0.26              # [unix]
         - tensorflow-estimator >=2.2.0,<2.3.0a0
-        # pin
-        - zlib                     # [linux]
-        - libpng                    # [linux]
-        - libcurl                   # [linux]
+        - zlib  # [linux]
+        - libpng  # [linux]
+        - libcurl  # [linux]
       run:
         - python
         - absl-py >=0.1.6
         - astor >=0.6.0
         - astunparse
         - gast >=0.2.0
-        - keras-applications >=1.0.6
+        - google-pasta
+        - h5py
+        - opt_einsum
         - keras-preprocessing >=1.0.5
-        - {{ pin_compatible('numpy') }}  # [linux]
-        - numpy >=1.16.1            # [not linux]
+        - {{ pin_compatible('numpy') }}
+        - scipy
         - six >=1.10.0
-        - zlib  # [linux]
-        - libpng  # [linux]
-        - libcurl  # [linux]
         - protobuf >=3.6.1
         - termcolor >=1.1.0
         - grpcio >=1.8.6
