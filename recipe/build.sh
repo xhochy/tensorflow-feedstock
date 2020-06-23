@@ -3,14 +3,11 @@
 set -ex
 
 if [[ "$target_platform" == "osx-64" ]]; then
-  export CC=clang
-  export CXX=clang++
-
   # install the whl using pip
   pip install --no-deps *.whl
 
   # The tensorboard package has the proper entrypoint
-  rm -f ${PREFIX}/bin/tensorboard
+#   rm -f ${PREFIX}/bin/tensorboard
 
   exit 0
 fi
@@ -26,18 +23,7 @@ export TF_NEED_MKL=0
 export BAZEL_MKL_OPT=""
 
 mkdir -p ./bazel_output_base
-export BAZEL_OPTS="--batch "
-
-echo "#!/bin/bash"                                > compiler-wrapper
-echo "export C_INCLUDE_PATH=$PREFIX/include"     >> compiler-wrapper
-echo "export CPLUS_INCLUDE_PATH=$PREFIX/include" >> compiler-wrapper
-echo "export CONDA_BUILD_SYSROOT=$CONDA_BUILD_SYSROOT"  >> compiler-wrapper
-echo "export MACOSX_DEPLOYMENT_TARGET=$MACOSX_DEPLOYMENT_TARGET" >> compiler-wrapper
-chmod +x "compiler-wrapper"
-cp compiler-wrapper $CC
-cp compiler-wrapper $CXX
-echo "exec $BUILD_PREFIX/bin/$CC -L$PREFIX/lib  \"\$@\" -Wno-unused-command-line-argument"  >> $CC
-echo "exec $BUILD_PREFIX/bin/$CXX -L$PREFIX/lib \"\$@\" -Wno-unused-command-line-argument"  >> $CXX
+export BAZEL_OPTS=""
 
 if [[ "$target_platform" == "osx-64" ]]; then
     # set up bazel config file for conda provided clang toolchain
@@ -65,7 +51,8 @@ else
     # the following arguments are useful for debugging
     #    --logging=6
     #    --subcommands
-
+    # jobs can be used to limit parallel builds and reduce resource needs
+    #    --jobs=20
     # Set compiler and linker flags as bazel does not account for CFLAGS,
     # CXXFLAGS and LDFLAGS.
     BUILD_OPTS="
@@ -79,7 +66,6 @@ else
     --cxxopt=-fmessage-length=0
     --linkopt=-zrelro
     --linkopt=-znow
-    --linkopt=-lrt
     --verbose_failures
     ${BAZEL_MKL_OPT}
     --config=opt"
@@ -127,4 +113,4 @@ bazel-bin/tensorflow/tools/pip_package/build_pip_package $SRC_DIR/tensorflow_pkg
 pip install --no-deps $SRC_DIR/tensorflow_pkg/*.whl
 
 # The tensorboard package has the proper entrypoint
-rm -f ${PREFIX}/bin/tensorboard
+# rm -f ${PREFIX}/bin/tensorboard
