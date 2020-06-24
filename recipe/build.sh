@@ -19,7 +19,7 @@ export CXX=$(basename $CXX)
 export LIBDIR=$PREFIX/lib
 export INCLUDEDIR=$PREFIX/include
 
-export TF_SYSTEM_LIBS="llvm,zlib,swig,curl,nasm,nsync"
+export TF_SYSTEM_LIBS="llvm,zlib,swig,curl,nsync"
 
 # do not build with MKL support
 export TF_NEED_MKL=0
