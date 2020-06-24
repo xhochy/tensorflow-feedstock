@@ -4,9 +4,11 @@ set -ex
 
 if [[ "$target_platform" == "osx-64" ]]; then
   # install the whl using pip
+  which pip
   pip install --no-deps *.whl
 
   # The tensorboard package has the proper entrypoint
+  ls -l ${PREFIX}/bin/
 #   rm -f ${PREFIX}/bin/tensorboard
 
   exit 0
@@ -17,6 +19,8 @@ export CC=$(basename $CC)
 export CXX=$(basename $CXX)
 export LIBDIR=$PREFIX/lib
 export INCLUDEDIR=$PREFIX/include
+
+export TF_SYSTEM_LIBS="llvm,zlib,swig,curl,nasm,nsync"
 
 # do not build with MKL support
 export TF_NEED_MKL=0
