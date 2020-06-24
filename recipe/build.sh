@@ -4,11 +4,10 @@ set -ex
 
 if [[ "$target_platform" == "osx-64" ]]; then
   # install the whl using pip
-  which pip
   pip install --no-deps *.whl
 
   # The tensorboard package has the proper entrypoint
-  ls -l ${PREFIX}/bin/
+  ls -l ${SP_DIR}
 #   rm -f ${PREFIX}/bin/tensorboard
 
   exit 0
@@ -28,6 +27,8 @@ export BAZEL_MKL_OPT=""
 
 mkdir -p ./bazel_output_base
 export BAZEL_OPTS=""
+which bazel
+bazel version
 
 if [[ "$target_platform" == "osx-64" ]]; then
     # set up bazel config file for conda provided clang toolchain
