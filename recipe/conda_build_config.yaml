@@ -1,8 +1,0 @@
-# Builds fail on linux with gcc 7.x, see
-# https://github.com/tensorflow/tensorflow/issues/25323
-c_compiler_version:    # [unix]
-  - 5.4                # [linux]
-  - 8.0                # [osx]
-cxx_compiler_version:  # [unix]
-  - 5.4                # [linux]
-  - 8.0                # [osx]
