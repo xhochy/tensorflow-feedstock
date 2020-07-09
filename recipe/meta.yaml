@@ -55,7 +55,7 @@ requirements:
     - google-pasta >=0.1.6
     - keras-applications >=1.0.6
     - keras-preprocessing >=1.0.5
-    - llvmdev >=8.0.0,<9.0.0    # [linux]
+    - llvmdev >=9.0.0,<10.0.0    # [linux]
     - zlib                      # [linux]
     - libpng                    # [linux]
     - libcurl                   # [linux]
@@ -203,7 +203,7 @@ outputs:
 
 about:
   home: http://tensorflow.org/
-  license: Apache 2.0
+  license: Apache-2.0
   license_file: LICENSE
   license_family: Apache
   summary: TensorFlow is an open source machine learning framework for everyone.
