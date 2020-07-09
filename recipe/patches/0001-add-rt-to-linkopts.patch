@@ -12,13 +12,12 @@ diff --git a/tensorflow/BUILD b/tensorflow/BUILD
 index 823ad8f..96e12cb 100644
 --- a/tensorflow/BUILD
 +++ b/tensorflow/BUILD
-@@ -429,6 +429,7 @@ tf_cc_shared_object(
+@@ -429,5 +429,6 @@ tf_cc_shared_object(
          "//tensorflow:darwin": [],
          "//tensorflow:windows": [],
          "//conditions:default": [
 +            "-lrt",
-             "-Wl,--version-script",  #  This line must be directly followed by the version_script.lds file
-             "$(location //tensorflow:tf_framework_version_script.lds)",
+             "-Wl,--version-script,$(location //tensorflow:tf_framework_version_script.lds)",
          ],
 diff --git a/tensorflow/tensorflow.bzl b/tensorflow/tensorflow.bzl
 index d93e0df..b8438d2 100644
