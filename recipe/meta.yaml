@@ -25,13 +25,13 @@ source:
   patches:
     #- patches/0001-add-rt-to-linkopts.patch                                     # [linux]
     #- patches/0002-stable-image-rotate-test.patch                               # [linux]
-    - patches/0003-relax-tolerence-in-special_math_test.patch                   # [linux]
-    - patches/0004-skip-read-only-debugger_cli_common-test.patch                # [linux]
+    - patches/0001-relax-tolerence-in-special_math_test.patch                    # [linux]
+    - patches/0002-skip-read-only-debugger_cli_common-test.patch                 # [linux]
     #- patches/0005-fix-lookup_ops-test.patch                                    # [linux]
-    - patches/0006-relax-precision-in-matrix_log_op_test.patch                  # [linux]
+    - patches/0003-relax-precision-in-matrix_log_op_test.patch                   # [linux]
     #- patches/0007-Add-init-symbol-names-prefixed-with-an-underscore.patch      # [osx]
     #- patches/0008-Add-alternate-clock_gettime-implementation-for-macOS.patch   # [osx]
-    - patches/unbundle_llvm.patch                                               # [linux]
+    - patches/0004-Unbundle-LLVM.patch                                           # [linux]
 
 build:
   number: 0
