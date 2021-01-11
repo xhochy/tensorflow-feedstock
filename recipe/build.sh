@@ -76,18 +76,6 @@ else
 	export BUILD_TARGET="//tensorflow/tools/pip_package:build_pip_package //tensorflow:libtensorflow.so //tensorflow:libtensorflow_cc.so"
 fi
 
-# TODO: publish 2.0 branch in bazel-feedstock
-export BAZEL_VERSION=2.0.0
-export EXTRA_BAZEL_ARGS="--host_javabase=@local_jdk//:jdk"
-mkdir bazel_local
-cd bazel_local
-curl -sSOL https://github.com/bazelbuild/bazel/releases/download/${BAZEL_VERSION}/bazel-${BAZEL_VERSION}-dist.zip
-unzip bazel-${BAZEL_VERSION}-dist.zip
-./compile.sh
-cd ..
-export PATH="$PWD/bazel_local/output:$PATH"
-bazel version
-
 # Python settings
 export PYTHON_BIN_PATH=${PYTHON}
 export PYTHON_LIB_PATH=${SP_DIR}

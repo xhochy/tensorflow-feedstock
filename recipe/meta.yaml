@@ -36,7 +36,7 @@ requirements:
   build:
     - {{ compiler('c') }}       # [linux]
     - {{ compiler('cxx') }}     # [linux]
-    #- bazel ==2.0.0   # [linux]
+    - bazel                     # [linux]
     - nasm                      # [linux]
     - swig                      # [linux]
   host:
