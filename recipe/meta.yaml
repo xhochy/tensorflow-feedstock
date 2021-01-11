@@ -51,7 +51,7 @@ requirements:
     - google-pasta >=0.1.6
     - keras-applications >=1.0.6
     - keras-preprocessing >=1.0.5
-    - llvmdev >=9.0.0,<10.0.0    # [linux]
+    - llvmdev >=9.0.0           # [linux]
     - zlib                      # [linux]
     - libpng                    # [linux]
     - libcurl                   # [linux]
@@ -176,7 +176,7 @@ outputs:
         - libcurl  # [linux]
         - zlib  # [linux]
       run:
-        - libprotobuf >=3.6.1,<3.7
+        - libprotobuf >=3.6.1
         - nsync
     test:
       files:
