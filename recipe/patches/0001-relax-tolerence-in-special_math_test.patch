@@ -1,7 +1,7 @@
 From 3ce7b37b14b9d849e1bb283ad599ef128cf98a98 Mon Sep 17 00:00:00 2001
 From: Jonathan Helmus <jjhelmus@gmail.com>
 Date: Tue, 20 Jun 2017 15:13:14 -0500
-Subject: [PATCH 1/4] relax tolerence in special_math_test
+Subject: [PATCH 1/5] relax tolerence in special_math_test
 
 ---
  .../python/kernel_tests/distributions/special_math_test.py      | 2 +-

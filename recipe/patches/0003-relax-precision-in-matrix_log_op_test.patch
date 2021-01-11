@@ -1,7 +1,7 @@
 From 4fd78e4e883b9f40329bee5bc9af7ef2f04c18d0 Mon Sep 17 00:00:00 2001
 From: Jonathan Helmus <jjhelmus@gmail.com>
 Date: Mon, 20 Aug 2018 12:19:04 -0500
-Subject: [PATCH 3/4] relax precision in matrix_log_op_test
+Subject: [PATCH 3/5] relax precision in matrix_log_op_test
 
 ---
  tensorflow/python/kernel_tests/matrix_logarithm_op_test.py | 2 +-

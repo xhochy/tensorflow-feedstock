@@ -27,6 +27,7 @@ source:
     - patches/0002-skip-read-only-debugger_cli_common-test.patch               # [linux]
     - patches/0003-relax-precision-in-matrix_log_op_test.patch                 # [linux]
     - patches/0004-Unbundle-LLVM.patch                                         # [linux]
+    - patches/0005-rerun-generate_llvm_build.py.patch                          # [linux]
 
 build:
   number: 0
