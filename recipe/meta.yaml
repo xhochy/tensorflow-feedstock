@@ -50,12 +50,13 @@ requirements:
     - pip
     #- setuptools <=39.1.0
     # requirements specified by the package itself
-    - absl-py >=0.1.6
+    - absl-py >=0.7.0
     - astor >=0.6.0
     - gast >=0.2.0
+    - google-pasta >=0.1.6
     - keras-applications >=1.0.6
     - keras-preprocessing >=1.0.5
-    - llvmdev >=8.0.0,<9.0.0    # [linux]
+    - llvmdev >=9.0.0,<10.0.0    # [linux]
     - zlib                      # [linux]
     - libpng                    # [linux]
     - libcurl                   # [linux]
@@ -67,6 +68,7 @@ requirements:
     - six >=1.10.0
     - protobuf >=3.6.1
     - termcolor >=1.1.0
+    - wrapt >=1.11.1
     - grpcio >=1.8.6
     - wheel >=0.26              # [linux]
     - tensorflow-estimator >=2.2.0,<2.3.0a0
@@ -95,7 +97,7 @@ outputs:
         - python
         - pip
         # requirements specified by the package itself
-        - absl-py >=0.1.6
+        - absl-py >=0.7.0
         - astor >=0.6.0
         - astunparse
         - gast >=0.2.0
@@ -106,6 +108,7 @@ outputs:
         - six >=1.10.0
         - protobuf >=3.6.1
         - termcolor >=1.1.0
+        - wrapt >=1.11.1
         - grpcio >=1.8.6
         - wheel >=0.26              # [unix]
         - tensorflow-estimator >=2.2.0,<2.3.0a0
@@ -114,7 +117,7 @@ outputs:
         - libcurl  # [linux]
       run:
         - python
-        - absl-py >=0.1.6
+        - absl-py >=0.7.0
         - astor >=0.6.0
         - astunparse
         - gast >=0.2.0
@@ -127,6 +130,7 @@ outputs:
         - six >=1.10.0
         - protobuf >=3.6.1
         - termcolor >=1.1.0
+        - wrapt >=1.11.1
         - grpcio >=1.8.6
         - tensorflow-estimator >=2.2.0,<2.3.0a0
         - tensorboard >=2.2.0,<2.3.0a0
