@@ -171,13 +171,11 @@ outputs:
       build:
         - {{ compiler('c') }}       # [linux]
         - {{ compiler('cxx') }}     # [linux]
+        - rsync                     # [linux]
       # host requirements to pick up run_exports
       host:
         - libcurl                   # [linux]
         - zlib                      # [linux]
-      run:
-        - libprotobuf >=3.6.1
-        - nsync
     test:
       files:
         - test_cc.cc
