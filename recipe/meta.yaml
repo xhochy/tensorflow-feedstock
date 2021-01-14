@@ -23,21 +23,15 @@ requirements:
   build:
     - {{ compiler('c') }}
     - {{ compiler('cxx') }}
-    - bazel =2.0.0
+    # see https://github.com/tensorflow/tensorflow/blob/v{{ version }}/.bazelversion
+    - bazel ==3.1.0
     - nasm
     - swig
   host:
     # conda build requirements
     - python
     - pip
-    #- setuptools <=39.1.0
-    # requirements specified by the package itself
-    - absl-py >=0.7.0
-    - astor >=0.6.0
-    - gast >=0.2.0
-    - google-pasta >=0.1.6
-    - keras-applications >=1.0.6
-    - keras-preprocessing >=1.0.5
+    # TODO: potentially remove these?
     - llvmdev >=9.0.0
     - zlib
     - libpng
@@ -46,14 +40,27 @@ requirements:
     - zip
     - openjdk >=8
     - nsync
-    - numpy >=1.16.1
-    - six >=1.10.0
-    - protobuf >=3.6.1
+    # requirements specified by the package itself, see
+    # github.com/tensorflow/tensorflow/blob/v{{ version }}/tensorflow/tools/pip_package/setup.py
+    - absl-py >=0.10.0
+    - astunparse >=1.6.3
+    - flatbuffers >=1.12.0
+    - google-pasta >=0.2
+    - h5py >=2.10
+    - keras-preprocessing >=1.1.2
+    - numpy >=1.19.2
+    - opt_einsum >=3.3.0
+    - protobuf >=3.9.2
+    - six >=1.15.0
     - termcolor >=1.1.0
+    - typing_extensions >=3.7.4
+    - wheel >=0.35
     - wrapt >=1.11.1
-    - grpcio >=1.8.6
-    - wheel >=0.26
-    - tensorflow-estimator >=2.2.0,<2.3.0a0
+    # upstream wants exact pin for gast
+    - gast ==0.3.3
+    # TF-API needs to move in sync
+    - tensorboard >=2.4.0,<2.5
+    - tensorflow-estimator >=2.4.0,<2.5
   run:
     - {{ pin_subpackage('tensorflow-base', exact=True) }}
 
@@ -79,43 +86,46 @@ outputs:
         - python
         - pip
         # requirements specified by the package itself
-        - absl-py >=0.7.0
-        - astor >=0.6.0
-        - astunparse
-        - gast >=0.2.0
-        - google-pasta
-        - h5py
-        - keras-preprocessing >=1.0.5
-        - numpy >=1.16.1
-        - six >=1.10.0
-        - protobuf >=3.6.1
+        - absl-py >=0.10.0
+        - astunparse >=1.6.3
+        - flatbuffers >=1.12.0
+        - google-pasta >=0.2
+        - h5py >=2.10
+        - keras-preprocessing >=1.1.2
+        - numpy >=1.19.2
+        - opt_einsum >=3.3.0
+        - protobuf >=3.9.2
+        - six >=1.15.0
         - termcolor >=1.1.0
+        - typing_extensions >=3.7.4
+        - wheel >=0.35
         - wrapt >=1.11.1
-        - grpcio >=1.8.6
-        - wheel >=0.26
-        - tensorflow-estimator >=2.2.0,<2.3.0a0
-        - zlib
-        - libpng
-        - libcurl
+        # upstream wants exact pin for gast
+        - gast ==0.3.3
+        # TF-API needs to move in sync
+        - tensorboard >=2.4.0,<2.5
+        - tensorflow-estimator >=2.4.0,<2.5
       run:
         - python
-        - absl-py >=0.7.0
-        - astor >=0.6.0
-        - astunparse
-        - gast >=0.2.0
-        - google-pasta
-        - h5py
-        - opt_einsum
-        - keras-preprocessing >=1.0.5
-        - {{ pin_compatible('numpy') }}
-        - scipy
-        - six >=1.10.0
-        - protobuf >=3.6.1
+        - absl-py >=0.10.0
+        - astunparse >=1.6.3
+        - flatbuffers >=1.12.0
+        - google-pasta >=0.2
+        - h5py >=2.10
+        - keras-preprocessing >=1.1.2
+        - numpy >=1.19.2
+        - opt_einsum >=3.3.0
+        - protobuf >=3.9.2
+        - six >=1.15.0
         - termcolor >=1.1.0
+        - typing_extensions >=3.7.4
+        - wheel >=0.35
         - wrapt >=1.11.1
-        - grpcio >=1.8.6
-        - tensorflow-estimator >=2.2.0,<2.3.0a0
-        - tensorboard >=2.2.0,<2.3.0a0
+        # upstream wants exact pin for gast
+        - gast ==0.3.3
+        # TF-API needs to move in sync
+        - tensorboard >=2.4.0,<2.5
+        - tensorflow-estimator >=2.4.0,<2.5
     test:
       imports:
         - tensorflow
