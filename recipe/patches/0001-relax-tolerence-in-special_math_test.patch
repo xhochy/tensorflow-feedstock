@@ -1,4 +1,4 @@
-From 3ce7b37b14b9d849e1bb283ad599ef128cf98a98 Mon Sep 17 00:00:00 2001
+From 59ddc914ccd9a223c8411dc8a00eab9206971cd6 Mon Sep 17 00:00:00 2001
 From: Jonathan Helmus <jjhelmus@gmail.com>
 Date: Tue, 20 Jun 2017 15:13:14 -0500
 Subject: [PATCH 1/5] relax tolerence in special_math_test

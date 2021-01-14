@@ -1,4 +1,4 @@
-From 1d47b6cf0af5da59d192f0752bc437d9bd8c87bb Mon Sep 17 00:00:00 2001
+From 5d04da7f2b31df87f38bebc5ed806589880e7eed Mon Sep 17 00:00:00 2001
 From: Jonathan Helmus <jjhelmus@gmail.com>
 Date: Thu, 4 Jan 2018 17:17:23 -0600
 Subject: [PATCH 2/5] skip read only debugger_cli_common test
@@ -12,7 +12,7 @@ that depends on the read-only behavior of the log.
  1 file changed, 3 insertions(+), 1 deletion(-)
 
 diff --git a/tensorflow/python/debug/cli/debugger_cli_common_test.py b/tensorflow/python/debug/cli/debugger_cli_common_test.py
-index eb46a0a4062..36b620234fd 100644
+index 93df845c4c5..814ddf13a16 100644
 --- a/tensorflow/python/debug/cli/debugger_cli_common_test.py
 +++ b/tensorflow/python/debug/cli/debugger_cli_common_test.py
 @@ -1057,7 +1057,9 @@ class CommandHistoryTest(test_util.TensorFlowTestCase):

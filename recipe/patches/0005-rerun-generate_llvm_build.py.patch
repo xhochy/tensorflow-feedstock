@@ -1,4 +1,4 @@
-From 76b34b80cd7c05dcddfe798323e1593766f4999f Mon Sep 17 00:00:00 2001
+From ab0bb5c2f810d75c61da91ed61d1278d1f1c2400 Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Mon, 11 Jan 2021 22:49:01 +0100
 Subject: [PATCH 5/5] rerun generate_llvm_build.py
@@ -6,16 +6,16 @@ Subject: [PATCH 5/5] rerun generate_llvm_build.py
 From repository base, run:
 python third_party/systemlibs/generate_llvm_build.py > third_party/systemlibs/llvm.BUILD
 ---
- third_party/systemlibs/llvm.BUILD | 2303 +++++++++++++++++++++++++++++
- 1 file changed, 2303 insertions(+)
+ third_party/systemlibs/llvm.BUILD | 2395 +++++++++++++++++++++++++++++
+ 1 file changed, 2395 insertions(+)
  create mode 100644 third_party/systemlibs/llvm.BUILD
 
 diff --git a/third_party/systemlibs/llvm.BUILD b/third_party/systemlibs/llvm.BUILD
 new file mode 100644
-index 00000000000..0a15904c097
+index 00000000000..f0c5120e908
 --- /dev/null
 +++ b/third_party/systemlibs/llvm.BUILD
-@@ -0,0 +1,2303 @@
+@@ -0,0 +1,2395 @@
 +
 +# Bazel BUILD file for system LLVM
 +#
@@ -81,641 +81,687 @@ index 00000000000..0a15904c097
 +
 +
 +cc_library(
-+    name = "utils_tablegen",
-+    linkopts = ["-lLLVMutils_tablegen"],
++    name = "tblgen",
++    linkopts = ["-lLLVMtblgen"],
 +    visibility = ["//visibility:public"],
 +    deps = [
-+        ":tablegen",
-+    ],
-+)
-+
-+cc_library(
-+    name = "all_targets",
-+    linkopts = ["-lLLVMall_targets"],
-+    visibility = ["//visibility:public"],
-+    deps = [
-+        ":aarch64_code_gen",
-+        ":amdgpu_code_gen",
-+        ":arm_code_gen",
-+        ":nvptx_code_gen",
-+        ":powerpc_code_gen",
-+        ":x86_code_gen",
-+    ],
-+)
-+
-+cc_library(
-+    name = "aarch64_asm_parser",
-+    linkopts = ["-lLLVMAArch64AsmParser"],
-+    visibility = ["//visibility:public"],
-+    deps = [
-+        ":aarch64_desc",
-+        ":aarch64_info",
-+        ":aarch64_utils",
++        ":MC",
++        ":Support",
++        ":TableGen",
 +        ":config",
-+        ":mc",
-+        ":mc_parser",
-+        ":support",
 +    ],
 +)
 +
 +cc_library(
-+    name = "aarch64_code_gen",
-+    linkopts = ["-lLLVMAArch64CodeGen"],
++    name = "FileCheckLib",
++    linkopts = ["-lLLVMFileCheckLib"],
 +    visibility = ["//visibility:public"],
 +    deps = [
-+        ":aarch64_desc",
-+        ":aarch64_info",
-+        ":aarch64_utils",
-+        ":analysis",
-+        ":asm_printer",
-+        ":cf_guard",
-+        ":code_gen",
-+        ":config",
-+        ":core",
-+        ":global_i_sel",
-+        ":mc",
-+        ":scalar",
-+        ":selection_dag",
-+        ":support",
-+        ":target",
-+        ":transform_utils",
++        ":Support",
 +    ],
 +)
 +
 +cc_library(
-+    name = "aarch64_desc",
-+    linkopts = ["-lLLVMAArch64Desc"],
++    name = "AllTargetsCodeGens",
++    linkopts = ["-lLLVMAllTargetsCodeGens"],
 +    visibility = ["//visibility:public"],
 +    deps = [
-+        ":aarch64_info",
-+        ":aarch64_utils",
-+        ":config",
-+        ":mc",
-+        ":object",
-+        ":support",
++        "AArch64CodeGen",
++        "AMDGPUCodeGen",
++        "ARMCodeGen",
++        "NVPTXCodeGen",
++        "PowerPCCodeGen",
++        "SystemZCodeGen",
++        "X86CodeGen",
 +    ],
 +)
 +
 +cc_library(
-+    name = "aarch64_disassembler",
-+    linkopts = ["-lLLVMAArch64Disassembler"],
-+    visibility = ["//visibility:public"],
-+    deps = [
-+        ":aarch64_desc",
-+        ":aarch64_info",
-+        ":aarch64_utils",
-+        ":config",
-+        ":mc",
-+        ":mc_disassembler",
-+        ":support",
-+    ],
-+)
-+
-+cc_library(
-+    name = "aarch64_info",
-+    linkopts = ["-lLLVMAArch64Info"],
-+    visibility = ["//visibility:public"],
-+    deps = [
-+        ":code_gen",
-+        ":config",
-+        ":support",
-+        ":target",
-+    ],
-+)
-+
-+cc_library(
-+    name = "aarch64_utils",
-+    linkopts = ["-lLLVMAArch64Utils"],
-+    visibility = ["//visibility:public"],
-+    deps = [
-+        ":config",
-+        ":mc",
-+        ":support",
-+    ],
-+)
-+
-+cc_library(
-+    name = "amdgpu_asm_parser",
-+    linkopts = ["-lLLVMAMDGPUAsmParser"],
-+    visibility = ["//visibility:public"],
-+    deps = [
-+        ":amdgpu_desc",
-+        ":amdgpu_info",
-+        ":amdgpu_utils",
-+        ":config",
-+        ":mc",
-+        ":mc_parser",
-+        ":support",
-+    ],
-+)
-+
-+cc_library(
-+    name = "amdgpu_code_gen",
-+    linkopts = ["-lLLVMAMDGPUCodeGen"],
-+    visibility = ["//visibility:public"],
-+    deps = [
-+        ":amdgpu_desc",
-+        ":amdgpu_info",
-+        ":amdgpu_utils",
-+        ":analysis",
-+        ":asm_printer",
-+        ":binary_format",
-+        ":code_gen",
-+        ":config",
-+        ":core",
-+        ":global_i_sel",
-+        ":ipo",
-+        ":mc",
-+        ":mir_parser",
-+        ":scalar",
-+        ":selection_dag",
-+        ":support",
-+        ":target",
-+        ":transform_utils",
-+        ":vectorize",
-+    ],
-+)
-+
-+cc_library(
-+    name = "amdgpu_desc",
-+    linkopts = ["-lLLVMAMDGPUDesc"],
-+    visibility = ["//visibility:public"],
-+    deps = [
-+        ":amdgpu_info",
-+        ":amdgpu_utils",
-+        ":binary_format",
-+        ":config",
-+        ":core",
-+        ":mc",
-+        ":support",
-+    ],
-+)
-+
-+cc_library(
-+    name = "amdgpu_disassembler",
-+    linkopts = ["-lLLVMAMDGPUDisassembler"],
-+    visibility = ["//visibility:public"],
-+    deps = [
-+        ":amdgpu_desc",
-+        ":amdgpu_info",
-+        ":amdgpu_utils",
-+        ":config",
-+        ":mc",
-+        ":mc_disassembler",
-+        ":support",
-+    ],
-+)
-+
-+cc_library(
-+    name = "amdgpu_info",
-+    linkopts = ["-lLLVMAMDGPUInfo"],
-+    visibility = ["//visibility:public"],
-+    deps = [
-+        ":amdgpu_r600_target_gen",
-+        ":amdgpu_target_gen",
-+        ":config",
-+        ":core",
-+        ":support",
-+    ],
-+)
-+
-+cc_library(
-+    name = "amdgpu_utils",
-+    linkopts = ["-lLLVMAMDGPUUtils"],
-+    visibility = ["//visibility:public"],
-+    deps = [
-+        ":amdgpu_r600_target_gen",
-+        ":amdgpu_target_gen",
-+        ":binary_format",
-+        ":config",
-+        ":core",
-+        ":mc",
-+        ":support",
-+    ],
-+)
-+
-+cc_library(
-+    name = "arc_code_gen",
-+    linkopts = ["-lLLVMSparcCodeGen"],
-+    visibility = ["//visibility:public"],
-+    deps = [
-+        ":analysis",
-+        ":arc_desc",
-+        ":arc_info",
-+        ":asm_printer",
-+        ":code_gen",
-+        ":config",
-+        ":core",
-+        ":mc",
-+        ":selection_dag",
-+        ":support",
-+        ":target",
-+        ":transform_utils",
-+    ],
-+)
-+
-+cc_library(
-+    name = "arc_desc",
-+    linkopts = ["-lLLVMSparcDesc"],
-+    visibility = ["//visibility:public"],
-+    deps = [
-+        ":arc_info",
-+        ":config",
-+        ":mc",
-+        ":support",
-+    ],
-+)
-+
-+cc_library(
-+    name = "arc_disassembler",
-+    linkopts = ["-lLLVMSparcDisassembler"],
-+    visibility = ["//visibility:public"],
-+    deps = [
-+        ":arc_info",
-+        ":config",
-+        ":mc_disassembler",
-+        ":support",
-+    ],
-+)
-+
-+cc_library(
-+    name = "arc_info",
-+    linkopts = ["-lLLVMSparcInfo"],
-+    visibility = ["//visibility:public"],
-+    deps = [
-+        ":config",
-+        ":support",
-+    ],
-+)
-+
-+cc_library(
-+    name = "arm_asm_parser",
-+    linkopts = ["-lLLVMARMAsmParser"],
-+    visibility = ["//visibility:public"],
-+    deps = [
-+        ":arm_desc",
-+        ":arm_info",
-+        ":arm_utils",
-+        ":config",
-+        ":mc",
-+        ":mc_parser",
-+        ":support",
-+    ],
-+)
-+
-+cc_library(
-+    name = "arm_code_gen",
-+    linkopts = ["-lLLVMARMCodeGen"],
-+    visibility = ["//visibility:public"],
-+    deps = [
-+        ":analysis",
-+        ":arm_desc",
-+        ":arm_info",
-+        ":arm_utils",
-+        ":asm_printer",
-+        ":cf_guard",
-+        ":code_gen",
-+        ":config",
-+        ":core",
-+        ":global_i_sel",
-+        ":mc",
-+        ":scalar",
-+        ":selection_dag",
-+        ":support",
-+        ":target",
-+        ":transform_utils",
-+    ],
-+)
-+
-+cc_library(
-+    name = "arm_desc",
-+    linkopts = ["-lLLVMARMDesc"],
-+    visibility = ["//visibility:public"],
-+    deps = [
-+        ":arm_info",
-+        ":arm_utils",
-+        ":config",
-+        ":mc",
-+        ":mc_disassembler",
-+        ":object",
-+        ":support",
-+    ],
-+)
-+
-+cc_library(
-+    name = "arm_disassembler",
-+    linkopts = ["-lLLVMARMDisassembler"],
-+    visibility = ["//visibility:public"],
-+    deps = [
-+        ":arm_desc",
-+        ":arm_info",
-+        ":arm_utils",
-+        ":config",
-+        ":mc_disassembler",
-+        ":support",
-+    ],
-+)
-+
-+cc_library(
-+    name = "arm_info",
-+    linkopts = ["-lLLVMARMInfo"],
-+    visibility = ["//visibility:public"],
-+    deps = [
-+        ":config",
-+        ":support",
-+        ":target",
-+    ],
-+)
-+
-+cc_library(
-+    name = "arm_utils",
-+    linkopts = ["-lLLVMARMUtils"],
-+    visibility = ["//visibility:public"],
-+    deps = [
-+        ":config",
-+        ":mc",
-+        ":support",
-+    ],
-+)
-+
-+cc_library(
-+    name = "avr_asm_parser",
-+    linkopts = ["-lLLVMavr_asm_parser"],
-+    visibility = ["//visibility:public"],
-+    deps = [
-+        ":avr_desc",
-+        ":avr_info",
-+        ":config",
-+        ":mc",
-+        ":mc_parser",
-+        ":support",
-+    ],
-+)
-+
-+cc_library(
-+    name = "avr_code_gen",
-+    linkopts = ["-lLLVMavr_code_gen"],
-+    visibility = ["//visibility:public"],
-+    deps = [
-+        ":asm_printer",
-+        ":avr_desc",
-+        ":avr_info",
-+        ":code_gen",
-+        ":config",
-+        ":core",
-+        ":mc",
-+        ":selection_dag",
-+        ":support",
-+        ":target",
-+    ],
-+)
-+
-+cc_library(
-+    name = "avr_desc",
-+    linkopts = ["-lLLVMavr_desc"],
-+    visibility = ["//visibility:public"],
-+    deps = [
-+        ":avr_info",
-+        ":config",
-+        ":mc",
-+        ":support",
-+    ],
-+)
-+
-+cc_library(
-+    name = "avr_disassembler",
-+    linkopts = ["-lLLVMavr_disassembler"],
-+    visibility = ["//visibility:public"],
-+    deps = [
-+        ":avr_info",
-+        ":config",
-+        ":mc_disassembler",
-+        ":support",
-+    ],
-+)
-+
-+cc_library(
-+    name = "avr_info",
-+    linkopts = ["-lLLVMavr_info"],
-+    visibility = ["//visibility:public"],
-+    deps = [
-+        ":config",
-+        ":support",
-+    ],
-+)
-+
-+cc_library(
-+    name = "aggressive_inst_combine",
-+    linkopts = ["-lLLVMAggressiveInstCombine"],
-+    visibility = ["//visibility:public"],
-+    deps = [
-+        ":analysis",
-+        ":config",
-+        ":core",
-+        ":support",
-+        ":transform_utils",
-+    ],
-+)
-+
-+cc_library(
-+    name = "analysis",
++    name = "Analysis",
 +    linkopts = ["-lLLVMAnalysis"],
 +    visibility = ["//visibility:public"],
 +    deps = [
-+        ":binary_format",
++        ":BinaryFormat",
++        ":Core",
++        ":Object",
++        ":ProfileData",
++        ":Support",
 +        ":config",
-+        ":core",
-+        ":object",
-+        ":profile_data",
-+        ":support",
 +    ],
 +)
 +
 +cc_library(
-+    name = "asm_parser",
++    name = "AArch64AsmParser",
++    linkopts = ["-lLLVMAArch64AsmParser"],
++    visibility = ["//visibility:public"],
++    deps = [
++        ":AArch64Desc",
++        ":AArch64Info",
++        ":AArch64Utils",
++        ":MC",
++        ":MCParser",
++        ":Support",
++        ":config",
++    ],
++)
++
++cc_library(
++    name = "AArch64CodeGen",
++    linkopts = ["-lLLVMAArch64CodeGen"],
++    visibility = ["//visibility:public"],
++    deps = [
++        ":AArch64Desc",
++        ":AArch64Info",
++        ":AArch64Utils",
++        ":Analysis",
++        ":AsmPrinter",
++        ":CFGuard",
++        ":CodeGen",
++        ":Core",
++        ":GlobalISel",
++        ":MC",
++        ":Scalar",
++        ":SelectionDAG",
++        ":Support",
++        ":Target",
++        ":TransformUtils",
++        ":config",
++    ],
++)
++
++cc_library(
++    name = "AArch64Desc",
++    linkopts = ["-lLLVMAArch64Desc"],
++    visibility = ["//visibility:public"],
++    deps = [
++        ":AArch64CommonTableGen",
++        ":AArch64Info",
++        ":AArch64Utils",
++        ":BinaryFormat",
++        ":MC",
++        ":Support",
++        ":config",
++    ],
++)
++
++cc_library(
++    name = "AArch64Disassembler",
++    linkopts = ["-lLLVMAArch64Disassembler"],
++    visibility = ["//visibility:public"],
++    deps = [
++        ":AArch64Desc",
++        ":AArch64Info",
++        ":AArch64Utils",
++        ":MC",
++        ":MCDisassembler",
++        ":Support",
++        ":config",
++    ],
++)
++
++cc_library(
++    name = "AArch64Info",
++    linkopts = ["-lLLVMAArch64Info"],
++    visibility = ["//visibility:public"],
++    deps = [
++        ":CodeGen",
++        ":Support",
++        ":Target",
++        ":config",
++    ],
++)
++
++cc_library(
++    name = "AArch64Utils",
++    linkopts = ["-lLLVMAArch64Utils"],
++    visibility = ["//visibility:public"],
++    deps = [
++        ":AArch64CommonTableGen",
++        ":MC",
++        ":Support",
++        ":config",
++    ],
++)
++
++cc_library(
++    name = "AMDGPUAsmParser",
++    linkopts = ["-lLLVMAMDGPUAsmParser"],
++    visibility = ["//visibility:public"],
++    deps = [
++        ":AMDGPUDesc",
++        ":AMDGPUInfo",
++        ":AMDGPUUtils",
++        ":MC",
++        ":MCParser",
++        ":Support",
++        ":config",
++    ],
++)
++
++cc_library(
++    name = "AMDGPUCodeGen",
++    linkopts = ["-lLLVMAMDGPUCodeGen"],
++    visibility = ["//visibility:public"],
++    deps = [
++        ":AMDGPUDesc",
++        ":AMDGPUInfo",
++        ":AMDGPUUtils",
++        ":Analysis",
++        ":AsmPrinter",
++        ":BinaryFormat",
++        ":CodeGen",
++        ":Core",
++        ":GlobalISel",
++        ":IPO",
++        ":MC",
++        ":MIRParser",
++        ":Scalar",
++        ":SelectionDAG",
++        ":Support",
++        ":Target",
++        ":TransformUtils",
++        ":Vectorize",
++        ":config",
++    ],
++)
++
++cc_library(
++    name = "AMDGPUDesc",
++    linkopts = ["-lLLVMAMDGPUDesc"],
++    visibility = ["//visibility:public"],
++    deps = [
++        ":AMDGPUInfo",
++        ":AMDGPUUtils",
++        ":BinaryFormat",
++        ":Core",
++        ":MC",
++        ":Support",
++        ":config",
++    ],
++)
++
++cc_library(
++    name = "AMDGPUDisassembler",
++    linkopts = ["-lLLVMAMDGPUDisassembler"],
++    visibility = ["//visibility:public"],
++    deps = [
++        ":AMDGPUDesc",
++        ":AMDGPUInfo",
++        ":AMDGPUUtils",
++        ":MC",
++        ":MCDisassembler",
++        ":Support",
++        ":config",
++    ],
++)
++
++cc_library(
++    name = "AMDGPUInfo",
++    linkopts = ["-lLLVMAMDGPUInfo"],
++    visibility = ["//visibility:public"],
++    deps = [
++        ":AMDGPUCommonTableGen",
++        ":Core",
++        ":Support",
++        ":config",
++        ":r600_target_gen",
++    ],
++)
++
++cc_library(
++    name = "AMDGPUUtils",
++    linkopts = ["-lLLVMAMDGPUUtils"],
++    visibility = ["//visibility:public"],
++    deps = [
++        ":AMDGPUCommonTableGen",
++        ":BinaryFormat",
++        ":Core",
++        ":MC",
++        ":Support",
++        ":config",
++        ":r600_target_gen",
++    ],
++)
++
++cc_library(
++    name = "ARCCodeGen",
++    linkopts = ["-lLLVMARCCodeGen"],
++    visibility = ["//visibility:public"],
++    deps = [
++        ":ARCDesc",
++        ":ARCInfo",
++        ":Analysis",
++        ":AsmPrinter",
++        ":CodeGen",
++        ":Core",
++        ":MC",
++        ":SelectionDAG",
++        ":Support",
++        ":Target",
++        ":TransformUtils",
++        ":config",
++    ],
++)
++
++cc_library(
++    name = "ARCDesc",
++    linkopts = ["-lLLVMARCDesc"],
++    visibility = ["//visibility:public"],
++    deps = [
++        ":ARCInfo",
++        ":MC",
++        ":Support",
++        ":config",
++    ],
++)
++
++cc_library(
++    name = "ARCDisassembler",
++    linkopts = ["-lLLVMARCDisassembler"],
++    visibility = ["//visibility:public"],
++    deps = [
++        ":ARCInfo",
++        ":MCDisassembler",
++        ":Support",
++        ":config",
++    ],
++)
++
++cc_library(
++    name = "ARCInfo",
++    linkopts = ["-lLLVMARCInfo"],
++    visibility = ["//visibility:public"],
++    deps = [
++        ":Support",
++        ":config",
++    ],
++)
++
++cc_library(
++    name = "ARMAsmParser",
++    linkopts = ["-lLLVMARMAsmParser"],
++    visibility = ["//visibility:public"],
++    deps = [
++        ":ARMDesc",
++        ":ARMInfo",
++        ":ARMUtils",
++        ":MC",
++        ":MCParser",
++        ":Support",
++        ":config",
++    ],
++)
++
++cc_library(
++    name = "ARMCodeGen",
++    linkopts = ["-lLLVMARMCodeGen"],
++    visibility = ["//visibility:public"],
++    deps = [
++        ":ARMDesc",
++        ":ARMInfo",
++        ":ARMUtils",
++        ":Analysis",
++        ":AsmPrinter",
++        ":CFGuard",
++        ":CodeGen",
++        ":Core",
++        ":GlobalISel",
++        ":MC",
++        ":Scalar",
++        ":SelectionDAG",
++        ":Support",
++        ":Target",
++        ":TransformUtils",
++        ":config",
++    ],
++)
++
++cc_library(
++    name = "ARMDesc",
++    linkopts = ["-lLLVMARMDesc"],
++    visibility = ["//visibility:public"],
++    deps = [
++        ":ARMCommonTableGen",
++        ":ARMInfo",
++        ":ARMUtils",
++        ":BinaryFormat",
++        ":MC",
++        ":MCDisassembler",
++        ":Support",
++        ":config",
++    ],
++)
++
++cc_library(
++    name = "ARMDisassembler",
++    linkopts = ["-lLLVMARMDisassembler"],
++    visibility = ["//visibility:public"],
++    deps = [
++        ":ARMDesc",
++        ":ARMInfo",
++        ":ARMUtils",
++        ":MCDisassembler",
++        ":Support",
++        ":config",
++    ],
++)
++
++cc_library(
++    name = "ARMInfo",
++    linkopts = ["-lLLVMARMInfo"],
++    visibility = ["//visibility:public"],
++    deps = [
++        ":ARMCommonTableGen",
++        ":Support",
++        ":Target",
++        ":config",
++    ],
++)
++
++cc_library(
++    name = "ARMUtils",
++    linkopts = ["-lLLVMARMUtils"],
++    visibility = ["//visibility:public"],
++    deps = [
++        ":ARMCommonTableGen",
++        ":MC",
++        ":Support",
++        ":config",
++    ],
++)
++
++cc_library(
++    name = "AVRAsmParser",
++    linkopts = ["-lLLVMAVRAsmParser"],
++    visibility = ["//visibility:public"],
++    deps = [
++        ":AVRDesc",
++        ":AVRInfo",
++        ":MC",
++        ":MCParser",
++        ":Support",
++        ":config",
++    ],
++)
++
++cc_library(
++    name = "AVRCodeGen",
++    linkopts = ["-lLLVMAVRCodeGen"],
++    visibility = ["//visibility:public"],
++    deps = [
++        ":AVRDesc",
++        ":AVRInfo",
++        ":AsmPrinter",
++        ":CodeGen",
++        ":Core",
++        ":MC",
++        ":SelectionDAG",
++        ":Support",
++        ":Target",
++        ":config",
++    ],
++)
++
++cc_library(
++    name = "AVRDesc",
++    linkopts = ["-lLLVMAVRDesc"],
++    visibility = ["//visibility:public"],
++    deps = [
++        ":AVRInfo",
++        ":MC",
++        ":Support",
++        ":config",
++    ],
++)
++
++cc_library(
++    name = "AVRDisassembler",
++    linkopts = ["-lLLVMAVRDisassembler"],
++    visibility = ["//visibility:public"],
++    deps = [
++        ":AVRInfo",
++        ":MCDisassembler",
++        ":Support",
++        ":config",
++    ],
++)
++
++cc_library(
++    name = "AVRInfo",
++    linkopts = ["-lLLVMAVRInfo"],
++    visibility = ["//visibility:public"],
++    deps = [
++        ":Support",
++        ":config",
++    ],
++)
++
++cc_library(
++    name = "AggressiveInstCombine",
++    linkopts = ["-lLLVMAggressiveInstCombine"],
++    visibility = ["//visibility:public"],
++    deps = [
++        ":Analysis",
++        ":Core",
++        ":Support",
++        ":TransformUtils",
++        ":config",
++    ],
++)
++
++cc_library(
++    name = "AsmParser",
 +    linkopts = ["-lLLVMAsmParser"],
 +    visibility = ["//visibility:public"],
 +    deps = [
-+        ":binary_format",
++        ":BinaryFormat",
++        ":Core",
++        ":Support",
 +        ":config",
-+        ":core",
-+        ":support",
 +    ],
 +)
 +
 +cc_library(
-+    name = "asm_printer",
++    name = "AsmPrinter",
 +    linkopts = ["-lLLVMAsmPrinter"],
 +    visibility = ["//visibility:public"],
 +    deps = [
-+        ":analysis",
-+        ":binary_format",
-+        ":code_gen",
++        ":Analysis",
++        ":BinaryFormat",
++        ":CodeGen",
++        ":Core",
++        ":DebugInfoCodeView",
++        ":DebugInfoDWARF",
++        ":DebugInfoMSF",
++        ":MC",
++        ":MCParser",
++        ":Remarks",
++        ":Support",
++        ":Target",
 +        ":config",
-+        ":core",
-+        ":debug_info_code_view",
-+        ":debug_info_dwarf",
-+        ":debug_info_msf",
-+        ":mc",
-+        ":mc_parser",
-+        ":remarks",
-+        ":support",
-+        ":target",
 +    ],
 +)
 +
 +cc_library(
-+    name = "bpf_asm_parser",
++    name = "BPFAsmParser",
 +    linkopts = ["-lLLVMBPFAsmParser"],
 +    visibility = ["//visibility:public"],
 +    deps = [
-+        ":bpf_desc",
-+        ":bpf_info",
++        ":BPFDesc",
++        ":BPFInfo",
++        ":MC",
++        ":MCParser",
++        ":Support",
 +        ":config",
-+        ":mc",
-+        ":mc_parser",
-+        ":support",
 +    ],
 +)
 +
 +cc_library(
-+    name = "bpf_code_gen",
++    name = "BPFCodeGen",
 +    linkopts = ["-lLLVMBPFCodeGen"],
 +    visibility = ["//visibility:public"],
 +    deps = [
-+        ":asm_printer",
-+        ":bpf_desc",
-+        ":bpf_info",
-+        ":code_gen",
++        ":AsmPrinter",
++        ":BPFDesc",
++        ":BPFInfo",
++        ":CodeGen",
++        ":Core",
++        ":IPO",
++        ":MC",
++        ":Scalar",
++        ":SelectionDAG",
++        ":Support",
++        ":Target",
 +        ":config",
-+        ":core",
-+        ":mc",
-+        ":selection_dag",
-+        ":support",
-+        ":target",
 +    ],
 +)
 +
 +cc_library(
-+    name = "bpf_desc",
++    name = "BPFDesc",
 +    linkopts = ["-lLLVMBPFDesc"],
 +    visibility = ["//visibility:public"],
 +    deps = [
-+        ":bpf_info",
++        ":BPFInfo",
++        ":MC",
++        ":Support",
 +        ":config",
-+        ":mc",
-+        ":support",
 +    ],
 +)
 +
 +cc_library(
-+    name = "bpf_disassembler",
++    name = "BPFDisassembler",
 +    linkopts = ["-lLLVMBPFDisassembler"],
 +    visibility = ["//visibility:public"],
 +    deps = [
-+        ":bpf_info",
++        ":BPFInfo",
++        ":MCDisassembler",
++        ":Support",
 +        ":config",
-+        ":mc_disassembler",
-+        ":support",
 +    ],
 +)
 +
 +cc_library(
-+    name = "bpf_info",
++    name = "BPFInfo",
 +    linkopts = ["-lLLVMBPFInfo"],
 +    visibility = ["//visibility:public"],
 +    deps = [
++        ":Support",
 +        ":config",
-+        ":support",
 +    ],
 +)
 +
 +cc_library(
-+    name = "binary_format",
++    name = "BinaryFormat",
 +    linkopts = ["-lLLVMBinaryFormat"],
 +    visibility = ["//visibility:public"],
 +    deps = [
++        ":Support",
 +        ":config",
-+        ":support",
 +    ],
 +)
 +
 +cc_library(
-+    name = "bit_reader",
++    name = "BitReader",
 +    linkopts = ["-lLLVMBitReader"],
 +    visibility = ["//visibility:public"],
 +    deps = [
-+        ":bitstream_reader",
++        ":BitstreamReader",
++        ":Core",
++        ":Support",
 +        ":config",
-+        ":core",
-+        ":support",
 +    ],
 +)
 +
 +cc_library(
-+    name = "bit_writer",
++    name = "BitWriter",
 +    linkopts = ["-lLLVMBitWriter"],
 +    visibility = ["//visibility:public"],
 +    deps = [
-+        ":analysis",
++        ":Analysis",
++        ":Core",
++        ":MC",
++        ":Object",
++        ":Support",
 +        ":config",
-+        ":core",
-+        ":mc",
-+        ":object",
-+        ":support",
 +    ],
 +)
 +
 +cc_library(
-+    name = "bitstream_reader",
++    name = "BitstreamReader",
 +    linkopts = ["-lLLVMBitstreamReader"],
 +    visibility = ["//visibility:public"],
 +    deps = [
++        ":Support",
 +        ":config",
-+        ":support",
 +    ],
 +)
 +
 +cc_library(
-+    name = "cf_guard",
-+    linkopts = ["-lLLVMcf_guard"],
++    name = "CFGuard",
++    linkopts = ["-lLLVMCFGuard"],
 +    visibility = ["//visibility:public"],
 +    deps = [
++        ":Core",
++        ":Support",
 +        ":config",
-+        ":core",
-+        ":support",
 +    ],
 +)
 +
 +cc_library(
-+    name = "code_gen",
++    name = "CSKYCodeGen",
++    linkopts = ["-lLLVMCSKYCodeGen"],
++    visibility = ["//visibility:public"],
++    deps = [
++        ":CSKYInfo",
++        ":CodeGen",
++        ":Core",
++        ":Support",
++        ":Target",
++        ":config",
++    ],
++)
++
++cc_library(
++    name = "CSKYInfo",
++    linkopts = ["-lLLVMCSKYInfo"],
++    visibility = ["//visibility:public"],
++    deps = [
++        ":Support",
++        ":config",
++    ],
++)
++
++cc_library(
++    name = "CodeGen",
 +    linkopts = ["-lLLVMCodeGen"],
 +    visibility = ["//visibility:public"],
 +    deps = [
-+        ":analysis",
-+        ":bit_reader",
-+        ":bit_writer",
++        ":Analysis",
++        ":BitReader",
++        ":BitWriter",
++        ":Core",
++        ":Instrumentation",
++        ":MC",
++        ":ProfileData",
++        ":Scalar",
++        ":Support",
++        ":Target",
++        ":TransformUtils",
 +        ":config",
-+        ":core",
-+        ":instrumentation",
-+        ":mc",
-+        ":profile_data",
-+        ":scalar",
-+        ":support",
-+        ":target",
-+        ":transform_utils",
 +    ],
 +)
 +
 +cc_library(
-+    name = "core",
++    name = "Core",
 +    linkopts = ["-lLLVMCore"],
 +    visibility = ["//visibility:public"],
 +    deps = [
++        ":BinaryFormat",
++        ":Remarks",
++        ":Support",
 +        ":aarch64_enums_gen",
 +        ":amdgcn_enums_gen",
 +        ":arm_enums_gen",
-+        ":binary_format",
 +        ":bpf_enums_gen",
 +        ":config",
 +        ":hexagon_enums_gen",
@@ -723,10 +769,8 @@ index 00000000000..0a15904c097
 +        ":nvvm_enums_gen",
 +        ":ppc_enums_gen",
 +        ":r600_enums_gen",
-+        ":remarks",
 +        ":riscv_enums_gen",
 +        ":s390_enums_gen",
-+        ":support",
 +        ":wasm_enums_gen",
 +        ":x86_enums_gen",
 +        ":xcore_enums_gen",
@@ -734,110 +778,112 @@ index 00000000000..0a15904c097
 +)
 +
 +cc_library(
-+    name = "coroutines",
++    name = "Coroutines",
 +    linkopts = ["-lLLVMCoroutines"],
 +    visibility = ["//visibility:public"],
 +    deps = [
-+        ":analysis",
++        ":Analysis",
++        ":Core",
++        ":IPO",
++        ":Scalar",
++        ":Support",
++        ":TransformUtils",
 +        ":config",
-+        ":core",
-+        ":ipo",
-+        ":scalar",
-+        ":support",
-+        ":transform_utils",
 +    ],
 +)
 +
 +cc_library(
-+    name = "coverage",
++    name = "Coverage",
 +    linkopts = ["-lLLVMCoverage"],
 +    visibility = ["//visibility:public"],
 +    deps = [
++        ":Core",
++        ":Object",
++        ":ProfileData",
++        ":Support",
 +        ":config",
-+        ":core",
-+        ":object",
-+        ":profile_data",
-+        ":support",
 +    ],
 +)
 +
 +cc_library(
-+    name = "dwarf_linker",
-+    linkopts = ["-lLLVMdwarf_linker"],
++    name = "DWARFLinker",
++    linkopts = ["-lLLVMDWARFLinker"],
 +    visibility = ["//visibility:public"],
 +    deps = [
-+        ":asm_printer",
-+        ":code_gen",
++        ":AsmPrinter",
++        ":CodeGen",
++        ":DebugInfoDWARF",
++        ":MC",
++        ":Object",
++        ":Support",
 +        ":config",
-+        ":debug_info_dwarf",
-+        ":mc",
-+        ":object",
-+        ":support",
 +    ],
 +)
 +
 +cc_library(
-+    name = "debug_info_code_view",
++    name = "DebugInfoCodeView",
 +    linkopts = ["-lLLVMDebugInfoCodeView"],
 +    visibility = ["//visibility:public"],
 +    deps = [
-+        ":binary_format",
++        ":BinaryFormat",
++        ":DebugInfoMSF",
++        ":Support",
 +        ":config",
-+        ":debug_info_msf",
-+        ":support",
 +    ],
 +)
 +
 +cc_library(
-+    name = "debug_info_dwarf",
++    name = "DebugInfoDWARF",
 +    linkopts = ["-lLLVMDebugInfoDWARF"],
 +    visibility = ["//visibility:public"],
 +    deps = [
-+        ":binary_format",
++        ":BinaryFormat",
++        ":MC",
++        ":Object",
++        ":Support",
 +        ":config",
-+        ":mc",
-+        ":object",
-+        ":support",
 +    ],
 +)
 +
 +cc_library(
-+    name = "debug_info_gsym",
++    name = "DebugInfoGSYM",
 +    linkopts = ["-lLLVMDebugInfoGSYM"],
 +    visibility = ["//visibility:public"],
 +    deps = [
++        ":DebugInfoDWARF",
++        ":MC",
++        ":Object",
++        ":Support",
 +        ":config",
-+        ":debug_info_dwarf",
-+        ":mc",
-+        ":support",
 +    ],
 +)
 +
 +cc_library(
-+    name = "debug_info_msf",
++    name = "DebugInfoMSF",
 +    linkopts = ["-lLLVMDebugInfoMSF"],
 +    visibility = ["//visibility:public"],
 +    deps = [
++        ":Support",
 +        ":config",
-+        ":support",
 +    ],
 +)
 +
 +cc_library(
-+    name = "debug_info_pdb",
++    name = "DebugInfoPDB",
 +    linkopts = ["-lLLVMDebugInfoPDB"],
 +    visibility = ["//visibility:public"],
 +    deps = [
++        ":BinaryFormat",
++        ":DebugInfoCodeView",
++        ":DebugInfoMSF",
++        ":Object",
++        ":Support",
 +        ":config",
-+        ":debug_info_code_view",
-+        ":debug_info_msf",
-+        ":object",
-+        ":support",
 +    ],
 +)
 +
 +cc_library(
-+    name = "demangle",
++    name = "Demangle",
 +    linkopts = ["-lLLVMDemangle"],
 +    visibility = ["//visibility:public"],
 +    deps = [
@@ -846,1477 +892,1523 @@ index 00000000000..0a15904c097
 +)
 +
 +cc_library(
-+    name = "dlltool_driver",
++    name = "DlltoolDriver",
 +    linkopts = ["-lLLVMDlltoolDriver"],
 +    visibility = ["//visibility:public"],
 +    deps = [
++        ":Object",
++        ":Option",
++        ":Support",
 +        ":config",
-+        ":object",
-+        ":option",
-+        ":support",
 +    ],
 +)
 +
 +cc_library(
-+    name = "execution_engine",
++    name = "ExecutionEngine",
 +    linkopts = ["-lLLVMExecutionEngine"],
 +    visibility = ["//visibility:public"],
 +    deps = [
++        ":Core",
++        ":MC",
++        ":Object",
++        ":RuntimeDyld",
++        ":Support",
++        ":Target",
 +        ":config",
-+        ":core",
-+        ":mc",
-+        ":object",
-+        ":runtime_dyld",
-+        ":support",
-+        ":target",
 +    ],
 +)
 +
 +cc_library(
-+    name = "frontend_open_mp",
-+    linkopts = ["-lLLVMfrontend_open_mp"],
++    name = "Extensions",
++    linkopts = ["-lLLVMExtensions"],
 +    visibility = ["//visibility:public"],
 +    deps = [
++        ":Support",
 +        ":config",
-+        ":core",
-+        ":support",
-+        ":transform_utils",
 +    ],
 +)
 +
 +cc_library(
-+    name = "fuzz_mutate",
++    name = "FrontendOpenMP",
++    linkopts = ["-lLLVMFrontendOpenMP"],
++    visibility = ["//visibility:public"],
++    deps = [
++        ":Core",
++        ":Support",
++        ":TransformUtils",
++        ":config",
++        ":omp_gen",
++        ":omp_gen_impl",
++    ],
++)
++
++cc_library(
++    name = "FuzzMutate",
 +    linkopts = ["-lLLVMFuzzMutate"],
 +    visibility = ["//visibility:public"],
 +    deps = [
-+        ":analysis",
-+        ":bit_reader",
-+        ":bit_writer",
++        ":Analysis",
++        ":BitReader",
++        ":BitWriter",
++        ":Core",
++        ":Scalar",
++        ":Support",
++        ":Target",
 +        ":config",
-+        ":core",
-+        ":scalar",
-+        ":support",
-+        ":target",
 +    ],
 +)
 +
 +cc_library(
-+    name = "global_i_sel",
++    name = "GlobalISel",
 +    linkopts = ["-lLLVMGlobalISel"],
 +    visibility = ["//visibility:public"],
 +    deps = [
-+        ":analysis",
-+        ":code_gen",
++        ":Analysis",
++        ":CodeGen",
++        ":Core",
++        ":MC",
++        ":SelectionDAG",
++        ":Support",
++        ":Target",
++        ":TransformUtils",
 +        ":config",
-+        ":core",
-+        ":mc",
-+        ":selection_dag",
-+        ":support",
-+        ":target",
-+        ":transform_utils",
 +    ],
 +)
 +
 +cc_library(
-+    name = "hexagon_asm_parser",
++    name = "HelloNew",
++    linkopts = ["-lLLVMHelloNew"],
++    visibility = ["//visibility:public"],
++    deps = [
++        ":Core",
++        ":Support",
++        ":config",
++    ],
++)
++
++cc_library(
++    name = "HexagonAsmParser",
 +    linkopts = ["-lLLVMHexagonAsmParser"],
 +    visibility = ["//visibility:public"],
 +    deps = [
++        ":HexagonDesc",
++        ":HexagonInfo",
++        ":MC",
++        ":MCParser",
++        ":Support",
 +        ":config",
-+        ":hexagon_desc",
-+        ":hexagon_info",
-+        ":mc",
-+        ":mc_parser",
-+        ":support",
 +    ],
 +)
 +
 +cc_library(
-+    name = "hexagon_code_gen",
++    name = "HexagonCodeGen",
 +    linkopts = ["-lLLVMHexagonCodeGen"],
 +    visibility = ["//visibility:public"],
 +    deps = [
-+        ":analysis",
-+        ":asm_printer",
-+        ":code_gen",
++        ":Analysis",
++        ":AsmPrinter",
++        ":CodeGen",
++        ":Core",
++        ":HexagonAsmParser",
++        ":HexagonDesc",
++        ":HexagonInfo",
++        ":IPO",
++        ":MC",
++        ":Scalar",
++        ":SelectionDAG",
++        ":Support",
++        ":Target",
++        ":TransformUtils",
 +        ":config",
-+        ":core",
-+        ":hexagon_asm_parser",
-+        ":hexagon_desc",
-+        ":hexagon_info",
-+        ":ipo",
-+        ":mc",
-+        ":scalar",
-+        ":selection_dag",
-+        ":support",
-+        ":target",
-+        ":transform_utils",
 +    ],
 +)
 +
 +cc_library(
-+    name = "hexagon_desc",
++    name = "HexagonDesc",
 +    linkopts = ["-lLLVMHexagonDesc"],
 +    visibility = ["//visibility:public"],
 +    deps = [
++        ":HexagonInfo",
++        ":MC",
++        ":Support",
 +        ":config",
-+        ":hexagon_info",
-+        ":mc",
-+        ":support",
 +    ],
 +)
 +
 +cc_library(
-+    name = "hexagon_disassembler",
++    name = "HexagonDisassembler",
 +    linkopts = ["-lLLVMHexagonDisassembler"],
 +    visibility = ["//visibility:public"],
 +    deps = [
++        ":HexagonDesc",
++        ":HexagonInfo",
++        ":MC",
++        ":MCDisassembler",
++        ":Support",
 +        ":config",
-+        ":hexagon_desc",
-+        ":hexagon_info",
-+        ":mc",
-+        ":mc_disassembler",
-+        ":support",
 +    ],
 +)
 +
 +cc_library(
-+    name = "hexagon_info",
++    name = "HexagonInfo",
 +    linkopts = ["-lLLVMHexagonInfo"],
 +    visibility = ["//visibility:public"],
 +    deps = [
++        ":Support",
 +        ":config",
-+        ":support",
 +    ],
 +)
 +
 +cc_library(
-+    name = "ipo",
-+    linkopts = ["-lLLVMipo"],
++    name = "IPO",
++    linkopts = ["-lLLVMIPO"],
 +    visibility = ["//visibility:public"],
 +    deps = [
-+        ":aggressive_inst_combine",
-+        ":analysis",
-+        ":bit_reader",
-+        ":bit_writer",
++        ":AggressiveInstCombine",
++        ":Analysis",
++        ":BitReader",
++        ":BitWriter",
++        ":Core",
++        ":FrontendOpenMP",
++        ":IRReader",
++        ":InstCombine",
++        ":Instrumentation",
++        ":Linker",
++        ":Object",
++        ":ProfileData",
++        ":Scalar",
++        ":Support",
++        ":TransformUtils",
++        ":Vectorize",
 +        ":config",
-+        ":core",
-+        ":frontend_open_mp",
-+        ":inst_combine",
-+        ":instrumentation",
-+        ":ir_reader",
-+        ":linker",
-+        ":object",
-+        ":profile_data",
-+        ":scalar",
-+        ":support",
-+        ":transform_utils",
-+        ":vectorize",
 +    ],
 +)
 +
 +cc_library(
-+    name = "ir_reader",
++    name = "IRReader",
 +    linkopts = ["-lLLVMIRReader"],
 +    visibility = ["//visibility:public"],
 +    deps = [
-+        ":asm_parser",
-+        ":bit_reader",
++        ":AsmParser",
++        ":BitReader",
++        ":Core",
++        ":Support",
 +        ":config",
-+        ":core",
-+        ":support",
 +    ],
 +)
 +
 +cc_library(
-+    name = "inst_combine",
++    name = "InstCombine",
 +    linkopts = ["-lLLVMInstCombine"],
 +    visibility = ["//visibility:public"],
 +    deps = [
-+        ":analysis",
++        ":Analysis",
++        ":Core",
++        ":InstCombineTableGen",
++        ":Support",
++        ":TransformUtils",
 +        ":config",
-+        ":core",
-+        ":support",
-+        ":transform_utils",
 +    ],
 +)
 +
 +cc_library(
-+    name = "instrumentation",
++    name = "Instrumentation",
 +    linkopts = ["-lLLVMInstrumentation"],
 +    visibility = ["//visibility:public"],
 +    deps = [
-+        ":analysis",
++        ":Analysis",
++        ":Core",
++        ":MC",
++        ":ProfileData",
++        ":Support",
++        ":TransformUtils",
 +        ":config",
-+        ":core",
-+        ":mc",
-+        ":profile_data",
-+        ":support",
-+        ":transform_utils",
 +    ],
 +)
 +
 +cc_library(
-+    name = "interpreter",
++    name = "InterfaceStub",
++    linkopts = ["-lLLVMInterfaceStub"],
++    visibility = ["//visibility:public"],
++    deps = [
++        ":Object",
++        ":Support",
++        ":config",
++    ],
++)
++
++cc_library(
++    name = "Interpreter",
 +    linkopts = ["-lLLVMInterpreter"],
 +    visibility = ["//visibility:public"],
 +    deps = [
-+        ":code_gen",
++        ":CodeGen",
++        ":Core",
++        ":ExecutionEngine",
++        ":Support",
 +        ":config",
-+        ":core",
-+        ":execution_engine",
-+        ":support",
 +    ],
 +)
 +
 +cc_library(
-+    name = "jit_link",
++    name = "JITLink",
 +    linkopts = ["-lLLVMJITLink"],
 +    visibility = ["//visibility:public"],
 +    deps = [
-+        ":binary_format",
++        ":BinaryFormat",
++        ":Object",
++        ":Support",
 +        ":config",
-+        ":object",
-+        ":support",
 +    ],
 +)
 +
 +cc_library(
-+    name = "lto",
++    name = "LTO",
 +    linkopts = ["-lLLVMLTO"],
 +    visibility = ["//visibility:public"],
 +    deps = [
-+        ":aggressive_inst_combine",
-+        ":analysis",
-+        ":bit_reader",
-+        ":bit_writer",
-+        ":code_gen",
++        ":AggressiveInstCombine",
++        ":Analysis",
++        ":BinaryFormat",
++        ":BitReader",
++        ":BitWriter",
++        ":CodeGen",
++        ":Core",
++        ":Extensions",
++        ":IPO",
++        ":InstCombine",
++        ":Linker",
++        ":MC",
++        ":ObjCARC",
++        ":Object",
++        ":Passes",
++        ":Remarks",
++        ":Scalar",
++        ":Support",
++        ":Target",
++        ":TransformUtils",
 +        ":config",
-+        ":core",
-+        ":inst_combine",
-+        ":ipo",
-+        ":linker",
-+        ":mc",
-+        ":objc_arc",
-+        ":object",
-+        ":passes",
-+        ":remarks",
-+        ":scalar",
-+        ":support",
-+        ":target",
-+        ":transform_utils",
 +    ],
 +)
 +
 +cc_library(
-+    name = "lanai_asm_parser",
++    name = "LanaiAsmParser",
 +    linkopts = ["-lLLVMLanaiAsmParser"],
 +    visibility = ["//visibility:public"],
 +    deps = [
++        ":LanaiDesc",
++        ":LanaiInfo",
++        ":MC",
++        ":MCParser",
++        ":Support",
 +        ":config",
-+        ":lanai_desc",
-+        ":lanai_info",
-+        ":mc",
-+        ":mc_parser",
-+        ":support",
 +    ],
 +)
 +
 +cc_library(
-+    name = "lanai_code_gen",
++    name = "LanaiCodeGen",
 +    linkopts = ["-lLLVMLanaiCodeGen"],
 +    visibility = ["//visibility:public"],
 +    deps = [
-+        ":analysis",
-+        ":asm_printer",
-+        ":code_gen",
++        ":Analysis",
++        ":AsmPrinter",
++        ":CodeGen",
++        ":Core",
++        ":LanaiAsmParser",
++        ":LanaiDesc",
++        ":LanaiInfo",
++        ":MC",
++        ":SelectionDAG",
++        ":Support",
++        ":Target",
++        ":TransformUtils",
 +        ":config",
-+        ":core",
-+        ":lanai_asm_parser",
-+        ":lanai_desc",
-+        ":lanai_info",
-+        ":mc",
-+        ":selection_dag",
-+        ":support",
-+        ":target",
-+        ":transform_utils",
 +    ],
 +)
 +
 +cc_library(
-+    name = "lanai_desc",
++    name = "LanaiDesc",
 +    linkopts = ["-lLLVMLanaiDesc"],
 +    visibility = ["//visibility:public"],
 +    deps = [
++        ":LanaiInfo",
++        ":MC",
++        ":MCDisassembler",
++        ":Support",
 +        ":config",
-+        ":lanai_info",
-+        ":mc",
-+        ":mc_disassembler",
-+        ":support",
 +    ],
 +)
 +
 +cc_library(
-+    name = "lanai_disassembler",
++    name = "LanaiDisassembler",
 +    linkopts = ["-lLLVMLanaiDisassembler"],
 +    visibility = ["//visibility:public"],
 +    deps = [
++        ":LanaiDesc",
++        ":LanaiInfo",
++        ":MC",
++        ":MCDisassembler",
++        ":Support",
 +        ":config",
-+        ":lanai_desc",
-+        ":lanai_info",
-+        ":mc",
-+        ":mc_disassembler",
-+        ":support",
 +    ],
 +)
 +
 +cc_library(
-+    name = "lanai_info",
++    name = "LanaiInfo",
 +    linkopts = ["-lLLVMLanaiInfo"],
 +    visibility = ["//visibility:public"],
 +    deps = [
++        ":Support",
 +        ":config",
-+        ":support",
 +    ],
 +)
 +
 +cc_library(
-+    name = "lib_driver",
++    name = "LibDriver",
 +    linkopts = ["-lLLVMLibDriver"],
 +    visibility = ["//visibility:public"],
 +    deps = [
-+        ":binary_format",
-+        ":bit_reader",
++        ":BinaryFormat",
++        ":BitReader",
++        ":Object",
++        ":Option",
++        ":Support",
 +        ":config",
-+        ":object",
-+        ":option",
-+        ":support",
 +    ],
 +)
 +
 +cc_library(
-+    name = "line_editor",
++    name = "LineEditor",
 +    linkopts = ["-lLLVMLineEditor"],
 +    visibility = ["//visibility:public"],
 +    deps = [
++        ":Support",
 +        ":config",
-+        ":support",
 +    ],
 +)
 +
 +cc_library(
-+    name = "linker",
++    name = "Linker",
 +    linkopts = ["-lLLVMLinker"],
 +    visibility = ["//visibility:public"],
 +    deps = [
++        ":Core",
++        ":Support",
++        ":TransformUtils",
 +        ":config",
-+        ":core",
-+        ":support",
-+        ":transform_utils",
 +    ],
 +)
 +
 +cc_library(
-+    name = "mc",
++    name = "MC",
 +    linkopts = ["-lLLVMMC"],
 +    visibility = ["//visibility:public"],
 +    deps = [
-+        ":binary_format",
++        ":BinaryFormat",
++        ":DebugInfoCodeView",
++        ":Support",
 +        ":config",
-+        ":debug_info_code_view",
-+        ":support",
 +    ],
 +)
 +
 +cc_library(
-+    name = "mca",
++    name = "MCA",
 +    linkopts = ["-lLLVMMCA"],
 +    visibility = ["//visibility:public"],
 +    deps = [
++        ":MC",
++        ":Support",
 +        ":config",
-+        ":mc",
-+        ":support",
 +    ],
 +)
 +
 +cc_library(
-+    name = "mc_disassembler",
++    name = "MCDisassembler",
 +    linkopts = ["-lLLVMMCDisassembler"],
 +    visibility = ["//visibility:public"],
 +    deps = [
++        ":MC",
++        ":Support",
 +        ":config",
-+        ":mc",
-+        ":support",
 +    ],
 +)
 +
 +cc_library(
-+    name = "mcjit",
++    name = "MCJIT",
 +    linkopts = ["-lLLVMMCJIT"],
 +    visibility = ["//visibility:public"],
 +    deps = [
++        ":Core",
++        ":ExecutionEngine",
++        ":Object",
++        ":RuntimeDyld",
++        ":Support",
++        ":Target",
 +        ":config",
-+        ":core",
-+        ":execution_engine",
-+        ":object",
-+        ":runtime_dyld",
-+        ":support",
-+        ":target",
 +    ],
 +)
 +
 +cc_library(
-+    name = "mc_parser",
++    name = "MCParser",
 +    linkopts = ["-lLLVMMCParser"],
 +    visibility = ["//visibility:public"],
 +    deps = [
++        ":MC",
++        ":Support",
 +        ":config",
-+        ":mc",
-+        ":support",
 +    ],
 +)
 +
 +cc_library(
-+    name = "mir_parser",
++    name = "MIRParser",
 +    linkopts = ["-lLLVMMIRParser"],
 +    visibility = ["//visibility:public"],
 +    deps = [
-+        ":asm_parser",
-+        ":binary_format",
-+        ":code_gen",
++        ":AsmParser",
++        ":BinaryFormat",
++        ":CodeGen",
++        ":Core",
++        ":MC",
++        ":Support",
++        ":Target",
 +        ":config",
-+        ":core",
-+        ":mc",
-+        ":support",
-+        ":target",
 +    ],
 +)
 +
 +cc_library(
-+    name = "msp430_asm_parser",
++    name = "MSP430AsmParser",
 +    linkopts = ["-lLLVMMSP430AsmParser"],
 +    visibility = ["//visibility:public"],
 +    deps = [
++        ":MC",
++        ":MCParser",
++        ":MSP430Desc",
++        ":MSP430Info",
++        ":Support",
 +        ":config",
-+        ":mc",
-+        ":mc_parser",
-+        ":msp430_desc",
-+        ":msp430_info",
-+        ":support",
 +    ],
 +)
 +
 +cc_library(
-+    name = "msp430_code_gen",
++    name = "MSP430CodeGen",
 +    linkopts = ["-lLLVMMSP430CodeGen"],
 +    visibility = ["//visibility:public"],
 +    deps = [
-+        ":asm_printer",
-+        ":code_gen",
++        ":AsmPrinter",
++        ":CodeGen",
++        ":Core",
++        ":MC",
++        ":MSP430Desc",
++        ":MSP430Info",
++        ":SelectionDAG",
++        ":Support",
++        ":Target",
 +        ":config",
-+        ":core",
-+        ":mc",
-+        ":msp430_desc",
-+        ":msp430_info",
-+        ":selection_dag",
-+        ":support",
-+        ":target",
 +    ],
 +)
 +
 +cc_library(
-+    name = "msp430_desc",
++    name = "MSP430Desc",
 +    linkopts = ["-lLLVMMSP430Desc"],
 +    visibility = ["//visibility:public"],
 +    deps = [
++        ":MC",
++        ":MSP430Info",
++        ":Support",
 +        ":config",
-+        ":mc",
-+        ":msp430_info",
-+        ":support",
 +    ],
 +)
 +
 +cc_library(
-+    name = "msp430_disassembler",
++    name = "MSP430Disassembler",
 +    linkopts = ["-lLLVMMSP430Disassembler"],
 +    visibility = ["//visibility:public"],
 +    deps = [
++        ":MCDisassembler",
++        ":MSP430Info",
++        ":Support",
 +        ":config",
-+        ":mc_disassembler",
-+        ":msp430_info",
-+        ":support",
 +    ],
 +)
 +
 +cc_library(
-+    name = "msp430_info",
++    name = "MSP430Info",
 +    linkopts = ["-lLLVMMSP430Info"],
 +    visibility = ["//visibility:public"],
 +    deps = [
++        ":Support",
 +        ":config",
-+        ":support",
 +    ],
 +)
 +
 +cc_library(
-+    name = "mips_asm_parser",
++    name = "MipsAsmParser",
 +    linkopts = ["-lLLVMMipsAsmParser"],
 +    visibility = ["//visibility:public"],
 +    deps = [
++        ":MC",
++        ":MCParser",
++        ":MipsDesc",
++        ":MipsInfo",
++        ":Support",
 +        ":config",
-+        ":mc",
-+        ":mc_parser",
-+        ":mips_desc",
-+        ":mips_info",
-+        ":support",
 +    ],
 +)
 +
 +cc_library(
-+    name = "mips_code_gen",
++    name = "MipsCodeGen",
 +    linkopts = ["-lLLVMMipsCodeGen"],
 +    visibility = ["//visibility:public"],
 +    deps = [
-+        ":analysis",
-+        ":asm_printer",
-+        ":code_gen",
++        ":Analysis",
++        ":AsmPrinter",
++        ":CodeGen",
++        ":Core",
++        ":GlobalISel",
++        ":MC",
++        ":MipsDesc",
++        ":MipsInfo",
++        ":SelectionDAG",
++        ":Support",
++        ":Target",
 +        ":config",
-+        ":core",
-+        ":global_i_sel",
-+        ":mc",
-+        ":mips_desc",
-+        ":mips_info",
-+        ":selection_dag",
-+        ":support",
-+        ":target",
 +    ],
 +)
 +
 +cc_library(
-+    name = "mips_desc",
++    name = "MipsDesc",
 +    linkopts = ["-lLLVMMipsDesc"],
 +    visibility = ["//visibility:public"],
 +    deps = [
++        ":MC",
++        ":MipsInfo",
++        ":Support",
 +        ":config",
-+        ":mc",
-+        ":mips_info",
-+        ":support",
 +    ],
 +)
 +
 +cc_library(
-+    name = "mips_disassembler",
++    name = "MipsDisassembler",
 +    linkopts = ["-lLLVMMipsDisassembler"],
 +    visibility = ["//visibility:public"],
 +    deps = [
++        ":MCDisassembler",
++        ":MipsInfo",
++        ":Support",
 +        ":config",
-+        ":mc_disassembler",
-+        ":mips_info",
-+        ":support",
 +    ],
 +)
 +
 +cc_library(
-+    name = "mips_info",
++    name = "MipsInfo",
 +    linkopts = ["-lLLVMMipsInfo"],
 +    visibility = ["//visibility:public"],
 +    deps = [
++        ":Support",
 +        ":config",
-+        ":support",
 +    ],
 +)
 +
 +cc_library(
-+    name = "nvptx_code_gen",
++    name = "NVPTXCodeGen",
 +    linkopts = ["-lLLVMNVPTXCodeGen"],
 +    visibility = ["//visibility:public"],
 +    deps = [
-+        ":analysis",
-+        ":asm_printer",
-+        ":code_gen",
++        ":Analysis",
++        ":AsmPrinter",
++        ":CodeGen",
++        ":Core",
++        ":IPO",
++        ":MC",
++        ":NVPTXDesc",
++        ":NVPTXInfo",
++        ":Scalar",
++        ":SelectionDAG",
++        ":Support",
++        ":Target",
++        ":TransformUtils",
++        ":Vectorize",
 +        ":config",
-+        ":core",
-+        ":ipo",
-+        ":mc",
-+        ":nvptx_desc",
-+        ":nvptx_info",
-+        ":scalar",
-+        ":selection_dag",
-+        ":support",
-+        ":target",
-+        ":transform_utils",
-+        ":vectorize",
 +    ],
 +)
 +
 +cc_library(
-+    name = "nvptx_desc",
++    name = "NVPTXDesc",
 +    linkopts = ["-lLLVMNVPTXDesc"],
 +    visibility = ["//visibility:public"],
 +    deps = [
-+        "nvptx_target_gen",
++        ":MC",
++        ":NVPTXCommonTableGen",
++        ":NVPTXInfo",
++        ":Support",
 +        ":config",
-+        ":mc",
-+        ":nvptx_info",
-+        ":support",
 +    ],
 +)
 +
 +cc_library(
-+    name = "nvptx_info",
++    name = "NVPTXInfo",
 +    linkopts = ["-lLLVMNVPTXInfo"],
 +    visibility = ["//visibility:public"],
 +    deps = [
-+        "nvptx_target_gen",
++        ":Core",
++        ":NVPTXCommonTableGen",
++        ":Support",
++        ":Target",
 +        ":config",
-+        ":core",
-+        ":support",
-+        ":target",
 +    ],
 +)
 +
 +cc_library(
-+    name = "objc_arc",
-+    linkopts = ["-lLLVMObjCARCOpts"],
++    name = "ObjCARC",
++    linkopts = ["-lLLVMObjCARC"],
 +    visibility = ["//visibility:public"],
 +    deps = [
-+        ":analysis",
++        ":Analysis",
++        ":Core",
++        ":Support",
++        ":TransformUtils",
 +        ":config",
-+        ":core",
-+        ":support",
-+        ":transform_utils",
 +    ],
 +)
 +
 +cc_library(
-+    name = "object",
++    name = "Object",
 +    linkopts = ["-lLLVMObject"],
 +    visibility = ["//visibility:public"],
 +    deps = [
-+        ":binary_format",
-+        ":bit_reader",
++        ":BinaryFormat",
++        ":BitReader",
++        ":Core",
++        ":MC",
++        ":MCParser",
++        ":Support",
++        ":TextAPI",
 +        ":config",
-+        ":core",
-+        ":mc",
-+        ":mc_parser",
-+        ":support",
-+        ":text_api",
 +    ],
 +)
 +
 +cc_library(
-+    name = "object_yaml",
++    name = "ObjectYAML",
 +    linkopts = ["-lLLVMObjectYAML"],
 +    visibility = ["//visibility:public"],
 +    deps = [
++        ":BinaryFormat",
++        ":DebugInfoCodeView",
++        ":MC",
++        ":Object",
++        ":Support",
 +        ":config",
-+        ":debug_info_code_view",
-+        ":mc",
-+        ":object",
-+        ":support",
 +    ],
 +)
 +
 +cc_library(
-+    name = "option",
++    name = "Option",
 +    linkopts = ["-lLLVMOption"],
 +    visibility = ["//visibility:public"],
 +    deps = [
++        ":Support",
 +        ":config",
-+        ":support",
 +    ],
 +)
 +
 +cc_library(
-+    name = "orc_error",
-+    linkopts = ["-lLLVMorc_error"],
++    name = "OrcError",
++    linkopts = ["-lLLVMOrcError"],
 +    visibility = ["//visibility:public"],
 +    deps = [
++        ":Support",
 +        ":config",
-+        ":support",
 +    ],
 +)
 +
 +cc_library(
-+    name = "orc_jit",
++    name = "OrcJIT",
 +    linkopts = ["-lLLVMOrcJIT"],
 +    visibility = ["//visibility:public"],
 +    deps = [
++        ":Core",
++        ":ExecutionEngine",
++        ":JITLink",
++        ":MC",
++        ":Object",
++        ":OrcError",
++        ":Passes",
++        ":RuntimeDyld",
++        ":Support",
++        ":Target",
++        ":TransformUtils",
 +        ":config",
-+        ":core",
-+        ":execution_engine",
-+        ":jit_link",
-+        ":mc",
-+        ":object",
-+        ":orc_error",
-+        ":passes",
-+        ":runtime_dyld",
-+        ":support",
-+        ":target",
-+        ":transform_utils",
 +    ],
 +)
 +
 +cc_library(
-+    name = "passes",
++    name = "Passes",
 +    linkopts = ["-lLLVMPasses"],
 +    visibility = ["//visibility:public"],
 +    deps = [
-+        ":aggressive_inst_combine",
-+        ":analysis",
-+        ":code_gen",
++        ":AggressiveInstCombine",
++        ":Analysis",
++        ":CodeGen",
++        ":Core",
++        ":Coroutines",
++        ":HelloNew",
++        ":IPO",
++        ":InstCombine",
++        ":Instrumentation",
++        ":ObjCARC",
++        ":Scalar",
++        ":Support",
++        ":Target",
++        ":TransformUtils",
++        ":Vectorize",
 +        ":config",
-+        ":core",
-+        ":coroutines",
-+        ":inst_combine",
-+        ":instrumentation",
-+        ":ipo",
-+        ":scalar",
-+        ":support",
-+        ":target",
-+        ":transform_utils",
-+        ":vectorize",
 +    ],
 +)
 +
 +cc_library(
-+    name = "powerpc_asm_parser",
++    name = "PowerPCAsmParser",
 +    linkopts = ["-lLLVMPowerPCAsmParser"],
 +    visibility = ["//visibility:public"],
 +    deps = [
++        ":MC",
++        ":MCParser",
++        ":PowerPCDesc",
++        ":PowerPCInfo",
++        ":Support",
 +        ":config",
-+        ":mc",
-+        ":mc_parser",
-+        ":powerpc_desc",
-+        ":powerpc_info",
-+        ":support",
 +    ],
 +)
 +
 +cc_library(
-+    name = "powerpc_code_gen",
++    name = "PowerPCCodeGen",
 +    linkopts = ["-lLLVMPowerPCCodeGen"],
 +    visibility = ["//visibility:public"],
 +    deps = [
-+        ":analysis",
-+        ":asm_printer",
-+        ":code_gen",
++        ":Analysis",
++        ":AsmPrinter",
++        ":CodeGen",
++        ":Core",
++        ":GlobalISel",
++        ":MC",
++        ":PowerPCDesc",
++        ":PowerPCInfo",
++        ":Scalar",
++        ":SelectionDAG",
++        ":Support",
++        ":Target",
++        ":TransformUtils",
 +        ":config",
-+        ":core",
-+        ":mc",
-+        ":powerpc_desc",
-+        ":powerpc_info",
-+        ":scalar",
-+        ":selection_dag",
-+        ":support",
-+        ":target",
-+        ":transform_utils",
 +    ],
 +)
 +
 +cc_library(
-+    name = "powerpc_desc",
++    name = "PowerPCDesc",
 +    linkopts = ["-lLLVMPowerPCDesc"],
 +    visibility = ["//visibility:public"],
 +    deps = [
++        ":BinaryFormat",
++        ":MC",
++        ":PowerPCCommonTableGen",
++        ":PowerPCInfo",
++        ":Support",
 +        ":config",
-+        ":mc",
-+        ":object",
-+        ":powerpc_info",
-+        ":powerpc_target_gen",
-+        ":support",
 +    ],
 +)
 +
 +cc_library(
-+    name = "powerpc_disassembler",
++    name = "PowerPCDisassembler",
 +    linkopts = ["-lLLVMPowerPCDisassembler"],
 +    visibility = ["//visibility:public"],
 +    deps = [
++        ":MCDisassembler",
++        ":PowerPCInfo",
++        ":Support",
 +        ":config",
-+        ":mc_disassembler",
-+        ":powerpc_info",
-+        ":support",
 +    ],
 +)
 +
 +cc_library(
-+    name = "powerpc_info",
++    name = "PowerPCInfo",
 +    linkopts = ["-lLLVMPowerPCInfo"],
 +    visibility = ["//visibility:public"],
 +    deps = [
++        ":Core",
++        ":PowerPCCommonTableGen",
++        ":Support",
++        ":Target",
 +        ":config",
-+        ":core",
-+        ":powerpc_target_gen",
-+        ":support",
-+        ":target",
 +    ],
 +)
 +
 +cc_library(
-+    name = "profile_data",
++    name = "ProfileData",
 +    linkopts = ["-lLLVMProfileData"],
 +    visibility = ["//visibility:public"],
 +    deps = [
++        ":Core",
++        ":Demangle",
++        ":Support",
 +        ":config",
-+        ":core",
-+        ":support",
 +    ],
 +)
 +
 +cc_library(
-+    name = "riscv_asm_parser",
++    name = "RISCVAsmParser",
 +    linkopts = ["-lLLVMRISCVAsmParser"],
 +    visibility = ["//visibility:public"],
 +    deps = [
++        ":MC",
++        ":MCParser",
++        ":RISCVDesc",
++        ":RISCVInfo",
++        ":RISCVUtils",
++        ":Support",
 +        ":config",
-+        ":mc",
-+        ":mc_parser",
-+        ":riscv_desc",
-+        ":riscv_info",
-+        ":riscv_utils",
-+        ":support",
 +    ],
 +)
 +
 +cc_library(
-+    name = "riscv_code_gen",
++    name = "RISCVCodeGen",
 +    linkopts = ["-lLLVMRISCVCodeGen"],
 +    visibility = ["//visibility:public"],
 +    deps = [
-+        ":analysis",
-+        ":asm_printer",
-+        ":code_gen",
++        ":Analysis",
++        ":AsmPrinter",
++        ":CodeGen",
++        ":Core",
++        ":GlobalISel",
++        ":MC",
++        ":RISCVDesc",
++        ":RISCVInfo",
++        ":RISCVUtils",
++        ":SelectionDAG",
++        ":Support",
++        ":Target",
 +        ":config",
-+        ":core",
-+        ":global_i_sel",
-+        ":mc",
-+        ":riscv_desc",
-+        ":riscv_info",
-+        ":riscv_utils",
-+        ":selection_dag",
-+        ":support",
-+        ":target",
 +    ],
 +)
 +
 +cc_library(
-+    name = "riscv_desc",
++    name = "RISCVDesc",
 +    linkopts = ["-lLLVMRISCVDesc"],
 +    visibility = ["//visibility:public"],
 +    deps = [
++        ":MC",
++        ":RISCVInfo",
++        ":RISCVUtils",
++        ":Support",
 +        ":config",
-+        ":mc",
-+        ":riscv_info",
-+        ":riscv_utils",
-+        ":support",
 +    ],
 +)
 +
 +cc_library(
-+    name = "riscv_disassembler",
++    name = "RISCVDisassembler",
 +    linkopts = ["-lLLVMRISCVDisassembler"],
 +    visibility = ["//visibility:public"],
 +    deps = [
++        ":MCDisassembler",
++        ":RISCVInfo",
++        ":Support",
 +        ":config",
-+        ":mc_disassembler",
-+        ":riscv_info",
-+        ":support",
 +    ],
 +)
 +
 +cc_library(
-+    name = "riscv_info",
++    name = "RISCVInfo",
 +    linkopts = ["-lLLVMRISCVInfo"],
 +    visibility = ["//visibility:public"],
 +    deps = [
++        ":Support",
 +        ":config",
-+        ":support",
 +    ],
 +)
 +
 +cc_library(
-+    name = "riscv_utils",
++    name = "RISCVUtils",
 +    linkopts = ["-lLLVMRISCVUtils"],
 +    visibility = ["//visibility:public"],
 +    deps = [
++        ":Support",
 +        ":config",
-+        ":support",
 +    ],
 +)
 +
 +cc_library(
-+    name = "remarks",
++    name = "Remarks",
 +    linkopts = ["-lLLVMRemarks"],
 +    visibility = ["//visibility:public"],
 +    deps = [
-+        ":bitstream_reader",
++        ":BitstreamReader",
++        ":Support",
 +        ":config",
-+        ":support",
 +    ],
 +)
 +
 +cc_library(
-+    name = "runtime_dyld",
++    name = "RuntimeDyld",
 +    linkopts = ["-lLLVMRuntimeDyld"],
 +    visibility = ["//visibility:public"],
 +    deps = [
++        ":Core",
++        ":MC",
++        ":MCDisassembler",
++        ":Object",
++        ":Support",
 +        ":config",
-+        ":mc",
-+        ":mc_disassembler",
-+        ":object",
-+        ":support",
 +    ],
 +)
 +
 +cc_library(
-+    name = "scalar",
-+    linkopts = ["-lLLVMScalarOpts"],
++    name = "Scalar",
++    linkopts = ["-lLLVMScalar"],
 +    visibility = ["//visibility:public"],
 +    deps = [
-+        ":aggressive_inst_combine",
-+        ":analysis",
++        ":AggressiveInstCombine",
++        ":Analysis",
++        ":Core",
++        ":InstCombine",
++        ":Support",
++        ":Target",
++        ":TransformUtils",
 +        ":config",
-+        ":core",
-+        ":inst_combine",
-+        ":support",
-+        ":target",
-+        ":transform_utils",
 +    ],
 +)
 +
 +cc_library(
-+    name = "selection_dag",
++    name = "SelectionDAG",
 +    linkopts = ["-lLLVMSelectionDAG"],
 +    visibility = ["//visibility:public"],
 +    deps = [
-+        ":analysis",
-+        ":code_gen",
++        ":Analysis",
++        ":CodeGen",
++        ":Core",
++        ":MC",
++        ":Support",
++        ":Target",
++        ":TransformUtils",
 +        ":config",
-+        ":core",
-+        ":mc",
-+        ":support",
-+        ":target",
-+        ":transform_utils",
 +    ],
 +)
 +
 +cc_library(
-+    name = "sparc_asm_parser",
++    name = "SparcAsmParser",
 +    linkopts = ["-lLLVMSparcAsmParser"],
 +    visibility = ["//visibility:public"],
 +    deps = [
++        ":MC",
++        ":MCParser",
++        ":SparcDesc",
++        ":SparcInfo",
++        ":Support",
 +        ":config",
-+        ":mc",
-+        ":mc_parser",
-+        ":sparc_desc",
-+        ":sparc_info",
-+        ":support",
 +    ],
 +)
 +
 +cc_library(
-+    name = "sparc_code_gen",
++    name = "SparcCodeGen",
 +    linkopts = ["-lLLVMSparcCodeGen"],
 +    visibility = ["//visibility:public"],
 +    deps = [
-+        ":asm_printer",
-+        ":code_gen",
++        ":AsmPrinter",
++        ":CodeGen",
++        ":Core",
++        ":MC",
++        ":SelectionDAG",
++        ":SparcDesc",
++        ":SparcInfo",
++        ":Support",
++        ":Target",
 +        ":config",
-+        ":core",
-+        ":mc",
-+        ":selection_dag",
-+        ":sparc_desc",
-+        ":sparc_info",
-+        ":support",
-+        ":target",
 +    ],
 +)
 +
 +cc_library(
-+    name = "sparc_desc",
++    name = "SparcDesc",
 +    linkopts = ["-lLLVMSparcDesc"],
 +    visibility = ["//visibility:public"],
 +    deps = [
++        ":MC",
++        ":SparcInfo",
++        ":Support",
 +        ":config",
-+        ":mc",
-+        ":sparc_info",
-+        ":support",
 +    ],
 +)
 +
 +cc_library(
-+    name = "sparc_disassembler",
++    name = "SparcDisassembler",
 +    linkopts = ["-lLLVMSparcDisassembler"],
 +    visibility = ["//visibility:public"],
 +    deps = [
++        ":MCDisassembler",
++        ":SparcInfo",
++        ":Support",
 +        ":config",
-+        ":mc_disassembler",
-+        ":sparc_info",
-+        ":support",
 +    ],
 +)
 +
 +cc_library(
-+    name = "sparc_info",
++    name = "SparcInfo",
 +    linkopts = ["-lLLVMSparcInfo"],
 +    visibility = ["//visibility:public"],
 +    deps = [
++        ":Support",
 +        ":config",
-+        ":support",
 +    ],
 +)
 +
 +cc_library(
-+    name = "support",
++    name = "Support",
 +    linkopts = ["-lLLVMSupport"],
 +    visibility = ["//visibility:public"],
 +    deps = [
++        ":Demangle",
 +        ":config",
-+        ":demangle",
 +        "@zlib",
 +    ],
 +)
 +
 +cc_library(
-+    name = "symbolize",
++    name = "Symbolize",
 +    linkopts = ["-lLLVMSymbolize"],
 +    visibility = ["//visibility:public"],
 +    deps = [
++        ":DebugInfoDWARF",
++        ":DebugInfoPDB",
++        ":Demangle",
++        ":Object",
++        ":Support",
 +        ":config",
-+        ":debug_info_dwarf",
-+        ":debug_info_pdb",
-+        ":demangle",
-+        ":object",
-+        ":support",
 +    ],
 +)
 +
 +cc_library(
-+    name = "system_z_asm_parser",
++    name = "SystemZAsmParser",
 +    linkopts = ["-lLLVMSystemZAsmParser"],
 +    visibility = ["//visibility:public"],
 +    deps = [
++        ":MC",
++        ":MCParser",
++        ":Support",
++        ":SystemZDesc",
++        ":SystemZInfo",
 +        ":config",
-+        ":mc",
-+        ":mc_parser",
-+        ":support",
-+        ":system_z_desc",
-+        ":system_z_info",
 +    ],
 +)
 +
 +cc_library(
-+    name = "system_z_code_gen",
++    name = "SystemZCodeGen",
 +    linkopts = ["-lLLVMSystemZCodeGen"],
 +    visibility = ["//visibility:public"],
 +    deps = [
-+        ":analysis",
-+        ":asm_printer",
-+        ":code_gen",
++        ":Analysis",
++        ":AsmPrinter",
++        ":CodeGen",
++        ":Core",
++        ":MC",
++        ":Scalar",
++        ":SelectionDAG",
++        ":Support",
++        ":SystemZDesc",
++        ":SystemZInfo",
++        ":Target",
 +        ":config",
-+        ":core",
-+        ":mc",
-+        ":scalar",
-+        ":selection_dag",
-+        ":support",
-+        ":system_z_desc",
-+        ":system_z_info",
-+        ":target",
 +    ],
 +)
 +
 +cc_library(
-+    name = "system_z_desc",
++    name = "SystemZDesc",
 +    linkopts = ["-lLLVMSystemZDesc"],
 +    visibility = ["//visibility:public"],
 +    deps = [
++        ":MC",
++        ":Support",
++        ":SystemZCommonTableGen",
++        ":SystemZInfo",
 +        ":config",
-+        ":mc",
-+        ":support",
-+        ":system_z_info",
 +    ],
 +)
 +
 +cc_library(
-+    name = "system_z_disassembler",
++    name = "SystemZDisassembler",
 +    linkopts = ["-lLLVMSystemZDisassembler"],
 +    visibility = ["//visibility:public"],
 +    deps = [
++        ":MC",
++        ":MCDisassembler",
++        ":Support",
++        ":SystemZDesc",
++        ":SystemZInfo",
 +        ":config",
-+        ":mc",
-+        ":mc_disassembler",
-+        ":support",
-+        ":system_z_desc",
-+        ":system_z_info",
 +    ],
 +)
 +
 +cc_library(
-+    name = "system_z_info",
++    name = "SystemZInfo",
 +    linkopts = ["-lLLVMSystemZInfo"],
 +    visibility = ["//visibility:public"],
 +    deps = [
++        ":Support",
++        ":SystemZCommonTableGen",
 +        ":config",
-+        ":support",
 +    ],
 +)
 +
 +cc_library(
-+    name = "tablegen",
++    name = "TableGen",
 +    linkopts = ["-lLLVMTableGen"],
 +    visibility = ["//visibility:public"],
 +    deps = [
++        ":MC",
++        ":Support",
 +        ":config",
-+        ":mc",
-+        ":support",
 +    ],
 +)
 +
 +cc_library(
-+    name = "target",
++    name = "Target",
 +    linkopts = ["-lLLVMTarget"],
 +    visibility = ["//visibility:public"],
 +    deps = [
-+        ":analysis",
++        ":Analysis",
++        ":Core",
++        ":MC",
++        ":Support",
 +        ":config",
-+        ":core",
-+        ":mc",
-+        ":support",
 +    ],
 +)
 +
 +cc_library(
-+    name = "testing_support",
-+    linkopts = ["-lLLVMtesting_support"],
++    name = "TestingSupport",
++    linkopts = ["-lLLVMTestingSupport"],
 +    visibility = ["//visibility:public"],
 +    deps = [
++        ":Support",
 +        ":config",
-+        ":support",
 +    ],
 +)
 +
 +cc_library(
-+    name = "text_api",
++    name = "TextAPI",
 +    linkopts = ["-lLLVMTextAPI"],
 +    visibility = ["//visibility:public"],
 +    deps = [
-+        ":binary_format",
++        ":BinaryFormat",
++        ":Support",
 +        ":config",
-+        ":support",
 +    ],
 +)
 +
 +cc_library(
-+    name = "transform_utils",
++    name = "TransformUtils",
 +    linkopts = ["-lLLVMTransformUtils"],
 +    visibility = ["//visibility:public"],
 +    deps = [
-+        ":analysis",
++        ":Analysis",
++        ":Core",
++        ":Support",
 +        ":config",
-+        ":core",
-+        ":support",
 +    ],
 +)
 +
 +cc_library(
-+    name = "ve_asm_printer",
-+    linkopts = ["-lLLVMve_asm_printer"],
++    name = "VEAsmParser",
++    linkopts = ["-lLLVMVEAsmParser"],
 +    visibility = ["//visibility:public"],
 +    deps = [
++        ":MC",
++        ":MCParser",
++        ":Support",
++        ":VEDesc",
++        ":VEInfo",
 +        ":config",
-+        ":mc",
-+        ":support",
 +    ],
 +)
 +
 +cc_library(
-+    name = "ve_code_gen",
-+    linkopts = ["-lLLVMve_code_gen"],
++    name = "VECodeGen",
++    linkopts = ["-lLLVMVECodeGen"],
 +    visibility = ["//visibility:public"],
 +    deps = [
-+        ":analysis",
-+        ":asm_printer",
-+        ":code_gen",
++        ":Analysis",
++        ":AsmPrinter",
++        ":CodeGen",
++        ":Core",
++        ":MC",
++        ":SelectionDAG",
++        ":Support",
++        ":Target",
++        ":VEDesc",
++        ":VEInfo",
 +        ":config",
-+        ":core",
-+        ":mc",
-+        ":selection_dag",
-+        ":support",
-+        ":target",
-+        ":ve_asm_printer",
-+        ":ve_desc",
-+        ":ve_info",
 +    ],
 +)
 +
 +cc_library(
-+    name = "ve_desc",
-+    linkopts = ["-lLLVMve_desc"],
++    name = "VEDesc",
++    linkopts = ["-lLLVMVEDesc"],
 +    visibility = ["//visibility:public"],
 +    deps = [
++        ":MC",
++        ":Support",
++        ":VEInfo",
 +        ":config",
-+        ":mc",
-+        ":support",
-+        ":ve_asm_printer",
-+        ":ve_info",
 +    ],
 +)
 +
 +cc_library(
-+    name = "ve_info",
-+    linkopts = ["-lLLVMve_info"],
++    name = "VEDisassembler",
++    linkopts = ["-lLLVMVEDisassembler"],
 +    visibility = ["//visibility:public"],
 +    deps = [
++        ":MCDisassembler",
++        ":Support",
++        ":VEInfo",
 +        ":config",
-+        ":support",
 +    ],
 +)
 +
 +cc_library(
-+    name = "vectorize",
++    name = "VEInfo",
++    linkopts = ["-lLLVMVEInfo"],
++    visibility = ["//visibility:public"],
++    deps = [
++        ":Support",
++        ":config",
++    ],
++)
++
++cc_library(
++    name = "Vectorize",
 +    linkopts = ["-lLLVMVectorize"],
 +    visibility = ["//visibility:public"],
 +    deps = [
-+        ":analysis",
++        ":Analysis",
++        ":Core",
++        ":Scalar",
++        ":Support",
++        ":TransformUtils",
 +        ":config",
-+        ":core",
-+        ":scalar",
-+        ":support",
-+        ":transform_utils",
 +    ],
 +)
 +
 +cc_library(
-+    name = "web_assembly_asm_parser",
++    name = "WebAssemblyAsmParser",
 +    linkopts = ["-lLLVMWebAssemblyAsmParser"],
 +    visibility = ["//visibility:public"],
 +    deps = [
++        ":MC",
++        ":MCParser",
++        ":Support",
++        ":WebAssemblyInfo",
 +        ":config",
-+        ":mc",
-+        ":mc_parser",
-+        ":support",
-+        ":web_assembly_info",
 +    ],
 +)
 +
 +cc_library(
-+    name = "web_assembly_code_gen",
++    name = "WebAssemblyCodeGen",
 +    linkopts = ["-lLLVMWebAssemblyCodeGen"],
 +    visibility = ["//visibility:public"],
 +    deps = [
-+        ":analysis",
-+        ":asm_printer",
-+        ":binary_format",
-+        ":code_gen",
++        ":Analysis",
++        ":AsmPrinter",
++        ":BinaryFormat",
++        ":CodeGen",
++        ":Core",
++        ":MC",
++        ":Scalar",
++        ":SelectionDAG",
++        ":Support",
++        ":Target",
++        ":TransformUtils",
++        ":WebAssemblyDesc",
++        ":WebAssemblyInfo",
 +        ":config",
-+        ":core",
-+        ":mc",
-+        ":scalar",
-+        ":selection_dag",
-+        ":support",
-+        ":target",
-+        ":transform_utils",
-+        ":web_assembly_desc",
-+        ":web_assembly_info",
 +    ],
 +)
 +
 +cc_library(
-+    name = "web_assembly_desc",
++    name = "WebAssemblyDesc",
 +    linkopts = ["-lLLVMWebAssemblyDesc"],
 +    visibility = ["//visibility:public"],
 +    deps = [
++        ":MC",
++        ":Support",
++        ":WebAssemblyInfo",
 +        ":config",
-+        ":mc",
-+        ":support",
-+        ":web_assembly_info",
 +    ],
 +)
 +
 +cc_library(
-+    name = "web_assembly_disassembler",
++    name = "WebAssemblyDisassembler",
 +    linkopts = ["-lLLVMWebAssemblyDisassembler"],
 +    visibility = ["//visibility:public"],
 +    deps = [
++        ":MC",
++        ":MCDisassembler",
++        ":Support",
++        ":WebAssemblyDesc",
++        ":WebAssemblyInfo",
 +        ":config",
-+        ":mc",
-+        ":mc_disassembler",
-+        ":support",
-+        ":web_assembly_desc",
-+        ":web_assembly_info",
 +    ],
 +)
 +
 +cc_library(
-+    name = "web_assembly_info",
++    name = "WebAssemblyInfo",
 +    linkopts = ["-lLLVMWebAssemblyInfo"],
 +    visibility = ["//visibility:public"],
 +    deps = [
++        ":Support",
 +        ":config",
-+        ":support",
 +    ],
 +)
 +
 +cc_library(
-+    name = "windows_manifest",
++    name = "WindowsManifest",
 +    linkopts = ["-lLLVMWindowsManifest"],
 +    visibility = ["//visibility:public"],
 +    deps = [
++        ":Support",
 +        ":config",
-+        ":support",
 +    ],
 +)
 +
 +cc_library(
-+    name = "x86_asm_parser",
++    name = "X86AsmParser",
 +    linkopts = ["-lLLVMX86AsmParser"],
 +    visibility = ["//visibility:public"],
 +    deps = [
++        ":MC",
++        ":MCParser",
++        ":Support",
++        ":X86Desc",
++        ":X86Info",
 +        ":config",
-+        ":mc",
-+        ":mc_parser",
-+        ":support",
-+        ":x86_desc",
-+        ":x86_info",
 +    ],
 +)
 +
 +cc_library(
-+    name = "x86_code_gen",
++    name = "X86CodeGen",
 +    linkopts = ["-lLLVMX86CodeGen"],
 +    visibility = ["//visibility:public"],
 +    deps = [
-+        ":analysis",
-+        ":asm_printer",
-+        ":cf_guard",
-+        ":code_gen",
++        ":Analysis",
++        ":AsmPrinter",
++        ":CFGuard",
++        ":CodeGen",
++        ":Core",
++        ":GlobalISel",
++        ":MC",
++        ":ProfileData",
++        ":SelectionDAG",
++        ":Support",
++        ":Target",
++        ":X86Desc",
++        ":X86Info",
 +        ":config",
-+        ":core",
-+        ":global_i_sel",
-+        ":mc",
-+        ":profile_data",
-+        ":selection_dag",
-+        ":support",
-+        ":target",
 +        ":x86_defs",
-+        ":x86_desc",
-+        ":x86_info",
-+        ":x86_utils",
 +    ],
 +)
 +
 +cc_library(
-+    name = "x86_desc",
++    name = "X86Desc",
 +    linkopts = ["-lLLVMX86Desc"],
 +    visibility = ["//visibility:public"],
 +    deps = [
++        ":BinaryFormat",
++        ":MC",
++        ":MCDisassembler",
++        ":Support",
++        ":X86Info",
 +        ":config",
-+        ":mc",
-+        ":mc_disassembler",
-+        ":object",
-+        ":support",
-+        ":x86_info",
-+        ":x86_utils",
 +    ],
 +)
 +
 +cc_library(
-+    name = "x86_disassembler",
++    name = "X86Disassembler",
 +    linkopts = ["-lLLVMX86Disassembler"],
 +    visibility = ["//visibility:public"],
 +    deps = [
++        ":MCDisassembler",
++        ":Support",
++        ":X86Info",
 +        ":config",
-+        ":mc_disassembler",
-+        ":support",
-+        ":x86_info",
 +    ],
 +)
 +
 +cc_library(
-+    name = "x86_info",
++    name = "X86Info",
 +    linkopts = ["-lLLVMX86Info"],
 +    visibility = ["//visibility:public"],
 +    deps = [
++        ":MC",
++        ":Support",
++        ":X86CommonTableGen",
 +        ":config",
-+        ":mc",
-+        ":support",
 +    ],
 +)
 +
 +cc_library(
-+    name = "x86_utils",
-+    linkopts = ["-lLLVMX86Utils"],
-+    visibility = ["//visibility:public"],
-+    deps = [
-+        ":code_gen",
-+        ":config",
-+        ":support",
-+    ],
-+)
-+
-+cc_library(
-+    name = "x_core_code_gen",
++    name = "XCoreCodeGen",
 +    linkopts = ["-lLLVMXCoreCodeGen"],
 +    visibility = ["//visibility:public"],
 +    deps = [
-+        ":analysis",
-+        ":asm_printer",
-+        ":code_gen",
++        ":Analysis",
++        ":AsmPrinter",
++        ":CodeGen",
++        ":Core",
++        ":MC",
++        ":SelectionDAG",
++        ":Support",
++        ":Target",
++        ":TransformUtils",
++        ":XCoreDesc",
++        ":XCoreInfo",
 +        ":config",
-+        ":core",
-+        ":mc",
-+        ":selection_dag",
-+        ":support",
-+        ":target",
-+        ":transform_utils",
-+        ":x_core_desc",
-+        ":x_core_info",
 +    ],
 +)
 +
 +cc_library(
-+    name = "x_core_desc",
++    name = "XCoreDesc",
 +    linkopts = ["-lLLVMXCoreDesc"],
 +    visibility = ["//visibility:public"],
 +    deps = [
++        ":MC",
++        ":Support",
++        ":XCoreInfo",
 +        ":config",
-+        ":mc",
-+        ":support",
-+        ":x_core_info",
 +    ],
 +)
 +
 +cc_library(
-+    name = "x_core_disassembler",
++    name = "XCoreDisassembler",
 +    linkopts = ["-lLLVMXCoreDisassembler"],
 +    visibility = ["//visibility:public"],
 +    deps = [
++        ":MCDisassembler",
++        ":Support",
++        ":XCoreInfo",
 +        ":config",
-+        ":mc_disassembler",
-+        ":support",
-+        ":x_core_info",
 +    ],
 +)
 +
 +cc_library(
-+    name = "x_core_info",
++    name = "XCoreInfo",
 +    linkopts = ["-lLLVMXCoreInfo"],
 +    visibility = ["//visibility:public"],
 +    deps = [
++        ":Support",
 +        ":config",
-+        ":support",
 +    ],
 +)
 +
 +cc_library(
-+    name = "x_ray",
++    name = "XRay",
 +    linkopts = ["-lLLVMXRay"],
 +    visibility = ["//visibility:public"],
 +    deps = [
++        ":Object",
++        ":Support",
 +        ":config",
-+        ":object",
-+        ":support",
 +    ],
 +)
 -- 

@@ -1,4 +1,4 @@
-From 08297dea9f83024876e0be3f203a83b777ee1ea4 Mon Sep 17 00:00:00 2001
+From 17d3c28a3ff5e877f4286cb8b4f804447618fa6f Mon Sep 17 00:00:00 2001
 From: Isuru Fernando <isuruf@gmail.com>
 Date: Thu, 15 Aug 2019 02:50:37 +0000
 Subject: [PATCH 4/5] Unbundle LLVM
@@ -11,10 +11,10 @@ Subject: [PATCH 4/5] Unbundle LLVM
  create mode 100644 third_party/systemlibs/generate_llvm_build.py
 
 diff --git a/tensorflow/workspace.bzl b/tensorflow/workspace.bzl
-index 262da77e0c2..9824c6c7b68 100755
+index 3397d1070d1..716757ade64 100755
 --- a/tensorflow/workspace.bzl
 +++ b/tensorflow/workspace.bzl
-@@ -612,6 +612,7 @@ def tf_repositories(path_prefix = "", tf_repo_name = ""):
+@@ -691,6 +691,7 @@ def tf_repositories(path_prefix = "", tf_repo_name = ""):
          name = "llvm-project",
          sha256 = LLVM_SHA256,
          strip_prefix = "llvm-project-" + LLVM_COMMIT,
@@ -330,10 +330,10 @@ index 00000000000..54745b46f10
 +with open(build_path, "r") as f:
 +  exec(f.read())
 diff --git a/third_party/systemlibs/syslibs_configure.bzl b/third_party/systemlibs/syslibs_configure.bzl
-index 217c0131186..9e89523266a 100644
+index 265fe968003..67bf3553f09 100644
 --- a/third_party/systemlibs/syslibs_configure.bzl
 +++ b/third_party/systemlibs/syslibs_configure.bzl
-@@ -30,6 +30,7 @@ VALID_LIBS = [
+@@ -31,6 +31,7 @@ VALID_LIBS = [
      "icu",
      "jsoncpp_git",
      "libjpeg_turbo",
