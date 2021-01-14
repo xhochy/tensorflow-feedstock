@@ -2,17 +2,6 @@
 
 set -ex
 
-if [[ "$target_platform" == "osx-64" ]]; then
-  # install the whl using pip
-  pip install --no-deps *.whl
-
-  # The tensorboard package has the proper entrypoint
-  ls -l ${SP_DIR}
-#   rm -f ${PREFIX}/bin/tensorboard
-
-  exit 0
-fi
-
 export PATH="$PWD:$PATH"
 export CC=$(basename $CC)
 export CXX=$(basename $CXX)
@@ -28,53 +17,29 @@ export BAZEL_MKL_OPT=""
 mkdir -p ./bazel_output_base
 export BAZEL_OPTS=""
 
-if [[ "$target_platform" == "osx-64" ]]; then
-    # set up bazel config file for conda provided clang toolchain
-    cp -r ${RECIPE_DIR}/custom_clang_toolchain .
-    pushd custom_clang_toolchain
-    cp  ../$CC cc_wrapper.sh
-    sed -e "s:\${PREFIX}:${BUILD_PREFIX}:" \
-        -e "s:\${LD}:${LD}:" \
-        -e "s:\${NM}:${NM}:" \
-        -e "s:\${STRIP}:${STRIP}:" \
-        -e "s:\${LIBTOOL}:${LIBTOOL}:" \
-        -e "s:\${CONDA_BUILD_SYSROOT}:${CONDA_BUILD_SYSROOT}:" \
-        CROSSTOOL.template > CROSSTOOL
-    popd
-    export BAZEL_USE_CPP_ONLY_TOOLCHAIN=1
-    BUILD_OPTS="
-        --crosstool_top=//custom_clang_toolchain:toolchain
-        --verbose_failures
-        ${BAZEL_MKL_OPT}
-        --config=opt"
-    export TF_ENABLE_XLA=0
-	export BUILD_TARGET="//tensorflow/tools/pip_package:build_pip_package"
-else
-    # Linux
-    # the following arguments are useful for debugging
-    #    --logging=6
-    #    --subcommands
-    # jobs can be used to limit parallel builds and reduce resource needs
-    #    --jobs=20
-    # Set compiler and linker flags as bazel does not account for CFLAGS,
-    # CXXFLAGS and LDFLAGS.
-    BUILD_OPTS="
-    --copt=-march=nocona
-    --copt=-mtune=haswell
-    --copt=-ftree-vectorize
-    --copt=-fPIC
-    --copt=-fstack-protector-strong
-    --copt=-O2
-    --cxxopt=-fvisibility-inlines-hidden
-    --cxxopt=-fmessage-length=0
-    --linkopt=-zrelro
-    --linkopt=-znow
-    --verbose_failures
-    ${BAZEL_MKL_OPT}
-    --config=opt"
-    export TF_ENABLE_XLA=0
-	export BUILD_TARGET="//tensorflow/tools/pip_package:build_pip_package //tensorflow:libtensorflow.so //tensorflow:libtensorflow_cc.so"
-fi
+# the following arguments are useful for debugging
+#    --logging=6
+#    --subcommands
+# jobs can be used to limit parallel builds and reduce resource needs
+#    --jobs=20
+# Set compiler and linker flags as bazel does not account for CFLAGS,
+# CXXFLAGS and LDFLAGS.
+BUILD_OPTS="
+--copt=-march=nocona
+--copt=-mtune=haswell
+--copt=-ftree-vectorize
+--copt=-fPIC
+--copt=-fstack-protector-strong
+--copt=-O2
+--cxxopt=-fvisibility-inlines-hidden
+--cxxopt=-fmessage-length=0
+--linkopt=-zrelro
+--linkopt=-znow
+--verbose_failures
+${BAZEL_MKL_OPT}
+--config=opt"
+export TF_ENABLE_XLA=0
+export BUILD_TARGET="//tensorflow/tools/pip_package:build_pip_package //tensorflow:libtensorflow.so //tensorflow:libtensorflow_cc.so"
 
 # Python settings
 export PYTHON_BIN_PATH=${PYTHON}
