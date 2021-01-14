@@ -36,8 +36,10 @@ requirements:
     - zlib
     - libpng
     - libcurl
-    - unzip
-    - zip
+    - unzip        # [not win]
+    - zip          # [not win]
+    - m2-unzip     # [win]
+    - m2-zip       # [win]
     - openjdk >=8
     - nsync
     # requirements specified by the package itself, see
