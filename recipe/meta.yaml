@@ -1,4 +1,4 @@
-{% set version = "2.2.0" %}
+{% set version = "2.4.0" %}
 
 package:
   name: tensorflow
@@ -6,7 +6,7 @@ package:
 
 source:
   url: https://github.com/tensorflow/tensorflow/archive/v{{ version }}.tar.gz
-  sha256: 69cd836f87b8c53506c4f706f655d423270f5a563b76dc1cfa60fbc3184185a3
+  sha256: 26c833b7e1873936379e810a39d14700281125257ddda8cd822c89111db6f6ae
 
   patches:
     - patches/0001-relax-tolerence-in-special_math_test.patch
