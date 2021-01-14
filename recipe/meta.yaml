@@ -1,26 +1,12 @@
 {% set version = "2.2.0" %}
 
-{% set pyver = "cp{}{}".format(PY_VER[0], PY_VER[2]) %}
-{% set platform = "macosx_10_11_x86_64" %}        # [osx]
-{% set platform = "win_amd64" %}                  # [win]
-{% set fn = "{}-{}-{}-{}m-{}.whl".format("tensorflow", version, pyver, pyver, platform) %}  # [not linux]
-{% set fn = "tensorflow-{{ version }}.tar.gz" %}  # [linux]
-
 package:
   name: tensorflow
   version: {{ version }}
 
 source:
-  fn: {{ fn }}
-  url: https://github.com/tensorflow/tensorflow/archive/v{{ version }}.tar.gz  # [linux]
-  sha256: 69cd836f87b8c53506c4f706f655d423270f5a563b76dc1cfa60fbc3184185a3     # [linux]
-  url: https://pypi.io/packages/{{ pyver }}/t/tensorflow/{{ fn }}              # [not linux]
-  sha256: 6735486ee9c3cb0807476e2b36ef7a4cd6c597cb24abf496e66b703360e1e54e     # [osx and py==36]
-  sha256: c332c7fc5cfd54cb86d5da99787c9693e3a924848097c54df1b71ee595a39c93     # [osx and py==37]
-  sha256: bbcfb04738099bd46822db91584db74703fdddacf4cd0a76acfc5e086956b5ba     # [osx and py==38]
-  sha256: 3ee8819732d8594913b7d22ded7b22e48a49aa015050d8dd8464eaa010ba2e41     # [win and py==36]
-  sha256: 68ea22aee9c269a6a0c1061c141f1ec1cd1b1be7569390519c1bf4773f434a40     # [win and py==37]
-  sha256: 784ab8217e4b0eb4d121c28430c6cdc2ce56c02634a9720d84fb30598b338b8c     # [win and py==38]
+  url: https://github.com/tensorflow/tensorflow/archive/v{{ version }}.tar.gz
+  sha256: 69cd836f87b8c53506c4f706f655d423270f5a563b76dc1cfa60fbc3184185a3
 
   patches:
     - patches/0001-relax-tolerence-in-special_math_test.patch                  # [linux]
