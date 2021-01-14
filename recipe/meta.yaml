@@ -9,11 +9,11 @@ source:
   sha256: 69cd836f87b8c53506c4f706f655d423270f5a563b76dc1cfa60fbc3184185a3
 
   patches:
-    - patches/0001-relax-tolerence-in-special_math_test.patch                  # [linux]
-    - patches/0002-skip-read-only-debugger_cli_common-test.patch               # [linux]
-    - patches/0003-relax-precision-in-matrix_log_op_test.patch                 # [linux]
-    - patches/0004-Unbundle-LLVM.patch                                         # [linux]
-    - patches/0005-rerun-generate_llvm_build.py.patch                          # [linux]
+    - patches/0001-relax-tolerence-in-special_math_test.patch
+    - patches/0002-skip-read-only-debugger_cli_common-test.patch
+    - patches/0003-relax-precision-in-matrix_log_op_test.patch
+    - patches/0004-Unbundle-LLVM.patch
+    - patches/0005-rerun-generate_llvm_build.py.patch
 
 build:
   number: 0
@@ -21,11 +21,11 @@ build:
 
 requirements:
   build:
-    - {{ compiler('c') }}       # [linux]
-    - {{ compiler('cxx') }}     # [linux]
-    - bazel =2.0.0              # [linux]
-    - nasm                      # [linux]
-    - swig                      # [linux]
+    - {{ compiler('c') }}
+    - {{ compiler('cxx') }}
+    - bazel =2.0.0
+    - nasm
+    - swig
   host:
     # conda build requirements
     - python
@@ -38,21 +38,21 @@ requirements:
     - google-pasta >=0.1.6
     - keras-applications >=1.0.6
     - keras-preprocessing >=1.0.5
-    - llvmdev >=9.0.0           # [linux]
-    - zlib                      # [linux]
-    - libpng                    # [linux]
-    - libcurl                   # [linux]
-    - unzip                     # [linux]
-    - zip                       # [linux]
-    - openjdk >=8               # [linux]
-    - nsync                     # [linux]
+    - llvmdev >=9.0.0
+    - zlib
+    - libpng
+    - libcurl
+    - unzip
+    - zip
+    - openjdk >=8
+    - nsync
     - numpy >=1.16.1
     - six >=1.10.0
     - protobuf >=3.6.1
     - termcolor >=1.1.0
     - wrapt >=1.11.1
     - grpcio >=1.8.6
-    - wheel >=0.26              # [linux]
+    - wheel >=0.26
     - tensorflow-estimator >=2.2.0,<2.3.0a0
   run:
     - {{ pin_subpackage('tensorflow-base', exact=True) }}
@@ -72,8 +72,8 @@ outputs:
     requirements:
       # build requirements needs to pick up the compiler run_exports
       build:
-        - {{ compiler('c') }}       # [linux]
-        - {{ compiler('cxx') }}     # [linux]
+        - {{ compiler('c') }}
+        - {{ compiler('cxx') }}
       host:
         # conda build requirements
         - python
@@ -92,11 +92,11 @@ outputs:
         - termcolor >=1.1.0
         - wrapt >=1.11.1
         - grpcio >=1.8.6
-        - wheel >=0.26              # [unix]
+        - wheel >=0.26
         - tensorflow-estimator >=2.2.0,<2.3.0a0
-        - zlib                      # [linux]
-        - libpng                    # [linux]
-        - libcurl                   # [linux]
+        - zlib
+        - libpng
+        - libcurl
       run:
         - python
         - absl-py >=0.7.0
@@ -127,18 +127,18 @@ outputs:
         - toco --help               # [not win]
 
   - name: libtensorflow
-    script: cp_libtensorflow.sh     # [unix]
+    script: cp_libtensorflow.sh
     build:
       skip: true                    # [not linux]
     requirements:
       # build requirements needs to pick up the compiler run_exports
       build:
-        - {{ compiler('c') }}       # [linux]
-        - {{ compiler('cxx') }}     # [linux]
+        - {{ compiler('c') }}
+        - {{ compiler('cxx') }}
       # host requirements to pick up run_exports
       host:
-        - libcurl                   # [linux]
-        - zlib                      # [linux]
+        - libcurl
+        - zlib
 
     test:
       files:
@@ -150,19 +150,19 @@ outputs:
         - $CC -o test_c -L${PREFIX}/lib/ -ltensorflow -I${PREFIX}/include/ test_c.c && ./test_c  # [not win]
 
   - name: libtensorflow_cc
-    script: cp_libtensorflow_cc.sh  # [unix]
+    script: cp_libtensorflow_cc.sh
     build:
-      skip: true  # [not linux]
+      skip: true                    # [not linux]
     requirements:
       # build requirements needs to pick up the compiler run_exports
       build:
-        - {{ compiler('c') }}       # [linux]
-        - {{ compiler('cxx') }}     # [linux]
-        - rsync                     # [linux]
+        - {{ compiler('c') }}
+        - {{ compiler('cxx') }}
+        - rsync
       # host requirements to pick up run_exports
       host:
-        - libcurl                   # [linux]
-        - zlib                      # [linux]
+        - libcurl
+        - zlib
     test:
       files:
         - test_cc.cc
