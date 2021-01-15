@@ -8,7 +8,7 @@ export CXX=$(basename $CXX)
 export LIBDIR=$PREFIX/lib
 export INCLUDEDIR=$PREFIX/include
 
-export TF_SYSTEM_LIBS="llvm,swig"
+export TF_SYSTEM_LIBS="llvm"
 
 # do not build with MKL support
 export TF_NEED_MKL=0
