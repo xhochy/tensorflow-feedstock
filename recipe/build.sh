@@ -73,10 +73,7 @@ export TF_SET_ANDROID_WORKSPACE=0
 ./configure
 
 # build using bazel
-bazel --host_jvm_args="-Xms512m" --host_jvm_args="-Xmx4096m" \
-    ${BAZEL_OPTS} build \
-    --local_cpu_resources ${CPU_COUNT} --local_ram_resources 7168 \
-    ${BUILD_OPTS} ${BUILD_TARGET}
+bazel ${BAZEL_OPTS} build ${BUILD_OPTS} ${BUILD_TARGET}
 
 # build a whl file
 mkdir -p $SRC_DIR/tensorflow_pkg
