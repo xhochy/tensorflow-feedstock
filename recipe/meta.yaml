@@ -68,6 +68,8 @@ requirements:
 
 outputs:
   - name: tensorflow-base
+    files:
+      - "lib/python*/site-packages/tensorflow"
     build:
       entry_points:
         - toco_from_protos = tensorflow.lite.toco.python.toco_from_protos:main
