@@ -46,7 +46,7 @@ requirements:
     # github.com/tensorflow/tensorflow/blob/v{{ version }}/tensorflow/tools/pip_package/setup.py
     - absl-py >=0.10.0
     - astunparse >=1.6.3
-    - flatbuffers >=1.12.0
+    - python-flatbuffers >=1.12.0
     - google-pasta >=0.2
     - h5py >=2.10
     - keras-preprocessing >=1.1.2
@@ -92,7 +92,7 @@ outputs:
         # requirements specified by the package itself
         - absl-py >=0.10.0
         - astunparse >=1.6.3
-        - flatbuffers >=1.12.0
+        - python-flatbuffers >=1.12.0
         - google-pasta >=0.2
         - h5py >=2.10
         - keras-preprocessing >=1.1.2
@@ -113,7 +113,7 @@ outputs:
         - python
         - absl-py >=0.10.0
         - astunparse >=1.6.3
-        - flatbuffers >=1.12.0
+        - python-flatbuffers >=1.12.0
         - google-pasta >=0.2
         - h5py >=2.10
         - keras-preprocessing >=1.1.2
