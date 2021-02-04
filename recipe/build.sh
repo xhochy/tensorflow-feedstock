@@ -39,7 +39,7 @@ BUILD_OPTS="
 ${BAZEL_MKL_OPT}
 --config=opt"
 export TF_ENABLE_XLA=0
-export BUILD_TARGET="//tensorflow/tools/pip_package:build_pip_package //tensorflow:libtensorflow.so //tensorflow:libtensorflow_cc.so"
+export BUILD_TARGET="//tensorflow/tools/pip_package:build_pip_package //tensorflow/tools/lib_package:libtensorflow //tensorflow:libtensorflow_cc.so"
 
 # Python settings
 export PYTHON_BIN_PATH=${PYTHON}
