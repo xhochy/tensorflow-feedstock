@@ -6,4 +6,4 @@ cp bazel-bin/tensorflow/*.so ${PREFIX}/lib/
 mkdir -p ${PREFIX}/include/tensorflow/c
 cp -R tensorflow/c/* ${PREFIX}/include/tensorflow/c/.
 mkdir -p ${PREFIX}/include/tensorflow/core/platform/
-cp tensorflow/core/platform/ctstring.h ${PREFIX}/include/tensorflow/core/platform/
+cp tensorflow/core/platform/*.h ${PREFIX}/include/tensorflow/core/platform/
