@@ -36,20 +36,6 @@ Current build status
         <table>
           <thead><tr><th>Variant</th><th>Status</th></tr></thead>
           <tbody><tr>
-              <td>linux_64_python3.6.____cpython</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=4385&branchName=master">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/tensorflow-feedstock?branchName=master&jobName=linux&configuration=linux_64_python3.6.____cpython" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
-              <td>linux_64_python3.7.____cpython</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=4385&branchName=master">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/tensorflow-feedstock?branchName=master&jobName=linux&configuration=linux_64_python3.7.____cpython" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
               <td>linux_64_python3.8.____cpython</td>
               <td>
                 <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=4385&branchName=master">
@@ -57,45 +43,10 @@ Current build status
                 </a>
               </td>
             </tr><tr>
-              <td>osx_64_python3.6.____cpython</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=4385&branchName=master">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/tensorflow-feedstock?branchName=master&jobName=osx&configuration=osx_64_python3.6.____cpython" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
-              <td>osx_64_python3.7.____cpython</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=4385&branchName=master">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/tensorflow-feedstock?branchName=master&jobName=osx&configuration=osx_64_python3.7.____cpython" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
               <td>osx_64_python3.8.____cpython</td>
               <td>
                 <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=4385&branchName=master">
                   <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/tensorflow-feedstock?branchName=master&jobName=osx&configuration=osx_64_python3.8.____cpython" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
-              <td>win_64_python3.6.____cpython</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=4385&branchName=master">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/tensorflow-feedstock?branchName=master&jobName=win&configuration=win_64_python3.6.____cpython" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
-              <td>win_64_python3.7.____cpython</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=4385&branchName=master">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/tensorflow-feedstock?branchName=master&jobName=win&configuration=win_64_python3.7.____cpython" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
-              <td>win_64_python3.8.____cpython</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=4385&branchName=master">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/tensorflow-feedstock?branchName=master&jobName=win&configuration=win_64_python3.8.____cpython" alt="variant">
                 </a>
               </td>
             </tr>
@@ -113,7 +64,6 @@ Current release info
 | --- | --- | --- | --- |
 | [![Conda Recipe](https://img.shields.io/badge/recipe-libtensorflow-green.svg)](https://anaconda.org/conda-forge/libtensorflow) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/libtensorflow.svg)](https://anaconda.org/conda-forge/libtensorflow) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/libtensorflow.svg)](https://anaconda.org/conda-forge/libtensorflow) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/libtensorflow.svg)](https://anaconda.org/conda-forge/libtensorflow) |
 | [![Conda Recipe](https://img.shields.io/badge/recipe-libtensorflow_cc-green.svg)](https://anaconda.org/conda-forge/libtensorflow_cc) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/libtensorflow_cc.svg)](https://anaconda.org/conda-forge/libtensorflow_cc) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/libtensorflow_cc.svg)](https://anaconda.org/conda-forge/libtensorflow_cc) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/libtensorflow_cc.svg)](https://anaconda.org/conda-forge/libtensorflow_cc) |
-| [![Conda Recipe](https://img.shields.io/badge/recipe-tensorflow-green.svg)](https://anaconda.org/conda-forge/tensorflow) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/tensorflow.svg)](https://anaconda.org/conda-forge/tensorflow) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/tensorflow.svg)](https://anaconda.org/conda-forge/tensorflow) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/tensorflow.svg)](https://anaconda.org/conda-forge/tensorflow) |
 | [![Conda Recipe](https://img.shields.io/badge/recipe-tensorflow--base-green.svg)](https://anaconda.org/conda-forge/tensorflow-base) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/tensorflow-base.svg)](https://anaconda.org/conda-forge/tensorflow-base) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/tensorflow-base.svg)](https://anaconda.org/conda-forge/tensorflow-base) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/tensorflow-base.svg)](https://anaconda.org/conda-forge/tensorflow-base) |
 
 Installing tensorflow
@@ -125,10 +75,10 @@ Installing `tensorflow` from the `conda-forge` channel can be achieved by adding
 conda config --add channels conda-forge
 ```
 
-Once the `conda-forge` channel has been enabled, `libtensorflow, libtensorflow_cc, tensorflow, tensorflow-base` can be installed with:
+Once the `conda-forge` channel has been enabled, `libtensorflow, libtensorflow_cc, tensorflow-base` can be installed with:
 
 ```
-conda install libtensorflow libtensorflow_cc tensorflow tensorflow-base
+conda install libtensorflow libtensorflow_cc tensorflow-base
 ```
 
 It is possible to list all of the versions of `libtensorflow` available on your platform with:
@@ -193,9 +143,9 @@ build distinct package versions.
 
 In order to produce a uniquely identifiable distribution:
  * If the version of a package **is not** being increased, please add or increase
-   the [``build/number``](https://conda.io/docs/user-guide/tasks/build-packages/define-metadata.html#build-number-and-string).
+   the [``build/number``](https://docs.conda.io/projects/conda-build/en/latest/resources/define-metadata.html#build-number-and-string).
  * If the version of a package **is** being increased, please remember to return
-   the [``build/number``](https://conda.io/docs/user-guide/tasks/build-packages/define-metadata.html#build-number-and-string)
+   the [``build/number``](https://docs.conda.io/projects/conda-build/en/latest/resources/define-metadata.html#build-number-and-string)
    back to 0.
 
 Feedstock Maintainers
