@@ -58,13 +58,23 @@ requirements:
     - typing_extensions >=3.7.4
     - wheel >=0.35
     - wrapt >=1.11.1
+    # TF_SYSTEM_LIBS
+    - astor >=0.7.1
+    - grpc-cpp
+    - libprotobuf
+    - giflib
+    - libjpeg-turbo
+    - openssl
+    - cython >=0.28.4
+    - dill >=0.3.1.1
+    - snappy
     # upstream wants exact pin for gast
     - gast ==0.3.3
     # TF-API needs to move in sync
     - tensorboard >=2.4.0,<2.5
     - tensorflow-estimator >=2.4.0,<2.5
-  run:
-    - {{ pin_subpackage('tensorflow-base', exact=True) }}
+  #run:
+  #- {{ pin_subpackage('tensorflow-base', exact=True) }}
 
 outputs:
   - name: tensorflow-base
@@ -201,6 +211,7 @@ about:
   doc_source_url: https://github.com/tensorflow/tensorflow/tree/master/tensorflow/docs_src
 
 extra:
+  feedstock-name: tensorflow
   recipe-maintainers:
     - waitingkuo
     - ghego
