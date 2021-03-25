@@ -31,7 +31,6 @@ toolchain {
   linker_flag: "-Wl,-pie"
   linker_flag: "-headerpad_max_install_names"
   linker_flag: "-Wl,-dead_strip_dylibs"
-  linker_flag: "-lc++"
   linker_flag: "-undefined"
   linker_flag: "dynamic_lookup"
   linker_flag: "-force_load"

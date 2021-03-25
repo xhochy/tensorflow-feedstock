@@ -14,6 +14,7 @@ source:
     - patches/0003-relax-precision-in-matrix_log_op_test.patch
     - patches/0004-Unbundle-LLVM.patch
     - patches/0005-rerun-generate_llvm_build.py.patch
+    - patches/osx-arm64.patch  # [osx and arm64]
 
 build:
   number: 0
