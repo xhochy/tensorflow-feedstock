@@ -24,7 +24,8 @@ requirements:
     - {{ compiler('c') }}
     - {{ compiler('cxx') }}
     # see https://github.com/tensorflow/tensorflow/blob/v{{ version }}/.bazelversion
-    - bazel ==3.1.0
+    - bazel 3.1.0  # [not osx]
+    - bazel        # [osx]
     - nasm
   host:
     # conda build requirements
