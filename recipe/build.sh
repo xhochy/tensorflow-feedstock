@@ -53,36 +53,17 @@ export CC_OPT_FLAGS="${CFLAGS}"
 # bazel query 'deps(//tensorflow/tools/lib_package:libtensorflow)' --output graph > graph.in
 if [[ "${target_platform}" == osx-* ]]; then
   export LDFLAGS="${LDFLAGS} -lz -framework CoreFoundation"
-  source ${RECIPE_DIR}/gen-bazel-toolchain.sh
-  BUILD_OPTS="
-      --crosstool_top=//custom_toolchain:toolchain
-      --logging=6
-      --subcommands
-      --verbose_failures
-      --config=opt
-      --cpu=${TARGET_CPU}"
 else
-  # the following arguments are useful for debugging
-  #    --logging=6
-  #    --subcommands
-  # jobs can be used to limit parallel builds and reduce resource needs
-  #    --jobs=20
-  # Set compiler and linker flags as bazel does not account for CFLAGS,
-  # CXXFLAGS and LDFLAGS.
-  BUILD_OPTS="
-  --copt=-mtune=haswell
-  --copt=-ftree-vectorize
-  --copt=-fPIC
-  --copt=-fstack-protector-strong
-  --copt=-O2
-  --cxxopt=-fvisibility-inlines-hidden
-  --cxxopt=-fmessage-length=0
-  --linkopt=-zrelro
-  --linkopt=-znow
-  --verbose_failures
-  ${BAZEL_MKL_OPT}
-  --config=opt"
+  export LDFLAGS="${LDFLAGS} -lrt"
 fi
+source ${RECIPE_DIR}/gen-bazel-toolchain.sh
+BUILD_OPTS="
+    --crosstool_top=//custom_toolchain:toolchain
+    --logging=6
+    --subcommands
+    --verbose_failures
+    --config=opt
+    --cpu=${TARGET_CPU}"
 export TF_ENABLE_XLA=0
 export BUILD_TARGET="//tensorflow/tools/pip_package:build_pip_package //tensorflow/tools/lib_package:libtensorflow //tensorflow:libtensorflow_cc.so"
 
