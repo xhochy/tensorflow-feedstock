@@ -165,4 +165,5 @@ Feedstock Maintainers
 * [@jschueller](https://github.com/jschueller/)
 * [@njzjz](https://github.com/njzjz/)
 * [@waitingkuo](https://github.com/waitingkuo/)
+* [@xhochy](https://github.com/xhochy/)
 
