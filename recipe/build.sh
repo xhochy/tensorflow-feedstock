@@ -34,6 +34,7 @@ export TF_SYSTEM_LIBS="
   gif
   libjpeg_turbo
   llvm
+  pybind11
   snappy
   zlib
   "
