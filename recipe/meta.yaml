@@ -117,6 +117,17 @@ outputs:
         - typing_extensions >=3.7.4
         - wheel >=0.35
         - wrapt >=1.11.1
+        # TF_SYSTEM_LIBS
+        - astor >=0.7.1
+        - grpc-cpp
+        - libprotobuf
+        - giflib
+        - libjpeg-turbo
+        - openssl
+        - cython >=0.28.4
+        - dill >=0.3.1.1
+        - snappy
+        - pybind11
         # upstream wants exact pin for gast
         - gast ==0.3.3
         # TF-API needs to move in sync
