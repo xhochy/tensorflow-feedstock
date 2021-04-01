@@ -18,10 +18,10 @@ giflib:
 - '5.2'
 grpc_cpp:
 - '1.36'
+jpeg:
+- '9'
 libcurl:
 - '7'
-libjpeg_turbo:
-- '2'
 libpng:
 - '1.6'
 libprotobuf:
@@ -29,9 +29,9 @@ libprotobuf:
 openssl:
 - 1.1.1
 pin_run_as_build:
-  libcurl:
+  jpeg:
     max_pin: x
-  libjpeg_turbo:
+  libcurl:
     max_pin: x
   libpng:
     max_pin: x.x
