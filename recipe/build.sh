@@ -53,7 +53,7 @@ export CC_OPT_FLAGS="${CFLAGS}"
 # Dependency graph:
 # bazel query 'deps(//tensorflow/tools/lib_package:libtensorflow)' --output graph > graph.in
 if [[ "${target_platform}" == osx-* ]]; then
-  export LDFLAGS="${LDFLAGS} -lz -framework CoreFoundation"
+  export LDFLAGS="${LDFLAGS} -lz -framework CoreFoundation -Xlinker -undefined -Xlinker dynamic_lookup"
 else
   export LDFLAGS="${LDFLAGS} -lrt"
 fi
@@ -71,7 +71,13 @@ BUILD_OPTS="
     --subcommands
     --verbose_failures
     --config=opt
+    --define=PREFIX=${PREFIX}
+    --define=PROTOBUF_INCLUDE_PATH=${PREFIX}/include
     --cpu=${TARGET_CPU}"
+
+if [[ "${target_platform}" == "osx-arm64" ]]; then
+  BUILD_OPTS="${BUILD_OPTS} --config=macos_arm64"
+fi
 export TF_ENABLE_XLA=0
 export BUILD_TARGET="//tensorflow/tools/pip_package:build_pip_package //tensorflow/tools/lib_package:libtensorflow //tensorflow:libtensorflow_cc.so"
 
@@ -92,6 +98,11 @@ export TF_NEED_MPI=0
 export TF_DOWNLOAD_CLANG=0
 export TF_SET_ANDROID_WORKSPACE=0
 export TF_CONFIGURE_IOS=0
+
+# Get rid of unwanted defaults
+sed -i -e "/PROTOBUF_INCLUDE_PATH/c\ " .bazelrc
+sed -i -e "/PREFIX/c\ " .bazelrc
+
 ./configure
 echo "build --config=noaws" >> .bazelrc
 

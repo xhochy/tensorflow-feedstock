@@ -15,6 +15,7 @@ source:
     - patches/0004-Unbundle-LLVM.patch
     - patches/0005-rerun-generate_llvm_build.py.patch
     - patches/osx-arm64.patch  # [osx and arm64]
+    - patches/osx-arm64-2.patch  # [osx and arm64]
 
 build:
   number: 0
@@ -28,12 +29,11 @@ requirements:
     - bazel 3.1.0  # [not osx]
     - bazel        # [osx]
     - nasm
+    - sed
   host:
     # conda build requirements
     - python
     - pip
-    # TODO: potentially remove these?
-    - llvmdev >=9.0.0
     - zlib
     - libpng
     - libcurl
