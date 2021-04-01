@@ -33,12 +33,11 @@ export TF_SYSTEM_LIBS="
   dill_archive
   gif
   libjpeg_turbo
-  llvm
   pybind11
   snappy
   zlib
   "
-python ./third_party/systemlibs/generate_llvm_build.py > third_party/systemlibs/llvm.BUILD
+# python ./third_party/systemlibs/generate_llvm_build.py > third_party/systemlibs/llvm.BUILD
 
 # do not build with MKL support
 export TF_NEED_MKL=0
