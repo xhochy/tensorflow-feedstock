@@ -25,7 +25,7 @@ requirements:
   build:
     - python                                 # [build_platform != target_platform]
     - cross-python_{{ target_platform }}     # [build_platform != target_platform]
-    - numpy                                  # [build_platform != target_platform]
+    - numpy 1.19.2                           # [build_platform != target_platform]
     - {{ compiler('c') }}
     - {{ compiler('cxx') }}
     # see https://github.com/tensorflow/tensorflow/blob/v{{ version }}/.bazelversion
@@ -56,7 +56,7 @@ requirements:
     - google-pasta >=0.2
     - h5py >=2.10
     - keras-preprocessing >=1.1.2
-    - numpy >=1.19.2
+    - numpy 1.19.2
     - opt_einsum >=3.3.0
     - protobuf >=3.9.2
     - six >=1.15.0
@@ -64,7 +64,6 @@ requirements:
     - typing_extensions >=3.7.4
     - wheel >=0.35
     - wrapt >=1.11.1
-    - numpy
     # TF_SYSTEM_LIBS
     - astor >=0.7.1
     - cython >=0.28.4
@@ -116,7 +115,7 @@ outputs:
         - google-pasta >=0.2
         - h5py >=2.10
         - keras-preprocessing >=1.1.2
-        - numpy >=1.19.2
+        - numpy 1.19.2
         - opt_einsum >=3.3.0
         - protobuf >=3.9.2
         - six >=1.15.0
