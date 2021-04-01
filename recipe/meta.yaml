@@ -67,15 +67,16 @@ requirements:
     - numpy
     # TF_SYSTEM_LIBS
     - astor >=0.7.1
-    - grpc-cpp
-    - libprotobuf
-    - giflib
-    - jpeg
-    - openssl
     - cython >=0.28.4
     - dill >=0.3.1.1
-    - snappy
+    - giflib
+    - grpc-cpp
+    - jpeg
+    - libpng
+    - libprotobuf
+    - openssl
     - pybind11
+    - snappy
     - zlib
     # upstream wants exact pin for gast
     - gast ==0.3.3
@@ -125,17 +126,18 @@ outputs:
         - wrapt >=1.11.1
         # TF_SYSTEM_LIBS
         - astor >=0.7.1
-        - grpc-cpp
-        - libprotobuf
-        - giflib
-        - jpeg
-        - openssl
         - cython >=0.28.4
         - dill >=0.3.1.1
-        - snappy
-        - pybind11
-        - zlib
+        - giflib
+        - grpc-cpp
+        - jpeg
         - libcurl
+        - libpng
+        - libprotobuf
+        - openssl
+        - pybind11
+        - snappy
+        - zlib
         # upstream wants exact pin for gast
         - gast ==0.3.3
         # TF-API needs to move in sync
@@ -163,9 +165,12 @@ outputs:
         - tensorboard >=2.4.0,<2.5
         - tensorflow-estimator >=2.4.0,<2.5
     test:
+      requires:
+        - pip
       imports:
         - tensorflow
       commands:
+        - pip check
         - tf_upgrade_v2 --help
         - saved_model_cli --help
         - tflite_convert --help     # [not win]
@@ -183,11 +188,12 @@ outputs:
         - {{ compiler('cxx') }}
       # host requirements to pick up run_exports
       host:
-        - grpc-cpp
-        - libprotobuf
         - giflib
+        - grpc-cpp
         - jpeg
         - libcurl
+        - libpng
+        - libprotobuf
         - openssl
         - snappy
         - zlib
@@ -214,13 +220,14 @@ outputs:
         - rsync
       # host requirements to pick up run_exports
       host:
-        - grpc-cpp
-        - libprotobuf
-        - libcurl
-        - jpeg
-        - snappy
-        - openssl
         - giflib
+        - grpc-cpp
+        - jpeg
+        - libcurl
+        - libpng
+        - libprotobuf
+        - openssl
+        - snappy
         - zlib
     test:
       files:

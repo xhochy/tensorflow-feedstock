@@ -33,6 +33,7 @@ export TF_SYSTEM_LIBS="
   dill_archive
   gif
   libjpeg_turbo
+  png
   pybind11
   snappy
   zlib
