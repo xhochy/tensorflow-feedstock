@@ -64,10 +64,10 @@ if [[ "${target_platform}" == "osx-64" ]]; then
   TARGET_CPU=darwin
 fi
 
+# If you really want to see what is executed, add --subcommands
 BUILD_OPTS="
     --crosstool_top=//custom_toolchain:toolchain
     --logging=6
-    --subcommands
     --verbose_failures
     --config=opt
     --define=PREFIX=${PREFIX}

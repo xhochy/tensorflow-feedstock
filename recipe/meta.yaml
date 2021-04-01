@@ -23,10 +23,14 @@ build:
 
 requirements:
   build:
+    - python                                 # [build_platform != target_platform]
+    - cross-python_{{ target_platform }}     # [build_platform != target_platform]
+    - numpy                                  # [build_platform != target_platform]
     - {{ compiler('c') }}
     - {{ compiler('cxx') }}
     # see https://github.com/tensorflow/tensorflow/blob/v{{ version }}/.bazelversion
     - bazel 3.1.0  # [not osx]
+    # For osx-arm64 cross-compilation to work, we need bazel>=4.1
     - bazel        # [osx]
     - nasm
     - sed
@@ -60,6 +64,7 @@ requirements:
     - typing_extensions >=3.7.4
     - wheel >=0.35
     - wrapt >=1.11.1
+    - numpy
     # TF_SYSTEM_LIBS
     - astor >=0.7.1
     - grpc-cpp
