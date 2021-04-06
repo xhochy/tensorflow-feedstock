@@ -14,6 +14,7 @@ source:
     - patches/0003-relax-precision-in-matrix_log_op_test.patch
     #- patches/0004-Unbundle-LLVM.patch
     #- patches/0005-rerun-generate_llvm_build.py.patch
+    - patches/loosen-requirements.patch
     - patches/osx-arm64.patch  # [osx and arm64]
     - patches/osx-arm64-2.patch  # [osx and arm64]
 
@@ -52,12 +53,12 @@ requirements:
     # github.com/tensorflow/tensorflow/blob/v{{ version }}/tensorflow/tools/pip_package/setup.py
     - absl-py >=0.10.0
     - astunparse >=1.6.3
-    - python-flatbuffers >=1.12.0
+    - python-flatbuffers 1.12.*
     - google-pasta >=0.2
     - h5py >=2.10
     - keras-preprocessing >=1.1.2
     - numpy 1.19.*
-    - opt_einsum >=3.3.0
+    - opt_einsum 3.3.0.*
     - protobuf >=3.9.2
     - six >=1.15.0
     - termcolor >=1.1.0
@@ -111,12 +112,12 @@ outputs:
         # requirements specified by the package itself
         - absl-py >=0.10.0
         - astunparse >=1.6.3
-        - python-flatbuffers >=1.12.0
+        - python-flatbuffers 1.12.*
         - google-pasta >=0.2
-        - h5py >=2.10
+        - h5py 2.10.*
         - keras-preprocessing >=1.1.2
         - numpy 1.19.*
-        - opt_einsum >=3.3.0
+        - opt_einsum 3.3.0.*
         - protobuf >=3.9.2
         - six >=1.15.0
         - termcolor >=1.1.0
@@ -146,18 +147,19 @@ outputs:
         - python
         - absl-py >=0.10.0
         - astunparse >=1.6.3
-        - python-flatbuffers >=1.12.0
+        - python-flatbuffers 1.12.*
         - google-pasta >=0.2
-        - h5py >=2.10
+        - h5py 2.10.*
         - keras-preprocessing >=1.1.2
         - numpy >=1.19
-        - opt_einsum >=3.3.0
+        - opt_einsum 3.3.0.*
         - protobuf >=3.9.2
         - six >=1.15.0
         - termcolor >=1.1.0
         - typing_extensions >=3.7.4
         - wheel >=0.35
         - wrapt >=1.11.1
+        - grpcio {{ grpc_cpp }}.*
         # upstream wants exact pin for gast
         - gast ==0.3.3
         # TF-API needs to move in sync
