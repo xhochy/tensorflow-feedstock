@@ -39,7 +39,6 @@ export TF_SYSTEM_LIBS="
   zlib
   "
 sed -i -e "s/GRPCIO_VERSION/${grpc_cpp}/" tensorflow/tools/pip_package/setup.py
-# python ./third_party/systemlibs/generate_llvm_build.py > third_party/systemlibs/llvm.BUILD
 
 # do not build with MKL support
 export TF_NEED_MKL=0
