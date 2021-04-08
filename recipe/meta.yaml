@@ -1,7 +1,7 @@
 {% set version = "2.4.0" %}
 
 package:
-  name: tensorflow
+  name: tensorflow-split
   version: {{ version }}
 
 source:
@@ -83,8 +83,6 @@ requirements:
     # TF-API needs to move in sync
     - tensorboard >=2.4.0,<2.5
     - tensorflow-estimator >=2.4.0,<2.5
-  #run:
-  #- {{ pin_subpackage('tensorflow-base', exact=True) }}
 
 outputs:
   - name: tensorflow-base
@@ -177,6 +175,15 @@ outputs:
         - tflite_convert --help     # [not win]
         - toco_from_protos --help   # [not win]
         - toco --help               # [not win]
+
+  - name: tensorflow
+    requirements:
+      host:
+        - python
+        - {{ pin_subpackage('tensorflow-base', exact=True) }}
+      run:
+        - python
+        - {{ pin_subpackage('tensorflow-base', exact=True) }}
 
   - name: libtensorflow
     script: cp_libtensorflow.sh
