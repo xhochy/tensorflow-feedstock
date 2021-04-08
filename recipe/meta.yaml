@@ -1,7 +1,7 @@
 {% set version = "2.4.0" %}
 
 package:
-  name: tensorflow
+  name: tensorflow-split
   version: {{ version }}
 
 source:
@@ -12,26 +12,31 @@ source:
     - patches/0001-relax-tolerence-in-special_math_test.patch
     - patches/0002-skip-read-only-debugger_cli_common-test.patch
     - patches/0003-relax-precision-in-matrix_log_op_test.patch
-    - patches/0004-Unbundle-LLVM.patch
-    - patches/0005-rerun-generate_llvm_build.py.patch
+    - patches/loosen-requirements.patch
+    - patches/osx-arm64.patch  # [osx and arm64]
+    - patches/osx-arm64-2.patch  # [osx and arm64]
 
 build:
   number: 0
-  skip: True  # [not x86_64]
+  skip: true  # [win]
 
 requirements:
   build:
+    - python                                 # [build_platform != target_platform]
+    - cross-python_{{ target_platform }}     # [build_platform != target_platform]
+    - numpy 1.19.*                           # [build_platform != target_platform]
     - {{ compiler('c') }}
     - {{ compiler('cxx') }}
     # see https://github.com/tensorflow/tensorflow/blob/v{{ version }}/.bazelversion
-    - bazel ==3.1.0
+    - bazel 3.1.0  # [not osx]
+    # For osx-arm64 cross-compilation to work, we need bazel>=4.1
+    - bazel        # [osx]
     - nasm
+    - sed
   host:
     # conda build requirements
     - python
     - pip
-    # TODO: potentially remove these?
-    - llvmdev >=9.0.0
     - zlib
     - libpng
     - libcurl
@@ -42,16 +47,29 @@ requirements:
     - m2-zip       # [win]
     - openjdk >=8
     - nsync
+    # TF_SYSTEM_LIBS
+    - astor >=0.7.1
+    - cython >=0.28.4
+    - dill >=0.3.1.1
+    - giflib
+    - grpc-cpp
+    - jpeg
+    - libpng
+    - libprotobuf
+    - openssl
+    - pybind11
+    - snappy
+    - zlib
     # requirements specified by the package itself, see
     # github.com/tensorflow/tensorflow/blob/v{{ version }}/tensorflow/tools/pip_package/setup.py
     - absl-py >=0.10.0
     - astunparse >=1.6.3
-    - flatbuffers >=1.12.0
+    - python-flatbuffers 1.12.*
     - google-pasta >=0.2
     - h5py >=2.10
     - keras-preprocessing >=1.1.2
-    - numpy >=1.19.2
-    - opt_einsum >=3.3.0
+    - numpy 1.19.*
+    - opt_einsum 3.3.0.*
     - protobuf >=3.9.2
     - six >=1.15.0
     - termcolor >=1.1.0
@@ -63,11 +81,11 @@ requirements:
     # TF-API needs to move in sync
     - tensorboard >=2.4.0,<2.5
     - tensorflow-estimator >=2.4.0,<2.5
-  run:
-    - {{ pin_subpackage('tensorflow-base', exact=True) }}
 
 outputs:
   - name: tensorflow-base
+    script: build_pkg.sh  # [not win]
+    script: build_pkg.bat  # [win]
     build:
       entry_points:
         - toco_from_protos = tensorflow.lite.toco.python.toco_from_protos:main
@@ -87,15 +105,29 @@ outputs:
         # conda build requirements
         - python
         - pip
+        # TF_SYSTEM_LIBS
+        - astor >=0.7.1
+        - cython >=0.28.4
+        - dill >=0.3.1.1
+        - giflib
+        - grpc-cpp
+        - jpeg
+        - libcurl
+        - libpng
+        - libprotobuf
+        - openssl
+        - pybind11
+        - snappy
+        - zlib
         # requirements specified by the package itself
         - absl-py >=0.10.0
         - astunparse >=1.6.3
-        - flatbuffers >=1.12.0
+        - python-flatbuffers 1.12.*
         - google-pasta >=0.2
-        - h5py >=2.10
+        - h5py 2.10.*
         - keras-preprocessing >=1.1.2
-        - numpy >=1.19.2
-        - opt_einsum >=3.3.0
+        - numpy 1.19.*
+        - opt_einsum 3.3.0.*
         - protobuf >=3.9.2
         - six >=1.15.0
         - termcolor >=1.1.0
@@ -111,32 +143,45 @@ outputs:
         - python
         - absl-py >=0.10.0
         - astunparse >=1.6.3
-        - flatbuffers >=1.12.0
+        - python-flatbuffers 1.12.*
         - google-pasta >=0.2
-        - h5py >=2.10
+        - h5py 2.10.*
         - keras-preprocessing >=1.1.2
-        - numpy >=1.19.2
-        - opt_einsum >=3.3.0
+        - numpy >=1.19
+        - opt_einsum 3.3.0.*
         - protobuf >=3.9.2
         - six >=1.15.0
         - termcolor >=1.1.0
         - typing_extensions >=3.7.4
         - wheel >=0.35
         - wrapt >=1.11.1
+        - grpcio {{ grpc_cpp }}.*
         # upstream wants exact pin for gast
         - gast ==0.3.3
         # TF-API needs to move in sync
         - tensorboard >=2.4.0,<2.5
         - tensorflow-estimator >=2.4.0,<2.5
     test:
+      requires:
+        - pip
       imports:
         - tensorflow
       commands:
-        - freeze_graph --help
+        - pip check
+        - tf_upgrade_v2 --help
         - saved_model_cli --help
         - tflite_convert --help     # [not win]
         - toco_from_protos --help   # [not win]
         - toco --help               # [not win]
+
+  - name: tensorflow
+    requirements:
+      host:
+        - python
+        - {{ pin_subpackage('tensorflow-base', exact=True) }}
+      run:
+        - python
+        - {{ pin_subpackage('tensorflow-base', exact=True) }}
 
   - name: libtensorflow
     script: cp_libtensorflow.sh
@@ -149,17 +194,25 @@ outputs:
         - {{ compiler('cxx') }}
       # host requirements to pick up run_exports
       host:
+        - giflib
+        - grpc-cpp
+        - jpeg
         - libcurl
+        - libpng
+        - libprotobuf
+        - openssl
+        - snappy
         - zlib
 
     test:
       files:
+        - test_libtensorflow.sh
         - test_c.c
       requires:
         - {{ compiler('c') }}
       commands:
         - test -f $PREFIX/lib/libtensorflow.so  # [not win]
-        - $CC -o test_c -L${PREFIX}/lib/ -ltensorflow -I${PREFIX}/include/ test_c.c && ./test_c  # [not win]
+        - ./test_libtensorflow.sh  # [not win]
 
   - name: libtensorflow_cc
     script: cp_libtensorflow_cc.sh
@@ -173,16 +226,24 @@ outputs:
         - rsync
       # host requirements to pick up run_exports
       host:
+        - giflib
+        - grpc-cpp
+        - jpeg
         - libcurl
+        - libpng
+        - libprotobuf
+        - openssl
+        - snappy
         - zlib
     test:
       files:
+        - test_libtensorflow_cc.sh
         - test_cc.cc
       requires:
         - {{ compiler('cxx') }}
       commands:
         - test -f $PREFIX/lib/libtensorflow_cc.so  # [not win]
-        - $CXX -std=c++11 -o test_cc -L${PREFIX}/lib/ -ltensorflow_cc -ltensorflow_framework -lrt -I${PREFIX}/include/ test_cc.cc && ./test_cc  # [not win]
+        - ./test_libtensorflow_cc.sh  # [not win]
 
 about:
   home: http://tensorflow.org/
@@ -199,6 +260,7 @@ about:
   doc_source_url: https://github.com/tensorflow/tensorflow/tree/master/tensorflow/docs_src
 
 extra:
+  feedstock-name: tensorflow
   recipe-maintainers:
     - waitingkuo
     - ghego
@@ -207,3 +269,4 @@ extra:
     - farhantejani
     - njzjz
     - jschueller
+    - xhochy
