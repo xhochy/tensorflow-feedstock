@@ -23,16 +23,23 @@ export INCLUDEDIR=$PREFIX/include
 # The possible values are specified in third_party/systemlibs/syslibs_configure.bzl
 # The versions for them can be found in tensorflow/workspace.bzl
 export TF_SYSTEM_LIBS="
+  absl_py
   astor_archive
   astunparse_archive
   boringssl
+  com_github_googleapis_googleapis
+  com_github_googlecloudplatform_google_cloud_cpp
   com_github_grpc_grpc
   com_google_protobuf
   curl
   cython
   dill_archive
+  flatbuffers
+  gast_archive
   gif
+  icu
   libjpeg_turbo
+  org_sqlite
   png
   pybind11
   snappy

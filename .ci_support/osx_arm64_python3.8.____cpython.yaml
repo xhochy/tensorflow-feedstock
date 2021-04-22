@@ -16,6 +16,8 @@ giflib:
 - '5.2'
 grpc_cpp:
 - '1.37'
+icu:
+- '68'
 jpeg:
 - '9'
 libcurl:

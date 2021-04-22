@@ -53,11 +53,14 @@ requirements:
     - dill >=0.3.1.1
     - giflib
     - grpc-cpp
+    - flatbuffers
+    - icu
     - jpeg
     - libpng
     - libprotobuf
     - openssl
     - pybind11
+    - sqlite
     - snappy
     - zlib
     # requirements specified by the package itself, see
@@ -111,6 +114,8 @@ outputs:
         - dill >=0.3.1.1
         - giflib
         - grpc-cpp
+        - flatbuffers
+        - icu
         - jpeg
         - libcurl
         - libpng
@@ -118,6 +123,7 @@ outputs:
         - openssl
         - pybind11
         - snappy
+        - sqlite
         - zlib
         # requirements specified by the package itself
         - absl-py >=0.10.0
