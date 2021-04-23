@@ -212,6 +212,7 @@ Feedstock Maintainers
 * [@farhantejani](https://github.com/farhantejani/)
 * [@ghego](https://github.com/ghego/)
 * [@gilbertfrancois](https://github.com/gilbertfrancois/)
+* [@h-vetinari](https://github.com/h-vetinari/)
 * [@hajapy](https://github.com/hajapy/)
 * [@jschueller](https://github.com/jschueller/)
 * [@njzjz](https://github.com/njzjz/)
