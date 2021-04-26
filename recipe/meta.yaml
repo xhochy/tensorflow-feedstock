@@ -202,12 +202,14 @@ outputs:
       host:
         - giflib
         - grpc-cpp
+        - icu
         - jpeg
         - libcurl
         - libpng
         - libprotobuf
         - openssl
         - snappy
+        - sqlite
         - zlib
 
     test:
@@ -234,12 +236,14 @@ outputs:
       host:
         - giflib
         - grpc-cpp
+        - icu
         - jpeg
         - libcurl
         - libpng
         - libprotobuf
         - openssl
         - snappy
+        - sqlite
         - zlib
     test:
       files:
@@ -268,11 +272,12 @@ about:
 extra:
   feedstock-name: tensorflow
   recipe-maintainers:
-    - waitingkuo
-    - ghego
-    - hajapy
-    - gilbertfrancois
     - farhantejani
-    - njzjz
+    - ghego
+    - gilbertfrancois
+    - h-vetinari
+    - hajapy
     - jschueller
+    - njzjz
+    - waitingkuo
     - xhochy
