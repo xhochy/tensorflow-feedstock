@@ -76,9 +76,9 @@ requirements:
     - numpy 1.19.*
     - opt_einsum 3.3.0.*
     - protobuf >=3.9.2
-    - six >=1.15.0
+    - six 1.15.0.*
     - termcolor >=1.1.0
-    - typing_extensions >=3.7.4
+    - typing_extensions 3.7.4.*
     - wheel >=0.35
     - wrapt >=1.11.1
     # upstream wants exact pin for gast
@@ -137,9 +137,9 @@ outputs:
         - numpy 1.19.*
         - opt_einsum 3.3.0.*
         - protobuf >=3.9.2
-        - six >=1.15.0
+        - six 1.15.0.*
         - termcolor >=1.1.0
-        - typing_extensions >=3.7.4
+        - typing_extensions 3.7.4.*
         - wheel >=0.35
         - wrapt >=1.11.1
         # upstream wants exact pin for gast
@@ -158,9 +158,9 @@ outputs:
         - numpy >=1.19
         - opt_einsum 3.3.0.*
         - protobuf >=3.9.2
-        - six >=1.15.0
+        - six 1.15.0.*
         - termcolor >=1.1.0
-        - typing_extensions >=3.7.4
+        - typing_extensions 3.7.4.*
         - wheel >=0.35
         - wrapt >=1.11.1
         - grpcio {{ grpc_cpp }}.*
