@@ -27,7 +27,6 @@ export TF_SYSTEM_LIBS="
   astor_archive
   astunparse_archive
   boringssl
-  com_github_googleapis_googleapis
   com_github_googlecloudplatform_google_cloud_cpp
   com_github_grpc_grpc
   com_google_protobuf
@@ -80,6 +79,7 @@ BUILD_OPTS="
     --config=opt
     --define=PREFIX=${PREFIX}
     --define=PROTOBUF_INCLUDE_PATH=${PREFIX}/include
+    --config=noaws
     --cpu=${TARGET_CPU}"
 
 if [[ "${target_platform}" == "osx-arm64" ]]; then
@@ -111,7 +111,6 @@ sed -i -e "/PROTOBUF_INCLUDE_PATH/c\ " .bazelrc
 sed -i -e "/PREFIX/c\ " .bazelrc
 
 ./configure
-echo "build --config=noaws" >> .bazelrc
 
 # build using bazel
 bazel ${BAZEL_OPTS} build ${BUILD_OPTS} ${BUILD_TARGET}
