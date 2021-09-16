@@ -118,4 +118,4 @@ bazel ${BAZEL_OPTS} build ${BUILD_OPTS} ${BUILD_TARGET}
 # build a whl file
 mkdir -p $SRC_DIR/tensorflow_pkg
 bash -x bazel-bin/tensorflow/tools/pip_package/build_pip_package $SRC_DIR/tensorflow_pkg
-
+bazel clean
