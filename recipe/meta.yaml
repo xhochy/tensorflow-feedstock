@@ -34,6 +34,7 @@ requirements:
     - libprotobuf
     - nasm
     - sed
+    - rsync  # [linux]
   host:
     # conda build requirements
     - python
@@ -266,7 +267,6 @@ outputs:
       build:
         - {{ compiler('c') }}
         - {{ compiler('cxx') }}
-        - rsync
       # host requirements to pick up run_exports
       host:
         - giflib
