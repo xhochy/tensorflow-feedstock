@@ -173,7 +173,7 @@ outputs:
         - grpcio {{ grpc_cpp }}.*
     test:
       files:
-        - test_tensorflow_base.sh
+        - test_tensorflow_base.py
       commands:
         - cat test_tensorflow_base.py   # [unix]
         - python test_tensorflow_base.py
