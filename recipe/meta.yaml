@@ -171,7 +171,11 @@ outputs:
         - keras >=2.6,<3
         - grpcio {{ grpc_cpp }}.*
     test:
+      files:
+        - test_tensorflow_base.sh
       commands:
+        - cat test_tensorflow_base.py   # [unix]
+        - python test_tensorflow_base.py
         - tf_upgrade_v2 --help
         - saved_model_cli --help
         - tflite_convert --help     # [not win]
