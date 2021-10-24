@@ -13,12 +13,14 @@ source:
       - patches/0003-relax-precision-in-matrix_log_op_test.patch
       # requires setting GRPCIO_VERSION in build script
       - patches/0004-loosen-requirements.patch
+      - patches/0005-remove_deprecated_use_of_error_message.patch
+      - patches/51450-Fix_protobuf_errors_when_using_system_protobuf.patch
   - url: https://github.com/tensorflow/estimator/archive/refs/tags/v{{ version }}.tar.gz
     sha256: 947705c60c50da0b4a8ceec1bc058aaf6bf567a7efdcd50d5173ebf6bafcf30f
     folder: tensorflow-estimator
 
 build:
-  number: 0
+  number: 1
   skip: true  # [win]
 
 requirements:
@@ -170,7 +172,11 @@ outputs:
         - keras >=2.6,<3
         - grpcio {{ grpc_cpp }}.*
     test:
+      files:
+        - test_tensorflow_base.py
       commands:
+        - cat test_tensorflow_base.py   # [unix]
+        - python test_tensorflow_base.py
         - tf_upgrade_v2 --help
         - saved_model_cli --help
         - tflite_convert --help     # [not win]
@@ -185,22 +191,20 @@ outputs:
         - {{ compiler('c') }}
         - {{ compiler('cxx') }}
         - bazel
+        - bazel >=4.2.1  # [osx and arm64]
       host:
         - python
         - pip
         - setuptools
         - wheel
+        # This ensures that a consistent version of openssl is chosen between
+        # all packages.
+        # https://github.com/conda-forge/conda-forge.github.io/issues/1528
+        - openssl
         - {{ pin_subpackage('tensorflow-base', exact=True) }}
       run:
-        - python >=3.6
-        - absl-py >=0.7.0
-        - astor >=0.6.0
-        - gast >=0.2.0
-        - numpy >=1.19
-        - six >=1.10.0
-        - protobuf >=3.6.1
-        - termcolor >=1.1.0
-        - wrapt >=1.11.1
+        - python
+        - {{ pin_subpackage('tensorflow-base', exact=True) }}
     test:
       requires:
         - pip
@@ -212,10 +216,14 @@ outputs:
     requirements:
       host:
         - python
+        # This ensures that a consistent version of openssl is chosen between
+        # all packages.
+        # https://github.com/conda-forge/conda-forge.github.io/issues/1528
+        - openssl
         - {{ pin_subpackage('tensorflow-base', exact=True) }}
       run:
         - python
-        - tensorflow-estimator {{ version }}.*
+        - {{ pin_subpackage('tensorflow-estimator', exact=True) }}
         - {{ pin_subpackage('tensorflow-base', exact=True) }}
     test:
       requires:
