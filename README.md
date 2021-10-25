@@ -17,7 +17,6 @@ TensorFlow provides multiple APIs.The lowest level API, TensorFlow Core
 provides you with complete programming control.
 Base package contains only tensorflow, not tensorflow-tensorboard.
 
-
 Current build status
 ====================
 
