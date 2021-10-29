@@ -110,6 +110,37 @@ export TF_CONFIGURE_IOS=0
 sed -i -e "/PROTOBUF_INCLUDE_PATH/c\ " .bazelrc
 sed -i -e "/PREFIX/c\ " .bazelrc
 
+
+if [[ ${cuda_compiler_version} != "None" ]]; then
+    export GCC_HOST_COMPILER_PATH="${GCC}"
+    export GCC_HOST_COMPILER_PREFIX="$(dirname ${GCC})"
+
+    export TF_CUDA_PATHS="${PREFIX},${CUDA_HOME}"
+    export TF_NEED_CUDA=1
+    export TF_CUDA_VERSION="${cuda_compiler_version}"
+    export TF_CUDNN_VERSION="${cudnn}"
+    export TF_NCCL_VERSION=$(pkg-config nccl --modversion | grep -Po '\d+\.\d+')
+
+    export LDFLAGS="${LDFLAGS//-Wl,-z,now/-Wl,-z,lazy}"
+    export CC_OPT_FLAGS="-march=nocona -mtune=haswell"
+
+    if [[ ${cuda_compiler_version} == 10.* ]]; then
+        export TF_CUDA_COMPUTE_CAPABILITIES=5.2,5.3,6.0,6.1,6.2,7.0,7.2,7.5
+    elif [[ ${cuda_compiler_version} == 11.0* ]]; then
+        export TF_CUDA_COMPUTE_CAPABILITIES=5.2,5.3,6.0,6.1,6.2,7.0,7.2,7.5,8.0
+    elif [[ ${cuda_compiler_version} == 11.1 ]]; then
+        export TF_CUDA_COMPUTE_CAPABILITIES=5.2,5.3,6.0,6.1,6.2,7.0,7.2,7.5,8.0,8.6
+    elif [[ ${cuda_compiler_version} == 11.2 ]]; then
+        export TF_CUDA_COMPUTE_CAPABILITIES=5.2,5.3,6.0,6.1,6.2,7.0,7.2,7.5,8.0,8.6
+    else
+        echo "unsupported cuda version."
+        exit 1
+    fi
+fi
+
+bazel clean --expunge
+bazel shutdown
+
 ./configure
 
 # build using bazel
