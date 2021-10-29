@@ -125,13 +125,13 @@ if [[ ${cuda_compiler_version} != "None" ]]; then
     export CC_OPT_FLAGS="-march=nocona -mtune=haswell"
 
     if [[ ${cuda_compiler_version} == 10.* ]]; then
-        export TF_CUDA_COMPUTE_CAPABILITIES=sm_5.2,sm_5.3,sm_6.0,sm_6.1,sm_6.2,sm_7.0,sm_7.2,compute_7.5
+        export TF_CUDA_COMPUTE_CAPABILITIES=sm_35,sm_50,sm_60,sm_70,sm_75,compute_75
     elif [[ ${cuda_compiler_version} == 11.0* ]]; then
-        export TF_CUDA_COMPUTE_CAPABILITIES=sm_5.2,sm_5.3,sm_6.0,sm_6.1,sm_6.2,sm_7.0,sm_7.2,sm_7.5,compute_8.0
+        export TF_CUDA_COMPUTE_CAPABILITIES=sm_35,sm_50,sm_60,sm_70,sm_75,sm_80,compute_80
     elif [[ ${cuda_compiler_version} == 11.1 ]]; then
-        export TF_CUDA_COMPUTE_CAPABILITIES=sm_5.2,sm_5.3,sm_6.0,sm_6.1,sm_6.2,sm_7.0,sm_7.2,sm_7.5,sm_8.0,compute_8.6
+        export TF_CUDA_COMPUTE_CAPABILITIES=sm_35,sm_50,sm_60,sm_70,sm_75,sm_80,sm_86,compute_86
     elif [[ ${cuda_compiler_version} == 11.2 ]]; then
-        export TF_CUDA_COMPUTE_CAPABILITIES=sm_5.2,sm_5.3,sm_6.0,sm_6.1,sm_6.2,sm_7.0,sm_7.2,sm_7.5,sm_8.0,compute_8.6
+        export TF_CUDA_COMPUTE_CAPABILITIES=sm_35,sm_50,sm_60,sm_70,sm_75,sm_80,sm_86,compute_86
     else
         echo "unsupported cuda version."
         exit 1
