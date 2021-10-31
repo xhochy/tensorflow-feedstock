@@ -51,12 +51,12 @@ pushd custom_toolchain
     export BAZEL_TOOLCHAIN_COMPILER_VERSION=$(${CC} -v 2>&1|tail -n1|cut -d' ' -f3)
     export BAZEL_TOOLCHAIN_AR=$(basename ${AR})
     touch cc_wrapper.sh
-    # For nvcc support we need to use a compiler wrapper
+
     export BAZEL_TOOLCHAIN_LIBCXX="stdc++"
-    if [[ -z ${cuda_compiler_version} ]]; then
-      export BAZEL_TOOLCHAIN_GCC="${GCC}"
-    else
-      # for NVCC we need to use a crosstool wrapper
+    export BAZEL_TOOLCHAIN_GCC="${GCC}"
+
+    # for NVCC we need to use a crosstool wrapper
+    if [[ ${cuda_compiler_version} != "None" ]]; then
       export BAZEL_TOOLCHAIN_GCC=crosstool_wrapper_driver_is_not_gcc
     fi
   fi
