@@ -9,7 +9,10 @@ function apply_cc_template() {
   sed -ie "s:TARGET_PLATFORM:${target_platform}:" $1
   sed -ie "s:\${CONDA_BUILD_SYSROOT}:${CONDA_BUILD_SYSROOT}:" $1
   sed -ie "s:\${COMPILER_VERSION}:${BAZEL_TOOLCHAIN_COMPILER_VERSION:-}:" $1
-  sed -ie "s:\${GCC}:${BAZEL_TOOLCHAIN_GCC}:" $1
+  sed -ie "s:\${GCC_COMPILER_PATH}:${GCC:-}:" $1
+  sed -ie "s:\${BAZEL_TOOLCHAIN_GCC}:${BAZEL_TOOLCHAIN_GCC}:" $1
+  sed -ie "s:\${CUDA_VERSION}:${cuda_compiler_version:-}:" $1
+  sed -ie "s:\${CUDA_HOME}:${CUDA_HOME:-}:" $1
   sed -ie "s:\${PREFIX}:${PREFIX}:" $1
   sed -ie "s:\${BUILD_PREFIX}:${BUILD_PREFIX}:" $1
   sed -ie "s:\${LD}:${LD}:" $1
@@ -48,8 +51,14 @@ pushd custom_toolchain
     export BAZEL_TOOLCHAIN_COMPILER_VERSION=$(${CC} -v 2>&1|tail -n1|cut -d' ' -f3)
     export BAZEL_TOOLCHAIN_AR=$(basename ${AR})
     touch cc_wrapper.sh
+
     export BAZEL_TOOLCHAIN_LIBCXX="stdc++"
     export BAZEL_TOOLCHAIN_GCC="${GCC}"
+
+    # for NVCC we need to use a crosstool wrapper
+    if [[ ${cuda_compiler_version} != "None" ]]; then
+      export BAZEL_TOOLCHAIN_GCC=crosstool_wrapper_driver_is_not_gcc
+    fi
   fi
 
   export TARGET_SYSTEM="${HOST}"
@@ -99,6 +108,7 @@ pushd custom_toolchain
 
   cp cc_toolchain_config.bzl cc_toolchain_build_config.bzl
   apply_cc_template cc_toolchain_config.bzl
+  apply_cc_template crosstool_wrapper_driver_is_not_gcc
   (
     if [[ "${build_platform}" != "${target_platform}" ]]; then
       if [[ "${target_platform}" == osx-* ]]; then

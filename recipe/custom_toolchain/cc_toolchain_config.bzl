@@ -18,7 +18,7 @@ def _impl(ctx):
     tool_paths = [
         tool_path(
             name = "gcc",
-            path = "${GCC}",
+            path = "${BAZEL_TOOLCHAIN_GCC}",
         ),
         tool_path(
             name = "ld",
@@ -304,15 +304,18 @@ def _impl(ctx):
     else:
         cxx_builtin_include_directories = [
             "${CONDA_BUILD_SYSROOT}/usr/include",
-	    "${BUILD_PREFIX}/lib/gcc/${HOST}/${COMPILER_VERSION}",
-	    "${BUILD_PREFIX}/${HOST}/include/c++/${COMPILER_VERSION}",
+            "${BUILD_PREFIX}/lib/gcc/${HOST}/${COMPILER_VERSION}",
+            "${BUILD_PREFIX}/${HOST}/include/c++/${COMPILER_VERSION}",
             "${PREFIX}/include",
         ]
+
+        if (len("${CUDA_HOME}")):
+            cxx_builtin_include_directories.append("${CUDA_HOME}/include")
 
     return cc_common.create_cc_toolchain_config_info(
         ctx = ctx,
         toolchain_identifier = "local",
-	host_system_name = "local",
+        host_system_name = "local",
         #host_system_name = "TARGET_CPU",
         target_system_name = "TARGET_SYSTEM",
         target_cpu = "TARGET_CPU",
