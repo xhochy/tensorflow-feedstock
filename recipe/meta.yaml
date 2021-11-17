@@ -279,6 +279,9 @@ outputs:
       skip: true  # [not linux]
       string: cuda{{ cuda_compiler_version | replace('.', '') }}h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}  # [cuda_compiler_version != "None"]
       string: cpu_h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}  # [cuda_compiler_version == "None"]
+      run_exports:
+        # tensorflow makes no ABI guarantees, need to pin to what we built with
+        - libtensorflow {{ version }}
     requirements:
       # build requirements needs to pick up the compiler run_exports
       build:
@@ -318,6 +321,9 @@ outputs:
       skip: true  # [not linux]
       string: cuda{{ cuda_compiler_version | replace('.', '') }}h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}  # [cuda_compiler_version != "None"]
       string: cpu_h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}  # [cuda_compiler_version == "None"]
+      run_exports:
+        # tensorflow makes no ABI guarantees, need to pin to what we built with
+        - libtensorflow_cc {{ version }}
     requirements:
       # build requirements needs to pick up the compiler run_exports
       build:
