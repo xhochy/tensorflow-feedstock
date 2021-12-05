@@ -29,6 +29,7 @@ GET_BOA=boa
 BUILD_CMD=mambabuild
 
 conda install --yes --quiet "conda-forge-ci-setup=3" conda-build pip ${GET_BOA:-} -c conda-forge
+# Without lief_dev builds take much longer on OSX
 conda update --yes -c conda-forge/label/lief_dev -c conda-forge py-lief
 
 # set up the condarc

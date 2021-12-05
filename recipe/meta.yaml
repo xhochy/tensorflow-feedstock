@@ -21,6 +21,7 @@ source:
 build:
   number: 0
   skip: true  # [win]
+  skip: true  # [python_impl == 'pypy']
 
 requirements:
   build:
@@ -92,10 +93,8 @@ requirements:
     - protobuf >=3.9.2
     - python-flatbuffers >=1.12,<3
     - six >=1.12
-    - tensorflow-io-gcs-filesystem >=0.21.0
     - termcolor >=1.1.0
     - typing_extensions >=3.6.6
-    - wheel >=0.32,<1
     - wrapt >=1.11.0
     # TF-API needs to move in sync
     # XXX: actually, TF 2.7.0 still demands tb 2.6
@@ -103,10 +102,12 @@ requirements:
     - keras >=2.7,<2.8
 
 outputs:
-  # as of tensorflow 2.7.0, we don't need tensorflow-base anymore;
-  # we still build it as a compatibility output (see below), but the
-  # main package is being built in the "tensorflow" output directly.
-  - name: tensorflow
+  # 2021/12/29: hmaarrfk
+  # as of tensorflow 2.7.0 we need the tensorflow-base package to break
+  # circular dependency when buliding tensorflow extra packages This annoying
+  # circularity is broken upstream by the fact that they have to bootstrap
+  # their builds
+  - name: tensorflow-base
     script: build_pkg.sh  # [not win]
     script: build_pkg.bat  # [win]
     build:
@@ -137,6 +138,7 @@ outputs:
         # conda build requirements
         - python
         - pip
+        - wheel
         # TF_SYSTEM_LIBS
         - astor
         - cython
@@ -166,10 +168,8 @@ outputs:
         - protobuf >=3.9.2
         - python-flatbuffers >=1.12,<3
         - six >=1.12
-        - tensorflow-io-gcs-filesystem >=0.21.0
         - termcolor >=1.1.0
         - typing_extensions >=3.6.6
-        - wheel >=0.32,<1
         - wrapt >=1.11.0
         # TF-API needs to move in sync
         # XXX: actually, TF 2.7.0 still demands tb 2.6
@@ -189,10 +189,8 @@ outputs:
         - protobuf >=3.9.2
         - python-flatbuffers >=1.12,<3
         - six >=1.12
-        - tensorflow-io-gcs-filesystem >=0.21.0
         - termcolor >=1.1.0
         - typing_extensions >=3.6.6
-        - wheel >=0.32,<1
         - wrapt >=1.11.0
         # TF-API needs to move in sync
         # XXX: actually, TF 2.7.0 still demands tb 2.6
@@ -200,10 +198,39 @@ outputs:
         - keras >=2.7,<2.8
         # avoid that people without GPUs needlessly download ~0.5-1GB
         - __cuda  # [cuda_compiler_version != "None"]
+    # TODO: decide on the name of the package
+    # run_constrained:
+    #   What is the difference between these two packages?
+    #   - tensorflow-io-gcs-filesystem >=0.21.0
+    #   - tensorflow-io >=0.21.0
+
+  - name: tensorflow
+    build:
+      string: cuda{{ cuda_compiler_version | replace('.', '') }}py{{ CONDA_PY }}h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}  # [cuda_compiler_version != "None"]
+      string: cpu_py{{ CONDA_PY }}h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}  # [cuda_compiler_version == "None"]
+      # weigh down cpu implementation and give cuda preference
+      track_features:
+        - tensorflow-cpu          # [cuda_compiler_version == "None"]
+    requirements:
+      host:
+        # Require python so that the CONDA_PY gets populated
+        - python
+      run:
+        - python
+        - {{ pin_subpackage('tensorflow-base', exact=True) }}
+        - {{ pin_subpackage('tensorflow-estimator', exact=True) }}
+        # avoid that people without GPUs needlessly download ~0.5-1GB
+        # This also helps mamba give preference to the CPU build
+        - __cuda  # [cuda_compiler_version != "None"]
     test:
       files:
         - test_tensorflow.py
+      requires:
+        - pip
+      imports:
+        - tensorflow
       commands:
+        - pip check
         - cat test_tensorflow.py    # [unix]
         - python test_tensorflow.py
         - tf_upgrade_v2 --help
@@ -211,25 +238,6 @@ outputs:
         - tflite_convert --help     # [not win]
         - toco_from_protos --help   # [not win]
         - toco --help               # [not win]
-
-  # compatibility output wrapping core package, since tensorflow-base
-  # was used as an output before 2.7 (should we add a deprecation warning?)
-  - name: tensorflow-base
-    requirements:
-      host:
-        - python
-        - openssl
-        - {{ pin_subpackage('tensorflow', exact=True) }}
-      run:
-        - python
-        - {{ pin_subpackage('tensorflow', exact=True) }}
-    test:
-      requires:
-        - pip
-      imports:
-        - tensorflow
-      commands:
-        - pip check
 
   - name: tensorflow-estimator
     script: build_estimator.sh   # [not win]
@@ -256,10 +264,10 @@ outputs:
         # all packages.
         # https://github.com/conda-forge/conda-forge.github.io/issues/1528
         - openssl
-        - {{ pin_subpackage('tensorflow', exact=True) }}
+        - {{ pin_subpackage('tensorflow-base', exact=True) }}
       run:
         - python
-        - {{ pin_subpackage('tensorflow', exact=True) }}
+        - {{ pin_subpackage('tensorflow-base', exact=True) }}
     test:
       requires:
         - pip
@@ -376,10 +384,12 @@ about:
   license: Apache-2.0
   license_file: LICENSE
   license_family: Apache
-  summary: An Open Source Machine Learning Framework for Everyone.
+  summary: TensorFlow is an end-to-end open source platform for machine learning.
   description: |
-    TensorFlow provides multiple APIs. The lowest level API, TensorFlow Core
-    provides you with complete programming control.
+    TensorFlow offers multiple levels of abstraction so you can choose the
+    right one for your needs. Build and train models by using the high-level
+    Keras API, which makes getting started with TensorFlow and machine learning
+    easy.
   dev_url: https://github.com/tensorflow/tensorflow
   doc_url: https://www.tensorflow.org/get_started/get_started
   doc_source_url: https://github.com/tensorflow/tensorflow/tree/master/tensorflow/docs_src

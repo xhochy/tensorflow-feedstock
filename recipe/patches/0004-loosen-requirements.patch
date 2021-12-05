@@ -1,16 +1,19 @@
-From 59100b60d2aeaa9110346995777b6ffc255e8999 Mon Sep 17 00:00:00 2001
+From b6371c3abefb0ab2b3e943f43088ab42fac9c5bc Mon Sep 17 00:00:00 2001
 From: "Uwe L. Korn" <uwe.korn@quantco.com>
-Date: Wed, 8 Sep 2021 06:57:09 +0200
-Subject: [PATCH 4/5] loosen requirements
+Date: Thu, 30 Dec 2021 06:57:09 +0200
+Subject: [PATCH] Fixup requirements
 
-* Set grpcio pin to the built grpc version
-* Remove unused clang requirement
+* Remove unused libclang requirement
+* Remove unused wheel requirement
+* Remove unecessary tensorflow-io-gcs-filesystem
+
+Co-authored-by: Mark Harfouche <mark.harfouche@gmail.com>
 ---
  tensorflow/tools/pip_package/setup.py | 3 +--
  1 file changed, 1 insertion(+), 2 deletions(-)
 
 diff --git a/tensorflow/tools/pip_package/setup.py b/tensorflow/tools/pip_package/setup.py
-index 26306e43aaf..bf5d21aca5b 100644
+index 26306e43aaf..60cefcad10d 100644
 --- a/tensorflow/tools/pip_package/setup.py
 +++ b/tensorflow/tools/pip_package/setup.py
 @@ -82,7 +82,6 @@ REQUIRED_PACKAGES = [
@@ -21,15 +24,20 @@ index 26306e43aaf..bf5d21aca5b 100644
      'flatbuffers >= 1.12, < 3.0', # capped as jax 0.1.71 needs < 3.0
      'google_pasta >= 0.1.1',
      'h5py >= 2.9.0', # capped since 3.3.0 lacks py3.6
-@@ -129,7 +128,7 @@ if 'tf_nightly' in project_name:
- # BoringSSL support.
- # See https://github.com/tensorflow/tensorflow/issues/17882.
- if sys.byteorder == 'little':
--  REQUIRED_PACKAGES.append('grpcio >= 1.24.3, < 2.0')
-+  REQUIRED_PACKAGES.append('grpcio >= GRPCIO_VERSION, < 2.0')
+@@ -92,7 +91,6 @@ REQUIRED_PACKAGES = [
+     'six >= 1.12.0',
+     'termcolor >= 1.1.0',
+     'typing_extensions >= 3.6.6',
+-    'wheel >= 0.32.0, < 1.0', # capped as astunparse 1.6.0-1.6.3 requires < 1.0
+     'wrapt >= 1.11.0',
+     # These packages need to be pinned exactly as newer versions are
+     # incompatible with the rest of the ecosystem
+@@ -106,7 +104,6 @@ REQUIRED_PACKAGES = [
+     # Keras release is not backward compatible with old tf release, and we have
+     # to make the version aligned between TF and Keras.
+     'keras >= 2.7.0rc0, < 2.8',
+-    'tensorflow-io-gcs-filesystem >= 0.21.0',
+ ]
  
  
- # Packages which are only needed for testing code.
--- 
-2.32.0.windows.2
 
