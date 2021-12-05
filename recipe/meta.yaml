@@ -61,7 +61,13 @@ requirements:
     - m2-zip       # [win]
     - openjdk >=8
     - nsync
-    # TF_SYSTEM_LIBS
+    # TF_SYSTEM_LIBS, see usage in
+    # https://github.com/tensorflow/tensorflow/blob/v{{ version }}/third_party/systemlibs/syslibs_configure.bzl
+    # their versions are specified in
+    # https://github.com/tensorflow/tensorflow/blob/v{{ version }}/tensorflow/workspace2.bzl
+    # but so far there have been no problems with leaving these
+    # unpinned; though some restrictions come in for packages
+    # that are also listed as a requirement for the pip_package.
     - astor >=0.7.1
     - cython >=0.28.4
     - dill >=0.3.1.1

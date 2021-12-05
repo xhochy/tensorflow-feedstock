@@ -8,6 +8,18 @@ export CXX=$(basename $CXX)
 export LIBDIR=$PREFIX/lib
 export INCLUDEDIR=$PREFIX/include
 
+# Upstream docstring for TF_SYSTEM_LIBS in:
+# https://github.com/tensorflow/tensorflow/blob/v{{ version }}/third_party/systemlibs/syslibs_configure.bzl
+#   * `TF_SYSTEM_LIBS`: list of third party dependencies that should use
+#      the system version instead
+#
+# To avoid bazel installing lots of vendored (python) packages,
+# we need to install these packages through meta.yaml and then
+# tell bazel to use them. Note that the names don't necessarily
+# match PyPI or conda, but are defined in:
+# https://github.com/tensorflow/tensorflow/blob/v{{ version }}/tensorflow/workspace<i>.bzl
+
+# Exceptions and TODOs:
 # Needs a bazel build:
 # com_google_absl
 # Build failures in tensorflow/core/platform/s3/aws_crypto.cc
@@ -19,9 +31,6 @@ export INCLUDEDIR=$PREFIX/include
 # com_github_googlecloudplatform_google_cloud_cpp
 # Needs c++17, try on linux
 #  com_googlesource_code_re2
-
-# The possible values are specified in third_party/systemlibs/syslibs_configure.bzl
-# The versions for them can be found in tensorflow/workspace.bzl
 export TF_SYSTEM_LIBS="
   absl_py
   astor_archive
