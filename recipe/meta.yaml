@@ -193,6 +193,8 @@ outputs:
         # TF-API needs to move in sync
         - tensorboard >=2.6,<2.7
         - keras >=2.6,<2.7
+        # avoid that people without GPUs needlessly download ~0.5-1GB
+        - __cuda  # [cuda_compiler_version != "None"]
     test:
       files:
         - test_tensorflow_base.py
@@ -310,7 +312,9 @@ outputs:
         - snappy
         - sqlite
         - zlib
-
+      run:
+        # avoid that people without GPUs needlessly download ~200-300MB
+        - __cuda  # [cuda_compiler_version != "None"]
     test:
       files:
         - test_libtensorflow.sh
@@ -352,6 +356,9 @@ outputs:
         - snappy
         - sqlite
         - zlib
+      run:
+        # avoid that people without GPUs needlessly download ~200-300MB
+        - __cuda  # [cuda_compiler_version != "None"]
     test:
       files:
         - test_libtensorflow_cc.sh
