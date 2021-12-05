@@ -18,6 +18,8 @@ source:
       - patches/0006-protobuf_3_18_comaptibility.patch
       # can be dropped for v>=2.7
       - patches/51450-Fix_protobuf_errors_when_using_system_protobuf.patch
+      # can be dropped for v>=2.7
+      - patches/0007-relax_six_requirement.patch
   - url: https://github.com/tensorflow/estimator/archive/refs/tags/v{{ estimator_version }}.tar.gz
     sha256: 947705c60c50da0b4a8ceec1bc058aaf6bf567a7efdcd50d5173ebf6bafcf30f
     folder: tensorflow-estimator
