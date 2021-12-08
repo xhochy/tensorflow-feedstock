@@ -18,12 +18,14 @@ source:
       - patches/0006-protobuf_3_18_comaptibility.patch
       # can be dropped for v>=2.7
       - patches/51450-Fix_protobuf_errors_when_using_system_protobuf.patch
+      # can be dropped for v>=2.7
+      - patches/0007-relax_six_requirement.patch
   - url: https://github.com/tensorflow/estimator/archive/refs/tags/v{{ estimator_version }}.tar.gz
     sha256: 947705c60c50da0b4a8ceec1bc058aaf6bf567a7efdcd50d5173ebf6bafcf30f
     folder: tensorflow-estimator
 
 build:
-  number: 1
+  number: 2
   skip: true  # [win]
 
 requirements:
@@ -61,7 +63,13 @@ requirements:
     - m2-zip       # [win]
     - openjdk >=8
     - nsync
-    # TF_SYSTEM_LIBS
+    # TF_SYSTEM_LIBS, see usage in
+    # https://github.com/tensorflow/tensorflow/blob/v{{ version }}/third_party/systemlibs/syslibs_configure.bzl
+    # their versions are specified in
+    # https://github.com/tensorflow/tensorflow/blob/v{{ version }}/tensorflow/workspace2.bzl
+    # but so far there have been no problems with leaving these
+    # unpinned; though some restrictions come in for packages
+    # that are also listed as a requirement for the pip_package.
     - astor >=0.7.1
     - cython >=0.28.4
     - dill >=0.3.1.1
@@ -88,7 +96,12 @@ requirements:
     - numpy 1.19.*
     - opt_einsum >=3.3,<3.4
     - protobuf >=3.9.2
-    - six >=1.15,<1.16
+    # 2021/12/05: hmaarrfk
+    # While tensorflow has an upper bound on six
+    # six has been highly backward compatible
+    # We remove the upper bound so that we can be more compatible with
+    # The rest of the conda-forge ecosystem
+    - six >=1.15
     - termcolor >=1.1,<1.2
     - typing_extensions >=3.7.4,<3.8
     - wheel >=0.35,<1
@@ -187,6 +200,8 @@ outputs:
         # TF-API needs to move in sync
         - tensorboard >=2.6,<2.7
         - keras >=2.6,<2.7
+        # avoid that people without GPUs needlessly download ~0.5-1GB
+        - __cuda  # [cuda_compiler_version != "None"]
     test:
       files:
         - test_tensorflow_base.py
@@ -304,7 +319,9 @@ outputs:
         - snappy
         - sqlite
         - zlib
-
+      run:
+        # avoid that people without GPUs needlessly download ~200-300MB
+        - __cuda  # [cuda_compiler_version != "None"]
     test:
       files:
         - test_libtensorflow.sh
@@ -346,6 +363,9 @@ outputs:
         - snappy
         - sqlite
         - zlib
+      run:
+        # avoid that people without GPUs needlessly download ~200-300MB
+        - __cuda  # [cuda_compiler_version != "None"]
     test:
       files:
         - test_libtensorflow_cc.sh
@@ -392,7 +412,6 @@ extra:
   recipe-maintainers:
     - farhantejani
     - ghego
-    - gilbertfrancois
     - h-vetinari
     - hajapy
     - jschueller
