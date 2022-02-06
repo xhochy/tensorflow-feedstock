@@ -105,3 +105,6 @@ for rpath in ${RPATHS}; do
     done
 done
 
+if [[ "${target_platform}" == "osx-arm64" ]]; then
+  /usr/bin/codesign -s - -f ${OUTPUT}
+fi

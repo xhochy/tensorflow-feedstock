@@ -35,11 +35,13 @@ pushd custom_toolchain
   if [[ "${target_platform}" == osx-* ]]; then
     export BAZEL_TOOLCHAIN_COMPILER_VERSION=$($CC -v 2>&1 | head -n1 | cut -d' ' -f3)
     sed -e "s:\${CLANG}:${CLANG}:" \
+        -e "s:\${target_platform}:${target_platform}:" \
         -e "s:\${INSTALL_NAME_TOOL}:${INSTALL_NAME_TOOL}:" \
         -e "s:\${CONDA_BUILD_SYSROOT}:${CONDA_BUILD_SYSROOT}:" \
         cc_wrapper.sh.template > cc_wrapper.sh
     chmod +x cc_wrapper.sh
     sed -e "s:\${CLANG}:${CC_FOR_BUILD}:" \
+        -e "s:\${target_platform}:${target_platform}:" \
         -e "s:\${INSTALL_NAME_TOOL}:${INSTALL_NAME_TOOL//${HOST}/${BUILD}}:" \
         -e "s:\${CONDA_BUILD_SYSROOT}:${CONDA_BUILD_SYSROOT}:" \
         cc_wrapper.sh.template > cc_wrapper_build.sh
