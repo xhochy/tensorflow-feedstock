@@ -7,5 +7,6 @@ MACOSX_SDK_VERSION:        # [osx and x86_64]
 # 2022/02/06 ngam
 # grpc_cpp 1.43 forces bazel 4.0.0
 # fixed by forcing grpc_cpp back to 1.42 for now
+# reference: conda-forge/bazel-feedstock#90
 grpc_cpp:
   - "1.42"
