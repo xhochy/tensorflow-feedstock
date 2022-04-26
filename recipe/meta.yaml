@@ -68,7 +68,9 @@ requirements:
     - dill
     - giflib
     - grpc-cpp
-    - flatbuffers
+    # the latest flatbuffers 2.0.6 seems to have removed a sybmol in a patch release...
+    # https://github.com/google/flatbuffers/issues/7217
+    - flatbuffers <2.0.6
     - icu
     - jpeg
     - libpng
@@ -144,7 +146,9 @@ outputs:
         - dill
         - giflib
         - grpc-cpp
-        - flatbuffers
+        # the latest flatbuffers 2.0.6 seems to have removed a sybmol in a patch release...
+        # https://github.com/google/flatbuffers/issues/7217
+        - flatbuffers <2.0.6
         - icu
         - jpeg
         - libcurl
