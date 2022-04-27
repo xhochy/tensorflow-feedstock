@@ -69,7 +69,7 @@ requirements:
     - dill
     - giflib
     - grpc-cpp
-    - flatbuffers
+    - flatbuffers <2.0.6
     - icu
     - jpeg
     - libpng
@@ -144,7 +144,7 @@ outputs:
         - dill
         - giflib
         - grpc-cpp
-        - flatbuffers
+        - flatbuffers <2.0.6
         - icu
         - jpeg
         - libcurl
