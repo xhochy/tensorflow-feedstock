@@ -65,6 +65,7 @@ requirements:
     # but so far there have been no problems with leaving these
     # unpinned; though some restrictions come in for packages
     # that are also listed as a requirement for the pip_package.
+    - abseil-cpp 20210324.2
     - astor
     - cython
     - dill
@@ -143,6 +144,7 @@ outputs:
         - pip
         - wheel
         # TF_SYSTEM_LIBS
+        - abseil-cpp 20210324.2
         - astor
         - cython
         - dill
