@@ -5,7 +5,11 @@ abseil_cpp:
 c_compiler:
 - clang
 c_compiler_version:
+<<<<<<< HEAD:.ci_support/osx_arm64_python3.10.____cpython.yaml
 - '12'
+=======
+- '13'
+>>>>>>> origin:.ci_support/osx_arm64_numpy1.21python3.10.____cpython.yaml
 channel_sources:
 - conda-forge
 channel_targets:
@@ -15,13 +19,17 @@ cuda_compiler_version:
 cxx_compiler:
 - clangxx
 cxx_compiler_version:
+<<<<<<< HEAD:.ci_support/osx_arm64_python3.10.____cpython.yaml
 - '12'
+=======
+- '13'
+>>>>>>> origin:.ci_support/osx_arm64_numpy1.21python3.10.____cpython.yaml
 giflib:
 - '5.2'
 grpc_cpp:
 - '1.43'
 icu:
-- '69'
+- '70'
 jpeg:
 - '9'
 libcurl:

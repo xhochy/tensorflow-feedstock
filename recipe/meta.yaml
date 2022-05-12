@@ -28,8 +28,7 @@ requirements:
     - {{ compiler('c') }}
     - {{ compiler('cxx') }}
     - {{ compiler('cuda') }}                 # [cuda_compiler_version != "None"]
-    - bazel <5
-    - bazel >=4.2.1  # [osx and arm64]
+    - bazel 4.2.2
     - grpc-cpp
     - libprotobuf
     - nasm
@@ -62,14 +61,15 @@ requirements:
     # but so far there have been no problems with leaving these
     # unpinned; though some restrictions come in for packages
     # that are also listed as a requirement for the pip_package.
-    - abseil-cpp
+    - abseil-cpp 20210324.2
     - astor
     - cython
     - dill
     - giflib
     - grpc-cpp
+    # 2022/04/25 hmaarrfk
     # the latest flatbuffers 2.0.6 seems to have removed a sybmol in a patch release...
-    # https://github.com/google/flatbuffers/issues/7217
+    # https://github.com/Qengineering/TensorFlow_Lite_Pose_RPi_64-bits/issues/3#issuecomment-1034799822
     - flatbuffers <2.0.6
     - icu
     - jpeg
@@ -140,14 +140,12 @@ outputs:
         - pip
         - wheel
         # TF_SYSTEM_LIBS
-        - abseil-cpp
+        - abseil-cpp 20210324.2
         - astor
         - cython
         - dill
         - giflib
         - grpc-cpp
-        # the latest flatbuffers 2.0.6 seems to have removed a sybmol in a patch release...
-        # https://github.com/google/flatbuffers/issues/7217
         - flatbuffers <2.0.6
         - icu
         - jpeg
@@ -255,8 +253,7 @@ outputs:
         # decide on the cuda variant
         # https://github.com/conda-forge/tensorflow-feedstock/issues/162
         - {{ compiler('cuda') }}                 # [cuda_compiler_version != "None"]
-        - bazel <5
-        - bazel >=4.2.1  # [osx and arm64]
+        - bazel 4.2.2
       host:
         - python
         - pip
