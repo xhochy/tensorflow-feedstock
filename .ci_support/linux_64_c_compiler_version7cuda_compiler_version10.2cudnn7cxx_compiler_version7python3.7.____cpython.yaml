@@ -1,5 +1,3 @@
-abseil_cpp:
-- '20210324.2'
 c_compiler:
 - gcc
 c_compiler_version:
@@ -38,11 +36,6 @@ libprotobuf:
 - '3.19'
 nccl:
 - '2'
-<<<<<<< HEAD:.ci_support/linux_64_c_compiler_version7cuda_compiler_version10.2cudnn7cxx_compiler_version7python3.7.____cpython.yaml
-=======
-numpy:
-- '1.19'
->>>>>>> origin:.ci_support/linux_64_c_compiler_version7cuda_compiler_version10.2cudnn7cxx_compiler_version7numpy1.19python3.7.____cpython.yaml
 openssl:
 - 1.1.1
 pin_run_as_build:

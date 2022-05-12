@@ -2,16 +2,10 @@ MACOSX_DEPLOYMENT_TARGET:
 - '10.9'
 MACOSX_SDK_VERSION:
 - '10.13'
-abseil_cpp:
-- '20210324.2'
 c_compiler:
 - clang
 c_compiler_version:
-<<<<<<< HEAD:.ci_support/osx_64_python3.8.____cpython.yaml
-- '12'
-=======
 - '13'
->>>>>>> origin:.ci_support/osx_64_numpy1.19python3.8.____cpython.yaml
 channel_sources:
 - conda-forge
 channel_targets:
@@ -21,11 +15,7 @@ cuda_compiler_version:
 cxx_compiler:
 - clangxx
 cxx_compiler_version:
-<<<<<<< HEAD:.ci_support/osx_64_python3.8.____cpython.yaml
-- '12'
-=======
 - '13'
->>>>>>> origin:.ci_support/osx_64_numpy1.19python3.8.____cpython.yaml
 giflib:
 - '5.2'
 grpc_cpp:
@@ -42,11 +32,6 @@ libprotobuf:
 - '3.19'
 macos_machine:
 - x86_64-apple-darwin13.4.0
-<<<<<<< HEAD:.ci_support/osx_64_python3.8.____cpython.yaml
-=======
-numpy:
-- '1.19'
->>>>>>> origin:.ci_support/osx_64_numpy1.19python3.8.____cpython.yaml
 openssl:
 - 1.1.1
 pin_run_as_build:
