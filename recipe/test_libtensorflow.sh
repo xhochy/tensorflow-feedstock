@@ -2,5 +2,5 @@
 
 set -euxo pipefail
 
-$CC -o test_c -L${PREFIX}/lib/ -ltensorflow -I${PREFIX}/include/ test_c.c
+${CC} ${CFLAGS} ${LDFLAGS} -o test_c test_c.c -ltensorflow
 ./test_c
