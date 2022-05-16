@@ -96,6 +96,8 @@ requirements:
     - jpeg
     - libpng
     - libprotobuf
+    - onednn
+    - onednn-cpu-threadpool  # [not (osx and arm64)]
     - openssl
     - pybind11
     - sqlite
@@ -104,6 +106,7 @@ requirements:
   run:
     # avoid that people without GPUs needlessly download ~200-300MB
     - __cuda  # [cuda_compiler_version != "None"]
+    - onednn-cpu-threadpool  # [not (osx and arm64)]
 
 test:
   commands:
