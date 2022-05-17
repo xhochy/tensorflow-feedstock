@@ -158,7 +158,6 @@ bazel shutdown
 # build using bazel
 bazel ${BAZEL_OPTS} build ${BUILD_OPTS} ${BUILD_TARGET}
 
-cp bazel-bin/tensorflow/core/kernels/liblibtfkernel_all_kernels.so_ccsharedlib.so ${PREFIX}/lib/libtfkernel_all_kernels${SHLIB_EXT}
 cp -RP bazel-bin/tensorflow/libtensorflow_framework.* ${PREFIX}/lib/
 
 bazel clean
