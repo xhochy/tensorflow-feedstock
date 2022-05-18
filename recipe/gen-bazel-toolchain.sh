@@ -3,6 +3,12 @@
 set -euxo pipefail
 
 function apply_cc_template() {
+  # Strip trailing/duplicate whitespace
+  CFLAGS=$(echo $CFLAGS | xargs echo -n)
+  CPPFLAGS=$(echo $CPPFLAGS | xargs echo -n)
+  CXXFLAGS=$(echo $CXXFLAGS | xargs echo -n)
+  LDFLAGS=$(echo $LDFLAGS | xargs echo -n)
+
   sed -ie "s:TARGET_CPU:${TARGET_CPU}:" $1
   sed -ie "s:TARGET_LIBC:${TARGET_LIBC}:" $1
   sed -ie "s:TARGET_SYSTEM:${TARGET_SYSTEM}:" $1
@@ -15,6 +21,7 @@ function apply_cc_template() {
   sed -ie "s:\${CUDA_HOME}:${CUDA_HOME:-}:" $1
   sed -ie "s:\${PREFIX}:${PREFIX}:" $1
   sed -ie "s:\${BUILD_PREFIX}:${BUILD_PREFIX}:" $1
+  sed -ie "s:\${HOST_PREFIX}:${HOST_PREFIX}:" $1
   sed -ie "s:\${LD}:${LD}:" $1
   sed -ie "s:\${CFLAGS}:${CFLAGS}:" $1
   sed -ie "s:\${CPPFLAGS}:${CPPFLAGS}:" $1
@@ -38,14 +45,19 @@ pushd custom_toolchain
         -e "s:\${target_platform}:${target_platform}:" \
         -e "s:\${INSTALL_NAME_TOOL}:${INSTALL_NAME_TOOL}:" \
         -e "s:\${CONDA_BUILD_SYSROOT}:${CONDA_BUILD_SYSROOT}:" \
+        -e "s:\${MACOSX_SDK_VERSION}:${MACOSX_SDK_VERSION:-}:" \
+        -e "s:\${MACOSX_DEPLOYMENT_TARGET}:${MACOSX_DEPLOYMENT_TARGET:-}:" \
         cc_wrapper.sh.template > cc_wrapper.sh
     chmod +x cc_wrapper.sh
     sed -e "s:\${CLANG}:${CC_FOR_BUILD}:" \
         -e "s:\${target_platform}:${target_platform}:" \
         -e "s:\${INSTALL_NAME_TOOL}:${INSTALL_NAME_TOOL//${HOST}/${BUILD}}:" \
         -e "s:\${CONDA_BUILD_SYSROOT}:${CONDA_BUILD_SYSROOT}:" \
+        -e "s:\${MACOSX_SDK_VERSION}:${MACOSX_SDK_VERSION:-}:" \
+        -e "s:\${MACOSX_DEPLOYMENT_TARGET}:${MACOSX_DEPLOYMENT_TARGET:-}:" \
         cc_wrapper.sh.template > cc_wrapper_build.sh
     chmod +x cc_wrapper.sh
+    chmod +x cc_wrapper_build.sh
     export BAZEL_TOOLCHAIN_GCC="cc_wrapper.sh"
     export BAZEL_TOOLCHAIN_LIBCXX="c++"
     export BAZEL_TOOLCHAIN_AR=${LIBTOOL}
@@ -104,9 +116,12 @@ pushd custom_toolchain
   #    export BUILD_CPU="darwin"
   #  fi
   #fi
-  
+
   sed -ie "s:TARGET_CPU:${TARGET_CPU}:" BUILD
   sed -ie "s:BUILD_CPU:${BUILD_CPU}:" BUILD
+
+  # save HOST_PREFIX before setting PREFIX to be BUILD_PREFIX (in cross-compilation).
+  HOST_PREFIX=${PREFIX}
 
   cp cc_toolchain_config.bzl cc_toolchain_build_config.bzl
   apply_cc_template cc_toolchain_config.bzl
@@ -123,10 +138,10 @@ pushd custom_toolchain
       target_platform=${build_platform}
       PREFIX=${BUILD_PREFIX}
       LD=${LD//${HOST}/${BUILD}}
-      CFLAGS=${CFLAGS//${PREFIX}/${BUILD_PREFIX}}
-      CPPFLAGS=${CPPFLAGS//${PREFIX}/${BUILD_PREFIX}}
-      CXXFLAGS=${CXXFLAGS//${PREFIX}/${BUILD_PREFIX}}
-      LDFLAGS=${LDFLAGS//${PREFIX}/${BUILD_PREFIX}}
+      CFLAGS=${CFLAGS//${HOST_PREFIX}/${BUILD_PREFIX}}
+      CPPFLAGS=${CPPFLAGS//${HOST_PREFIX}/${BUILD_PREFIX}}
+      CXXFLAGS=${CXXFLAGS//${HOST_PREFIX}/${BUILD_PREFIX}}
+      LDFLAGS=${LDFLAGS//${HOST_PREFIX}/${BUILD_PREFIX}}
       NM=${NM//${HOST}/${BUILD}}
       STRIP=${STRIP//${HOST}/${BUILD}}
       BAZEL_TOOLCHAIN_AR=${BAZEL_TOOLCHAIN_AR//${HOST}/${BUILD}}

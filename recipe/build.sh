@@ -63,7 +63,8 @@ export BAZEL_MKL_OPT=""
 
 mkdir -p ./bazel_output_base
 export BAZEL_OPTS=""
-export CC_OPT_FLAGS="${CFLAGS}"
+# Set this to something as otherwise, it would include CFLAGS which itself contains a host path and this then breaks bazel's include path validation.
+export CC_OPT_FLAGS="-O2"
 
 # Quick debug:
 # cp -r ${RECIPE_DIR}/build.sh . && bazel clean && bash -x build.sh --logging=6 | tee log.txt
@@ -97,7 +98,7 @@ if [[ "${target_platform}" == "osx-arm64" ]]; then
   BUILD_OPTS="${BUILD_OPTS} --config=macos_arm64"
 fi
 export TF_ENABLE_XLA=0
-export BUILD_TARGET="//tensorflow/tools/pip_package:build_pip_package //tensorflow/tools/lib_package:libtensorflow //tensorflow:libtensorflow_cc.so"
+export BUILD_TARGET="//tensorflow/tools/pip_package:build_pip_package //tensorflow/tools/lib_package:libtensorflow //tensorflow:libtensorflow_cc${SHLIB_EXT}"
 
 # Python settings
 export PYTHON_BIN_PATH=${PYTHON}
@@ -161,27 +162,30 @@ bazel ${BAZEL_OPTS} build ${BUILD_OPTS} ${BUILD_TARGET}
 mkdir -p $SRC_DIR/tensorflow_pkg
 bash -x bazel-bin/tensorflow/tools/pip_package/build_pip_package $SRC_DIR/tensorflow_pkg
 
-if [[ "${target_platform}" == linux-* ]]; then
-  cp $SRC_DIR/bazel-bin/tensorflow/tools/lib_package/libtensorflow.tar.gz $SRC_DIR
-  mkdir -p $SRC_DIR/libtensorflow_cc_output/lib
+# Build libtensorflow(_cc)
+cp $SRC_DIR/bazel-bin/tensorflow/tools/lib_package/libtensorflow.tar.gz $SRC_DIR
+mkdir -p $SRC_DIR/libtensorflow_cc_output/lib
+if [[ "${target_platform}" == osx-* ]]; then
+  cp -RP bazel-bin/tensorflow/libtensorflow_cc.* $SRC_DIR/libtensorflow_cc_output/lib/
+  cp -RP bazel-bin/tensorflow/libtensorflow_framework.* $SRC_DIR/libtensorflow_cc_output/lib/
+else
   cp -d bazel-bin/tensorflow/libtensorflow_cc.so* $SRC_DIR/libtensorflow_cc_output/lib/
   cp -d bazel-bin/tensorflow/libtensorflow_framework.so* $SRC_DIR/libtensorflow_cc_output/lib/
   cp -d $SRC_DIR/libtensorflow_cc_output/lib/libtensorflow_framework.so.2 $SRC_DIR/libtensorflow_cc_output/lib/libtensorflow_framework.so
-  # Make writable so patchelf can do its magic
-  chmod u+w $SRC_DIR/libtensorflow_cc_output/lib/libtensorflow*
-
-  mkdir -p $SRC_DIR/libtensorflow_cc_output/include/tensorflow
-  rsync -avzh --exclude '_virtual_includes/' --exclude 'pip_package/' --exclude 'lib_package/' --include '*/' --include '*.h' --include '*.inc' --exclude '*' bazel-bin/ $SRC_DIR/libtensorflow_cc_output/include
-  rsync -avzh --include '*/' --include '*.h' --include '*.inc' --exclude '*' tensorflow/cc $SRC_DIR/libtensorflow_cc_output/include/tensorflow/
-  rsync -avzh --include '*/' --include '*.h' --include '*.inc' --exclude '*' tensorflow/core $SRC_DIR/libtensorflow_cc_output/include/tensorflow/
-  rsync -avzh --include '*/' --include '*' --exclude '*.cc' third_party/ $SRC_DIR/libtensorflow_cc_output/include/third_party/
-  rsync -avzh --include '*/' --include '*' --exclude '*.txt' bazel-work/external/eigen_archive/Eigen/ $SRC_DIR/libtensorflow_cc_output/include/Eigen/
-  rsync -avzh --include '*/' --include '*' --exclude '*.txt' bazel-work/external/eigen_archive/unsupported/ $SRC_DIR/libtensorflow_cc_output/include/unsupported/
-  pushd $SRC_DIR/libtensorflow_cc_output
-    tar cf ../libtensorflow_cc_output.tar .
-  popd
-  chmod -R u+rw $SRC_DIR/libtensorflow_cc_output
-  rm -r $SRC_DIR/libtensorflow_cc_output
 fi
+# Make writable so patchelf can do its magic
+chmod u+w $SRC_DIR/libtensorflow_cc_output/lib/libtensorflow*
+
+mkdir -p $SRC_DIR/libtensorflow_cc_output/include/tensorflow
+rsync -r --chmod=D777,F666 --exclude '_solib*' --exclude '_virtual_includes/' --exclude 'pip_package/' --exclude 'lib_package/' --include '*/' --include '*.h' --include '*.inc' --exclude '*' bazel-bin/ $SRC_DIR/libtensorflow_cc_output/include
+rsync -r --chmod=D777,F666 --include '*/' --include '*.h' --include '*.inc' --exclude '*' tensorflow/cc $SRC_DIR/libtensorflow_cc_output/include/tensorflow/
+rsync -r --chmod=D777,F666 --include '*/' --include '*.h' --include '*.inc' --exclude '*' tensorflow/core $SRC_DIR/libtensorflow_cc_output/include/tensorflow/
+rsync -r --chmod=D777,F666 --include '*/' --include '*' --exclude '*.cc' third_party/ $SRC_DIR/libtensorflow_cc_output/include/third_party/
+rsync -r --chmod=D777,F666 --include '*/' --include '*' --exclude '*.txt' bazel-work/external/eigen_archive/Eigen/ $SRC_DIR/libtensorflow_cc_output/include/Eigen/
+rsync -r --chmod=D777,F666 --include '*/' --include '*' --exclude '*.txt' bazel-work/external/eigen_archive/unsupported/ $SRC_DIR/libtensorflow_cc_output/include/unsupported/
+pushd $SRC_DIR/libtensorflow_cc_output
+  tar cf ../libtensorflow_cc_output.tar .
+popd
+rm -r $SRC_DIR/libtensorflow_cc_output
 
 bazel clean
