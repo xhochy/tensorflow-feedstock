@@ -32,7 +32,8 @@ build:
     - grpc-cpp
   run_exports:
     # tensorflow makes no ABI guarantees, need to pin to what we built with
-    - {{ pin_subpackage('libtensorflow_framework', exact=True) }}
+    # Preferably we would use `exact=True` here but the hash doesn't work.
+    - {{ pin_subpackage('libtensorflow_framework', max_pin="x.x.x") }}
 
 requirements:
   build:
