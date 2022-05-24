@@ -15,6 +15,7 @@ source:
       - patches/0002-Remove_dependency_on_implementation_ofRepeatedField_iterator.patch
       - patches/0003-Remove_dependency_on_implementation_ofRepeatedField_iterator.patch
       - patches/0002-Use-oneDNN-systemlib.patch
+      - patches/0001-Define-libtensorflow_core_cpu.patch
 
 build:
   number: 0
@@ -112,6 +113,7 @@ requirements:
 test:
   commands:
     - test -f "${PREFIX}/lib/libtensorflow_framework${SHLIB_EXT}"
+    - test -f "${PREFIX}/lib/libtensorflow_core_cpu${SHLIB_EXT}"
 
 about:
   home: http://tensorflow.org/

@@ -36,7 +36,7 @@ BUILD_OPTS="
 if [[ "${target_platform}" == "osx-arm64" ]]; then
   BUILD_OPTS="${BUILD_OPTS} --config=macos_arm64"
 fi
-export BUILD_TARGET="//tensorflow:libtensorflow_framework_import_lib //tensorflow:libtensorflow_framework${SHLIB_EXT}"
+export BUILD_TARGET="//tensorflow:libtensorflow_framework_import_lib //tensorflow:libtensorflow_framework${SHLIB_EXT} //tensorflow/core/common_runtime:libtensorflow_core_cpu${SHLIB_EXT}"
 
 # Python settings
 export PYTHON_BIN_PATH=${BUILD_PREFIX}/bin/python
@@ -56,5 +56,6 @@ bazel shutdown
 bazel ${BAZEL_OPTS} build ${BUILD_OPTS} ${BUILD_TARGET}
 
 cp -RP bazel-bin/tensorflow/libtensorflow_framework.* ${PREFIX}/lib/
+cp -RP bazel-bin/tensorflow/core/common_runtime/libtensorflow_core_cpu${SHLIB_EXT} ${PREFIX}/lib/
 
 bazel clean
