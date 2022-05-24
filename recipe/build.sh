@@ -92,12 +92,13 @@ BUILD_OPTS="
     --define=PREFIX=${PREFIX}
     --define=PROTOBUF_INCLUDE_PATH=${PREFIX}/include
     --config=noaws
-    --cpu=${TARGET_CPU}"
+    --cpu=${TARGET_CPU}
+    --local_cpu_resources=${CPU_COUNT}"
 
 if [[ "${target_platform}" == "osx-arm64" ]]; then
   BUILD_OPTS="${BUILD_OPTS} --config=macos_arm64"
 fi
-export TF_ENABLE_XLA=0
+export TF_ENABLE_XLA=1
 export BUILD_TARGET="//tensorflow/tools/pip_package:build_pip_package //tensorflow/tools/lib_package:libtensorflow //tensorflow:libtensorflow_cc${SHLIB_EXT}"
 
 # Python settings

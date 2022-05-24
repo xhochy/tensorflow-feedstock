@@ -1,4 +1,5 @@
-{% set version = "2.8.0" %}
+{% set version = "2.8.1" %}
+{% set estimator_version = "2.8.0" %}
 
 package:
   name: tensorflow-split
@@ -6,11 +7,15 @@ package:
 
 source:
   - url: https://github.com/tensorflow/tensorflow/archive/refs/tags/v{{ version }}.tar.gz
-    sha256: 66b953ae7fba61fd78969a2e24e350b26ec116cf2e6a7eb93d02c63939c6f9f7
+    sha256: 4b487a63d6f0c1ca46a2ac37ba4687eabdc3a260c222616fa414f6df73228cec
     patches:
       - patches/0001-loosen-requirements.patch
+      # Slated for 2.9.0 release
+      # https://github.com/tensorflow/tensorflow/commit/613bcf9f92750bebf88b5f119da8bce83acb4b47
+      - patches/0002-Remove_dependency_on_implementation_ofRepeatedField_iterator.patch
+      - patches/0003-Remove_dependency_on_implementation_ofRepeatedField_iterator.patch
 
-  - url: https://github.com/tensorflow/estimator/archive/refs/tags/v{{ version }}.tar.gz
+  - url: https://github.com/tensorflow/estimator/archive/refs/tags/v{{ estimator_version }}.tar.gz
     sha256: 58a2c3562ca6491c257e9a4d9bd8825667883257edcdb452181efa691c586b17
     folder: tensorflow-estimator
 
@@ -18,6 +23,10 @@ build:
   number: 0
   skip: true  # [win]
   skip: true  # [python_impl == 'pypy']
+  # Tensorflow still hasn't updated from C++14.
+  # Newer versions of abseil_cpp require C++17
+  # This may be a possibility in 2.9.0
+  skip: true  # [abseil_cpp != '20210324.2']
 
 requirements:
   build:
@@ -71,7 +80,7 @@ requirements:
     # but so far there have been no problems with leaving these
     # unpinned; though some restrictions come in for packages
     # that are also listed as a requirement for the pip_package.
-    - abseil-cpp 20210324.2
+    - abseil-cpp
     - astor
     - cython
     - dill
@@ -150,7 +159,7 @@ outputs:
         - pip
         - wheel
         # TF_SYSTEM_LIBS
-        - abseil-cpp 20210324.2
+        - abseil-cpp
         - astor
         - cython
         - dill
