@@ -5,7 +5,7 @@ Home: http://tensorflow.org/
 
 Package license: Apache-2.0
 
-Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/tensorflow-feedstock/blob/main/LICENSE.txt)
+Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/tensorflow-feedstock-2-feedstock/blob/main/LICENSE.txt)
 
 Summary: TensorFlow is an end-to-end open source platform for machine learning.
 
@@ -30,248 +30,59 @@ Current build status
     <td>
       <details>
         <summary>
-          <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=4385&branchName=main">
-            <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/tensorflow-feedstock?branchName=main">
+          <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=&branchName=main">
+            <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/tensorflow-feedstock-2-feedstock?branchName=main">
           </a>
         </summary>
         <table>
           <thead><tr><th>Variant</th><th>Status</th></tr></thead>
           <tbody><tr>
-<<<<<<< HEAD
-              <td>linux_64_abseil_cpp20210324.2c_compiler_version10cuda_compiler_version11.1cxx_compiler_version10grpc_cpp1.45python3.10.____cpython</td>
+              <td>linux_64_abseil_cpp20210324.2c_compiler_version10cuda_compiler_version11.1cudnn8cxx_compiler_version10grpc_cpp1.45</td>
               <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=4385&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/tensorflow-feedstock?branchName=main&jobName=linux&configuration=linux_64_abseil_cpp20210324.2c_compiler_version10cuda_compiler_version11.1cxx_compiler_version10grpc_cpp1.45python3.10.____cpython" alt="variant">
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=&branchName=main">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/tensorflow-feedstock-2-feedstock?branchName=main&jobName=linux&configuration=linux_64_abseil_cpp20210324.2c_compiler_version10cuda_compiler_version11.1cudnn8cxx_compiler_version10grpc_cpp1.45" alt="variant">
                 </a>
               </td>
             </tr><tr>
-              <td>linux_64_abseil_cpp20210324.2c_compiler_version10cuda_compiler_version11.1cxx_compiler_version10grpc_cpp1.45python3.7.____cpython</td>
+              <td>linux_64_abseil_cpp20210324.2c_compiler_version10cuda_compiler_version11.2cudnn8cxx_compiler_version10grpc_cpp1.45</td>
               <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=4385&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/tensorflow-feedstock?branchName=main&jobName=linux&configuration=linux_64_abseil_cpp20210324.2c_compiler_version10cuda_compiler_version11.1cxx_compiler_version10grpc_cpp1.45python3.7.____cpython" alt="variant">
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=&branchName=main">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/tensorflow-feedstock-2-feedstock?branchName=main&jobName=linux&configuration=linux_64_abseil_cpp20210324.2c_compiler_version10cuda_compiler_version11.2cudnn8cxx_compiler_version10grpc_cpp1.45" alt="variant">
                 </a>
               </td>
             </tr><tr>
-              <td>linux_64_abseil_cpp20210324.2c_compiler_version10cuda_compiler_version11.1cxx_compiler_version10grpc_cpp1.45python3.8.____cpython</td>
+              <td>linux_64_abseil_cpp20210324.2c_compiler_version10cuda_compiler_versionNonecudnnundefinedcxx_compiler_version10grpc_cpp1.45</td>
               <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=4385&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/tensorflow-feedstock?branchName=main&jobName=linux&configuration=linux_64_abseil_cpp20210324.2c_compiler_version10cuda_compiler_version11.1cxx_compiler_version10grpc_cpp1.45python3.8.____cpython" alt="variant">
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=&branchName=main">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/tensorflow-feedstock-2-feedstock?branchName=main&jobName=linux&configuration=linux_64_abseil_cpp20210324.2c_compiler_version10cuda_compiler_versionNonecudnnundefinedcxx_compiler_version10grpc_cpp1.45" alt="variant">
                 </a>
               </td>
             </tr><tr>
-              <td>linux_64_abseil_cpp20210324.2c_compiler_version10cuda_compiler_version11.1cxx_compiler_version10grpc_cpp1.45python3.9.____cpython</td>
+              <td>linux_64_abseil_cpp20210324.2c_compiler_version7cuda_compiler_version10.2cudnn7cxx_compiler_version7grpc_cpp1.45</td>
               <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=4385&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/tensorflow-feedstock?branchName=main&jobName=linux&configuration=linux_64_abseil_cpp20210324.2c_compiler_version10cuda_compiler_version11.1cxx_compiler_version10grpc_cpp1.45python3.9.____cpython" alt="variant">
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=&branchName=main">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/tensorflow-feedstock-2-feedstock?branchName=main&jobName=linux&configuration=linux_64_abseil_cpp20210324.2c_compiler_version7cuda_compiler_version10.2cudnn7cxx_compiler_version7grpc_cpp1.45" alt="variant">
                 </a>
               </td>
             </tr><tr>
-              <td>linux_64_abseil_cpp20210324.2c_compiler_version10cuda_compiler_version11.2cxx_compiler_version10grpc_cpp1.45python3.10.____cpython</td>
+              <td>linux_64_abseil_cpp20210324.2c_compiler_version9cuda_compiler_version11.0cudnn8cxx_compiler_version9grpc_cpp1.45</td>
               <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=4385&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/tensorflow-feedstock?branchName=main&jobName=linux&configuration=linux_64_abseil_cpp20210324.2c_compiler_version10cuda_compiler_version11.2cxx_compiler_version10grpc_cpp1.45python3.10.____cpython" alt="variant">
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=&branchName=main">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/tensorflow-feedstock-2-feedstock?branchName=main&jobName=linux&configuration=linux_64_abseil_cpp20210324.2c_compiler_version9cuda_compiler_version11.0cudnn8cxx_compiler_version9grpc_cpp1.45" alt="variant">
                 </a>
               </td>
             </tr><tr>
-              <td>linux_64_abseil_cpp20210324.2c_compiler_version10cuda_compiler_version11.2cxx_compiler_version10grpc_cpp1.45python3.7.____cpython</td>
+              <td>osx_64_abseil_cpp20210324.2grpc_cpp1.45</td>
               <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=4385&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/tensorflow-feedstock?branchName=main&jobName=linux&configuration=linux_64_abseil_cpp20210324.2c_compiler_version10cuda_compiler_version11.2cxx_compiler_version10grpc_cpp1.45python3.7.____cpython" alt="variant">
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=&branchName=main">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/tensorflow-feedstock-2-feedstock?branchName=main&jobName=osx&configuration=osx_64_abseil_cpp20210324.2grpc_cpp1.45" alt="variant">
                 </a>
               </td>
             </tr><tr>
-              <td>linux_64_abseil_cpp20210324.2c_compiler_version10cuda_compiler_version11.2cxx_compiler_version10grpc_cpp1.45python3.8.____cpython</td>
+              <td>osx_arm64_abseil_cpp20210324.2grpc_cpp1.45</td>
               <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=4385&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/tensorflow-feedstock?branchName=main&jobName=linux&configuration=linux_64_abseil_cpp20210324.2c_compiler_version10cuda_compiler_version11.2cxx_compiler_version10grpc_cpp1.45python3.8.____cpython" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
-              <td>linux_64_abseil_cpp20210324.2c_compiler_version10cuda_compiler_version11.2cxx_compiler_version10grpc_cpp1.45python3.9.____cpython</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=4385&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/tensorflow-feedstock?branchName=main&jobName=linux&configuration=linux_64_abseil_cpp20210324.2c_compiler_version10cuda_compiler_version11.2cxx_compiler_version10grpc_cpp1.45python3.9.____cpython" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
-              <td>linux_64_abseil_cpp20210324.2c_compiler_version10cuda_compiler_versionNonecxx_compiler_version10grpc_cpp1.45python3.10.____cpython</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=4385&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/tensorflow-feedstock?branchName=main&jobName=linux&configuration=linux_64_abseil_cpp20210324.2c_compiler_version10cuda_compiler_versionNonecxx_compiler_version10grpc_cpp1.45python3.10.____cpython" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
-              <td>linux_64_abseil_cpp20210324.2c_compiler_version10cuda_compiler_versionNonecxx_compiler_version10grpc_cpp1.45python3.7.____cpython</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=4385&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/tensorflow-feedstock?branchName=main&jobName=linux&configuration=linux_64_abseil_cpp20210324.2c_compiler_version10cuda_compiler_versionNonecxx_compiler_version10grpc_cpp1.45python3.7.____cpython" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
-              <td>linux_64_abseil_cpp20210324.2c_compiler_version10cuda_compiler_versionNonecxx_compiler_version10grpc_cpp1.45python3.8.____cpython</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=4385&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/tensorflow-feedstock?branchName=main&jobName=linux&configuration=linux_64_abseil_cpp20210324.2c_compiler_version10cuda_compiler_versionNonecxx_compiler_version10grpc_cpp1.45python3.8.____cpython" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
-              <td>linux_64_abseil_cpp20210324.2c_compiler_version10cuda_compiler_versionNonecxx_compiler_version10grpc_cpp1.45python3.9.____cpython</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=4385&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/tensorflow-feedstock?branchName=main&jobName=linux&configuration=linux_64_abseil_cpp20210324.2c_compiler_version10cuda_compiler_versionNonecxx_compiler_version10grpc_cpp1.45python3.9.____cpython" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
-              <td>linux_64_abseil_cpp20210324.2c_compiler_version7cuda_compiler_version10.2cxx_compiler_version7grpc_cpp1.45python3.10.____cpython</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=4385&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/tensorflow-feedstock?branchName=main&jobName=linux&configuration=linux_64_abseil_cpp20210324.2c_compiler_version7cuda_compiler_version10.2cxx_compiler_version7grpc_cpp1.45python3.10.____cpython" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
-              <td>linux_64_abseil_cpp20210324.2c_compiler_version7cuda_compiler_version10.2cxx_compiler_version7grpc_cpp1.45python3.7.____cpython</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=4385&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/tensorflow-feedstock?branchName=main&jobName=linux&configuration=linux_64_abseil_cpp20210324.2c_compiler_version7cuda_compiler_version10.2cxx_compiler_version7grpc_cpp1.45python3.7.____cpython" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
-              <td>linux_64_abseil_cpp20210324.2c_compiler_version7cuda_compiler_version10.2cxx_compiler_version7grpc_cpp1.45python3.8.____cpython</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=4385&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/tensorflow-feedstock?branchName=main&jobName=linux&configuration=linux_64_abseil_cpp20210324.2c_compiler_version7cuda_compiler_version10.2cxx_compiler_version7grpc_cpp1.45python3.8.____cpython" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
-              <td>linux_64_abseil_cpp20210324.2c_compiler_version7cuda_compiler_version10.2cxx_compiler_version7grpc_cpp1.45python3.9.____cpython</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=4385&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/tensorflow-feedstock?branchName=main&jobName=linux&configuration=linux_64_abseil_cpp20210324.2c_compiler_version7cuda_compiler_version10.2cxx_compiler_version7grpc_cpp1.45python3.9.____cpython" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
-              <td>linux_64_abseil_cpp20210324.2c_compiler_version9cuda_compiler_version11.0cxx_compiler_version9grpc_cpp1.45python3.10.____cpython</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=4385&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/tensorflow-feedstock?branchName=main&jobName=linux&configuration=linux_64_abseil_cpp20210324.2c_compiler_version9cuda_compiler_version11.0cxx_compiler_version9grpc_cpp1.45python3.10.____cpython" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
-              <td>linux_64_abseil_cpp20210324.2c_compiler_version9cuda_compiler_version11.0cxx_compiler_version9grpc_cpp1.45python3.7.____cpython</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=4385&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/tensorflow-feedstock?branchName=main&jobName=linux&configuration=linux_64_abseil_cpp20210324.2c_compiler_version9cuda_compiler_version11.0cxx_compiler_version9grpc_cpp1.45python3.7.____cpython" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
-              <td>linux_64_abseil_cpp20210324.2c_compiler_version9cuda_compiler_version11.0cxx_compiler_version9grpc_cpp1.45python3.8.____cpython</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=4385&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/tensorflow-feedstock?branchName=main&jobName=linux&configuration=linux_64_abseil_cpp20210324.2c_compiler_version9cuda_compiler_version11.0cxx_compiler_version9grpc_cpp1.45python3.8.____cpython" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
-              <td>linux_64_abseil_cpp20210324.2c_compiler_version9cuda_compiler_version11.0cxx_compiler_version9grpc_cpp1.45python3.9.____cpython</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=4385&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/tensorflow-feedstock?branchName=main&jobName=linux&configuration=linux_64_abseil_cpp20210324.2c_compiler_version9cuda_compiler_version11.0cxx_compiler_version9grpc_cpp1.45python3.9.____cpython" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
-              <td>osx_64_abseil_cpp20210324.2grpc_cpp1.45python3.10.____cpython</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=4385&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/tensorflow-feedstock?branchName=main&jobName=osx&configuration=osx_64_abseil_cpp20210324.2grpc_cpp1.45python3.10.____cpython" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
-              <td>osx_64_abseil_cpp20210324.2grpc_cpp1.45python3.7.____cpython</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=4385&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/tensorflow-feedstock?branchName=main&jobName=osx&configuration=osx_64_abseil_cpp20210324.2grpc_cpp1.45python3.7.____cpython" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
-              <td>osx_64_abseil_cpp20210324.2grpc_cpp1.45python3.8.____cpython</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=4385&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/tensorflow-feedstock?branchName=main&jobName=osx&configuration=osx_64_abseil_cpp20210324.2grpc_cpp1.45python3.8.____cpython" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
-              <td>osx_64_abseil_cpp20210324.2grpc_cpp1.45python3.9.____cpython</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=4385&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/tensorflow-feedstock?branchName=main&jobName=osx&configuration=osx_64_abseil_cpp20210324.2grpc_cpp1.45python3.9.____cpython" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
-              <td>osx_arm64_abseil_cpp20210324.2grpc_cpp1.45python3.10.____cpython</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=4385&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/tensorflow-feedstock?branchName=main&jobName=osx&configuration=osx_arm64_abseil_cpp20210324.2grpc_cpp1.45python3.10.____cpython" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
-              <td>osx_arm64_abseil_cpp20210324.2grpc_cpp1.45python3.8.____cpython</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=4385&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/tensorflow-feedstock?branchName=main&jobName=osx&configuration=osx_arm64_abseil_cpp20210324.2grpc_cpp1.45python3.8.____cpython" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
-              <td>osx_arm64_abseil_cpp20210324.2grpc_cpp1.45python3.9.____cpython</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=4385&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/tensorflow-feedstock?branchName=main&jobName=osx&configuration=osx_arm64_abseil_cpp20210324.2grpc_cpp1.45python3.9.____cpython" alt="variant">
-=======
-              <td>linux_64_c_compiler_version10cuda_compiler_version11.1cudnn8cxx_compiler_version10</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=4385&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/tensorflow-feedstock?branchName=main&jobName=linux&configuration=linux_64_c_compiler_version10cuda_compiler_version11.1cudnn8cxx_compiler_version10" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
-              <td>linux_64_c_compiler_version10cuda_compiler_version11.2cudnn8cxx_compiler_version10</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=4385&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/tensorflow-feedstock?branchName=main&jobName=linux&configuration=linux_64_c_compiler_version10cuda_compiler_version11.2cudnn8cxx_compiler_version10" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
-              <td>linux_64_c_compiler_version10cuda_compiler_versionNonecudnnundefinedcxx_compiler_version10</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=4385&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/tensorflow-feedstock?branchName=main&jobName=linux&configuration=linux_64_c_compiler_version10cuda_compiler_versionNonecudnnundefinedcxx_compiler_version10" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
-              <td>linux_64_c_compiler_version7cuda_compiler_version10.2cudnn7cxx_compiler_version7</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=4385&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/tensorflow-feedstock?branchName=main&jobName=linux&configuration=linux_64_c_compiler_version7cuda_compiler_version10.2cudnn7cxx_compiler_version7" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
-              <td>linux_64_c_compiler_version9cuda_compiler_version11.0cudnn8cxx_compiler_version9</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=4385&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/tensorflow-feedstock?branchName=main&jobName=linux&configuration=linux_64_c_compiler_version9cuda_compiler_version11.0cudnn8cxx_compiler_version9" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
-              <td>osx_64</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=4385&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/tensorflow-feedstock?branchName=main&jobName=osx&configuration=osx_64_" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
-              <td>osx_arm64</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=4385&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/tensorflow-feedstock?branchName=main&jobName=osx&configuration=osx_arm64_" alt="variant">
->>>>>>> 5a515a2 (Build libtkernel_add_kernels as standalone package)
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=&branchName=main">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/tensorflow-feedstock-2-feedstock?branchName=main&jobName=osx&configuration=osx_arm64_abseil_cpp20210324.2grpc_cpp1.45" alt="variant">
                 </a>
               </td>
             </tr>
