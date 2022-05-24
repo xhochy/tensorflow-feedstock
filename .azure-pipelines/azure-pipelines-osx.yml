@@ -8,6 +8,7 @@ jobs:
     vmImage: macOS-10.15
   strategy:
     matrix:
+<<<<<<< HEAD
       osx_64_abseil_cpp20210324.2grpc_cpp1.45python3.10.____cpython:
         CONFIG: osx_64_abseil_cpp20210324.2grpc_cpp1.45python3.10.____cpython
         UPLOAD_PACKAGES: 'True'
@@ -28,6 +29,13 @@ jobs:
         UPLOAD_PACKAGES: 'True'
       osx_arm64_abseil_cpp20210324.2grpc_cpp1.45python3.9.____cpython:
         CONFIG: osx_arm64_abseil_cpp20210324.2grpc_cpp1.45python3.9.____cpython
+=======
+      osx_64_:
+        CONFIG: osx_64_
+        UPLOAD_PACKAGES: 'True'
+      osx_arm64_:
+        CONFIG: osx_arm64_
+>>>>>>> 5a515a2 (Build libtkernel_add_kernels as standalone package)
         UPLOAD_PACKAGES: 'True'
   timeoutInMinutes: 360
 
