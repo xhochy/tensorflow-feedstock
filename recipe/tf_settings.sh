@@ -41,6 +41,7 @@ export TF_SYSTEM_LIBS="
   flatbuffers
   gast_archive
   gif
+  mkldnn_v1
   icu
   libjpeg_turbo
   org_sqlite
