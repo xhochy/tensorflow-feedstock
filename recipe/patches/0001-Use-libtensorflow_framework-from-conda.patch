@@ -1,0 +1,214 @@
+From 9c83e2ae016e4238b1d195ec99318eec6ab8d011 Mon Sep 17 00:00:00 2001
+From: "Uwe L. Korn" <uwe.korn@quantco.com>
+Date: Fri, 20 May 2022 19:20:04 +0200
+Subject: [PATCH] Use libtensorflow_framework from conda
+
+---
+ tensorflow/BUILD                     | 55 ++++++++++++++++++++++++----
+ tensorflow/core/BUILD                |  3 +-
+ tensorflow/core/common_runtime/BUILD | 30 +++++----------
+ tensorflow/core/lib/core/arena.cc    |  2 +
+ tensorflow/tensorflow.bzl            |  4 +-
+ tensorflow/tools/lib_package/BUILD   | 12 +-----
+ 6 files changed, 64 insertions(+), 42 deletions(-)
+
+diff --git a/tensorflow/BUILD b/tensorflow/BUILD
+index fcaecb41..093e1eed 100644
+--- a/tensorflow/BUILD
++++ b/tensorflow/BUILD
+@@ -914,7 +914,7 @@ cc_library(
+ #
+ # TODO(cheshire): Write tests to check for rule violations.
+ tf_cc_shared_object(
+-    name = "tensorflow_framework",
++    name = "tensorflow_framework_NON_FUNCTIONAL",
+     framework_so = [],
+     linkopts = select({
+         "//tensorflow:macos": [
+@@ -959,16 +959,57 @@ tf_cc_shared_object(
+     ] + tf_additional_binary_deps(),
+ )
+ 
++cc_binary(
++  name = "libtensorflow_framework_sharedlib",
++  linkopts = ["-ltensorflow_framework"],
++  visibility = ["//visibility:public"],
++  linkshared = 1,
++)
++
++alias(
++  name = "libtensorflow_framework.2.dylib",
++  actual = "libtensorflow_framework_sharedlib",
++  visibility = ["//visibility:public"],
++)
++
++alias(
++  name = "libtensorflow_framework.so.2",
++  actual = "libtensorflow_framework_sharedlib",
++  visibility = ["//visibility:public"],
++)
++
++alias(
++  name = "libtensorflow_framework.so.2.8.1",
++  actual = "libtensorflow_framework_sharedlib",
++  visibility = ["//visibility:public"],
++)
++
++alias(
++  name = "libtensorflow_framework.2.8.1.dylib",
++  actual = "libtensorflow_framework_sharedlib",
++  visibility = ["//visibility:public"],
++)
++
++cc_library(
++  name = "libtensorflow_framework.dylib",
++  linkopts = ["-ltensorflow_framework"],
++  visibility = ["//visibility:public"],
++)
++
++cc_library(
++  name = "libtensorflow_framework.so",
++  linkopts = ["-ltensorflow_framework"],
++  visibility = ["//visibility:public"],
++)
++
+ # This is intended to be the same as tf_binary_additional_srcs:
+ # https://github.com/tensorflow/tensorflow/blob/cd67f4f3723f9165aabedd0171aaadc6290636e5/tensorflow/tensorflow.bzl#L396-L425
+ # And is usable in the "deps" attribute instead of the "srcs" attribute
+ # as a workaround for https://github.com/tensorflow/tensorflow/issues/34117
+-cc_import(
+-    name = "libtensorflow_framework_import_lib",
+-    shared_library = select({
+-        "//tensorflow:macos": ":libtensorflow_framework.dylib",
+-        "//conditions:default": ":libtensorflow_framework.so",
+-    }),
++cc_library(
++  name = "libtensorflow_framework_import_lib",
++  linkopts = ["-ltensorflow_framework"],
++  visibility = ["//visibility:public"],
+ )
+ 
+ # -------------------------------------------
+diff --git a/tensorflow/core/BUILD b/tensorflow/core/BUILD
+index 0e849d54..0d6d87e5 100644
+--- a/tensorflow/core/BUILD
++++ b/tensorflow/core/BUILD
+@@ -1293,7 +1293,8 @@ cc_library(
+         "//third_party/eigen3",
+         "@com_google_absl//absl/base:core_headers",
+         "//tensorflow/core/platform/default/build_config:platformlib",
+-    ] + if_static([":lib_internal_impl"]),
++	"//tensorflow:libtensorflow_framework.2.dylib",
++    ],
+ )
+ 
+ # Until we can ditch config=monolithic on windows, we have to provide an always
+diff --git a/tensorflow/core/common_runtime/BUILD b/tensorflow/core/common_runtime/BUILD
+index 7a057a79..8b4f3a82 100644
+--- a/tensorflow/core/common_runtime/BUILD
++++ b/tensorflow/core/common_runtime/BUILD
+@@ -61,6 +61,12 @@ package(
+     licenses = ["notice"],
+ )
+ 
++cc_binary(
++  name = "libtensorflow_core_cpu_sharedlib",
++  linkopts = ["-ltensorflow_core_cpu"],
++  visibility = ["//visibility:public"],
++)
++
+ tf_cuda_library(
+     name = "core_cpu",
+     hdrs = [
+@@ -1863,34 +1869,16 @@ tf_cuda_library(
+ 
+ tf_cuda_library(
+     name = "core_cpu_internal",
+-    srcs = [
+-        "graph_execution_state.cc",
+-    ],
+     hdrs = [
+         "graph_execution_state.h",
+         ":core_cpu_lib_headers",
+     ],
+     copts = tf_copts(),
+     deps = [
+-        "//tensorflow/core:framework",
+-        "//tensorflow/core:graph",
+-        "//tensorflow/core:lib",
+-        "//tensorflow/core:protos_all_cc",
+-        "@com_google_absl//absl/container:flat_hash_set",
+-        "@com_google_absl//absl/memory",
+-        "@com_google_absl//absl/strings",
+-        "//tensorflow/core/grappler:grappler_item",
+-        "//tensorflow/core/grappler/clusters:utils",
+-        "//tensorflow/core/grappler/clusters:virtual_cluster",
+-        "//tensorflow/core/grappler/optimizers:meta_optimizer",
++        ":libtensorflow_core_cpu_sharedlib",
+         "//third_party/eigen3",
+-    ] + tf_additional_core_deps() + if_static([
+-        ":core_cpu_impl",
+-        "//tensorflow/core:function_ops_op_lib",
+-        "//tensorflow/core:functional_grad",
+-        "//tensorflow/core:functional_ops_op_lib",
+-        "//tensorflow/core/kernels:required",
+-    ]),
++        "//tensorflow/core:protos_all_cc",
++    ],
+     alwayslink = 1,
+ )
+ 
+diff --git a/tensorflow/core/lib/core/arena.cc b/tensorflow/core/lib/core/arena.cc
+index 591e2bb9..ae669b9f 100644
+--- a/tensorflow/core/lib/core/arena.cc
++++ b/tensorflow/core/lib/core/arena.cc
+@@ -23,6 +23,8 @@ limitations under the License.
+ 
+ #include "tensorflow/core/lib/core/arena.h"
+ 
++DON'T COMPILE ME
++
+ #include <assert.h>
+ 
+ #include <algorithm>
+diff --git a/tensorflow/tensorflow.bzl b/tensorflow/tensorflow.bzl
+index 7ea160a5..2bc6d8fb 100644
+--- a/tensorflow/tensorflow.bzl
++++ b/tensorflow/tensorflow.bzl
+@@ -2933,8 +2933,8 @@ def pybind_extension(
+ 
+     # TODO(rostam): Add libtensorflow_framework.so to `dynamic_deps`.
+     # If we are to link to libtensorflow_framework.so, add it as a source.
+-    if link_in_framework:
+-        srcs += tf_binary_additional_srcs()
++    #if link_in_framework:
++    #    srcs += tf_binary_additional_srcs()
+ 
+     if not static_deps:
+         cc_binary(
+diff --git a/tensorflow/tools/lib_package/BUILD b/tensorflow/tools/lib_package/BUILD
+index 65d63aa8..dba8c7ee 100644
+--- a/tensorflow/tools/lib_package/BUILD
++++ b/tensorflow/tools/lib_package/BUILD
+@@ -54,17 +54,7 @@ pkg_tar(
+ # Shared objects that all TensorFlow libraries depend on.
+ pkg_tar(
+     name = "common_deps",
+-    srcs = ["//tensorflow:tensorflow_framework"],
+-    symlinks = if_macos(
+-        {
+-            "libtensorflow_framework.dylib": "libtensorflow_framework.%s.dylib" % VERSION_MAJOR,
+-            "libtensorflow_framework.%s.dylib" % VERSION_MAJOR: "libtensorflow_framework.%s.dylib" % VERSION,
+-        },
+-        {
+-            "libtensorflow_framework.so": "libtensorflow_framework.so.%s" % VERSION_MAJOR,
+-            "libtensorflow_framework.so.%s" % VERSION_MAJOR: "libtensorflow_framework.so.%s" % VERSION,
+-        },
+-    ),
++    srcs = ["//tensorflow:libtensorflow_framework_import_lib"],
+     tags = ["manual"],
+ )
+ 
+-- 
+2.32.1 (Apple Git-133)
+
