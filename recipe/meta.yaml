@@ -13,6 +13,7 @@ source:
     patches:
       - patches/0001-loosen-requirements.patch
       - patches/0001-Use-libtensorflow_framework-from-conda.patch
+      - patches/0002-Use-oneDNN-systemlib.patch
 
 build:
   number: 0
@@ -26,6 +27,8 @@ requirements:
   build:
     - python *
     - numpy >=1.21
+    - onednn                                 # [build_platform != target_platform]
+    - onednn-cpu-threadpool                  # [build_platform != target_platform]
     - {{ compiler('c') }}
     - {{ compiler('cxx') }}
     - {{ compiler('cuda') }}                 # [cuda_compiler_version != "None"]
@@ -74,6 +77,8 @@ requirements:
     - jpeg
     - libpng
     - libprotobuf
+    - onednn
+    - onednn-cpu-threadpool  # [not (osx and arm64)]
     - openssl
     - pybind11
     - sqlite
