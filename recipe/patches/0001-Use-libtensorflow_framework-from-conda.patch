@@ -1,4 +1,4 @@
-From 9c83e2ae016e4238b1d195ec99318eec6ab8d011 Mon Sep 17 00:00:00 2001
+From 69839d35c8fdecbc4a045ae51944d8dce165d50a Mon Sep 17 00:00:00 2001
 From: "Uwe L. Korn" <uwe.korn@quantco.com>
 Date: Fri, 20 May 2022 19:20:04 +0200
 Subject: [PATCH] Use libtensorflow_framework from conda
@@ -104,14 +104,14 @@ index 0e849d54..0d6d87e5 100644
  
  # Until we can ditch config=monolithic on windows, we have to provide an always
 diff --git a/tensorflow/core/common_runtime/BUILD b/tensorflow/core/common_runtime/BUILD
-index 7a057a79..8b4f3a82 100644
+index 7a057a79..bd7aa77f 100644
 --- a/tensorflow/core/common_runtime/BUILD
 +++ b/tensorflow/core/common_runtime/BUILD
 @@ -61,6 +61,12 @@ package(
      licenses = ["notice"],
  )
  
-+cc_binary(
++cc_library(
 +  name = "libtensorflow_core_cpu_sharedlib",
 +  linkopts = ["-ltensorflow_core_cpu"],
 +  visibility = ["//visibility:public"],
@@ -210,5 +210,5 @@ index 65d63aa8..dba8c7ee 100644
  )
  
 -- 
-2.32.1 (Apple Git-133)
+2.25.1
 
