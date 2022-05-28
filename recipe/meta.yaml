@@ -85,6 +85,10 @@ requirements:
     - snappy
     - zlib
 
+test:
+  commands:
+    - test -f "${PREFIX}/lib/libtfkernel_conv_ops${SHLIB_EXT}"
+
 about:
   home: http://tensorflow.org/
   license: Apache-2.0
