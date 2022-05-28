@@ -56,9 +56,9 @@ requirements:
     - m2-zip       # [win]
     - openjdk >=8
     - nsync
-    - libtensorflow_framework {{ version }}
+    - libtensorflow_framework {{ version }}
     #- libtensorflow_framework {{ version }} cuda{{ cuda_compiler_version | replace('.', '') }}_*  # [cuda_compiler_version != "None"]
-    #- libtensorflow_framework {{ version }} "cpu_h*"  # [cuda_compiler_version == "None"]
+    #- libtensorflow_framework {{ version }} "cpu_h*"  # [cuda_compiler_version == "None"]
     # TF_SYSTEM_LIBS, see usage in
     # https://github.com/tensorflow/tensorflow/blob/v{{ version }}/third_party/systemlibs/syslibs_configure.bzl
     # their versions are specified in
