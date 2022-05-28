@@ -1,4 +1,4 @@
-From 69839d35c8fdecbc4a045ae51944d8dce165d50a Mon Sep 17 00:00:00 2001
+From 63da6b8cb3c495916264957b6bec9553a37975cf Mon Sep 17 00:00:00 2001
 From: "Uwe L. Korn" <uwe.korn@quantco.com>
 Date: Fri, 20 May 2022 19:20:04 +0200
 Subject: [PATCH] Use libtensorflow_framework from conda
@@ -6,11 +6,11 @@ Subject: [PATCH] Use libtensorflow_framework from conda
 ---
  tensorflow/BUILD                     | 55 ++++++++++++++++++++++++----
  tensorflow/core/BUILD                |  3 +-
- tensorflow/core/common_runtime/BUILD | 30 +++++----------
+ tensorflow/core/common_runtime/BUILD | 29 +++++----------
  tensorflow/core/lib/core/arena.cc    |  2 +
  tensorflow/tensorflow.bzl            |  4 +-
  tensorflow/tools/lib_package/BUILD   | 12 +-----
- 6 files changed, 64 insertions(+), 42 deletions(-)
+ 6 files changed, 64 insertions(+), 41 deletions(-)
 
 diff --git a/tensorflow/BUILD b/tensorflow/BUILD
 index fcaecb41..093e1eed 100644
@@ -104,14 +104,14 @@ index 0e849d54..0d6d87e5 100644
  
  # Until we can ditch config=monolithic on windows, we have to provide an always
 diff --git a/tensorflow/core/common_runtime/BUILD b/tensorflow/core/common_runtime/BUILD
-index 7a057a79..bd7aa77f 100644
+index 7a057a79..80894890 100644
 --- a/tensorflow/core/common_runtime/BUILD
 +++ b/tensorflow/core/common_runtime/BUILD
 @@ -61,6 +61,12 @@ package(
      licenses = ["notice"],
  )
  
-+cc_library(
++cc_binary(
 +  name = "libtensorflow_core_cpu_sharedlib",
 +  linkopts = ["-ltensorflow_core_cpu"],
 +  visibility = ["//visibility:public"],
@@ -120,7 +120,7 @@ index 7a057a79..bd7aa77f 100644
  tf_cuda_library(
      name = "core_cpu",
      hdrs = [
-@@ -1863,34 +1869,16 @@ tf_cuda_library(
+@@ -1863,34 +1869,17 @@ tf_cuda_library(
  
  tf_cuda_library(
      name = "core_cpu_internal",
@@ -151,9 +151,9 @@ index 7a057a79..bd7aa77f 100644
 -        "//tensorflow/core:function_ops_op_lib",
 -        "//tensorflow/core:functional_grad",
 -        "//tensorflow/core:functional_ops_op_lib",
--        "//tensorflow/core/kernels:required",
--    ]),
 +        "//tensorflow/core:protos_all_cc",
+         "//tensorflow/core/kernels:required",
+-    ]),
 +    ],
      alwayslink = 1,
  )
@@ -210,5 +210,5 @@ index 65d63aa8..dba8c7ee 100644
  )
  
 -- 
-2.25.1
+2.32.1 (Apple Git-133)
 
