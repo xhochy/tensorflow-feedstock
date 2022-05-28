@@ -1,4 +1,4 @@
-From 181bf34a35908b8144c5b4b5e8747b437fd4a8ee Mon Sep 17 00:00:00 2001
+From 027dec8eeee69eb19a269649b289e0e4e53fbfad Mon Sep 17 00:00:00 2001
 From: "Uwe L. Korn" <uwe.korn@quantco.com>
 Date: Fri, 20 May 2022 19:20:04 +0200
 Subject: [PATCH] Use libtensorflow_framework from conda
@@ -6,11 +6,11 @@ Subject: [PATCH] Use libtensorflow_framework from conda
 ---
  tensorflow/BUILD                     | 55 ++++++++++++++++++++++++----
  tensorflow/core/BUILD                |  3 +-
- tensorflow/core/common_runtime/BUILD | 29 +++++----------
+ tensorflow/core/common_runtime/BUILD | 30 +++++----------
  tensorflow/core/lib/core/arena.cc    |  2 +
  tensorflow/tensorflow.bzl            |  4 +-
  tensorflow/tools/lib_package/BUILD   | 12 +-----
- 6 files changed, 64 insertions(+), 41 deletions(-)
+ 6 files changed, 65 insertions(+), 41 deletions(-)
 
 diff --git a/tensorflow/BUILD b/tensorflow/BUILD
 index fcaecb41..093e1eed 100644
@@ -104,7 +104,7 @@ index 0e849d54..0d6d87e5 100644
  
  # Until we can ditch config=monolithic on windows, we have to provide an always
 diff --git a/tensorflow/core/common_runtime/BUILD b/tensorflow/core/common_runtime/BUILD
-index 7a057a79..fec9c13b 100644
+index 7a057a79..3b5535a8 100644
 --- a/tensorflow/core/common_runtime/BUILD
 +++ b/tensorflow/core/common_runtime/BUILD
 @@ -61,6 +61,12 @@ package(
@@ -120,7 +120,7 @@ index 7a057a79..fec9c13b 100644
  tf_cuda_library(
      name = "core_cpu",
      hdrs = [
-@@ -1863,34 +1869,17 @@ tf_cuda_library(
+@@ -1863,34 +1869,18 @@ tf_cuda_library(
  
  tf_cuda_library(
      name = "core_cpu_internal",
@@ -154,6 +154,7 @@ index 7a057a79..fec9c13b 100644
 +        "//tensorflow/core:protos_all_cc",
          "//tensorflow/core/kernels:required",
 -    ]),
++        "//tensorflow/core/kernels:gpu_device_array",
 +    ],
      alwayslink = 1,
  )
