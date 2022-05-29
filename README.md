@@ -1,5 +1,5 @@
-About tensorflow-kernels
-========================
+About libtfkernel_unique_op
+===========================
 
 Home: http://tensorflow.org/
 
@@ -37,38 +37,38 @@ Current build status
         <table>
           <thead><tr><th>Variant</th><th>Status</th></tr></thead>
           <tbody><tr>
-              <td>linux_64_abseil_cpp20210324.2c_compiler_version10cuda_compiler_version11.1cudnn8cxx_compiler_version10grpc_cpp1.45</td>
+              <td>linux_64_abseil_cpp20210324.2c_compiler_version10cuda_compiler_version11.1cxx_compiler_version10grpc_cpp1.45</td>
               <td>
                 <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/tensorflow-feedstock-3-feedstock?branchName=main&jobName=linux&configuration=linux_64_abseil_cpp20210324.2c_compiler_version10cuda_compiler_version11.1cudnn8cxx_compiler_version10grpc_cpp1.45" alt="variant">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/tensorflow-feedstock-3-feedstock?branchName=main&jobName=linux&configuration=linux_64_abseil_cpp20210324.2c_compiler_version10cuda_compiler_version11.1cxx_compiler_version10grpc_cpp1.45" alt="variant">
                 </a>
               </td>
             </tr><tr>
-              <td>linux_64_abseil_cpp20210324.2c_compiler_version10cuda_compiler_version11.2cudnn8cxx_compiler_version10grpc_cpp1.45</td>
+              <td>linux_64_abseil_cpp20210324.2c_compiler_version10cuda_compiler_version11.2cxx_compiler_version10grpc_cpp1.45</td>
               <td>
                 <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/tensorflow-feedstock-3-feedstock?branchName=main&jobName=linux&configuration=linux_64_abseil_cpp20210324.2c_compiler_version10cuda_compiler_version11.2cudnn8cxx_compiler_version10grpc_cpp1.45" alt="variant">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/tensorflow-feedstock-3-feedstock?branchName=main&jobName=linux&configuration=linux_64_abseil_cpp20210324.2c_compiler_version10cuda_compiler_version11.2cxx_compiler_version10grpc_cpp1.45" alt="variant">
                 </a>
               </td>
             </tr><tr>
-              <td>linux_64_abseil_cpp20210324.2c_compiler_version10cuda_compiler_versionNonecudnnundefinedcxx_compiler_version10grpc_cpp1.45</td>
+              <td>linux_64_abseil_cpp20210324.2c_compiler_version10cuda_compiler_versionNonecxx_compiler_version10grpc_cpp1.45</td>
               <td>
                 <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/tensorflow-feedstock-3-feedstock?branchName=main&jobName=linux&configuration=linux_64_abseil_cpp20210324.2c_compiler_version10cuda_compiler_versionNonecudnnundefinedcxx_compiler_version10grpc_cpp1.45" alt="variant">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/tensorflow-feedstock-3-feedstock?branchName=main&jobName=linux&configuration=linux_64_abseil_cpp20210324.2c_compiler_version10cuda_compiler_versionNonecxx_compiler_version10grpc_cpp1.45" alt="variant">
                 </a>
               </td>
             </tr><tr>
-              <td>linux_64_abseil_cpp20210324.2c_compiler_version7cuda_compiler_version10.2cudnn7cxx_compiler_version7grpc_cpp1.45</td>
+              <td>linux_64_abseil_cpp20210324.2c_compiler_version7cuda_compiler_version10.2cxx_compiler_version7grpc_cpp1.45</td>
               <td>
                 <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/tensorflow-feedstock-3-feedstock?branchName=main&jobName=linux&configuration=linux_64_abseil_cpp20210324.2c_compiler_version7cuda_compiler_version10.2cudnn7cxx_compiler_version7grpc_cpp1.45" alt="variant">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/tensorflow-feedstock-3-feedstock?branchName=main&jobName=linux&configuration=linux_64_abseil_cpp20210324.2c_compiler_version7cuda_compiler_version10.2cxx_compiler_version7grpc_cpp1.45" alt="variant">
                 </a>
               </td>
             </tr><tr>
-              <td>linux_64_abseil_cpp20210324.2c_compiler_version9cuda_compiler_version11.0cudnn8cxx_compiler_version9grpc_cpp1.45</td>
+              <td>linux_64_abseil_cpp20210324.2c_compiler_version9cuda_compiler_version11.0cxx_compiler_version9grpc_cpp1.45</td>
               <td>
                 <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/tensorflow-feedstock-3-feedstock?branchName=main&jobName=linux&configuration=linux_64_abseil_cpp20210324.2c_compiler_version9cuda_compiler_version11.0cudnn8cxx_compiler_version9grpc_cpp1.45" alt="variant">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/tensorflow-feedstock-3-feedstock?branchName=main&jobName=linux&configuration=linux_64_abseil_cpp20210324.2c_compiler_version9cuda_compiler_version11.0cxx_compiler_version9grpc_cpp1.45" alt="variant">
                 </a>
               </td>
             </tr><tr>
@@ -98,53 +98,53 @@ Current release info
 
 | Name | Downloads | Version | Platforms |
 | --- | --- | --- | --- |
-| [![Conda Recipe](https://img.shields.io/badge/recipe-tensorflow--kernels-green.svg)](https://anaconda.org/conda-forge/tensorflow-kernels) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/tensorflow-kernels.svg)](https://anaconda.org/conda-forge/tensorflow-kernels) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/tensorflow-kernels.svg)](https://anaconda.org/conda-forge/tensorflow-kernels) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/tensorflow-kernels.svg)](https://anaconda.org/conda-forge/tensorflow-kernels) |
+| [![Conda Recipe](https://img.shields.io/badge/recipe-libtfkernel_unique_op-green.svg)](https://anaconda.org/conda-forge/libtfkernel_unique_op) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/libtfkernel_unique_op.svg)](https://anaconda.org/conda-forge/libtfkernel_unique_op) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/libtfkernel_unique_op.svg)](https://anaconda.org/conda-forge/libtfkernel_unique_op) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/libtfkernel_unique_op.svg)](https://anaconda.org/conda-forge/libtfkernel_unique_op) |
 
-Installing tensorflow-kernels
-=============================
+Installing libtfkernel_unique_op
+================================
 
-Installing `tensorflow-kernels` from the `conda-forge` channel can be achieved by adding `conda-forge` to your channels with:
+Installing `libtfkernel_unique_op` from the `conda-forge` channel can be achieved by adding `conda-forge` to your channels with:
 
 ```
 conda config --add channels conda-forge
 conda config --set channel_priority strict
 ```
 
-Once the `conda-forge` channel has been enabled, `tensorflow-kernels` can be installed with `conda`:
+Once the `conda-forge` channel has been enabled, `libtfkernel_unique_op` can be installed with `conda`:
 
 ```
-conda install tensorflow-kernels
-```
-
-or with `mamba`:
-
-```
-mamba install tensorflow-kernels
-```
-
-It is possible to list all of the versions of `tensorflow-kernels` available on your platform with `conda`:
-
-```
-conda search tensorflow-kernels --channel conda-forge
+conda install libtfkernel_unique_op
 ```
 
 or with `mamba`:
 
 ```
-mamba search tensorflow-kernels --channel conda-forge
+mamba install libtfkernel_unique_op
+```
+
+It is possible to list all of the versions of `libtfkernel_unique_op` available on your platform with `conda`:
+
+```
+conda search libtfkernel_unique_op --channel conda-forge
+```
+
+or with `mamba`:
+
+```
+mamba search libtfkernel_unique_op --channel conda-forge
 ```
 
 Alternatively, `mamba repoquery` may provide more information:
 
 ```
 # Search all versions available on your platform:
-mamba repoquery search tensorflow-kernels --channel conda-forge
+mamba repoquery search libtfkernel_unique_op --channel conda-forge
 
-# List packages depending on `tensorflow-kernels`:
-mamba repoquery whoneeds tensorflow-kernels --channel conda-forge
+# List packages depending on `libtfkernel_unique_op`:
+mamba repoquery whoneeds libtfkernel_unique_op --channel conda-forge
 
-# List dependencies of `tensorflow-kernels`:
-mamba repoquery depends tensorflow-kernels --channel conda-forge
+# List dependencies of `libtfkernel_unique_op`:
+mamba repoquery depends libtfkernel_unique_op --channel conda-forge
 ```
 
 
@@ -189,17 +189,17 @@ Terminology
                   produce the finished article (built conda distributions)
 
 
-Updating tensorflow-kernels-feedstock
-=====================================
+Updating libtfkernel_unique_op-feedstock
+========================================
 
-If you would like to improve the tensorflow-kernels recipe or build a new
+If you would like to improve the libtfkernel_unique_op recipe or build a new
 package version, please fork this repository and submit a PR. Upon submission,
 your changes will be run on the appropriate platforms to give the reviewer an
 opportunity to confirm that the changes result in a successful build. Once
 merged, the recipe will be re-built and uploaded automatically to the
 `conda-forge` channel, whereupon the built conda packages will be available for
 everybody to install and use from the `conda-forge` channel.
-Note that all branches in the conda-forge/tensorflow-kernels-feedstock are
+Note that all branches in the conda-forge/libtfkernel_unique_op-feedstock are
 immediately built and any created packages are uploaded, so PRs should be based
 on branches in forks and branches in the main repository should only be used to
 build distinct package versions.
