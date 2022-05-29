@@ -4,7 +4,7 @@
 # FIXME: libtensorflow_framework is still copied into the Python package, replace with symlinks
 
 package:
-  name: tensorflow-kernels
+  name: libtfkernel_conv_ops
   version: {{ version }}
 
 source:
