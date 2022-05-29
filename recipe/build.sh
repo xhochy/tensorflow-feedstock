@@ -28,9 +28,9 @@ if [[ "${target_platform}" == "osx-arm64" ]]; then
 fi
 export BUILD_TARGET="
   //tensorflow/core/kernels:libtfkernel_conv_ops.so
-  //tensorflow/core/kernels:libtfkernel_cwise_op.so
-  //tensorflow/core/kernels:libtfkernel_unique_op.so
 "
+#  //tensorflow/core/kernels:libtfkernel_cwise_op.so
+#  //tensorflow/core/kernels:libtfkernel_unique_op.so
 #  //tensorflow/core/kernels:libtfkernel_dynamic_partition_op.so
 #  //tensorflow/core/kernels:libtfkernel_dynamic_stitch_op.so
 #  //tensorflow/core/kernels:libtfkernel_strided_slice_op.so
@@ -54,8 +54,8 @@ bazel shutdown
 bazel ${BAZEL_OPTS} build ${BUILD_OPTS} ${BUILD_TARGET}
 
 cp -RP bazel-bin/tensorflow/core/kernels/libtfkernel_conv_ops.so ${PREFIX}/lib/libtfkernel_conv_ops${SHLIB_EXT}
-cp -RP bazel-bin/tensorflow/core/kernels/libtfkernel_cwise_op.so ${PREFIX}/lib/libtfkernel_cwise_op${SHLIB_EXT}
-cp -RP bazel-bin/tensorflow/core/kernels/libtfkernel_unique_op.so ${PREFIX}/lib/libtfkernel_unique_op${SHLIB_EXT}
+# cp -RP bazel-bin/tensorflow/core/kernels/libtfkernel_cwise_op.so ${PREFIX}/lib/libtfkernel_cwise_op${SHLIB_EXT}
+# cp -RP bazel-bin/tensorflow/core/kernels/libtfkernel_unique_op.so ${PREFIX}/lib/libtfkernel_unique_op${SHLIB_EXT}
 # cp -RP bazel-bin/tensorflow/core/kernels/libtfkernel_dynamic_partition_op.so ${PREFIX}/lib/libtfkernel_dynamic_partition_op${SHLIB_EXT}
 # cp -RP bazel-bin/tensorflow/core/kernels/libtfkernel_dynamic_stitch_op.so ${PREFIX}/lib/libtfkernek_dynamic_stitch_op${SHLIB_EXT}
 # cp -RP bazel-bin/tensorflow/core/kernels/libtfkernel_strided_slice_op.so ${PREFIX}/lib/libtfkernel_strided_slice_op${SHLIB_EXT}
