@@ -29,6 +29,9 @@ fi
 export BUILD_TARGET="
   //tensorflow/core/kernels:libtfkernel_conv_ops.so
 "
+# This is heavily dependent on MLIR-generated kernel code.
+# It should probably be its own build with the other MLIR-based ops.
+# We could split out the MLIR-based ones into individual ones once we can use a prebuilt MLIR.
 #  //tensorflow/core/kernels:libtfkernel_cwise_op.so
 #  //tensorflow/core/kernels:libtfkernel_unique_op.so
 #  //tensorflow/core/kernels:libtfkernel_dynamic_partition_op.so
