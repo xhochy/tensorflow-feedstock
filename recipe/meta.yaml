@@ -4,7 +4,7 @@
 # FIXME: libtensorflow_framework is still copied into the Python package, replace with symlinks
 
 package:
-  name: tensorflow-kernels
+  name: libtfkernel_unique_op
   version: {{ version }}
 
 source:
@@ -87,12 +87,7 @@ requirements:
 
 test:
   commands:
-    - test -f "${PREFIX}/lib/libtfkernel_conv_ops${SHLIB_EXT}"
-    # - test -f "${PREFIX}/lib/libtfkernel_cwise_op${SHLIB_EXT}"
-    # - test -f "${PREFIX}/lib/libtfkernel_unique_op${SHLIB_EXT}"
-    # - test -f "${PREFIX}/lib/libtfkernel_dynamic_partition_o${SHLIB_EXT}"
-    # - test -f "${PREFIX}/lib/libtfkernel_dynamic_stitch_op${SHLIB_EXT}"
-    # - test -f "${PREFIX}/lib/libtfkernel_strided_slice_op${SHLIB_EXT}"
+    - test -f "${PREFIX}/lib/libtfkernel_unique_op${SHLIB_EXT}"
 
 about:
   home: http://tensorflow.org/
