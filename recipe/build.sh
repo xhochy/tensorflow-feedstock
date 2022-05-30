@@ -14,7 +14,7 @@ mkdir -p ${PREFIX}/etc/tensorflow
 cp ${RECIPE_DIR}/tf_environment.sh ${RECIPE_DIR}/tf_settings.sh ${PREFIX}/etc/tensorflow
 source ${RECIPE_DIR}/tf_environment.sh
 
-source ${RECIPE_DIR}/gen-bazel-toolchain.sh
+source gen-bazel-toolchain
 
 if [[ "${target_platform}" == "osx-64" ]]; then
   # Tensorflow doesn't cope yet with an explicit architecture (darwin_x86_64) on osx-64 yet.
@@ -23,7 +23,7 @@ fi
 
 # If you really want to see what is executed, add --subcommands
 BUILD_OPTS="
-    --crosstool_top=//custom_toolchain:toolchain
+    --crosstool_top=//bazel_toolchain:toolchain
     --logging=6
     --verbose_failures
     --config=opt
