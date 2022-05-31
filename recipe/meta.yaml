@@ -16,6 +16,7 @@ source:
       - patches/0003-Remove_dependency_on_implementation_ofRepeatedField_iterator.patch
       - patches/0002-Use-oneDNN-systemlib.patch
       - patches/0001-Define-libtensorflow_core_cpu.patch
+      - patches/0001-Use-pre-built-LLVM.patch
 
 build:
   number: 0
@@ -85,6 +86,7 @@ requirements:
     # but so far there have been no problems with leaving these
     # unpinned; though some restrictions come in for packages
     # that are also listed as a requirement for the pip_package.
+    - llvm-for-tensorflow {{ tf_llvm_version }}
     - abseil-cpp
     - astor
     - cython
