@@ -8,31 +8,31 @@ jobs:
     vmImage: ubuntu-latest
   strategy:
     matrix:
-      linux_64_abseil_cpp20210324.2c_compiler_version10cuda_compiler_version11.1cxx_compiler_version10grpc_cpp1.45:
-        CONFIG: linux_64_abseil_cpp20210324.2c_compiler_version10cuda_compiler_version11.1cxx_compiler_version10grpc_cpp1.45
+      linux_64_abseil_cpp20210324.2c_compiler_version10cuda_compiler_version11.1cudnn8cxx_compiler_version10grpc_cpp1.45:
+        CONFIG: linux_64_abseil_cpp20210324.2c_compiler_version10cuda_compiler_version11.1cudnn8cxx_compiler_version10grpc_cpp1.45
         UPLOAD_PACKAGES: 'True'
         DOCKER_IMAGE: quay.io/condaforge/linux-anvil-cuda:11.1
-        SHORT_CONFIG: linux_64_abseil_cpp20210324.2c_comp_hb8f7e635d8
-      linux_64_abseil_cpp20210324.2c_compiler_version10cuda_compiler_version11.2cxx_compiler_version10grpc_cpp1.45:
-        CONFIG: linux_64_abseil_cpp20210324.2c_compiler_version10cuda_compiler_version11.2cxx_compiler_version10grpc_cpp1.45
+        SHORT_CONFIG: linux_64_abseil_cpp20210324.2c_comp_ha4e58b353d
+      linux_64_abseil_cpp20210324.2c_compiler_version10cuda_compiler_version11.2cudnn8cxx_compiler_version10grpc_cpp1.45:
+        CONFIG: linux_64_abseil_cpp20210324.2c_compiler_version10cuda_compiler_version11.2cudnn8cxx_compiler_version10grpc_cpp1.45
         UPLOAD_PACKAGES: 'True'
         DOCKER_IMAGE: quay.io/condaforge/linux-anvil-cuda:11.2
-        SHORT_CONFIG: linux_64_abseil_cpp20210324.2c_comp_hf5fb207974
-      linux_64_abseil_cpp20210324.2c_compiler_version10cuda_compiler_versionNonecxx_compiler_version10grpc_cpp1.45:
-        CONFIG: linux_64_abseil_cpp20210324.2c_compiler_version10cuda_compiler_versionNonecxx_compiler_version10grpc_cpp1.45
+        SHORT_CONFIG: linux_64_abseil_cpp20210324.2c_comp_h9b95c96ff8
+      linux_64_abseil_cpp20210324.2c_compiler_version10cuda_compiler_versionNonecudnnundefinedcxx_compiler_version10grpc_cpp1.45:
+        CONFIG: linux_64_abseil_cpp20210324.2c_compiler_version10cuda_compiler_versionNonecudnnundefinedcxx_compiler_version10grpc_cpp1.45
         UPLOAD_PACKAGES: 'True'
         DOCKER_IMAGE: quay.io/condaforge/linux-anvil-cos7-x86_64
-        SHORT_CONFIG: linux_64_abseil_cpp20210324.2c_comp_h06972486ef
-      linux_64_abseil_cpp20210324.2c_compiler_version7cuda_compiler_version10.2cxx_compiler_version7grpc_cpp1.45:
-        CONFIG: linux_64_abseil_cpp20210324.2c_compiler_version7cuda_compiler_version10.2cxx_compiler_version7grpc_cpp1.45
+        SHORT_CONFIG: linux_64_abseil_cpp20210324.2c_comp_h05131db218
+      linux_64_abseil_cpp20210324.2c_compiler_version7cuda_compiler_version10.2cudnn7cxx_compiler_version7grpc_cpp1.45:
+        CONFIG: linux_64_abseil_cpp20210324.2c_compiler_version7cuda_compiler_version10.2cudnn7cxx_compiler_version7grpc_cpp1.45
         UPLOAD_PACKAGES: 'True'
         DOCKER_IMAGE: quay.io/condaforge/linux-anvil-cos7-cuda:10.2
-        SHORT_CONFIG: linux_64_abseil_cpp20210324.2c_comp_hf592c4fe27
-      linux_64_abseil_cpp20210324.2c_compiler_version9cuda_compiler_version11.0cxx_compiler_version9grpc_cpp1.45:
-        CONFIG: linux_64_abseil_cpp20210324.2c_compiler_version9cuda_compiler_version11.0cxx_compiler_version9grpc_cpp1.45
+        SHORT_CONFIG: linux_64_abseil_cpp20210324.2c_comp_hd07d17727b
+      linux_64_abseil_cpp20210324.2c_compiler_version9cuda_compiler_version11.0cudnn8cxx_compiler_version9grpc_cpp1.45:
+        CONFIG: linux_64_abseil_cpp20210324.2c_compiler_version9cuda_compiler_version11.0cudnn8cxx_compiler_version9grpc_cpp1.45
         UPLOAD_PACKAGES: 'True'
         DOCKER_IMAGE: quay.io/condaforge/linux-anvil-cuda:11.0
-        SHORT_CONFIG: linux_64_abseil_cpp20210324.2c_comp_hc1f760764f
+        SHORT_CONFIG: linux_64_abseil_cpp20210324.2c_comp_h1ce4502992
   timeoutInMinutes: 360
 
   steps:

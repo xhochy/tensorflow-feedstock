@@ -9,7 +9,7 @@ c_compiler:
 c_compiler_version:
 - '13'
 channel_sources:
-- conda-forge
+- uwe.korn-tf-experimental,conda-forge
 channel_targets:
 - conda-forge main
 cuda_compiler_version:
