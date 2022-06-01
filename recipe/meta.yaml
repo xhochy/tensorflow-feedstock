@@ -14,6 +14,7 @@ source:
       - patches/0001-loosen-requirements.patch
       - patches/0001-Use-libtensorflow_framework-from-conda.patch
       - patches/0002-Use-oneDNN-systemlib.patch
+      - patches/0001-Use-pre-built-LLVM.patch
 
 build:
   number: 0
@@ -66,6 +67,7 @@ requirements:
     # but so far there have been no problems with leaving these
     # unpinned; though some restrictions come in for packages
     # that are also listed as a requirement for the pip_package.
+    - llvm-for-tensorflow {{ tf_llvm_version }}
     - abseil-cpp
     - giflib
     - grpc-cpp

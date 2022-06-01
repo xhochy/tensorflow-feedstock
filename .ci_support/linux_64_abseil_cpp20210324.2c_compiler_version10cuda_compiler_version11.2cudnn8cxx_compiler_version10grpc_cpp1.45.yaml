@@ -57,6 +57,8 @@ sqlite:
 - '3'
 target_platform:
 - linux-64
+tf_llvm_version:
+- 14.0.0.tf280_55c71c9eac9b
 zip_keys:
 - - abseil_cpp
   - grpc_cpp
