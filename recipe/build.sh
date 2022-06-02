@@ -63,7 +63,7 @@ bazel ${BAZEL_OPTS} build ${BUILD_OPTS} ${BUILD_TARGET}
 
 cp -RP bazel-bin/tensorflow/core/kernels/libtfkernel_cwise_op.so ${PREFIX}/lib/libtfkernel_cwise_op.so
 if [[ "${target_platform}" == osx-* ]]; then
-  ln -s ${PREFIX}/lib/libtfkernel_cwise_op.so ${PREFIX}/lib/libtfkernel_conv_op${SHLIB_EXT}
+  ln -s ${PREFIX}/lib/libtfkernel_cwise_op.so ${PREFIX}/lib/libtfkernel_cwise_op${SHLIB_EXT}
 fi
 
 bazel clean
