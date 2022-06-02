@@ -26,8 +26,13 @@ BUILD_OPTS="
     --define=PROTOBUF_INCLUDE_PATH=${PREFIX}/include
     --config=noaws
     --cpu=${TARGET_CPU}
-    --local_cpu_resources=1"
-#    --local_cpu_resources=${CPU_COUNT}"
+"
+# CUDA steps take too much memory in CI to use multiple CPUs
+if [[ "${cuda_compiler_version:-None}" != "None" ]]; then
+  BUILD_OPTS="${BUILD_OPTS} --local_cpu_resources=1"
+else
+  BUILD_OPTS="${BUILD_OPTS} --local_cpu_resources=${CPU_COUNT}"
+fi
 
 if [[ "${target_platform}" == "osx-arm64" ]]; then
   BUILD_OPTS="${BUILD_OPTS} --config=macos_arm64"
