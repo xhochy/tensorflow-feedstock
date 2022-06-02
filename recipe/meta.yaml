@@ -87,7 +87,7 @@ requirements:
 
 test:
   commands:
-    - test -f "${PREFIX}/lib/libtfkernel_conv_ops${SHLIB_EXT}"
+    - test -f "${PREFIX}/lib/libtfkernel_conv_ops.so"
     # - test -f "${PREFIX}/lib/libtfkernel_cwise_op${SHLIB_EXT}"
     # - test -f "${PREFIX}/lib/libtfkernel_unique_op${SHLIB_EXT}"
     # - test -f "${PREFIX}/lib/libtfkernel_dynamic_partition_o${SHLIB_EXT}"

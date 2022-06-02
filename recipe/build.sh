@@ -56,7 +56,7 @@ bazel shutdown
 # build using bazel
 bazel ${BAZEL_OPTS} build ${BUILD_OPTS} ${BUILD_TARGET}
 
-cp -RP bazel-bin/tensorflow/core/kernels/libtfkernel_conv_ops.so ${PREFIX}/lib/libtfkernel_conv_ops${SHLIB_EXT}
+cp -RP bazel-bin/tensorflow/core/kernels/libtfkernel_conv_ops.so ${PREFIX}/lib/libtfkernel_conv_ops.so
 # cp -RP bazel-bin/tensorflow/core/kernels/libtfkernel_cwise_op.so ${PREFIX}/lib/libtfkernel_cwise_op${SHLIB_EXT}
 # cp -RP bazel-bin/tensorflow/core/kernels/libtfkernel_unique_op.so ${PREFIX}/lib/libtfkernel_unique_op${SHLIB_EXT}
 # cp -RP bazel-bin/tensorflow/core/kernels/libtfkernel_dynamic_partition_op.so ${PREFIX}/lib/libtfkernel_dynamic_partition_op${SHLIB_EXT}
