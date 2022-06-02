@@ -61,9 +61,6 @@ bazel shutdown
 # build using bazel
 bazel ${BAZEL_OPTS} build ${BUILD_OPTS} ${BUILD_TARGET}
 
-cp -RP bazel-bin/tensorflow/core/kernels/libtfkernel_cwise_op.so ${PREFIX}/lib/libtfkernel_cwise_op${SHLIB_EXT}
-if [[ "${target_platform}" == osx-* ]]; then
-    $INSTALL_NAME_TOOL -id '@rpath/libtfkernel_cwise_op.dylib' ${PREFIX}/lib/libtfkernel_cwise_op${SHLIB_EXT}
-fi
+cp -RP bazel-bin/tensorflow/core/kernels/libtfkernel_cwise_op.so ${PREFIX}/lib/libtfkernel_cwise_op.so
 
 bazel clean

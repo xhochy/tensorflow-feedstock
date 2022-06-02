@@ -89,7 +89,7 @@ requirements:
 
 test:
   commands:
-    - test -f "${PREFIX}/lib/libtfkernel_cwise_op${SHLIB_EXT}"
+    - test -f "${PREFIX}/lib/libtfkernel_cwise_op.so"
 
 about:
   home: http://tensorflow.org/
