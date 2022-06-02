@@ -87,6 +87,7 @@ requirements:
 
 test:
   commands:
+    - test -f "${PREFIX}/lib/libtfkernel_unique_op.so"
     - test -f "${PREFIX}/lib/libtfkernel_unique_op${SHLIB_EXT}"
 
 about:

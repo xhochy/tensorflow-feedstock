@@ -48,6 +48,9 @@ bazel shutdown
 # build using bazel
 bazel ${BAZEL_OPTS} build ${BUILD_OPTS} ${BUILD_TARGET}
 
-cp -RP bazel-bin/tensorflow/core/kernels/libtfkernel_unique_op.so ${PREFIX}/lib/libtfkernel_unique_op${SHLIB_EXT}
+cp -RP bazel-bin/tensorflow/core/kernels/libtfkernel_unique_op.so ${PREFIX}/lib/libtfkernel_unique_op.so
+if [[ "${target_platform}" == osx-* ]]; then
+  ln -s ${PREFIX}/lib/libtfkernel_unique_op.so ${PREFIX}/lib/libtfkernel_unique_op${SHLIB_EXT}
+fi
 
 bazel clean
