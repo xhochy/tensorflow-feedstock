@@ -2,9 +2,6 @@
 
 set -exuo pipefail
 
-# Query immediately before any configuration settings are set.
-bazel query 'deps(//tensorflow/tools/pip_package:build_pip_package)' --output graph > graph.in
-
 # Quick debug:
 # cp -r ${RECIPE_DIR}/build.sh . && bazel clean && bash -x build.sh --logging=6 | tee log.txt
 # Dependency graph:
@@ -15,6 +12,9 @@ export PYTHONUNBUFFERED=1
 cp -r $PREFIX/share/llvm_for_tf llvm-project
 # See https://github.com/tensorflow/tensorflow/blob/3f878cff5b698b82eea85db2b60d65a2e320850e/third_party/llvm/setup.bzl#L6
 echo 'llvm_targets = ["AArch64", "AMDGPU", "ARM", "NVPTX", "PowerPC", "RISCV", "SystemZ", "X86"]' > llvm-project/llvm/targets.bzl
+
+# Query immediately before any configuration settings are set.
+bazel query 'deps(//tensorflow/tools/pip_package:build_pip_package)' --output graph > graph.in
 
 # Ensure we persist the setting across multiple tensorflow artefacts.
 mkdir -p ${PREFIX}/etc/tensorflow
