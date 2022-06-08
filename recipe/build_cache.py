@@ -111,7 +111,7 @@ for bs in build_files:
     if 'tpu' in bs or 'windows' in bs:
         continue
     # Slowly expand the scope here
-    if not bs.startswith('//tensorflow/core/grappler'):
+    if not bs.startswith('//tensorflow/core/grap'):
         continue
     targets, libs_to_copy = find_binaries((Path(bs[2:]) / 'BUILD').read_text(), bs)
     print(f"!! Building {bs} targets: {targets}")
