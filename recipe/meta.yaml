@@ -48,6 +48,7 @@ requirements:
     - onednn                                 # [build_platform != target_platform]
     - onednn-cpu-threadpool                  # [build_platform != target_platform]
     - pybind11                               # [build_platform != target_platform]
+    - llvm-for-tensorflow {{ tf_llvm_version }}  # [build_platform != target_platform]
     - {{ compiler('c') }}
     - {{ compiler('cxx') }}
     - {{ compiler('cuda') }}                 # [cuda_compiler_version != "None"]
