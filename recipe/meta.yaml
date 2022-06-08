@@ -2,7 +2,7 @@
 {% set estimator_version = "2.8.0" %}
 
 package:
-  name: libtensorflow_framework
+  name: tensorflow-build-cache
   version: {{ version }}
 
 source:
@@ -15,7 +15,7 @@ source:
       - patches/0002-Remove_dependency_on_implementation_ofRepeatedField_iterator.patch
       - patches/0003-Remove_dependency_on_implementation_ofRepeatedField_iterator.patch
       - patches/0002-Use-oneDNN-systemlib.patch
-      - patches/0001-Define-libtensorflow_core_cpu.patch
+      #- patches/0001-Define-libtensorflow_core_cpu.patch
       - patches/0001-Use-pre-built-LLVM.patch
 
 build:
@@ -28,19 +28,16 @@ build:
   skip: true  # [abseil_cpp != '20210324.2']
   string: cuda{{ cuda_compiler_version | replace('.', '') }}h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}  # [cuda_compiler_version != "None"]
   string: cpu_h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}  # [cuda_compiler_version == "None"]
-  # These are needed as build/configure dependencies but aren't used in the final product
-  ignore_run_exports_from:
-    - abseil-cpp
-    - grpc-cpp
   run_exports:
     # tensorflow makes no ABI guarantees, need to pin to what we built with
     # Preferably we would use `exact=True` here but the hash doesn't work.
-    - {{ pin_subpackage('libtensorflow_framework', max_pin="x.x.x") }}
+    - {{ pin_subpackage('tensorflow-build-cache', max_pin="x.x.x") }}
 
 requirements:
   build:
     - python *
     - numpy >=1.21
+    - astor
     - nsync                                  # [build_platform != target_platform]
     - snappy                                 # [build_platform != target_platform]
     - giflib                                 # [build_platform != target_platform]
@@ -115,8 +112,7 @@ requirements:
 
 test:
   commands:
-    - test -f "${PREFIX}/lib/libtensorflow_framework${SHLIB_EXT}"
-    - test -f "${PREFIX}/lib/libtensorflow_core_cpu${SHLIB_EXT}"
+    - test -f "${PREFIX}/lib/libtensorflow_core_grappler_utils.a"
 
 about:
   home: http://tensorflow.org/
