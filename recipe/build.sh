@@ -2,6 +2,9 @@
 
 set -exuo pipefail
 
+# Query immediately before any configuration settings are set.
+bazel query 'deps(//tensorflow/tools/pip_package:build_pip_package)' --output graph > graph.in
+
 # Quick debug:
 # cp -r ${RECIPE_DIR}/build.sh . && bazel clean && bash -x build.sh --logging=6 | tee log.txt
 # Dependency graph:
@@ -57,8 +60,6 @@ sed -i -e "/PREFIX/c\ " .bazelrc
 
 
 ./configure
-# Ignore TF_SYSTEM_LIBS as we don't have them installed for all targets in this caching build.
-TF_SYSTEM_LIBS="" bazel query 'deps(//tensorflow/tools/pip_package:build_pip_package)' --output graph > graph.in
 python $RECIPE_DIR/build_cache.py
 
 bazel clean
