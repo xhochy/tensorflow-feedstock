@@ -56,9 +56,9 @@ sed -i -e "/PROTOBUF_INCLUDE_PATH/c\ " .bazelrc
 sed -i -e "/PREFIX/c\ " .bazelrc
 
 
+./configure
 # Ignore TF_SYSTEM_LIBS as we don't have them installed for all targets in this caching build.
 TF_SYSTEM_LIBS="" bazel query 'deps(//tensorflow/tools/pip_package:build_pip_package)' --output graph > graph.in
-./configure
 python $RECIPE_DIR/build_cache.py
 
 bazel clean
