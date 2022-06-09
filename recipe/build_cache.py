@@ -106,7 +106,7 @@ nonexistent_libs = set()
 for bs in build_files:
     if bs.startswith('//tensorflow/core/kernels'):
         continue
-    if bs in {'//tensorflow/core/grappler/graph_analyzer', '//tensorflow/core/common_runtime/eager'}:
+    if bs in {'//tensorflow/core/grappler/graph_analyzer', '//tensorflow/core/common_runtime/eager', '//tensorflow/core/common_runtime/pluggable_device'}:
         continue
     if 'tpu' in bs or 'windows' in bs:
         continue
