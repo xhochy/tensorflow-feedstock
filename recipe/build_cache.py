@@ -45,14 +45,14 @@ def find_binaries(code, symbol):
                         alwayslink = kw.value
 
                 if alwayslink and isinstance(alwayslink, ast.Constant) and alwayslink.value:
+                    # Correctly caching/pre-building alwayslink=1 currently doesn't work
+                    # libext = '.lo'
                     continue
-                    libext = '.lo'
                 else:
                     libext = '.a'
                 
                 target = f"{symbol}:{name}"
                 if target in build_candidates:
-                    # Remove srcs
                     if srcs is not None and srcs_has_code(srcs):
                         targets_to_build.add(target)
                         libs_to_copy.append((f"{symbol[2:]}/lib{name}{libext}", f"lib{mangled}_{name}.a"))
@@ -67,7 +67,7 @@ def rewrite_binaries(code, symbol, libs_copied):
         if isinstance(node, ast.Expr) and isinstance(node.value, ast.Call):
             if node.value.func.id == "cc_library":
                 # Determine the name of the library
-                name = linkopts = alwayslink = None
+                name = srcs = linkopts = alwayslink = None
                 for kw in node.value.keywords:
                     if kw.arg == "name":
                         name = kw.value.value
@@ -75,6 +75,8 @@ def rewrite_binaries(code, symbol, libs_copied):
                         linkopts = kw
                     elif kw.arg == "alwayslink":
                         alwayslink = kw.value
+                    elif kw.arg == "srcs":
+                        srcs = kw
 
                 if alwayslink and isinstance(alwayslink, ast.Constant) and alwayslink.value:
                     libext = '.lo'
@@ -83,8 +85,14 @@ def rewrite_binaries(code, symbol, libs_copied):
                 
                 libname = f"{symbol[2:]}/lib{name}{libext}"
                 if libname in libs_copied:
-                    # Remove srcs and alwayslink
-                    node.value.keywords = [kw for kw in node.value.keywords if kw.arg not in ["srcs", "alwayslink"]]
+                    # Remove alwayslink
+                    node.value.keywords = [kw for kw in node.value.keywords if kw.arg != "alwayslink"]
+                    # Keep headers, otherwise drop all sources
+                    elts = [s for s in srcs.value.elts if s.value.endswith('.h')]
+                    if len(elts) > 0:
+                        srcs.value.elts = elts
+                    else:
+                        node.value.keywords = [kw for kw in node.value.keywords if kw.arg != "srcs"]
                     if linkopts is None:
                         node.value.keywords.append(new_kwarg("linkopts", f"['-l{mangled}_{name}']"))
                     else:
