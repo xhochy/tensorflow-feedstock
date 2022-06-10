@@ -111,25 +111,26 @@ for bs in build_files:
     if 'tpu' in bs or 'windows' in bs:
         continue
     # Slowly expand the scope here
-    if not (bs.startswith('//tensorflow/core/grap') or bs.startswith("//tensorflow/core/common_runtime") or bs.startswith("//tensorflow/core/ir") or bs.startswith("//tensorflow/core/platform") or bs.startswith('//tensorflow/core/lib')):
+    if not (bs.startswith('//tensorflow/core/grap') or bs.startswith("//tensorflow/core/common_runtime") or bs.startswith("//tensorflow/core/ir") or bs.startswith("//tensorflow/core/platform") or bs.startswith('//tensorflow/core/lib') or bs.startswith('//tensorflow/core/framework')):
         print(f"!! Skipping {bs}")
         continue
     targets, libs_to_copy = find_binaries((Path(bs[2:]) / 'BUILD').read_text(), bs)
-    print(f"!! Building {bs} targets: {targets}")
-    check_call(["bazel"] + shlex.split(os.environ.get("BAZEL_OPTS", "")) + ["build"] + shlex.split(os.environ.get('BUILD_OPTS', "")) + list(targets))
-    libs_copied = set()
-    for lib, target_loc in libs_to_copy:
-        src = Path('bazel-bin') / lib
-        if src.exists():
-            libs_copied.add(lib)
-            shutil.copyfile(Path('bazel-bin') / lib, Path(os.environ['PREFIX']) / 'lib' / target_loc)
-        else:
-            nonexistent_libs.add(lib)
+    if len(targets) > 0:
+        print(f"!! Building {bs} targets: {targets}")
+        check_call(["bazel"] + shlex.split(os.environ.get("BAZEL_OPTS", "")) + ["build"] + shlex.split(os.environ.get('BUILD_OPTS', "")) + list(targets))
+        libs_copied = set()
+        for lib, target_loc in libs_to_copy:
+            src = Path('bazel-bin') / lib
+            if src.exists():
+                libs_copied.add(lib)
+                shutil.copyfile(Path('bazel-bin') / lib, Path(os.environ['PREFIX']) / 'lib' / target_loc)
+            else:
+                nonexistent_libs.add(lib)
 
-    code = rewrite_binaries((Path(bs[2:]) / 'BUILD').read_text(), bs, libs_copied)
-    target_dir = Path(os.environ['PREFIX']) / 'share' / 'tensorflow-build-cache'/ bs[2:]
-    if not target_dir.exists():
-        target_dir.mkdir(parents=True)
-    (target_dir / 'BUILD').write_text(code)
+        code = rewrite_binaries((Path(bs[2:]) / 'BUILD').read_text(), bs, libs_copied)
+        target_dir = Path(os.environ['PREFIX']) / 'share' / 'tensorflow-build-cache'/ bs[2:]
+        if not target_dir.exists():
+            target_dir.mkdir(parents=True)
+        (target_dir / 'BUILD').write_text(code)
 
 print("Nonexistent libraries:\n  " + "\n  ".join(nonexistent_libs))
