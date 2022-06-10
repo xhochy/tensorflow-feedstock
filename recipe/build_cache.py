@@ -111,7 +111,7 @@ for bs in build_files:
     if 'tpu' in bs or 'windows' in bs:
         continue
     # Slowly expand the scope here
-    if not (bs.startswith('//tensorflow/core/grap') or bs.startswith("//tensorflow/core/common_runtime") or bs.startswith("//tensorflow/core/ir") or bs.startswith("//tensorflow/core/platform")):
+    if not (bs.startswith('//tensorflow/core/grap') or bs.startswith("//tensorflow/core/common_runtime") or bs.startswith("//tensorflow/core/ir") or bs.startswith("//tensorflow/core/platform") or bs.startswith('//tensorflow/core/lib')):
         print(f"!! Skipping {bs}")
         continue
     targets, libs_to_copy = find_binaries((Path(bs[2:]) / 'BUILD').read_text(), bs)
