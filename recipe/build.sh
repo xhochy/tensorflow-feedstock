@@ -2,10 +2,12 @@
 
 set -ex
 
-# Use pre-built LLVM and MLIR
-cp -r $PREFIX/share/llvm_for_tf llvm-project
-# See https://github.com/tensorflow/tensorflow/blob/3f878cff5b698b82eea85db2b60d65a2e320850e/third_party/llvm/setup.bzl#L6
-echo 'llvm_targets = ["AArch64", "AMDGPU", "ARM", "NVPTX", "PowerPC", "RISCV", "SystemZ", "X86"]' > llvm-project/llvm/targets.bzl
+if [ ! -d "llvm-project" ]; then
+  # Use pre-built LLVM and MLIR
+  cp -r $PREFIX/share/llvm_for_tf llvm-project
+  # See https://github.com/tensorflow/tensorflow/blob/3f878cff5b698b82eea85db2b60d65a2e320850e/third_party/llvm/setup.bzl#L6
+  echo 'llvm_targets = ["AArch64", "AMDGPU", "ARM", "NVPTX", "PowerPC", "RISCV", "SystemZ", "X86"]' > llvm-project/llvm/targets.bzl
+fi
 
 # Use pre-built tensorflow libs
 rsync -a $PREFIX/share/tensorflow-build-cache/ .
@@ -29,13 +31,11 @@ BUILD_OPTS="
     --define=PROTOBUF_INCLUDE_PATH=${PREFIX}/include
     --config=noaws
     --cpu=${TARGET_CPU}
-    --subcommands
     --local_cpu_resources=${CPU_COUNT}"
 
 if [[ "${target_platform}" == "osx-arm64" ]]; then
   BUILD_OPTS="${BUILD_OPTS} --config=macos_arm64"
 fi
-
 
 sed -i -e "s/GRPCIO_VERSION/${grpc_cpp}/" tensorflow/tools/pip_package/setup.py
 
@@ -50,9 +50,6 @@ export USE_DEFAULT_PYTHON_LIB_PATH=1
 sed -i -e "/PROTOBUF_INCLUDE_PATH/c\ " .bazelrc
 sed -i -e "/PREFIX/c\ " .bazelrc
 
-bazel clean --expunge
-bazel shutdown
-
 ./configure
 
 # build using bazel
@@ -60,14 +57,18 @@ bazel ${BAZEL_OPTS} build ${BUILD_OPTS} ${BUILD_TARGET}
 
 # build a whl file
 mkdir -p $SRC_DIR/tensorflow_pkg
+bash -x bazel-bin/tensorflow/tools/pip_package/build_pip_package $SRC_DIR/tensorflow_pkg
 
 # Build libtensorflow(_cc)
 cp $SRC_DIR/bazel-bin/tensorflow/tools/lib_package/libtensorflow.tar.gz $SRC_DIR
 mkdir -p $SRC_DIR/libtensorflow_cc_output/lib
 if [[ "${target_platform}" == osx-* ]]; then
   cp -RP bazel-bin/tensorflow/libtensorflow_cc.* $SRC_DIR/libtensorflow_cc_output/lib/
+  cp -RP bazel-bin/tensorflow/libtensorflow_framework.* $SRC_DIR/libtensorflow_cc_output/lib/
 else
   cp -d bazel-bin/tensorflow/libtensorflow_cc.so* $SRC_DIR/libtensorflow_cc_output/lib/
+  cp -d bazel-bin/tensorflow/libtensorflow_framework.so* $SRC_DIR/libtensorflow_cc_output/lib/
+  cp -d $SRC_DIR/libtensorflow_cc_output/lib/libtensorflow_framework.so.2 $SRC_DIR/libtensorflow_cc_output/lib/libtensorflow_framework.so
 fi
 # Make writable so patchelf can do its magic
 chmod u+w $SRC_DIR/libtensorflow_cc_output/lib/libtensorflow*

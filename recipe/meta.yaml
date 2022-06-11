@@ -76,7 +76,7 @@ requirements:
     - openjdk >=8
     - nsync
     - tensorflow-build-cache {{ version }}
-    - llvm-for-tensorflow
+    - llvm-for-tensorflow {{ tf_llvm_version }}
     # TF_SYSTEM_LIBS, see usage in
     # https://github.com/tensorflow/tensorflow/blob/v{{ version }}/third_party/systemlibs/syslibs_configure.bzl
     # their versions are specified in
