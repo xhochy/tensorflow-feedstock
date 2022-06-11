@@ -8,7 +8,7 @@ import shutil
 
 def extend_linkopts(kw, name):
     current_src = astor.to_source(kw.value)[:-1]
-    kw.value = ast.parse(f"{current_src} + ['-l{name}']").body[0].value
+    kw.value = ast.parse(f"{current_src} + ['-Wl,-force_load,{os.environ['PREFIX']}/lib/lib{name}.a']").body[0].value
 
 
 def new_kwarg(name, code):
@@ -94,7 +94,7 @@ def rewrite_binaries(code, symbol, libs_copied):
                     else:
                         node.value.keywords = [kw for kw in node.value.keywords if kw.arg != "srcs"]
                     if linkopts is None:
-                        node.value.keywords.append(new_kwarg("linkopts", f"['-l{mangled}_{name}']"))
+                        node.value.keywords.append(new_kwarg("linkopts", f"['-Wl,-force_load,{os.environ['PREFIX']}/lib/lib{mangled}_{name}.a']"))
                     else:
                         extend_linkopts(linkopts, f"{mangled}_{name}")
     return astor.to_source(tree)
