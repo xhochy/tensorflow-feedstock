@@ -113,7 +113,7 @@ requirements:
 
 test:
   commands:
-    - test -f "${PREFIX}/lib/libtensorflow_core_grappler_utils.a"
+    - test -f "${PREFIX}/share/tensorflow-build-cache/tensorflow/core/grappler/libtensorflow_core_grappler_utils.a"
 
 about:
   home: http://tensorflow.org/
