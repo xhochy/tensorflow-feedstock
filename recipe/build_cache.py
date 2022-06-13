@@ -91,7 +91,7 @@ def rewrite_binaries(code, symbol, libs_copied):
                     # Keep headers, otherwise drop all sources
                     elts = [s for s in srcs.value.elts if s.value.endswith('.h')]
                     # Add static library
-                    elts.append(libname)
+                    elts.append(f"lib{name}{libext}")
     return astor.to_source(tree)
 
 
