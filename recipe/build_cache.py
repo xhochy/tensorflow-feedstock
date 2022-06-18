@@ -100,7 +100,7 @@ for dep in Path("graph.in").read_text().split("\n"):
     if "->" in dep:
         targets = dep.split("->")[1].strip(' "').split("\\n")
         for target in targets:
-            if target.startswith("//tensorflow/core"):
+            if target.startswith("//tensorflow/co"):
                 build_candidates.add(target)
                 
 build_files = {c.split(':')[0] for c in build_candidates}
@@ -114,7 +114,7 @@ for bs in build_files:
     if 'tpu' in bs or 'windows' in bs:
         continue
     # Slowly expand the scope here
-    if not (bs.startswith('//tensorflow/core/grap') or bs.startswith("//tensorflow/core/common_runtime") or bs.startswith("//tensorflow/core/ir") or bs.startswith("//tensorflow/core/platform") or bs.startswith('//tensorflow/core/lib') or bs.startswith('//tensorflow/core/framework')):
+    if not (bs.startswith('//tensorflow/core/grap') or bs.startswith("//tensorflow/core/common_runtime") or bs.startswith("//tensorflow/core/ir") or bs.startswith("//tensorflow/core/platform") or bs.startswith('//tensorflow/core/lib') or bs.startswith('//tensorflow/core/framework') or bs.startswith("//tensorflow/compiler/xla")):
         print(f"!! Skipping {bs}")
         continue
     targets, libs_to_copy = find_binaries((Path(bs[2:]) / 'BUILD').read_text(), bs)
