@@ -1,0 +1,30 @@
+From 63e5924b87164b02e9ac636ba24841ce5be992d2 Mon Sep 17 00:00:00 2001
+From: ngam <67342040+ngam@users.noreply.github.com>
+Date: Tue, 21 Jun 2022 23:03:04 +0000
+Subject: [PATCH] disable using diagnose_if
+
+---
+ tensorflow/compiler/xla/util.h | 6 +-----
+ 1 file changed, 1 insertion(+), 5 deletions(-)
+
+diff --git a/tensorflow/compiler/xla/util.h b/tensorflow/compiler/xla/util.h
+index 09cc7d6063e..ff040b14345 100644
+--- a/tensorflow/compiler/xla/util.h
++++ b/tensorflow/compiler/xla/util.h
+@@ -433,12 +433,8 @@ void LogLines(int sev, absl::string_view text, const char* fname, int lineno);
+ //
+ //   int compute_absolute_value(int c)
+ //     XLA_DIAGNOSE_ERROR_IF(c >= 0, "'c' is already positive.");
+-#if ABSL_HAVE_ATTRIBUTE(diagnose_if)
+-#define XLA_DIAGNOSE_ERROR_IF(...) \
+-  __attribute__((diagnose_if(__VA_ARGS__, "error")))
+-#else
++// ngam 20220621: diagnose_if from absl causes failures on cf
+ #define XLA_DIAGNOSE_ERROR_IF(...)
+-#endif
+ 
+ constexpr bool IsRuntimeEvaluated() {
+ #ifdef __cpp_lib_is_constant_evaluated
+-- 
+2.36.1
+
