@@ -10,10 +10,7 @@ source:
     sha256: 6eaf86ead73e23988fe192da1db68f4d3828bcdd0f3a9dc195935e339c95dbdc
     patches:
       - patches/0001-loosen-requirements.patch
-      # the following patch disables some absl utils from being used
-      # in xla contexts; refer to issue for more info
-      # https://github.com/conda-forge/tensorflow-feedstock/issues/256
-      - patches/0001-disable-using-diagnose_if.patch
+
 
   - url: https://github.com/tensorflow/estimator/archive/refs/tags/v{{ estimator_version }}.tar.gz
     sha256: 62d7b5a574d9c995542f6cb485ff1c18ad115afd9ec6d63437b2aab227c35ef6
@@ -26,7 +23,8 @@ build:
   # Tensorflow still hasn't updated from C++14.
   # Newer versions of abseil_cpp require C++17
   # This may be a possibility in 2.9.0
-  skip: true  # [abseil_cpp != '20211102.0']
+  skip: true  # [abseil_cpp != '20211102.0' and not osx]
+  skip: true  # [abseil_cpp != '20210324.2' and osx]
 
 requirements:
   build:
