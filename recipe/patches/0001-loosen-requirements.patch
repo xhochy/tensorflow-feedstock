@@ -13,29 +13,32 @@ Co-authored-by: ngam
  1 file changed, 2 insertions(+), 4 deletions(-)
 
 diff --git a/tensorflow/tools/pip_package/setup.py b/tensorflow/tools/pip_package/setup.py
-index 58de3ad9c40..b1194d6948e 100644
+index cdcc355f4a6..b9cfdd6bb60 100644
 --- a/tensorflow/tools/pip_package/setup.py
 +++ b/tensorflow/tools/pip_package/setup.py
-@@ -78,7 +78,6 @@ REQUIRED_PACKAGES = [
+@@ -83,7 +83,6 @@ REQUIRED_PACKAGES = [
      'google_pasta >= 0.1.1',
      'h5py >= 2.9.0',
-     'keras_preprocessing >= 1.1.1', # 1.1.0 needs tensorflow==1.7
--    'libclang >= 9.0.1',
+     'keras_preprocessing >= 1.1.1',  # 1.1.0 needs tensorflow==1.7
+-    'libclang >= 13.0.0',
      'numpy >= 1.20',
      'opt_einsum >= 2.3.2',
-     'protobuf >= 3.9.2',
-@@ -92,9 +91,8 @@ REQUIRED_PACKAGES = [
-     # They are updated during the release process
-     # When updating these, please also update the nightly versions below
-     'tensorboard >= 2.8, < 2.9',
--    'tensorflow-estimator >= 2.8, < 2.9',
--    'keras >= 2.8.0rc0, < 2.9',
+     'packaging',
+@@ -94,13 +93,12 @@ REQUIRED_PACKAGES = [
+     # See also: https://github.com/protocolbuffers/protobuf/issues/9954
+     # See also: https://github.com/tensorflow/tensorflow/issues/56077
+     # This is a temporary patch for now, to patch previous TF releases.
+-    'protobuf >= 3.9.2, < 3.20',
++    'protobuf >= 3.9.2',
+     'setuptools',
+     'six >= 1.12.0',
+     'termcolor >= 1.1.0',
+     'typing_extensions >= 3.6.6',
+     'wrapt >= 1.11.0',
 -    'tensorflow-io-gcs-filesystem >= 0.23.1',
-+    'tensorflow_estimator >= 2.8, < 2.9',
-+    'keras >= 2.8, < 2.9',
- ]
- 
- 
+     # grpcio does not build correctly on big-endian machines due to lack of
+     # BoringSSL support.
+     # See https://github.com/tensorflow/tensorflow/issues/17882.
+
 -- 
 2.35.0
-

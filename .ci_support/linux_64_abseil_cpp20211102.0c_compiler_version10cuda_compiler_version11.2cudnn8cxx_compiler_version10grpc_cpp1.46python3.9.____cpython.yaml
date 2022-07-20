@@ -1,5 +1,5 @@
 abseil_cpp:
-- '20210324.2'
+- '20211102.0'
 c_compiler:
 - gcc
 c_compiler_version:
@@ -25,7 +25,7 @@ docker_image:
 giflib:
 - '5.2'
 grpc_cpp:
-- '1.45'
+- '1.46'
 icu:
 - '70'
 jpeg:
@@ -68,10 +68,10 @@ zip_keys:
 - - abseil_cpp
   - grpc_cpp
 - - c_compiler_version
-  - cdt_name
-  - cuda_compiler_version
-  - cudnn
   - cxx_compiler_version
+  - cudnn
+  - cuda_compiler_version
+  - cdt_name
   - docker_image
 - - python
   - python_impl
