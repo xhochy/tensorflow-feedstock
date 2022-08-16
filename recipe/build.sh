@@ -101,7 +101,6 @@ build --local_cpu_resources=${CPU_COUNT}"
 EOF
 
 if [[ "${target_platform}" == "osx-arm64" ]]; then
-  BUILD_OPTS="${BUILD_OPTS} --config=macos_arm64"
   echo "build --config=macos_arm64" >> .bazelrc
   # See https://conda-forge.org/docs/maintainer/knowledge_base.html#newer-c-features-with-old-sdk
   export CXXFLAGS="${CXXFLAGS} -D_LIBCPP_DISABLE_AVAILABILITY"
@@ -161,7 +160,7 @@ bazel shutdown
 ./configure
 
 # build using bazel
-bazel ${BAZEL_OPTS} build ${BUILD_OPTS} ${BUILD_TARGET}
+bazel ${BAZEL_OPTS} build ${BUILD_TARGET}
 
 # build a whl file
 mkdir -p $SRC_DIR/tensorflow_pkg
