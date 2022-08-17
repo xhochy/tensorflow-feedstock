@@ -20,8 +20,7 @@ build:
   number: 0
   skip: true  # [win]
   skip: true  # [python_impl == 'pypy']
-  # We specify a version of abseil_cpp that is compatible with C++17
-  skip: true  # [abseil_cpp != '20211102.0']
+  skip: true  # [libabseil != '20220623.0']
   skip: true  # [cuda_compiler_version in ("10.2", "11.0", "11.1")]
 
 requirements:
@@ -44,7 +43,6 @@ requirements:
     - {{ compiler('cxx') }}
     - {{ compiler('cuda') }}                 # [cuda_compiler_version != "None"]
     - bazel >=5.2.0
-
     - grpc-cpp
     - libprotobuf
     - nasm
@@ -78,7 +76,7 @@ requirements:
     # but so far there have been no problems with leaving these
     # unpinned; though some restrictions come in for packages
     # that are also listed as a requirement for the pip_package.
-    - abseil-cpp
+    - libabseil
     - astor
     - cython
     - dill
@@ -158,7 +156,7 @@ outputs:
         - packaging
         - wheel
         # TF_SYSTEM_LIBS
-        - abseil-cpp
+        - libabseil
         - astor
         - cython
         - dill
@@ -275,7 +273,6 @@ outputs:
         # https://github.com/conda-forge/tensorflow-feedstock/issues/162
         - {{ compiler('cuda') }}                 # [cuda_compiler_version != "None"]
         - bazel >=5.2.0
-
       host:
         - python
         - pip
@@ -316,7 +313,7 @@ outputs:
         - {{ compiler('cuda') }}  # [cuda_compiler_version != "None"]
       # host requirements to pick up run_exports
       host:
-        - abseil-cpp 20211102.0
+        - libabseil
         - giflib
         - grpc-cpp
         - icu
@@ -361,7 +358,7 @@ outputs:
         - {{ compiler('cuda') }}  # [cuda_compiler_version != "None"]
       # host requirements to pick up run_exports
       host:
-        - abseil-cpp 20211102.0
+        - libabseil
         - giflib
         - grpc-cpp
         - icu
