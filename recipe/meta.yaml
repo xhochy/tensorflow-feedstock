@@ -10,6 +10,7 @@ source:
     sha256: b5a1bb04c84b6fe1538377e5a1f649bb5d5f0b2e3625a3c526ff3a8af88633e8
     patches:
       - patches/0001-loosen-requirements.patch
+      - patches/0002-cublas-fix-backport.patch
 
 
   - url: https://github.com/tensorflow/estimator/archive/refs/tags/v{{ estimator_version.replace(".rc", "-rc") }}.tar.gz
