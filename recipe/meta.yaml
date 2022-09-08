@@ -417,6 +417,7 @@ about:
 extra:
   feedstock-name: tensorflow
   recipe-maintainers:
+    - ngam
     - farhantejani
     - ghego
     - h-vetinari
