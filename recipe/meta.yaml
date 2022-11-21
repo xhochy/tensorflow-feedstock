@@ -1,5 +1,5 @@
-{% set version = "2.10.0" %}
-{% set estimator_version = "2.10" %}
+{% set version = "2.11.0" %}
+{% set estimator_version = "2.11" %}
 
 package:
   name: tensorflow-split
@@ -7,14 +7,14 @@ package:
 
 source:
   - url: https://github.com/tensorflow/tensorflow/archive/refs/tags/v{{ version.replace(".rc", "-rc") }}.tar.gz
-    sha256: b5a1bb04c84b6fe1538377e5a1f649bb5d5f0b2e3625a3c526ff3a8af88633e8
+    sha256: 99c732b92b1b37fc243a559e02f9aef5671771e272758aa4aec7f34dc92dac48
     patches:
       - patches/0001-loosen-requirements.patch
-      - patches/0002-cublas-fix-backport.patch
 
-
-  - url: https://github.com/tensorflow/estimator/archive/refs/tags/v{{ estimator_version.replace(".rc", "-rc") }}.tar.gz
-    sha256: 60df309377cf4e584ca20198f9639beb685d50616395f50770fc0999092d6d85
+  # they didn't release estimator 2.11, but it's needed.. 
+  # - url: https://github.com/tensorflow/estimator/archive/refs/tags/v{{ estimator_version.replace(".rc", "-rc") }}.tar.gz
+  - url: http://github.com/tensorflow/estimator/archive/c7e88f0b110aa1b352e2af3e8876e797a94c27a3.tar.gz
+    sha256: 5275359ff105742016d7a4c0a01b23eb21b30106b11b0b7f27f4cc75bc634726
     folder: tensorflow-estimator
 
 build:
@@ -43,7 +43,7 @@ requirements:
     - {{ compiler('cxx') }}
     - {{ compiler('cuda') }}                 # [cuda_compiler_version != "None"]
     - bazel >=5.2.0
-    - grpc-cpp
+    - libgrpc
     - libprotobuf
     - nasm
     - sed
@@ -81,7 +81,7 @@ requirements:
     - cython
     - dill
     - giflib
-    - grpc-cpp
+    - libgrpc
     # 2022/04/25 hmaarrfk
     # the latest flatbuffers 2.0.6 seems to have removed a sybmol in a patch release...
     # https://github.com/Qengineering/TensorFlow_Lite_Pose_RPi_64-bits/issues/3#issuecomment-1034799822
@@ -112,8 +112,8 @@ requirements:
     - typing_extensions >=3.6.6
     - wrapt >=1.11.0
     # TF-API needs to move in sync
-    - tensorboard >=2.10,<2.11
-    - keras >=2.10,<2.11
+    - tensorboard >=2.11,<2.12
+    - keras >=2.11,<2.12
 
 outputs:
   # 2021/12/29: hmaarrfk
@@ -160,7 +160,7 @@ outputs:
         - cython
         - dill
         - giflib
-        - grpc-cpp
+        - libgrpc
         - flatbuffers >=2
         - icu
         - jpeg
@@ -188,8 +188,8 @@ outputs:
         - typing_extensions >=3.6.6
         - wrapt >=1.11.0
         # TF-API needs to move in sync
-        - tensorboard >=2.10,<2.11
-        - keras >=2.10,<2.11
+        - tensorboard >=2.11,<2.12
+        - keras >=2.11,<2.12
       run:
         - python
         - packaging
@@ -210,8 +210,8 @@ outputs:
         - typing_extensions >=3.6.6
         - wrapt >=1.11.0
         # TF-API needs to move in sync
-        - tensorboard >=2.10,<2.11
-        - keras >=2.10,<2.11
+        - tensorboard >=2.11,<2.12
+        - keras >=2.11,<2.12
         # avoid that people without GPUs needlessly download ~0.5-1GB
         - __cuda  # [cuda_compiler_version != "None"]
         - __osx >={{ MACOSX_DEPLOYMENT_TARGET|default("10.9") }}  # [osx and x86_64]
@@ -313,7 +313,7 @@ outputs:
       host:
         - libabseil
         - giflib
-        - grpc-cpp
+        - libgrpc
         - icu
         - jpeg
         - libcurl
@@ -358,7 +358,7 @@ outputs:
       host:
         - libabseil
         - giflib
-        - grpc-cpp
+        - libgrpc
         - icu
         - jpeg
         - libcurl
