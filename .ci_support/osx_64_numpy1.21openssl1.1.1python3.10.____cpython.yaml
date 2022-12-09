@@ -19,7 +19,7 @@ cxx_compiler_version:
 giflib:
 - '5.2'
 grpc_cpp:
-- '1.49'
+- '1.51'
 icu:
 - '70'
 jpeg:
@@ -29,7 +29,7 @@ libabseil:
 libcurl:
 - '7'
 libgrpc:
-- '1.49'
+- '1.51'
 libpng:
 - '1.6'
 libprotobuf:

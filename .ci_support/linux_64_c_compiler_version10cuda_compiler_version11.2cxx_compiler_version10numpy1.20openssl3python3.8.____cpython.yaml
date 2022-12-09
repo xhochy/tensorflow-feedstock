@@ -23,7 +23,7 @@ docker_image:
 giflib:
 - '5.2'
 grpc_cpp:
-- '1.49'
+- '1.51'
 icu:
 - '70'
 jpeg:
@@ -33,7 +33,7 @@ libabseil:
 libcurl:
 - '7'
 libgrpc:
-- '1.49'
+- '1.51'
 libpng:
 - '1.6'
 libprotobuf:
@@ -43,7 +43,7 @@ nccl:
 numpy:
 - '1.20'
 openssl:
-- 1.1.1
+- '3'
 pin_run_as_build:
   python:
     min_pin: x.x
