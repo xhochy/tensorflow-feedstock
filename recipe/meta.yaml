@@ -208,7 +208,8 @@ outputs:
         # the run_export is added to the main and 2.x.x branch
         # https://github.com/conda-forge/flatbuffers-feedstock/pull/35
         # https://github.com/conda-forge/flatbuffers-feedstock/pull/36
-        - {{ pin_compatible('flatbuffers', max_pin='x.x') }}
+        # https://github.com/conda-forge/flatbuffers-feedstock/pull/37
+        - {{ pin_compatible('flatbuffers', max_pin='x') }}
         - six >=1.12
         - termcolor >=1.1.0
         - typing_extensions >=3.6.6
