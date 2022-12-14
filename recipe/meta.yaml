@@ -27,6 +27,7 @@ build:
 requirements:
   build:
     - python                                 # [build_platform != target_platform]
+    - cython                                 # [build_platform != target_platform]
     - cross-python_{{ target_platform }}     # [build_platform != target_platform]
     - nsync                                  # [build_platform != target_platform]
     - snappy                                 # [build_platform != target_platform]
