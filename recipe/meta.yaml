@@ -11,10 +11,8 @@ source:
     patches:
       - patches/0001-loosen-requirements.patch
 
-  # they didn't release estimator 2.11, but it's needed.. 
-  # - url: https://github.com/tensorflow/estimator/archive/refs/tags/v{{ estimator_version.replace(".rc", "-rc") }}.tar.gz
-  - url: http://github.com/tensorflow/estimator/archive/c7e88f0b110aa1b352e2af3e8876e797a94c27a3.tar.gz
-    sha256: 5275359ff105742016d7a4c0a01b23eb21b30106b11b0b7f27f4cc75bc634726
+  - url: https://github.com/tensorflow/estimator/archive/refs/tags/v{{ estimator_version.replace(".rc", "-rc") }}.tar.gz
+    sha256: 922f9187de79e8e7f7d7a5b2d6d3aabc81bbbd6ba5f12a4f52967dd302214a43
     folder: tensorflow-estimator
 
 build:
