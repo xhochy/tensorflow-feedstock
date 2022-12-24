@@ -144,6 +144,8 @@ outputs:
         - {{ compiler('c') }}
         - {{ compiler('cxx') }}
         - {{ compiler('cuda') }}  # [cuda_compiler_version != "None"]
+        - python                              # [build_platform != target_platform]
+        - cross-python_{{ target_platform }}  # [build_platform != target_platform]
       host:
         # GPU reuqirements
         - cudnn                   # [cuda_compiler_version != "None"]
@@ -275,6 +277,9 @@ outputs:
         # https://github.com/conda-forge/tensorflow-feedstock/issues/162
         - {{ compiler('cuda') }}                 # [cuda_compiler_version != "None"]
         - bazel >=5.2.0,<6
+        - python                                   # [build_platform != target_platform]
+        - cross-python_{{ target_platform }}       # [build_platform != target_platform]
+        - {{ pin_subpackage('tensorflow-base') }}  # [build_platform != target_platform]
       host:
         - python
         - pip
