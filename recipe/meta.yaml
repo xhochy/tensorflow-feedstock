@@ -253,14 +253,14 @@ outputs:
       imports:
         - tensorflow
       commands:
-        - pip check
-        - cat test_tensorflow.py    # [unix]
-        - python test_tensorflow.py
-        - tf_upgrade_v2 --help
-        - saved_model_cli --help
-        - tflite_convert --help     # [not win]
-        - toco_from_protos --help   # [not win]
-        - toco --help               # [not win]
+        - pip check                  # [build_platform == target_platform]
+        - cat test_tensorflow.py     # [unix]
+        - python test_tensorflow.py  # [build_platform == target_platform]
+        - tf_upgrade_v2 --help       # [build_platform == target_platform]
+        - saved_model_cli --help     # [build_platform == target_platform]
+        - tflite_convert --help      # [not win and build_platform == target_platform]
+        - toco_from_protos --help    # [not win and build_platform == target_platform]
+        - toco --help                # [not win and build_platform == target_platform]
 
   - name: tensorflow-estimator
     script: build_estimator.sh   # [not win]
@@ -298,7 +298,7 @@ outputs:
       requires:
         - pip
       commands:
-        - pip check
+        - pip check  # [build_platform == target_platform]
 
   - name: libtensorflow
     script: cp_libtensorflow.sh
@@ -343,7 +343,7 @@ outputs:
         - {{ compiler('c') }}
       commands:
         - test -f $PREFIX/lib/libtensorflow${SHLIB_EXT}  # [not win and cuda_compiler_version == "None"]
-        - ./test_libtensorflow.sh                        # [not win and cuda_compiler_version == "None"]
+        - ./test_libtensorflow.sh                        # [not win and cuda_compiler_version == "None" and build_platform == target_platform]
 
   - name: libtensorflow_cc
     script: cp_libtensorflow_cc.sh
@@ -388,7 +388,7 @@ outputs:
         - {{ compiler('cxx') }}
       commands:
         - test -f $PREFIX/lib/libtensorflow_cc${SHLIB_EXT}  # [not win and cuda_compiler_version == "None"]
-        - ./test_libtensorflow_cc.sh                        # [not win and cuda_compiler_version == "None"]
+        - ./test_libtensorflow_cc.sh                        # [not win and cuda_compiler_version == "None" and build_platform == target_platform]
 
   # 2021/08/01, hmaarrfk
   # While this seems like a roundabout way of defining the package name
