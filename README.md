@@ -1,11 +1,11 @@
-About libtensorflow_framework
-=============================
+About tensorflow-build-cache
+============================
 
 Home: http://tensorflow.org/
 
 Package license: Apache-2.0
 
-Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/tensorflow-feedstock-2-feedstock/blob/main/LICENSE.txt)
+Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/tensorflow-feedstock/blob/main/LICENSE.txt)
 
 Summary: TensorFlow is an end-to-end open source platform for machine learning.
 
@@ -24,73 +24,6 @@ Current build status
 
 
 <table>
-    
-  <tr>
-    <td>Azure</td>
-    <td>
-      <details>
-        <summary>
-          <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=&branchName=main">
-            <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/tensorflow-feedstock-2-feedstock?branchName=main">
-          </a>
-        </summary>
-        <table>
-          <thead><tr><th>Variant</th><th>Status</th></tr></thead>
-          <tbody><tr>
-              <td>linux_64_abseil_cpp20210324.2c_compiler_version10cuda_compiler_version11.1cudnn8cxx_compiler_version10grpc_cpp1.45</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/tensorflow-feedstock-2-feedstock?branchName=main&jobName=linux&configuration=linux_64_abseil_cpp20210324.2c_compiler_version10cuda_compiler_version11.1cudnn8cxx_compiler_version10grpc_cpp1.45" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
-              <td>linux_64_abseil_cpp20210324.2c_compiler_version10cuda_compiler_version11.2cudnn8cxx_compiler_version10grpc_cpp1.45</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/tensorflow-feedstock-2-feedstock?branchName=main&jobName=linux&configuration=linux_64_abseil_cpp20210324.2c_compiler_version10cuda_compiler_version11.2cudnn8cxx_compiler_version10grpc_cpp1.45" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
-              <td>linux_64_abseil_cpp20210324.2c_compiler_version10cuda_compiler_versionNonecudnnundefinedcxx_compiler_version10grpc_cpp1.45</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/tensorflow-feedstock-2-feedstock?branchName=main&jobName=linux&configuration=linux_64_abseil_cpp20210324.2c_compiler_version10cuda_compiler_versionNonecudnnundefinedcxx_compiler_version10grpc_cpp1.45" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
-              <td>linux_64_abseil_cpp20210324.2c_compiler_version7cuda_compiler_version10.2cudnn7cxx_compiler_version7grpc_cpp1.45</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/tensorflow-feedstock-2-feedstock?branchName=main&jobName=linux&configuration=linux_64_abseil_cpp20210324.2c_compiler_version7cuda_compiler_version10.2cudnn7cxx_compiler_version7grpc_cpp1.45" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
-              <td>linux_64_abseil_cpp20210324.2c_compiler_version9cuda_compiler_version11.0cudnn8cxx_compiler_version9grpc_cpp1.45</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/tensorflow-feedstock-2-feedstock?branchName=main&jobName=linux&configuration=linux_64_abseil_cpp20210324.2c_compiler_version9cuda_compiler_version11.0cudnn8cxx_compiler_version9grpc_cpp1.45" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
-              <td>osx_64_abseil_cpp20210324.2grpc_cpp1.45</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/tensorflow-feedstock-2-feedstock?branchName=main&jobName=osx&configuration=osx_64_abseil_cpp20210324.2grpc_cpp1.45" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
-              <td>osx_arm64_abseil_cpp20210324.2grpc_cpp1.45</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/tensorflow-feedstock-2-feedstock?branchName=main&jobName=osx&configuration=osx_arm64_abseil_cpp20210324.2grpc_cpp1.45" alt="variant">
-                </a>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </details>
-    </td>
-  </tr>
 </table>
 
 Current release info
@@ -98,53 +31,53 @@ Current release info
 
 | Name | Downloads | Version | Platforms |
 | --- | --- | --- | --- |
-| [![Conda Recipe](https://img.shields.io/badge/recipe-libtensorflow_framework-green.svg)](https://anaconda.org/conda-forge/libtensorflow_framework) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/libtensorflow_framework.svg)](https://anaconda.org/conda-forge/libtensorflow_framework) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/libtensorflow_framework.svg)](https://anaconda.org/conda-forge/libtensorflow_framework) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/libtensorflow_framework.svg)](https://anaconda.org/conda-forge/libtensorflow_framework) |
+| [![Conda Recipe](https://img.shields.io/badge/recipe-tensorflow--build--cache-green.svg)](https://anaconda.org/conda-forge/tensorflow-build-cache) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/tensorflow-build-cache.svg)](https://anaconda.org/conda-forge/tensorflow-build-cache) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/tensorflow-build-cache.svg)](https://anaconda.org/conda-forge/tensorflow-build-cache) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/tensorflow-build-cache.svg)](https://anaconda.org/conda-forge/tensorflow-build-cache) |
 
-Installing libtensorflow_framework
-==================================
+Installing tensorflow-build-cache
+=================================
 
-Installing `libtensorflow_framework` from the `conda-forge` channel can be achieved by adding `conda-forge` to your channels with:
+Installing `tensorflow-build-cache` from the `conda-forge` channel can be achieved by adding `conda-forge` to your channels with:
 
 ```
 conda config --add channels conda-forge
 conda config --set channel_priority strict
 ```
 
-Once the `conda-forge` channel has been enabled, `libtensorflow_framework` can be installed with `conda`:
+Once the `conda-forge` channel has been enabled, `tensorflow-build-cache` can be installed with `conda`:
 
 ```
-conda install libtensorflow_framework
-```
-
-or with `mamba`:
-
-```
-mamba install libtensorflow_framework
-```
-
-It is possible to list all of the versions of `libtensorflow_framework` available on your platform with `conda`:
-
-```
-conda search libtensorflow_framework --channel conda-forge
+conda install tensorflow-build-cache
 ```
 
 or with `mamba`:
 
 ```
-mamba search libtensorflow_framework --channel conda-forge
+mamba install tensorflow-build-cache
+```
+
+It is possible to list all of the versions of `tensorflow-build-cache` available on your platform with `conda`:
+
+```
+conda search tensorflow-build-cache --channel conda-forge
+```
+
+or with `mamba`:
+
+```
+mamba search tensorflow-build-cache --channel conda-forge
 ```
 
 Alternatively, `mamba repoquery` may provide more information:
 
 ```
 # Search all versions available on your platform:
-mamba repoquery search libtensorflow_framework --channel conda-forge
+mamba repoquery search tensorflow-build-cache --channel conda-forge
 
-# List packages depending on `libtensorflow_framework`:
-mamba repoquery whoneeds libtensorflow_framework --channel conda-forge
+# List packages depending on `tensorflow-build-cache`:
+mamba repoquery whoneeds tensorflow-build-cache --channel conda-forge
 
-# List dependencies of `libtensorflow_framework`:
-mamba repoquery depends libtensorflow_framework --channel conda-forge
+# List dependencies of `tensorflow-build-cache`:
+mamba repoquery depends tensorflow-build-cache --channel conda-forge
 ```
 
 
@@ -189,17 +122,17 @@ Terminology
                   produce the finished article (built conda distributions)
 
 
-Updating libtensorflow_framework-feedstock
-==========================================
+Updating tensorflow-build-cache-feedstock
+=========================================
 
-If you would like to improve the libtensorflow_framework recipe or build a new
+If you would like to improve the tensorflow-build-cache recipe or build a new
 package version, please fork this repository and submit a PR. Upon submission,
 your changes will be run on the appropriate platforms to give the reviewer an
 opportunity to confirm that the changes result in a successful build. Once
 merged, the recipe will be re-built and uploaded automatically to the
 `conda-forge` channel, whereupon the built conda packages will be available for
 everybody to install and use from the `conda-forge` channel.
-Note that all branches in the conda-forge/libtensorflow_framework-feedstock are
+Note that all branches in the conda-forge/tensorflow-build-cache-feedstock are
 immediately built and any created packages are uploaded, so PRs should be based
 on branches in forks and branches in the main repository should only be used to
 build distinct package versions.
