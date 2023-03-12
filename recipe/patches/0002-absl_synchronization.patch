@@ -1,0 +1,12 @@
+diff --git a/tensorflow/core/distributed_runtime/rpc/BUILD b/tensorflow/core/distributed_runtime/rpc/BUILD
+index 8feae916d90..436930970e8 100644
+--- a/tensorflow/core/distributed_runtime/rpc/BUILD
++++ b/tensorflow/core/distributed_runtime/rpc/BUILD
+@@ -289,6 +289,7 @@ cc_library(
+     hdrs = ["grpc_master_service_impl.h"],
+     deps = [
+         "//tensorflow/core/protobuf:master_proto_cc",
++        "@com_google_absl//absl/synchronization",
+     ] + tf_grpc_cc_dependencies(),
+ )
+ 
