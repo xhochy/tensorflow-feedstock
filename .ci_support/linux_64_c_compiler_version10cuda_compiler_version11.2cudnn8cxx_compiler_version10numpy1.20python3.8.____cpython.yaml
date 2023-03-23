@@ -26,14 +26,14 @@ grpc_cpp:
 - '1.51'
 icu:
 - '70'
-jpeg:
-- '9'
 libabseil:
 - '20220623.0'
 libcurl:
 - '7'
 libgrpc:
 - '1.51'
+libjpeg_turbo:
+- 2.1.5
 libpng:
 - '1.6'
 libprotobuf:
@@ -49,7 +49,7 @@ pin_run_as_build:
     min_pin: x.x
     max_pin: x.x
 python:
-- 3.9.* *_cpython
+- 3.8.* *_cpython
 python_impl:
 - cpython
 snappy:
