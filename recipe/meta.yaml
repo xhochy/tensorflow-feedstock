@@ -1,4 +1,4 @@
-{% set version = "2.11.0" %}
+{% set version = "2.11.1" %}
 {% set estimator_version = "2.11.0" %}
 
 package:
@@ -7,7 +7,7 @@ package:
 
 source:
   - url: https://github.com/tensorflow/tensorflow/archive/refs/tags/v{{ version.replace(".rc", "-rc") }}.tar.gz
-    sha256: 99c732b92b1b37fc243a559e02f9aef5671771e272758aa4aec7f34dc92dac48
+    sha256: 624ed1cc170cdcc19e8a15d8cdde989a9a1c6b0534c90b38a6b2f06fb2963e5f
     patches:
       - patches/0001-loosen-requirements.patch
 
@@ -16,7 +16,7 @@ source:
     folder: tensorflow-estimator
 
 build:
-  number: 2
+  number: 0
   skip: true  # [win]
   skip: true  # [python_impl == 'pypy']
   skip: true  # [cuda_compiler_version in ("10.2", "11.0", "11.1")]
