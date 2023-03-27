@@ -1,5 +1,5 @@
-{% set version = "2.11.1" %}
-{% set estimator_version = "2.11.0" %}
+{% set version = "2.12.0" %}
+{% set estimator_version = "2.12.0" %}
 
 package:
   name: tensorflow-split
@@ -7,12 +7,12 @@ package:
 
 source:
   - url: https://github.com/tensorflow/tensorflow/archive/refs/tags/v{{ version.replace(".rc", "-rc") }}.tar.gz
-    sha256: 624ed1cc170cdcc19e8a15d8cdde989a9a1c6b0534c90b38a6b2f06fb2963e5f
+    # sha256: 624ed1cc170cdcc19e8a15d8cdde989a9a1c6b0534c90b38a6b2f06fb2963e5f
     patches:
       - patches/0001-loosen-requirements.patch
 
   - url: https://github.com/tensorflow/estimator/archive/refs/tags/v{{ estimator_version.replace(".rc", "-rc") }}.tar.gz
-    sha256: 922f9187de79e8e7f7d7a5b2d6d3aabc81bbbd6ba5f12a4f52967dd302214a43
+    # sha256: 922f9187de79e8e7f7d7a5b2d6d3aabc81bbbd6ba5f12a4f52967dd302214a43
     folder: tensorflow-estimator
 
 build:
@@ -110,8 +110,8 @@ requirements:
     - typing_extensions >=3.6.6
     - wrapt >=1.11.0
     # TF-API needs to move in sync
-    - tensorboard >=2.11,<2.12
-    - keras >=2.11,<2.12
+    - tensorboard >=2.12,<2.13
+    - keras >=2.12,<2.13
 
 outputs:
   # 2021/12/29: hmaarrfk
@@ -188,8 +188,8 @@ outputs:
         - typing_extensions >=3.6.6
         - wrapt >=1.11.0
         # TF-API needs to move in sync
-        - tensorboard >=2.11,<2.12
-        - keras >=2.11,<2.12
+        - tensorboard >=2.12,<2.13
+        - keras >=2.12,<2.13
       run:
         - python
         - packaging
@@ -215,8 +215,8 @@ outputs:
         - typing_extensions >=3.6.6
         - wrapt >=1.11.0
         # TF-API needs to move in sync
-        - tensorboard >=2.11,<2.12
-        - keras >=2.11,<2.12
+        - tensorboard >=2.12,<2.13
+        - keras >=2.12,<2.13
         # avoid that people without GPUs needlessly download ~0.5-1GB
         - __cuda  # [cuda_compiler_version != "None"]
         - __osx >={{ MACOSX_DEPLOYMENT_TARGET|default("10.9") }}  # [osx and x86_64]
