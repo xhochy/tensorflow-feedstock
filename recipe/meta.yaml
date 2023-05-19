@@ -12,6 +12,7 @@ source:
       - patches/0001-loosen-requirements.patch
       - patches/0002-fix-genproto.patch
       - patches/0003-fix-absl-py.patch
+      - patches/0004-fix-protobuf-header.patch
 
   - url: https://github.com/tensorflow/estimator/archive/refs/tags/v{{ estimator_version.replace(".rc", "-rc") }}.tar.gz
     # sha256: 922f9187de79e8e7f7d7a5b2d6d3aabc81bbbd6ba5f12a4f52967dd302214a43
