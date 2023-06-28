@@ -57,6 +57,8 @@ target_platform:
 zip_keys:
 - - c_compiler_version
   - cxx_compiler_version
+- - libgrpc
+  - libprotobuf
 - - python
   - numpy
   - python_impl
