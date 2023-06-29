@@ -154,8 +154,8 @@ if [[ ${cuda_compiler_version} != "None" ]]; then
     fi
 fi
 
-bazel clean --expunge
-bazel shutdown
+#bazel clean --expunge
+#bazel shutdown
 
 ./configure
 
