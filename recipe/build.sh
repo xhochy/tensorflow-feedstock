@@ -89,17 +89,6 @@ fi
 sed -i -e "/PROTOBUF_INCLUDE_PATH/c\ " .bazelrc
 sed -i -e "/PREFIX/c\ " .bazelrc
 
-cat >> .bazelrc <<EOF
-build --crosstool_top=//custom_toolchain:toolchain
-build --logging=6
-build --verbose_failures
-build --define=PREFIX=${PREFIX}
-build --define=PROTOBUF_INCLUDE_PATH=${PREFIX}/include
-build --config=noaws
-build --cpu=${TARGET_CPU}
-build --local_cpu_resources=${CPU_COUNT}
-EOF
-
 if [[ "${target_platform}" == "osx-arm64" ]]; then
   echo "build --config=macos_arm64" >> .bazelrc
   # See https://conda-forge.org/docs/maintainer/knowledge_base.html#newer-c-features-with-old-sdk
@@ -158,6 +147,18 @@ fi
 #bazel shutdown
 
 ./configure
+
+cat >> .bazelrc <<EOF
+build --crosstool_top=//custom_toolchain:toolchain
+build --logging=6
+build --verbose_failures
+build --define=PREFIX=${PREFIX}
+build --define=PROTOBUF_INCLUDE_PATH=${PREFIX}/include
+build --config=noaws
+build --cpu=${TARGET_CPU}
+build --local_cpu_resources=${CPU_COUNT}
+EOF
+
 
 # build using bazel
 bazel ${BAZEL_OPTS} build ${BUILD_TARGET}
