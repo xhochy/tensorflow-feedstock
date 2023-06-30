@@ -31,7 +31,7 @@ libabseil:
 libcurl:
 - '8'
 libgrpc:
-- '1.52'
+- '1.54'
 libjpeg_turbo:
 - 2.1.5
 libpng:
