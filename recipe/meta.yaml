@@ -12,6 +12,7 @@ source:
       - patches/0001-loosen-requirements.patch
       - patches/0002-fix-genproto.patch
       - patches/0003-fix-absl-py.patch
+      - patches/0004-Add-additional-absl_synchronization-linkage-to-gRPC.patch
 
   - url: https://github.com/tensorflow/estimator/archive/refs/tags/v{{ estimator_version.replace(".rc", "-rc") }}.tar.gz
     sha256: 86c75e830c6ba762d0e3cf04c160096930fb12a992e69b3f24674b9f58902063
