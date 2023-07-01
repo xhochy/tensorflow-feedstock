@@ -201,7 +201,7 @@ outputs:
         - astunparse >=1.6.0
         - gast >=0.2.1,<=0.4.0
         - google-pasta >=0.1.1
-        - grpcio {{ grpc_cpp }}.*
+        - grpcio {{ libgrpc }}.*
         - h5py >=2.9.0
         - keras-preprocessing >=1.1.1
         - {{ pin_compatible('numpy') }}
