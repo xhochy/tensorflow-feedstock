@@ -1,5 +1,14 @@
+From 087c5fa55fd33ce9f7a508726f959e41d7e8fefe Mon Sep 17 00:00:00 2001
+From: Jinzhe Zeng <jinzhe.zeng@rutgers.edu>
+Date: Thu, 18 May 2023 06:30:06 -0400
+Subject: [PATCH 3/5] fix absl-py
+
+---
+ third_party/systemlibs/absl_py.absl.flags.BUILD | 4 ++++
+ 1 file changed, 4 insertions(+)
+
 diff --git a/third_party/systemlibs/absl_py.absl.flags.BUILD b/third_party/systemlibs/absl_py.absl.flags.BUILD
-index 4049989ae2fda..d92f4949df1a5 100644
+index 4049989ae2f..d92f4949df1 100644
 --- a/third_party/systemlibs/absl_py.absl.flags.BUILD
 +++ b/third_party/systemlibs/absl_py.absl.flags.BUILD
 @@ -5,3 +5,7 @@ package(default_visibility = ["//visibility:public"])

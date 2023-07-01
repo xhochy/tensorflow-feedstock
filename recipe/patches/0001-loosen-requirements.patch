@@ -1,7 +1,7 @@
-From 2b14b3c38210f8454894cec887915820a28b3ef8 Mon Sep 17 00:00:00 2001
+From 2688062b264a541f3141b68f2a3110af9d8fb02c Mon Sep 17 00:00:00 2001
 From: "Uwe L. Korn" <uwe.korn@quantco.com>
 Date: Thu, 30 Dec 2021 06:57:09 +0200
-Subject: [PATCH] loosen requirements
+Subject: [PATCH 1/5] loosen requirements
 
 * Remove unused libclang requirement
 * Remove unecessary tensorflow-io-gcs-filesystem
@@ -9,14 +9,14 @@ Subject: [PATCH] loosen requirements
 Co-authored-by: Mark Harfouche <mark.harfouche@gmail.com>
 Co-authored-by: ngam
 ---
- tensorflow/tools/pip_package/setup.py | 5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
+ tensorflow/tools/pip_package/setup.py | 3 ---
+ 1 file changed, 3 deletions(-)
 
 diff --git a/tensorflow/tools/pip_package/setup.py b/tensorflow/tools/pip_package/setup.py
-index face32bbb9a2e..6b251d8ac17ee 100644
+index d087ae2a671..c3326e74e64 100644
 --- a/tensorflow/tools/pip_package/setup.py
 +++ b/tensorflow/tools/pip_package/setup.py
-@@ -92,7 +92,6 @@ def standard_or_nightly(standard, nightly):
+@@ -92,7 +92,6 @@ REQUIRED_PACKAGES = [
      # TODO(b/239052279): replace with external dependency on JAX repo once JAX
      # no longer relies on TF.
      'jax >= 0.3.15',
@@ -24,7 +24,7 @@ index face32bbb9a2e..6b251d8ac17ee 100644
      # TODO(b/263178356): numpy 1.24 breaks TF's tests
      'numpy >= 1.22, <1.24',
      'opt_einsum >= 2.3.2',
-@@ -112,8 +111,6 @@ def standard_or_nightly(standard, nightly):
+@@ -112,8 +111,6 @@ REQUIRED_PACKAGES = [
      # TODO(b/266362323): wrapt==1.15.0rc0 incompatible with TF 2.12.0 RC0 (and
      # nightly, but works with TF 2.11)
      'wrapt >= 1.11.0, <1.15',
@@ -33,6 +33,3 @@ index face32bbb9a2e..6b251d8ac17ee 100644
      # grpcio does not build correctly on big-endian machines due to lack of
      # BoringSSL support.
      # See https://github.com/tensorflow/tensorflow/issues/17882.
-
--- 
-2.35.0
