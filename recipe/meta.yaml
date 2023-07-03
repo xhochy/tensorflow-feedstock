@@ -380,12 +380,13 @@ outputs:
         - {{ compiler('cuda') }}  # [cuda_compiler_version != "None"]
       # host requirements to pick up run_exports
       host:
-        - libabseil
+        - flatbuffers
         - giflib
-        - libgrpc
         - icu
-        - libjpeg-turbo
+        - libabseil
         - libcurl
+        - libgrpc
+        - libjpeg-turbo
         - libpng
         - libprotobuf
         - openssl
