@@ -42,7 +42,7 @@ requirements:
     - libjpeg-turbo                          # [build_platform != target_platform]
     - icu                                    # [build_platform != target_platform]
     - libpng                                 # [build_platform != target_platform]
-    - flatbuffers >=2                        # [build_platform != target_platform]
+    - flatbuffers                            # [build_platform != target_platform]
     - onednn                                 # [build_platform != target_platform]
     - onednn-cpu-threadpool                  # [build_platform != target_platform]
     - pybind11                               # [build_platform != target_platform]
@@ -93,7 +93,7 @@ requirements:
     # 2022/04/25 hmaarrfk
     # the latest flatbuffers 2.0.6 seems to have removed a sybmol in a patch release...
     # https://github.com/Qengineering/TensorFlow_Lite_Pose_RPi_64-bits/issues/3#issuecomment-1034799822
-    - flatbuffers >=2
+    - flatbuffers
     - icu
     - libjpeg-turbo
     - libpng
@@ -171,7 +171,7 @@ outputs:
         - dill
         - giflib
         - libgrpc
-        - flatbuffers >=2
+        - flatbuffers
         - icu
         - libjpeg-turbo
         - libcurl
@@ -214,12 +214,6 @@ outputs:
         - opt_einsum >=2.3.2
         - protobuf >=3.9.2
         - python-flatbuffers >=2
-        # This can be removed once the dust settles after
-        # the run_export is added to the main and 2.x.x branch
-        # https://github.com/conda-forge/flatbuffers-feedstock/pull/35
-        # https://github.com/conda-forge/flatbuffers-feedstock/pull/36
-        # https://github.com/conda-forge/flatbuffers-feedstock/pull/37
-        - {{ pin_compatible('flatbuffers', max_pin='x') }}
         - six >=1.12
         - termcolor >=1.1.0
         - typing_extensions >=3.6.6
