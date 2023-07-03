@@ -17,6 +17,8 @@ source:
       # backport https://github.com/tensorflow/tensorflow/commit/2eae48506773587a7e74dd7064aa0fa9f0c37fbf
       # to not have to carry an upper bound for wrapt-version
       - patches/0006-Add-TypeError-catch-wrapt-1.15.0rc-throws-TypeError-.patch
+      # backport https://github.com/tensorflow/tensorflow/commit/ad938db0da16d00d7f14da3de2a4abb97b1bc340
+      # for compatibility with newer abseil
       - patches/0007-Update-Abseil-to-the-latest-LTS-replace-or-with-in-d.patch
       - patches/0008-Add-missing-any_invocable-target-to-absel-bazel.patch
       - patches/0009-Fix-missing-abseil-linkages.patch
