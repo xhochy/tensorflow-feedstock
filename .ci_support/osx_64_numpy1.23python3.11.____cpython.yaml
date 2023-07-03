@@ -16,6 +16,8 @@ cxx_compiler:
 - clangxx
 cxx_compiler_version:
 - '15'
+flatbuffers:
+- 23.5.26
 giflib:
 - '5.2'
 icu:
