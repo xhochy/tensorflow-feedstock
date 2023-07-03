@@ -17,6 +17,9 @@ source:
       # backport https://github.com/tensorflow/tensorflow/commit/2eae48506773587a7e74dd7064aa0fa9f0c37fbf
       # to not have to carry an upper bound for wrapt-version
       - patches/0006-Add-TypeError-catch-wrapt-1.15.0rc-throws-TypeError-.patch
+      - patches/0007-Update-Abseil-to-the-latest-LTS-replace-or-with-in-d.patch
+      - patches/0008-Add-missing-any_invocable-target-to-absel-bazel.patch
+      - patches/0009-Fix-missing-abseil-linkages.patch
 
   - url: https://github.com/tensorflow/estimator/archive/refs/tags/v{{ estimator_version.replace(".rc", "-rc") }}.tar.gz
     sha256: 86c75e830c6ba762d0e3cf04c160096930fb12a992e69b3f24674b9f58902063

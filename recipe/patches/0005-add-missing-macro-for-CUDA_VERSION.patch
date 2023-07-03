@@ -1,14 +1,14 @@
-From 3b945b58de7cbc18de3601e8a6176bdc2dbd2294 Mon Sep 17 00:00:00 2001
+From 9846d24f2a6b2d17f522c8fb731b4d9af8353ee3 Mon Sep 17 00:00:00 2001
 From: Jinzhe Zeng <jinzhe.zeng@rutgers.edu>
 Date: Fri, 30 Jun 2023 19:00:49 -0400
-Subject: [PATCH 5/6] add missing macro for CUDA_VERSION
+Subject: [PATCH 5/9] add missing macro for CUDA_VERSION
 
 ---
  tensorflow/compiler/xla/stream_executor/cuda/cuda_graph.cc | 2 ++
  1 file changed, 2 insertions(+)
 
 diff --git a/tensorflow/compiler/xla/stream_executor/cuda/cuda_graph.cc b/tensorflow/compiler/xla/stream_executor/cuda/cuda_graph.cc
-index 45eb8220d04..b0063383575 100644
+index 45eb8220..b0063383 100644
 --- a/tensorflow/compiler/xla/stream_executor/cuda/cuda_graph.cc
 +++ b/tensorflow/compiler/xla/stream_executor/cuda/cuda_graph.cc
 @@ -123,6 +123,7 @@ tsl::StatusOr<OwnedCudaGraph> CaptureCudaGraph(
@@ -27,3 +27,6 @@ index 45eb8220d04..b0063383575 100644
  
    return OwnedCudaGraph(graph);
  }
+-- 
+2.30.2
+

@@ -38,6 +38,7 @@ export TF_SYSTEM_LIBS="
   astor_archive
   astunparse_archive
   boringssl
+  com_google_absl
   com_github_googlecloudplatform_google_cloud_cpp
   com_github_grpc_grpc
   com_google_protobuf

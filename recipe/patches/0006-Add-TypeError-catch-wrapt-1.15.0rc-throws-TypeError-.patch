@@ -1,7 +1,7 @@
-From 2054f99a1d16ccb12688fb220fb0568c826b4860 Mon Sep 17 00:00:00 2001
+From 53b000d191009fa827f5a121800c16781db25c40 Mon Sep 17 00:00:00 2001
 From: Katherine Wu <kathywu@google.com>
 Date: Tue, 9 May 2023 13:36:04 -0700
-Subject: [PATCH 6/6] Add TypeError catch (wrapt==1.15.0rc throws TypeError
+Subject: [PATCH 6/9] Add TypeError catch (wrapt==1.15.0rc throws TypeError
  instead of AttributeError).
 
 PiperOrigin-RevId: 530700040
@@ -10,7 +10,7 @@ PiperOrigin-RevId: 530700040
  1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/tensorflow/python/training/saving/saveable_object_util.py b/tensorflow/python/training/saving/saveable_object_util.py
-index 9fdc4e77732..1a6acd5c1db 100644
+index 9fdc4e77..1a6acd5c 100644
 --- a/tensorflow/python/training/saving/saveable_object_util.py
 +++ b/tensorflow/python/training/saving/saveable_object_util.py
 @@ -746,7 +746,8 @@ def trackable_has_serialize_to_tensor(obj):
@@ -23,3 +23,6 @@ index 9fdc4e77732..1a6acd5c1db 100644
      pass
  
    # Use MRO so that if a parent class has `_serialize_to_tensors`, but the
+-- 
+2.30.2
+
