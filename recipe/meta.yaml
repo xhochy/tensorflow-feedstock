@@ -210,7 +210,7 @@ outputs:
         - grpcio {{ libgrpc }}.*
         - h5py >=2.9.0
         - keras-preprocessing >=1.1.1
-        - {{ pin_compatible('numpy') }}
+        - {{ pin_compatible('numpy', lower_bound='1.22') }}
         - opt_einsum >=2.3.2
         - protobuf >=3.9.2
         - python-flatbuffers >=2
