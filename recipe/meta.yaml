@@ -267,7 +267,7 @@ outputs:
         - python test_tensorflow.py  # [build_platform == target_platform]
         - tf_upgrade_v2 --help       # [build_platform == target_platform]
         # --help exits with exit code 1
-        - test -f $PREFIX/bin/saved_model_cli  # [build_platform == target_platform]
+        - test -x $PREFIX/bin/saved_model_cli  # [unix]
         - tflite_convert --help      # [not win and build_platform == target_platform]
         - toco_from_protos --help    # [not win and build_platform == target_platform]
         - toco --help                # [not win and build_platform == target_platform]
