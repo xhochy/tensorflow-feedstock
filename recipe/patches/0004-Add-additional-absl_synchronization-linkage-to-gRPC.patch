@@ -1,4 +1,4 @@
-From c6ec7b665b0c4b1d09d99e07ed103f13674f3705 Mon Sep 17 00:00:00 2001
+From eaa3a4d1cb57e5f1e71e938d0aea782854a9ec3c Mon Sep 17 00:00:00 2001
 From: "Uwe L. Korn" <uwe.korn@quantco.com>
 Date: Fri, 30 Jun 2023 08:39:32 +0000
 Subject: [PATCH 4/9] Add additional absl_synchronization linkage to gRPC
@@ -8,7 +8,7 @@ Subject: [PATCH 4/9] Add additional absl_synchronization linkage to gRPC
  1 file changed, 3 insertions(+)
 
 diff --git a/third_party/systemlibs/grpc.BUILD b/third_party/systemlibs/grpc.BUILD
-index 8b703f11556..417baf5d342 100644
+index 8b703f11..417baf5d 100644
 --- a/third_party/systemlibs/grpc.BUILD
 +++ b/third_party/systemlibs/grpc.BUILD
 @@ -10,6 +10,7 @@ cc_library(
@@ -35,3 +35,6 @@ index 8b703f11556..417baf5d342 100644
      ],
      visibility = ["//visibility:public"],
  )
+-- 
+2.39.2 (Apple Git-143)
+

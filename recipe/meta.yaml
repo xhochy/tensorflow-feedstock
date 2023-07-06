@@ -1,4 +1,4 @@
-{% set version = "2.12.0" %}
+{% set version = "2.12.1" %}
 {% set estimator_version = "2.12.0" %}
 
 package:
@@ -7,7 +7,7 @@ package:
 
 source:
   - url: https://github.com/tensorflow/tensorflow/archive/refs/tags/v{{ version.replace(".rc", "-rc") }}.tar.gz
-    sha256: c030cb1905bff1d2446615992aad8d8d85cbe90c4fb625cee458c63bf466bc8e
+    sha256: 6bc4600cc0b88e9e40f1800096f5bddbbd3b6e5527a030dea631b87f2ae46b5b
     patches:
       - patches/0001-loosen-requirements.patch
       - patches/0002-fix-genproto.patch

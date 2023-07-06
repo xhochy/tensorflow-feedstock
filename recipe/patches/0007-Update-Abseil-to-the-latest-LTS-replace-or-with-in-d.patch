@@ -1,4 +1,4 @@
-From 18d7be99d42004a854133374ae693ce8a92b1063 Mon Sep 17 00:00:00 2001
+From 20787a0315dc6ed7217395d3ecdeea97d60afccc Mon Sep 17 00:00:00 2001
 From: David Dunleavy <ddunleavy@google.com>
 Date: Thu, 13 Apr 2023 10:02:13 -0700
 Subject: [PATCH 7/9] Update Abseil to the latest LTS, replace `or` with `||`
@@ -21,7 +21,7 @@ PiperOrigin-RevId: 524030843
  delete mode 100644 third_party/absl/com_google_absl_fix_mac_and_nvcc_build.patch
 
 diff --git a/tensorflow/compiler/tf2xla/kernels/data_format_ops.cc b/tensorflow/compiler/tf2xla/kernels/data_format_ops.cc
-index 1707fd10a74..e2b3e3ffcf5 100644
+index 1707fd10..e2b3e3ff 100644
 --- a/tensorflow/compiler/tf2xla/kernels/data_format_ops.cc
 +++ b/tensorflow/compiler/tf2xla/kernels/data_format_ops.cc
 @@ -35,13 +35,13 @@ class DataFormatDimMapOp : public XlaOpKernel {
@@ -41,7 +41,7 @@ index 1707fd10a74..e2b3e3ffcf5 100644
              "Destination format must of length 4 or 5, received dst_format = ",
              dst_format)));
 diff --git a/tensorflow/lite/tools/cmake/modules/abseil-cpp.cmake b/tensorflow/lite/tools/cmake/modules/abseil-cpp.cmake
-index fe91b029e3e..92e746afafe 100644
+index fe91b029..92e746af 100644
 --- a/tensorflow/lite/tools/cmake/modules/abseil-cpp.cmake
 +++ b/tensorflow/lite/tools/cmake/modules/abseil-cpp.cmake
 @@ -24,7 +24,7 @@ OverridableFetchContent_Declare(
@@ -54,7 +54,7 @@ index fe91b029e3e..92e746afafe 100644
    GIT_PROGRESS TRUE
    PREFIX "${CMAKE_BINARY_DIR}"
 diff --git a/tensorflow/tools/def_file_filter/def_file_filter.py.tpl b/tensorflow/tools/def_file_filter/def_file_filter.py.tpl
-index 444c2d151ab..7e93850d58d 100644
+index 444c2d15..7e93850d 100644
 --- a/tensorflow/tools/def_file_filter/def_file_filter.py.tpl
 +++ b/tensorflow/tools/def_file_filter/def_file_filter.py.tpl
 @@ -1,5 +1,4 @@
@@ -76,7 +76,7 @@ index 444c2d151ab..7e93850d58d 100644
      def_fp.write("\t ??_7MetaGraphDef@tensorflow@@6B@\n")
 diff --git a/third_party/absl/absl_designated_initializers.patch b/third_party/absl/absl_designated_initializers.patch
 new file mode 100644
-index 00000000000..6ee232238f7
+index 00000000..6ee23223
 --- /dev/null
 +++ b/third_party/absl/absl_designated_initializers.patch
 @@ -0,0 +1,65 @@
@@ -147,7 +147,7 @@ index 00000000000..6ee232238f7
 + }
 diff --git a/third_party/absl/com_google_absl_fix_mac_and_nvcc_build.patch b/third_party/absl/com_google_absl_fix_mac_and_nvcc_build.patch
 deleted file mode 100644
-index f5c03435b12..00000000000
+index f5c03435..00000000
 --- a/third_party/absl/com_google_absl_fix_mac_and_nvcc_build.patch
 +++ /dev/null
 @@ -1,267 +0,0 @@
@@ -419,7 +419,7 @@ index f5c03435b12..00000000000
 - #endif
 - 
 diff --git a/third_party/absl/workspace.bzl b/third_party/absl/workspace.bzl
-index 8c8923f1008..07f49cebb78 100644
+index 8c8923f1..07f49ceb 100644
 --- a/third_party/absl/workspace.bzl
 +++ b/third_party/absl/workspace.bzl
 @@ -7,8 +7,8 @@ def repo():
@@ -445,3 +445,6 @@ index 8c8923f1008..07f49cebb78 100644
          strip_prefix = "abseil-cpp-{commit}".format(commit = ABSL_COMMIT),
          urls = tf_mirror_urls("https://github.com/abseil/abseil-cpp/archive/{commit}.tar.gz".format(commit = ABSL_COMMIT)),
      )
+-- 
+2.39.2 (Apple Git-143)
+
