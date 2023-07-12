@@ -119,7 +119,7 @@ requirements:
     - python-flatbuffers >=2
     - six >=1.12
     - termcolor >=1.1.0
-    - typing_extensions >=3.6.6
+    - typing_extensions >=3.6.6,<4.6.0
     - wrapt >=1.11.0
     # TF-API needs to move in sync
     - tensorboard >=2.12,<2.13
@@ -197,7 +197,7 @@ outputs:
         - python-flatbuffers >=2
         - six >=1.12
         - termcolor >=1.1.0
-        - typing_extensions >=3.6.6
+        - typing_extensions >=3.6.6,<4.6.0
         - wrapt >=1.11.0
         # TF-API needs to move in sync
         - tensorboard >=2.12,<2.13
@@ -219,7 +219,7 @@ outputs:
         - python-flatbuffers >=2
         - six >=1.12
         - termcolor >=1.1.0
-        - typing_extensions >=3.6.6
+        - typing_extensions >=3.6.6,<4.6.0
         - wrapt >=1.11.0
         # TF-API needs to move in sync
         - tensorboard >=2.12,<2.13
