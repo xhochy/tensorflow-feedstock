@@ -1,0 +1,28 @@
+From 3971be2cde4d1cf323d0b48115ee17b7f2d632b2 Mon Sep 17 00:00:00 2001
+From: Katherine Wu <kathywu@google.com>
+Date: Tue, 9 May 2023 13:36:04 -0700
+Subject: [PATCH 6/9] Add TypeError catch (wrapt==1.15.0rc throws TypeError
+ instead of AttributeError).
+
+PiperOrigin-RevId: 530700040
+---
+ tensorflow/python/training/saving/saveable_object_util.py | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/tensorflow/python/training/saving/saveable_object_util.py b/tensorflow/python/training/saving/saveable_object_util.py
+index 9fdc4e77..1a6acd5c 100644
+--- a/tensorflow/python/training/saving/saveable_object_util.py
++++ b/tensorflow/python/training/saving/saveable_object_util.py
+@@ -746,7 +746,8 @@ def trackable_has_serialize_to_tensor(obj):
+       # In some cases (e.g. restored objects), the object may have
+       # `_serialize_to_tensors` even if the class does not.
+       return True
+-  except AttributeError:  # Data structure proxy wrappers don't have __dict__.
++  except (AttributeError, TypeError):
++    # Data structure proxy wrappers don't have __dict__.
+     pass
+ 
+   # Use MRO so that if a parent class has `_serialize_to_tensors`, but the
+-- 
+2.39.2 (Apple Git-143)
+

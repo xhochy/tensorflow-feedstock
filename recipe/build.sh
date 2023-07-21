@@ -40,6 +40,7 @@ export TF_SYSTEM_LIBS="
   boringssl
   com_github_googlecloudplatform_google_cloud_cpp
   com_github_grpc_grpc
+  com_google_absl
   com_google_protobuf
   curl
   cython
@@ -88,17 +89,8 @@ fi
 # Get rid of unwanted defaults
 sed -i -e "/PROTOBUF_INCLUDE_PATH/c\ " .bazelrc
 sed -i -e "/PREFIX/c\ " .bazelrc
-
-cat >> .bazelrc <<EOF
-build --crosstool_top=//custom_toolchain:toolchain
-build --logging=6
-build --verbose_failures
-build --define=PREFIX=${PREFIX}
-build --define=PROTOBUF_INCLUDE_PATH=${PREFIX}/include
-build --config=noaws
-build --cpu=${TARGET_CPU}
-build --local_cpu_resources=${CPU_COUNT}"
-EOF
+# Ensure .bazelrc ends in a newline
+echo "" >> .bazelrc
 
 if [[ "${target_platform}" == "osx-arm64" ]]; then
   echo "build --config=macos_arm64" >> .bazelrc
@@ -154,10 +146,22 @@ if [[ ${cuda_compiler_version} != "None" ]]; then
     fi
 fi
 
-bazel clean --expunge
-bazel shutdown
+#bazel clean --expunge
+#bazel shutdown
 
 ./configure
+
+cat >> .bazelrc <<EOF
+build --crosstool_top=//custom_toolchain:toolchain
+build --logging=6
+build --verbose_failures
+build --define=PREFIX=${PREFIX}
+build --define=PROTOBUF_INCLUDE_PATH=${PREFIX}/include
+build --config=noaws
+build --cpu=${TARGET_CPU}
+build --local_cpu_resources=${CPU_COUNT}
+EOF
+
 
 # build using bazel
 bazel ${BAZEL_OPTS} build ${BUILD_TARGET}
