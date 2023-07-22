@@ -1,4 +1,4 @@
-{% set version = "2.12.1" %}
+{% set version = "2.13.0" %}
 {% set estimator_version = "2.12.0" %}
 
 package:
@@ -7,7 +7,7 @@ package:
 
 source:
   - url: https://github.com/tensorflow/tensorflow/archive/refs/tags/v{{ version.replace(".rc", "-rc") }}.tar.gz
-    sha256: 6bc4600cc0b88e9e40f1800096f5bddbbd3b6e5527a030dea631b87f2ae46b5b
+    sha256: e58c939079588623e6fa1d054aec2f90f95018266e0a970fd353a5244f5173dc
     patches:
       - patches/0001-loosen-requirements.patch
       - patches/0002-fix-genproto.patch
@@ -413,7 +413,7 @@ outputs:
     build:
       string: cuda{{ cuda_compiler_version | replace('.', '') }}py{{ CONDA_PY }}h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}  # [cuda_compiler_version != "None"]
       string: cpu_py{{ CONDA_PY }}h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}                                      # [cuda_compiler_version == "None"]
-      detect_binary_files_with_prefix: False
+      detect_binary_files_with_prefix: false
     requirements:
       run:
         - {{ pin_subpackage("tensorflow", exact=True) }}
