@@ -14,6 +14,8 @@ source:
       - patches/0004-Add-additional-absl_synchronization-linkage-to-gRPC.patch
       - patches/0005-Add-missing-any_invocable-target-to-absel-bazel.patch
       - patches/0006-Fix-missing-abseil-linkages.patch
+      # backport https://github.com/tensorflow/tensorflow/pull/61134
+      - patches/0007-unpin-gast-dependency-for-pip_package.patch
 
   - url: https://github.com/tensorflow/estimator/archive/refs/tags/v{{ version.replace(".rc", "-rc") }}.tar.gz
     sha256: 4175e9276a1eb8b5e4e876d228e4605871832e7bd8517965d6a47f1481af2c3e
@@ -97,7 +99,7 @@ requirements:
     # github.com/tensorflow/tensorflow/blob/v{{ version }}/tensorflow/tools/pip_package/setup.py
     - absl-py >=1.0.0
     - astunparse >=1.6.0
-    - gast >=0.2.1,<=0.4.0
+    - gast >=0.2.1,!=0.5.0,!=0.5.1,!=0.5.2
     - google-pasta >=0.1.1
     - h5py >=2.9.0
     - numpy
@@ -174,7 +176,7 @@ outputs:
         # requirements specified by the package itself
         - absl-py >=1.0.0
         - astunparse >=1.6.0
-        - gast >=0.2.1,<=0.4.0
+        - gast >=0.2.1,!=0.5.0,!=0.5.1,!=0.5.2
         - google-pasta >=0.1.1
         - h5py >=2.9.0
         - numpy
@@ -193,7 +195,7 @@ outputs:
         - packaging
         - absl-py >=1.0.0
         - astunparse >=1.6.0
-        - gast >=0.2.1,<=0.4.0
+        - gast >=0.2.1,!=0.5.0,!=0.5.1,!=0.5.2
         - google-pasta >=0.1.1
         - grpcio {{ libgrpc }}.*
         - h5py >=2.9.0

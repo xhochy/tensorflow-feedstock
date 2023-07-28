@@ -1,7 +1,7 @@
 From c8a4ac14cc63332ae0acd7fa1ac83f5993c692f6 Mon Sep 17 00:00:00 2001
 From: ngam <67342040+ngam@users.noreply.github.com>
 Date: Thu, 18 May 2023 23:36:59 -0400
-Subject: [PATCH 2/6] fix genproto
+Subject: [PATCH 2/7] fix genproto
 
 ---
  tensorflow/tsl/platform/default/build_config.bzl | 5 +----
