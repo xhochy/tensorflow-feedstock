@@ -1,7 +1,7 @@
-From cc71d66db8ef279fa0abd69d2503b846f06614ed Mon Sep 17 00:00:00 2001
+From aaaf3251925bc4eac5f3fe7c5d02da220038761c Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Sat, 1 Jul 2023 10:25:10 +1100
-Subject: [PATCH 7/7] unpin gast dependency for pip_package
+Subject: [PATCH 07/10] unpin gast dependency for pip_package
 
 Commit c762c4501ca017994c1fa5554c3c8e47b7c80b66 noted that
 "I also know that gast 0.5.2 breaks one of our tests" and committed
@@ -16,7 +16,7 @@ https://github.com/serge-sans-paille/gast/tags
  1 file changed, 1 insertion(+), 2 deletions(-)
 
 diff --git a/tensorflow/tools/pip_package/setup.py b/tensorflow/tools/pip_package/setup.py
-index f7ab72c4f6d..87acb04145b 100644
+index f7ab72c4..87acb041 100644
 --- a/tensorflow/tools/pip_package/setup.py
 +++ b/tensorflow/tools/pip_package/setup.py
 @@ -85,8 +85,7 @@ REQUIRED_PACKAGES = [
@@ -29,3 +29,6 @@ index f7ab72c4f6d..87acb04145b 100644
      'google_pasta >= 0.1.1',
      'h5py >= 2.9.0',
      'numpy >= 1.22',
+-- 
+2.39.2 (Apple Git-143)
+
