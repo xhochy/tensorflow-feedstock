@@ -1,4 +1,4 @@
-From 3971be2cde4d1cf323d0b48115ee17b7f2d632b2 Mon Sep 17 00:00:00 2001
+From ac3da420d713a4af11e605d9a33652bf3e288463 Mon Sep 17 00:00:00 2001
 From: Katherine Wu <kathywu@google.com>
 Date: Tue, 9 May 2023 13:36:04 -0700
 Subject: [PATCH 6/9] Add TypeError catch (wrapt==1.15.0rc throws TypeError

@@ -1,4 +1,4 @@
-From 20787a0315dc6ed7217395d3ecdeea97d60afccc Mon Sep 17 00:00:00 2001
+From c73bf4ce071cb3416131a6796af793136148c570 Mon Sep 17 00:00:00 2001
 From: David Dunleavy <ddunleavy@google.com>
 Date: Thu, 13 Apr 2023 10:02:13 -0700
 Subject: [PATCH 7/9] Update Abseil to the latest LTS, replace `or` with `||`

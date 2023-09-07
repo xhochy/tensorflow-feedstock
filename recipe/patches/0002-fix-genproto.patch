@@ -1,4 +1,4 @@
-From accd9ee8eeea33d02e55431eeaf9120e3e62e2f8 Mon Sep 17 00:00:00 2001
+From 1959fef0cda79c625591b0d568506d7bb8a773cb Mon Sep 17 00:00:00 2001
 From: ngam <67342040+ngam@users.noreply.github.com>
 Date: Thu, 18 May 2023 23:36:59 -0400
 Subject: [PATCH 2/9] fix genproto
