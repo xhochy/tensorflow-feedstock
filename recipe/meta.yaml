@@ -7,22 +7,17 @@ package:
 
 source:
   # - url: https://github.com/tensorflow/tensorflow/archive/refs/tags/v{{ version.replace(".rc", "-rc") }}.tar.gz
-  - url: https://github.com/tensorflow/tensorflow/archive/3e5b6f1899f8515b3f27c67b5bea7481e990c163.zip
-    sha256: 9bbbce37203e663815d9a69819dfe3ca025610400ff7f12b284f8fcff5f69361
+  - url: https://github.com/tensorflow/tensorflow/archive/dfae31525db024287dde85b5b25fe816acb090da.zip
+    sha256: af309152fee4682240333bc24b09b171b0fd642f373ad862d89120ccf868ff21
     patches:
       - patches/0001-loosen-requirements.patch
       - patches/0002-fix-genproto.patch
       - patches/0003-fix-absl-py.patch
       - patches/0004-Add-additional-absl_synchronization-linkage-to-gRPC.patch
-      - patches/0005-add-missing-macro-for-CUDA_VERSION.patch
-      # backport https://github.com/tensorflow/tensorflow/commit/2eae48506773587a7e74dd7064aa0fa9f0c37fbf
-      # to not have to carry an upper bound for wrapt-version
-      - patches/0006-Add-TypeError-catch-wrapt-1.15.0rc-throws-TypeError-.patch
-      # backport https://github.com/tensorflow/tensorflow/commit/ad938db0da16d00d7f14da3de2a4abb97b1bc340
-      # for compatibility with newer abseil
-      - patches/0007-Update-Abseil-to-the-latest-LTS-replace-or-with-in-d.patch
-      - patches/0008-Add-missing-any_invocable-target-to-absel-bazel.patch
-      - patches/0009-Fix-missing-abseil-linkages.patch
+      - patches/0005-Add-TypeError-catch-wrapt-1.15.0rc-throws-TypeError-.patch
+      - patches/0006-Update-Abseil-to-the-latest-LTS-replace-or-with-in-d.patch
+      - patches/0007-Add-missing-any_invocable-target-to-absel-bazel.patch
+      - patches/008-Fix-missing-abseil-linkages.patch
 
   - url: https://github.com/tensorflow/estimator/archive/refs/tags/v{{ estimator_version.replace(".rc", "-rc") }}.tar.gz
     sha256: 86c75e830c6ba762d0e3cf04c160096930fb12a992e69b3f24674b9f58902063

@@ -1,7 +1,7 @@
-From 6828d8b15430b1929bdd1534084a54e9fd702578 Mon Sep 17 00:00:00 2001
+From 221762363cdbd6809d03d7e65f7e4e848ffb55cc Mon Sep 17 00:00:00 2001
 From: "Uwe L. Korn" <uwe.korn@quantco.com>
 Date: Thu, 30 Dec 2021 06:57:09 +0200
-Subject: [PATCH 1/9] loosen requirements
+Subject: [PATCH 1/8] loosen requirements
 
 * Remove unused libclang requirement
 * Remove unecessary tensorflow-io-gcs-filesystem
@@ -13,7 +13,7 @@ Co-authored-by: ngam
  1 file changed, 1 insertion(+), 4 deletions(-)
 
 diff --git a/tensorflow/tools/pip_package/setup.py b/tensorflow/tools/pip_package/setup.py
-index 915ad896..c56bf348 100644
+index 560a0c69..c5299fda 100644
 --- a/tensorflow/tools/pip_package/setup.py
 +++ b/tensorflow/tools/pip_package/setup.py
 @@ -92,9 +92,8 @@ REQUIRED_PACKAGES = [
@@ -26,11 +26,11 @@ index 915ad896..c56bf348 100644
 +    'numpy >= 1.22',
      'opt_einsum >= 2.3.2',
      'packaging',
-     # TODO(b/182876485): Protobuf 3.20 results in linker errors on Windows
-@@ -110,8 +109,6 @@ REQUIRED_PACKAGES = [
-     'termcolor >= 1.1.0',
-     'typing_extensions >= 3.6.6',
-     'wrapt >= 1.11.0',
+     'protobuf>=3.20.3,<5.0.0dev,!=4.21.0,!=4.21.1,!=4.21.2,!=4.21.3,!=4.21.4,!=4.21.5',
+@@ -105,8 +104,6 @@ REQUIRED_PACKAGES = [
+     # TODO(b/266362323): wrapt==1.15.0rc0 incompatible with TF 2.12.0 RC0 (and
+     # nightly, but works with TF 2.11)
+     'wrapt >= 1.11.0, <1.15',
 -    'tensorflow-io-gcs-filesystem >= 0.23.1;platform_machine!="arm64" or ' +
 -    'platform_system!="Darwin"',
      # grpcio does not build correctly on big-endian machines due to lack of

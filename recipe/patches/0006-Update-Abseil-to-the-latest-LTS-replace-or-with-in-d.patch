@@ -1,0 +1,450 @@
+From 1e2f2650010063bc41b181ab066c54a6da2fdb07 Mon Sep 17 00:00:00 2001
+From: David Dunleavy <ddunleavy@google.com>
+Date: Thu, 13 Apr 2023 10:02:13 -0700
+Subject: [PATCH 6/8] Update Abseil to the latest LTS, replace `or` with `||`
+ in data_format_ops.cc
+
+Current build requires a more recent Abseil with AnyInvocable, otherwise the build raise the following error:
+
+no such target '@com_google_absl//absl/functional:any_invocable': target 'any_invocable' not declared in package 'absl/functional' defined by /root/.cache/bazel/_bazel_root/edfec97661350df226696afb5a35c874/external/com_google_absl/absl/functional/BUILD.bazel and referenced by '@org_tensorflow//tensorflow/compiler/xla/stream_executor:stream_executor_headers'
+
+PiperOrigin-RevId: 524030843
+---
+ .../tf2xla/kernels/data_format_ops.cc         |   4 +-
+ .../lite/tools/cmake/modules/abseil-cpp.cmake |   2 +-
+ .../def_file_filter/def_file_filter.py.tpl    |   5 +-
+ .../absl/absl_designated_initializers.patch   |  65 +++++
+ ...m_google_absl_fix_mac_and_nvcc_build.patch | 267 ------------------
+ third_party/absl/workspace.bzl                |   9 +-
+ 6 files changed, 75 insertions(+), 277 deletions(-)
+ create mode 100644 third_party/absl/absl_designated_initializers.patch
+ delete mode 100644 third_party/absl/com_google_absl_fix_mac_and_nvcc_build.patch
+
+diff --git a/tensorflow/compiler/tf2xla/kernels/data_format_ops.cc b/tensorflow/compiler/tf2xla/kernels/data_format_ops.cc
+index 1707fd10..e2b3e3ff 100644
+--- a/tensorflow/compiler/tf2xla/kernels/data_format_ops.cc
++++ b/tensorflow/compiler/tf2xla/kernels/data_format_ops.cc
+@@ -35,13 +35,13 @@ class DataFormatDimMapOp : public XlaOpKernel {
+     OP_REQUIRES_OK(context, context->GetAttr("src_format", &src_format));
+     string dst_format;
+     OP_REQUIRES_OK(context, context->GetAttr("dst_format", &dst_format));
+-    OP_REQUIRES(context, src_format.size() == 4 or src_format.size() == 5,
++    OP_REQUIRES(context, src_format.size() == 4 || src_format.size() == 5,
+                 errors::InvalidArgument(
+                     absl::StrCat("Source format must of length 4 or 5, "
+                                  "received src_format = ",
+                                  src_format)));
+     OP_REQUIRES(
+-        context, dst_format.size() == 4 or dst_format.size() == 5,
++        context, dst_format.size() == 4 || dst_format.size() == 5,
+         errors::InvalidArgument(absl::StrCat(
+             "Destination format must of length 4 or 5, received dst_format = ",
+             dst_format)));
+diff --git a/tensorflow/lite/tools/cmake/modules/abseil-cpp.cmake b/tensorflow/lite/tools/cmake/modules/abseil-cpp.cmake
+index fe91b029..92e746af 100644
+--- a/tensorflow/lite/tools/cmake/modules/abseil-cpp.cmake
++++ b/tensorflow/lite/tools/cmake/modules/abseil-cpp.cmake
+@@ -24,7 +24,7 @@ OverridableFetchContent_Declare(
+   abseil-cpp
+   GIT_REPOSITORY https://github.com/abseil/abseil-cpp
+   # Sync with tensorflow/third_party/absl/workspace.bzl
+-  GIT_TAG 273292d1cfc0a94a65082ee350509af1d113344d
++  GIT_TAG b971ac5250ea8de900eae9f95e06548d14cd95fe
+   GIT_SHALLOW TRUE
+   GIT_PROGRESS TRUE
+   PREFIX "${CMAKE_BINARY_DIR}"
+diff --git a/tensorflow/tools/def_file_filter/def_file_filter.py.tpl b/tensorflow/tools/def_file_filter/def_file_filter.py.tpl
+index 71c34e44..294aad46 100644
+--- a/tensorflow/tools/def_file_filter/def_file_filter.py.tpl
++++ b/tensorflow/tools/def_file_filter/def_file_filter.py.tpl
+@@ -1,5 +1,4 @@
+ # Copyright 2017 The TensorFlow Authors. All Rights Reserved.
+-#
+ # Licensed under the Apache License, Version 2.0 (the "License");
+ # you may not use this file except in compliance with the License.
+ # You may obtain a copy of the License at
+@@ -293,8 +292,8 @@ def main():
+     def_fp.write("\t ??_7ConfigProto@tensorflow@@6B@\n") # for _pywrap_tfe
+     def_fp.write("\t ??_7CoordinatedTask@tensorflow@@6B@\n") # for _pywrap_tfe
+     def_fp.write("\t ?InternalSwap@CoordinatedTask@tensorflow@@AEAAXPEAV12@@Z\n") # for _pywrap_tfe
+-    def_fp.write("\t ?kSeed@MixingHashState@hash_internal@lts_20220623@absl@@0QEBXEB\n") # for _pywrap_tfcompile
+-    def_fp.write("\t ?kEmptyGroup@container_internal@lts_20220623@absl@@3QBW4ctrl_t@123@B\n") # for _pywrap_tfcompile
++    def_fp.write("\t ?kSeed@MixingHashState@hash_internal@lts_20230125@absl@@0QEBXEB\n") # for _pywrap_tfcompile
++    def_fp.write("\t ?kEmptyGroup@container_internal@lts_20230125@absl@@3QBW4ctrl_t@123@B\n") # for _pywrap_tfcompile
+     def_fp.write("\t ??_7GraphDef@tensorflow@@6B@\n")
+     def_fp.write("\t ??_7DeviceProperties@tensorflow@@6B@\n")
+     def_fp.write("\t ??_7MetaGraphDef@tensorflow@@6B@\n")
+diff --git a/third_party/absl/absl_designated_initializers.patch b/third_party/absl/absl_designated_initializers.patch
+new file mode 100644
+index 00000000..6ee23223
+--- /dev/null
++++ b/third_party/absl/absl_designated_initializers.patch
+@@ -0,0 +1,65 @@
++diff --git a/absl/crc/internal/crc_memcpy_x86_64.cc b/absl/crc/internal/crc_memcpy_x86_64.cc
++index 66f784de..ff424c54 100644
++--- a/absl/crc/internal/crc_memcpy_x86_64.cc
+++++ b/absl/crc/internal/crc_memcpy_x86_64.cc
++@@ -359,18 +359,18 @@ CrcMemcpy::ArchSpecificEngines CrcMemcpy::GetArchSpecificEngines() {
++     case CpuType::kIntelHaswell:
++     case CpuType::kIntelIvybridge:
++       return {
++-          .temporal = new FallbackCrcMemcpyEngine(),
++-          .non_temporal = new CrcNonTemporalMemcpyAVXEngine(),
+++          /*.temporal=*/new FallbackCrcMemcpyEngine(),
+++          /*.non_temporal=*/new CrcNonTemporalMemcpyAVXEngine(),
++       };
++     // INTEL_SANDYBRIDGE performs better with SSE than AVX.
++     case CpuType::kIntelSandybridge:
++       return {
++-          .temporal = new FallbackCrcMemcpyEngine(),
++-          .non_temporal = new CrcNonTemporalMemcpyEngine(),
+++          /*.temporal=*/new FallbackCrcMemcpyEngine(),
+++          /*.non_temporal=*/new CrcNonTemporalMemcpyEngine(),
++       };
++     default:
++-      return {.temporal = new FallbackCrcMemcpyEngine(),
++-              .non_temporal = new FallbackCrcMemcpyEngine()};
+++      return {/*.temporal=*/new FallbackCrcMemcpyEngine(),
+++              /*.non_temporal=*/new FallbackCrcMemcpyEngine()};
++   }
++ #else
++   // Get the underlying architecture.
++@@ -388,8 +388,8 @@ CrcMemcpy::ArchSpecificEngines CrcMemcpy::GetArchSpecificEngines() {
++     case CpuType::kAmdRome:
++     case CpuType::kAmdNaples:
++       return {
++-          .temporal = new AcceleratedCrcMemcpyEngine<1, 2>(),
++-          .non_temporal = new CrcNonTemporalMemcpyAVXEngine(),
+++          /*.temporal=*/new AcceleratedCrcMemcpyEngine<1, 2>(),
+++          /*.non_temporal=*/new CrcNonTemporalMemcpyAVXEngine(),
++       };
++     // PCLMULQDQ is slow and we don't have wide enough issue width to take
++     // advantage of it.  For an unknown architecture, don't risk using CLMULs.
++@@ -400,18 +400,18 @@ CrcMemcpy::ArchSpecificEngines CrcMemcpy::GetArchSpecificEngines() {
++     case CpuType::kIntelHaswell:
++     case CpuType::kIntelIvybridge:
++       return {
++-          .temporal = new AcceleratedCrcMemcpyEngine<3, 0>(),
++-          .non_temporal = new CrcNonTemporalMemcpyAVXEngine(),
+++          /*.temporal=*/new AcceleratedCrcMemcpyEngine<3, 0>(),
+++          /*.non_temporal=*/new CrcNonTemporalMemcpyAVXEngine(),
++       };
++     // INTEL_SANDYBRIDGE performs better with SSE than AVX.
++     case CpuType::kIntelSandybridge:
++       return {
++-          .temporal = new AcceleratedCrcMemcpyEngine<3, 0>(),
++-          .non_temporal = new CrcNonTemporalMemcpyEngine(),
+++          /*.temporal=*/new AcceleratedCrcMemcpyEngine<3, 0>(),
+++          /*.non_temporal=*/new CrcNonTemporalMemcpyEngine(),
++       };
++     default:
++-      return {.temporal = new FallbackCrcMemcpyEngine(),
++-              .non_temporal = new FallbackCrcMemcpyEngine()};
+++      return {/*.temporal=*/new FallbackCrcMemcpyEngine(),
+++              /*.non_temporal=*/new FallbackCrcMemcpyEngine()};
++   }
++ #endif  // UNDEFINED_BEHAVIOR_SANITIZER
++ }
+diff --git a/third_party/absl/com_google_absl_fix_mac_and_nvcc_build.patch b/third_party/absl/com_google_absl_fix_mac_and_nvcc_build.patch
+deleted file mode 100644
+index f5c03435..00000000
+--- a/third_party/absl/com_google_absl_fix_mac_and_nvcc_build.patch
++++ /dev/null
+@@ -1,267 +0,0 @@
+-diff --git a/absl/container/internal/compressed_tuple.h b/absl/container/internal/compressed_tuple.h
+-index 5ebe1649..01db7134 100644
+---- a/absl/container/internal/compressed_tuple.h
+-+++ b/absl/container/internal/compressed_tuple.h
+-@@ -32,7 +32,6 @@
+- #ifndef ABSL_CONTAINER_INTERNAL_COMPRESSED_TUPLE_H_
+- #define ABSL_CONTAINER_INTERNAL_COMPRESSED_TUPLE_H_
+- 
+--#include <initializer_list>
+- #include <tuple>
+- #include <type_traits>
+- #include <utility>
+-@@ -77,134 +76,61 @@ constexpr bool IsFinal() {
+- #endif
+- }
+- 
+--// We can't use EBCO on other CompressedTuples because that would mean that we
+--// derive from multiple Storage<> instantiations with the same I parameter,
+--// and potentially from multiple identical Storage<> instantiations.  So anytime
+--// we use type inheritance rather than encapsulation, we mark
+--// CompressedTupleImpl, to make this easy to detect.
+--struct uses_inheritance {};
+--
+- template <typename T>
+- constexpr bool ShouldUseBase() {
+--  return std::is_class<T>::value && std::is_empty<T>::value && !IsFinal<T>() &&
+--         !std::is_base_of<uses_inheritance, T>::value;
+-+  return std::is_class<T>::value && std::is_empty<T>::value && !IsFinal<T>();
+- }
+- 
+- // The storage class provides two specializations:
+- //  - For empty classes, it stores T as a base class.
+- //  - For everything else, it stores T as a member.
+--template <typename T, size_t I,
+--#if defined(_MSC_VER)
+--          bool UseBase =
+--              ShouldUseBase<typename std::enable_if<true, T>::type>()>
+--#else
+--          bool UseBase = ShouldUseBase<T>()>
+--#endif
+-+template <typename D, size_t I, bool = ShouldUseBase<ElemT<D, I>>()>
+- struct Storage {
+-+  using T = ElemT<D, I>;
+-   T value;
+-   constexpr Storage() = default;
+--  template <typename V>
+--  explicit constexpr Storage(absl::in_place_t, V&& v)
+--      : value(absl::forward<V>(v)) {}
+-+  explicit constexpr Storage(T&& v) : value(absl::forward<T>(v)) {}
+-   constexpr const T& get() const& { return value; }
+-   T& get() & { return value; }
+-   constexpr const T&& get() const&& { return absl::move(*this).value; }
+-   T&& get() && { return std::move(*this).value; }
+- };
+- 
+--template <typename T, size_t I>
+--struct ABSL_INTERNAL_COMPRESSED_TUPLE_DECLSPEC Storage<T, I, true> : T {
+-+template <typename D, size_t I>
+-+struct ABSL_INTERNAL_COMPRESSED_TUPLE_DECLSPEC Storage<D, I, true>
+-+    : ElemT<D, I> {
+-+  using T = internal_compressed_tuple::ElemT<D, I>;
+-   constexpr Storage() = default;
+--
+--  template <typename V>
+--  explicit constexpr Storage(absl::in_place_t, V&& v)
+--      : T(absl::forward<V>(v)) {}
+--
+-+  explicit constexpr Storage(T&& v) : T(absl::forward<T>(v)) {}
+-   constexpr const T& get() const& { return *this; }
+-   T& get() & { return *this; }
+-   constexpr const T&& get() const&& { return absl::move(*this); }
+-   T&& get() && { return std::move(*this); }
+- };
+- 
+--template <typename D, typename I, bool ShouldAnyUseBase>
+-+template <typename D, typename I>
+- struct ABSL_INTERNAL_COMPRESSED_TUPLE_DECLSPEC CompressedTupleImpl;
+- 
+--template <typename... Ts, size_t... I, bool ShouldAnyUseBase>
+--struct ABSL_INTERNAL_COMPRESSED_TUPLE_DECLSPEC CompressedTupleImpl<
+--    CompressedTuple<Ts...>, absl::index_sequence<I...>, ShouldAnyUseBase>
+-+template <typename... Ts, size_t... I>
+-+struct ABSL_INTERNAL_COMPRESSED_TUPLE_DECLSPEC
+-+    CompressedTupleImpl<CompressedTuple<Ts...>, absl::index_sequence<I...>>
+-     // We use the dummy identity function through std::integral_constant to
+-     // convince MSVC of accepting and expanding I in that context. Without it
+-     // you would get:
+-     //   error C3548: 'I': parameter pack cannot be used in this context
+--    : uses_inheritance,
+--      Storage<Ts, std::integral_constant<size_t, I>::value>... {
+-+    : Storage<CompressedTuple<Ts...>,
+-+              std::integral_constant<size_t, I>::value>... {
+-   constexpr CompressedTupleImpl() = default;
+--  template <typename... Vs>
+--  explicit constexpr CompressedTupleImpl(absl::in_place_t, Vs&&... args)
+--      : Storage<Ts, I>(absl::in_place, absl::forward<Vs>(args))... {}
+--  friend CompressedTuple<Ts...>;
+-+  explicit constexpr CompressedTupleImpl(Ts&&... args)
+-+      : Storage<CompressedTuple<Ts...>, I>(absl::forward<Ts>(args))... {}
+- };
+- 
+--template <typename... Ts, size_t... I>
+--struct ABSL_INTERNAL_COMPRESSED_TUPLE_DECLSPEC CompressedTupleImpl<
+--    CompressedTuple<Ts...>, absl::index_sequence<I...>, false>
+--    // We use the dummy identity function as above...
+--    : Storage<Ts, std::integral_constant<size_t, I>::value, false>... {
+--  constexpr CompressedTupleImpl() = default;
+--  template <typename... Vs>
+--  explicit constexpr CompressedTupleImpl(absl::in_place_t, Vs&&... args)
+--      : Storage<Ts, I, false>(absl::in_place, absl::forward<Vs>(args))... {}
+--  friend CompressedTuple<Ts...>;
+--};
+--
+--std::false_type Or(std::initializer_list<std::false_type>);
+--std::true_type Or(std::initializer_list<bool>);
+--
+--// MSVC requires this to be done separately rather than within the declaration
+--// of CompressedTuple below.
+--template <typename... Ts>
+--constexpr bool ShouldAnyUseBase() {
+--  return decltype(
+--      Or({std::integral_constant<bool, ShouldUseBase<Ts>()>()...})){};
+--}
+--
+--template <typename T, typename V>
+--using TupleElementMoveConstructible =
+--    typename std::conditional<std::is_reference<T>::value,
+--                              std::is_convertible<V, T>,
+--                              std::is_constructible<T, V&&>>::type;
+--
+--template <bool SizeMatches, class T, class... Vs>
+--struct TupleMoveConstructible : std::false_type {};
+--
+--template <class... Ts, class... Vs>
+--struct TupleMoveConstructible<true, CompressedTuple<Ts...>, Vs...>
+--    : std::integral_constant<
+--          bool, absl::conjunction<
+--                    TupleElementMoveConstructible<Ts, Vs&&>...>::value> {};
+--
+--template <typename T>
+--struct compressed_tuple_size;
+--
+--template <typename... Es>
+--struct compressed_tuple_size<CompressedTuple<Es...>>
+--    : public std::integral_constant<std::size_t, sizeof...(Es)> {};
+--
+--template <class T, class... Vs>
+--struct TupleItemsMoveConstructible
+--    : std::integral_constant<
+--          bool, TupleMoveConstructible<compressed_tuple_size<T>::value ==
+--                                           sizeof...(Vs),
+--                                       T, Vs...>::value> {};
+--
+- }  // namespace internal_compressed_tuple
+- 
+- // Helper class to perform the Empty Base Class Optimization.
+- // Ts can contain classes and non-classes, empty or not. For the ones that
+- // are empty classes, we perform the CompressedTuple. If all types in Ts are
+--// empty classes, then CompressedTuple<Ts...> is itself an empty class.  (This
+--// does not apply when one or more of those empty classes is itself an empty
+--// CompressedTuple.)
+-+// empty classes, then CompressedTuple<Ts...> is itself an empty class.
+- //
+- // To access the members, use member .get<N>() function.
+- //
+-@@ -220,59 +146,36 @@ struct TupleItemsMoveConstructible
+- template <typename... Ts>
+- class ABSL_INTERNAL_COMPRESSED_TUPLE_DECLSPEC CompressedTuple
+-     : private internal_compressed_tuple::CompressedTupleImpl<
+--          CompressedTuple<Ts...>, absl::index_sequence_for<Ts...>,
+--          internal_compressed_tuple::ShouldAnyUseBase<Ts...>()> {
+-+          CompressedTuple<Ts...>, absl::index_sequence_for<Ts...>> {
+-  private:
+-   template <int I>
+-   using ElemT = internal_compressed_tuple::ElemT<CompressedTuple, I>;
+- 
+--  template <int I>
+--  using StorageT = internal_compressed_tuple::Storage<ElemT<I>, I>;
+--
+-  public:
+--  // There seems to be a bug in MSVC dealing in which using '=default' here will
+--  // cause the compiler to ignore the body of other constructors. The work-
+--  // around is to explicitly implement the default constructor.
+--#if defined(_MSC_VER)
+--  constexpr CompressedTuple() : CompressedTuple::CompressedTupleImpl() {}
+--#else
+-   constexpr CompressedTuple() = default;
+--#endif
+--  explicit constexpr CompressedTuple(const Ts&... base)
+--      : CompressedTuple::CompressedTupleImpl(absl::in_place, base...) {}
+--
+--  template <typename First, typename... Vs,
+--            absl::enable_if_t<
+--                absl::conjunction<
+--                    // Ensure we are not hiding default copy/move constructors.
+--                    absl::negation<std::is_same<void(CompressedTuple),
+--                                                void(absl::decay_t<First>)>>,
+--                    internal_compressed_tuple::TupleItemsMoveConstructible<
+--                        CompressedTuple<Ts...>, First, Vs...>>::value,
+--                bool> = true>
+--  explicit constexpr CompressedTuple(First&& first, Vs&&... base)
+--      : CompressedTuple::CompressedTupleImpl(absl::in_place,
+--                                             absl::forward<First>(first),
+--                                             absl::forward<Vs>(base)...) {}
+-+  explicit constexpr CompressedTuple(Ts... base)
+-+      : CompressedTuple::CompressedTupleImpl(absl::forward<Ts>(base)...) {}
+- 
+-   template <int I>
+-   ElemT<I>& get() & {
+--    return StorageT<I>::get();
+-+    return internal_compressed_tuple::Storage<CompressedTuple, I>::get();
+-   }
+- 
+-   template <int I>
+-   constexpr const ElemT<I>& get() const& {
+--    return StorageT<I>::get();
+-+    return internal_compressed_tuple::Storage<CompressedTuple, I>::get();
+-   }
+- 
+-   template <int I>
+-   ElemT<I>&& get() && {
+--    return std::move(*this).StorageT<I>::get();
+-+    return std::move(*this)
+-+        .internal_compressed_tuple::template Storage<CompressedTuple, I>::get();
+-   }
+- 
+-   template <int I>
+-   constexpr const ElemT<I>&& get() const&& {
+--    return absl::move(*this).StorageT<I>::get();
+-+    return absl::move(*this)
+-+        .internal_compressed_tuple::template Storage<CompressedTuple, I>::get();
+-   }
+- };
+- 
+-diff --git a/absl/time/internal/cctz/BUILD.bazel b/absl/time/internal/cctz/BUILD.bazel
+-index 7304d40d..75d8e086 100644
+---- a/absl/time/internal/cctz/BUILD.bazel
+-+++ b/absl/time/internal/cctz/BUILD.bazel
+-@@ -72,15 +72,6 @@ cc_library(
+-         "include/cctz/time_zone.h",
+-         "include/cctz/zone_info_source.h",
+-     ],
+--    linkopts = select({
+--        ":osx": [
+--            "-framework Foundation",
+--        ],
+--        ":ios": [
+--            "-framework Foundation",
+--        ],
+--        "//conditions:default": [],
+--    }),
+-     visibility = ["//visibility:public"],
+-     deps = [
+-         ":civil_time",
+-diff --git a/absl/base/config.h b/absl/base/config.h
+-index 8533aea..07b4e80 100644
+---- a/absl/base/config.h.orig
+-+++ b/absl/base/config.h
+-@@ -906,7 +906,7 @@ static_assert(ABSL_INTERNAL_INLINE_NAMESPACE_STR[0] != 'h' ||
+- // SIMD).
+- #ifdef ABSL_INTERNAL_HAVE_ARM_NEON
+- #error ABSL_INTERNAL_HAVE_ARM_NEON cannot be directly set
+--#elif defined(__ARM_NEON)
+-+#elif defined(__ARM_NEON) && !defined(__CUDACC__)
+- #define ABSL_INTERNAL_HAVE_ARM_NEON 1
+- #endif
+- 
+diff --git a/third_party/absl/workspace.bzl b/third_party/absl/workspace.bzl
+index 8c8923f1..07f49ceb 100644
+--- a/third_party/absl/workspace.bzl
++++ b/third_party/absl/workspace.bzl
+@@ -7,8 +7,8 @@ def repo():
+ 
+     # Attention: tools parse and update these lines.
+     # LINT.IfChange
+-    ABSL_COMMIT = "273292d1cfc0a94a65082ee350509af1d113344d"
+-    ABSL_SHA256 = "94aef187f688665dc299d09286bfa0d22c4ecb86a80b156dff6aabadc5a5c26d"
++    ABSL_COMMIT = "b971ac5250ea8de900eae9f95e06548d14cd95fe"
++    ABSL_SHA256 = "8eeec9382fc0338ef5c60053f3a4b0e0708361375fe51c9e65d0ce46ccfe55a7"
+     # LINT.ThenChange(//tensorflow/lite/tools/cmake/modules/abseil-cpp.cmake)
+ 
+     SYS_DIRS = [
+@@ -42,8 +42,9 @@ def repo():
+         build_file = "//third_party/absl:com_google_absl.BUILD",
+         system_build_file = "//third_party/absl:system.BUILD",
+         system_link_files = SYS_LINKS,
+-        # TODO(b/234139015): Remove the patch when https://github.com/abseil/abseil-cpp/issues/326 is resolved
+-        patch_file = ["//third_party/absl:com_google_absl_fix_mac_and_nvcc_build.patch"],
++        # This patch pulls in a fix for designated initializers that MSVC
++        # complains about. It shouldn't be necessary at the next LTS release.
++        patch_file = ["//third_party/absl:absl_designated_initializers.patch"],
+         strip_prefix = "abseil-cpp-{commit}".format(commit = ABSL_COMMIT),
+         urls = tf_mirror_urls("https://github.com/abseil/abseil-cpp/archive/{commit}.tar.gz".format(commit = ABSL_COMMIT)),
+     )
+-- 
+2.39.2 (Apple Git-143)
+
