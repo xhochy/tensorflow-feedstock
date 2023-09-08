@@ -2,6 +2,14 @@
 
 set -ex
 
+# Make libprotobuf-python-headers visible for pybind11_protobuf
+# These files will be deleted at the end of the build.
+mkdir $PREFIX/include/python
+cp -r $PREFIX/include/google $PREFIX/include/python/
+
+sed -i "s;@@PREFIX@@;$PREFIX;" third_party/pybind11_protobuf/0001-Add-Python-include-path.patch
+sed -i "s;@@PY_VER@@;$PY_VER;" third_party/pybind11_protobuf/0001-Add-Python-include-path.patch
+
 export PATH="$PWD:$PATH"
 export CC=$(basename $CC)
 export CXX=$(basename $CXX)

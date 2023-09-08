@@ -17,7 +17,9 @@ source:
       - patches/0005-Add-TypeError-catch-wrapt-1.15.0rc-throws-TypeError-.patch
       - patches/0006-Update-Abseil-to-the-latest-LTS-replace-or-with-in-d.patch
       - patches/0007-Add-missing-any_invocable-target-to-absel-bazel.patch
-      - patches/008-Fix-missing-abseil-linkages.patch
+      - patches/0008-Fix-missing-abseil-linkages.patch
+      - patches/0008-Use-basename-instead-of-realpath.patch
+      - patches/0009-Fix-protobuf_python-for-systemlibs.patch
 
   - url: https://github.com/tensorflow/estimator/archive/refs/tags/v{{ estimator_version.replace(".rc", "-rc") }}.tar.gz
     sha256: 86c75e830c6ba762d0e3cf04c160096930fb12a992e69b3f24674b9f58902063
@@ -51,6 +53,7 @@ requirements:
     - bazel >=5.2.0,<6
     - libgrpc
     - libprotobuf
+    - libprotobuf-python-headers
     - nasm
     - sed
     - rsync
@@ -96,6 +99,7 @@ requirements:
     - libjpeg-turbo
     - libpng
     - libprotobuf
+    - libprotobuf-python-headers
     - openssl
     - pybind11
     - sqlite
@@ -175,6 +179,7 @@ outputs:
         - libcurl
         - libpng
         - libprotobuf
+        - libprotobuf-python-headers
         - openssl
         - pybind11
         - snappy
@@ -337,6 +342,7 @@ outputs:
         - libcurl
         - libpng
         - libprotobuf
+        - libprotobuf-python-headers
         - openssl
         - snappy
         - sqlite
@@ -383,6 +389,7 @@ outputs:
         - libjpeg-turbo
         - libpng
         - libprotobuf
+        - libprotobuf-python-headers
         - openssl
         - snappy
         - sqlite
