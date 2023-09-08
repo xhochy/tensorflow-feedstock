@@ -7,8 +7,8 @@ package:
 
 source:
   # - url: https://github.com/tensorflow/tensorflow/archive/refs/tags/v{{ version.replace(".rc", "-rc") }}.tar.gz
-  - url: https://github.com/tensorflow/tensorflow/archive/254ff35e35b92c1dfbf2e0de1a141e93c7b0cbb9.zip
-    sha256: 6aa721584d0d68fca48a6932caa32147356fa8a4a2ef66aec512076ecba65493
+  - url: https://github.com/tensorflow/tensorflow/archive/96aa596056316734f9193c733733dab2c52c5f15.zip
+    sha256: 81304ca5bb7b84e0c18594134d5639b99a2bd14f4da4e1aca452de1d27214537
     patches:
       - patches/0001-loosen-requirements.patch
       - patches/0002-fix-genproto.patch
@@ -18,7 +18,7 @@ source:
       - patches/0006-Update-Abseil-to-the-latest-LTS-replace-or-with-in-d.patch
       - patches/0007-Add-missing-any_invocable-target-to-absel-bazel.patch
       - patches/0008-Fix-missing-abseil-linkages.patch
-      # - patches/0008-Use-basename-instead-of-realpath.patch
+      - patches/0008-Use-basename-instead-of-realpath.patch
       - patches/0009-Fix-protobuf_python-for-systemlibs.patch
 
   - url: https://github.com/tensorflow/estimator/archive/refs/tags/v{{ estimator_version.replace(".rc", "-rc") }}.tar.gz
