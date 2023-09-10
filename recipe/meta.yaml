@@ -7,8 +7,8 @@ package:
 
 source:
   # - url: https://github.com/tensorflow/tensorflow/archive/refs/tags/v{{ version.replace(".rc", "-rc") }}.tar.gz
-  - url: https://github.com/tensorflow/tensorflow/archive/96aa596056316734f9193c733733dab2c52c5f15.zip
-    sha256: 81304ca5bb7b84e0c18594134d5639b99a2bd14f4da4e1aca452de1d27214537
+  - url: https://github.com/tensorflow/tensorflow/archive/3183e83db6101bdd57896c0747330e929b74aa6b.zip
+    sha256: 45262344636b8b17f619a02a347fdfb02e982b333230c5d1af6a7adec268668c
     patches:
       - patches/0001-loosen-requirements.patch
       - patches/0002-fix-genproto.patch
