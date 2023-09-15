@@ -19,6 +19,7 @@ source:
       - patches/0008-Use-basename-instead-of-realpath.patch
       - patches/0009-Fix-protobuf_python-for-systemlibs.patch
       - patches/0010-Add-absl_log-systemlib.patch
+      - patches/0001-Omit-linking-to-layout_proto_cc-if-protobuf-linkage-.patch
 
   - url: https://github.com/tensorflow/estimator/archive/refs/tags/v{{ version.replace(".rc", "-rc") }}.tar.gz
     sha256: 4175e9276a1eb8b5e4e876d228e4605871832e7bd8517965d6a47f1481af2c3e
