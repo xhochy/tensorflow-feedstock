@@ -1,7 +1,7 @@
-From a53a2e9c8b54dc28cc2de98af061e9ab682176be Mon Sep 17 00:00:00 2001
+From 0fa0515e3ead93083f2474352acb520feb5f77f1 Mon Sep 17 00:00:00 2001
 From: ngam <67342040+ngam@users.noreply.github.com>
 Date: Thu, 18 May 2023 23:36:59 -0400
-Subject: [PATCH 02/10] fix genproto
+Subject: [PATCH 02/12] fix genproto
 
 ---
  tensorflow/tsl/platform/default/build_config.bzl | 5 +----
@@ -24,5 +24,5 @@ index 6ffd37bf..cafa2013 100644
      proto_gen(
          name = name + "_genproto",
 -- 
-2.39.2 (Apple Git-143)
+2.30.2
 

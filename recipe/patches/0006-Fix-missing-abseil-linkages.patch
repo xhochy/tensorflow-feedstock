@@ -1,7 +1,7 @@
-From 55d357204d4f3b44eb5da91eb587b46785f57178 Mon Sep 17 00:00:00 2001
+From 146ee97bd239e5854773599f29d8b4b0d6294e91 Mon Sep 17 00:00:00 2001
 From: "Uwe L. Korn" <uwe.korn@quantco.com>
 Date: Mon, 3 Jul 2023 04:45:46 +0000
-Subject: [PATCH 06/10] Fix missing abseil linkages
+Subject: [PATCH 06/12] Fix missing abseil linkages
 
 ---
  third_party/absl/system.absl.strings.BUILD | 2 +-
@@ -21,5 +21,5 @@ index fa9a7a84..d04776c9 100644
          ":str_format",
          "//absl/container:compressed_tuple",
 -- 
-2.39.2 (Apple Git-143)
+2.30.2
 

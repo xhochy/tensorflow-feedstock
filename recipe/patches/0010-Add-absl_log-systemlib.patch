@@ -1,20 +1,20 @@
-recipe/patches/0010-Add-absl_log-systemlib.patchFrom 2fa70c7ff080882595d2e3dabacb607364dba9c4 Mon Sep 17 00:00:00 2001
+From 66417efd8ef37684bcb836860973a91f2238b28e Mon Sep 17 00:00:00 2001
 From: "Uwe L. Korn" <uwe.korn@quantco.com>
 Date: Wed, 30 Aug 2023 16:59:28 +0200
-Subject: [PATCH 10/10] Add absl_log systemlib
+Subject: [PATCH 10/12] Add absl_log systemlib
 
 ---
- third_party/absl/system.absl.log.BUILD | 18 ++++++++++++++++++
+ third_party/absl/system.absl.log.BUILD | 22 ++++++++++++++++++++++
  third_party/absl/workspace.bzl         |  1 +
- 2 files changed, 19 insertions(+)
+ 2 files changed, 23 insertions(+)
  create mode 100644 third_party/absl/system.absl.log.BUILD
 
 diff --git a/third_party/absl/system.absl.log.BUILD b/third_party/absl/system.absl.log.BUILD
 new file mode 100644
-index 00000000..9df9d3ce
+index 00000000..0248bda0
 --- /dev/null
 +++ b/third_party/absl/system.absl.log.BUILD
-@@ -0,0 +1,18 @@
+@@ -0,0 +1,22 @@
 +load("@rules_cc//cc:defs.bzl", "cc_library")
 +
 +package(default_visibility = ["//visibility:public"])
@@ -22,7 +22,10 @@ index 00000000..9df9d3ce
 +cc_library(
 +    name = "log",
 +    linkopts = [
-+	"-labsl_log_internal_conditions",
++        "-labsl_log_internal_conditions",
++        "-labsl_log_internal_check_op",
++        "-labsl_log_internal_message",
++        "-labsl_log_internal_nullguard",
 +    ],
 +)
 +
@@ -30,21 +33,22 @@ index 00000000..9df9d3ce
 +    name = "check",
 +    linkopts = [
 +        "-labsl_log_internal_check_op",
-+	"-labsl_log_internal_message",
++        "-labsl_log_internal_message",
++        "-labsl_log_internal_nullguard",
 +    ],
 +)
 diff --git a/third_party/absl/workspace.bzl b/third_party/absl/workspace.bzl
-index 07f49ceb..19cc4dd4 100644
+index 07f49ceb..a7f4e5ff 100644
 --- a/third_party/absl/workspace.bzl
 +++ b/third_party/absl/workspace.bzl
 @@ -20,6 +20,7 @@ def repo():
          "flags",
          "functional",
          "hash",
-+	"log",
++        "log",
          "memory",
          "meta",
          "numeric",
 -- 
-2.39.2 (Apple Git-143)
+2.30.2
 

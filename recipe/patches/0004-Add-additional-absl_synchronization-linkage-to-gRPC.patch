@@ -1,7 +1,7 @@
-From 56d092b5f49e7773234b624c58afef9317235e9b Mon Sep 17 00:00:00 2001
+From 34a97c64c5314671451d046885d70634ef62b3ee Mon Sep 17 00:00:00 2001
 From: "Uwe L. Korn" <uwe.korn@quantco.com>
 Date: Fri, 30 Jun 2023 08:39:32 +0000
-Subject: [PATCH 04/10] Add additional absl_synchronization linkage to gRPC
+Subject: [PATCH 04/12] Add additional absl_synchronization linkage to gRPC
 
 ---
  third_party/systemlibs/grpc.BUILD | 3 +++
@@ -36,5 +36,5 @@ index 8b703f11..417baf5d 100644
      visibility = ["//visibility:public"],
  )
 -- 
-2.39.2 (Apple Git-143)
+2.30.2
 

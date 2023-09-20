@@ -1,7 +1,7 @@
-From aaaf3251925bc4eac5f3fe7c5d02da220038761c Mon Sep 17 00:00:00 2001
+From d739b2b28deea98ece3c192e8a33e9013a1dc3bd Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Sat, 1 Jul 2023 10:25:10 +1100
-Subject: [PATCH 07/10] unpin gast dependency for pip_package
+Subject: [PATCH 07/12] unpin gast dependency for pip_package
 
 Commit c762c4501ca017994c1fa5554c3c8e47b7c80b66 noted that
 "I also know that gast 0.5.2 breaks one of our tests" and committed
@@ -30,5 +30,5 @@ index f7ab72c4..87acb041 100644
      'h5py >= 2.9.0',
      'numpy >= 1.22',
 -- 
-2.39.2 (Apple Git-143)
+2.30.2
 
