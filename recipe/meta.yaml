@@ -1,4 +1,5 @@
-{% set version = "2.13.0" %}
+{% set version = "2.13.1" %}
+{% set estimator_version = "2.13.0" %}
 
 package:
   name: tensorflow-split
@@ -6,7 +7,7 @@ package:
 
 source:
   - url: https://github.com/tensorflow/tensorflow/archive/refs/tags/v{{ version.replace(".rc", "-rc") }}.tar.gz
-    sha256: e58c939079588623e6fa1d054aec2f90f95018266e0a970fd353a5244f5173dc
+    sha256: 89c07aebd4f41fbe0d08cc88aef00305542134f2f16d3b62918dc3c1182f33e2
     patches:
       - patches/0001-loosen-requirements.patch
       - patches/0002-fix-genproto.patch
@@ -22,7 +23,7 @@ source:
       - patches/0011-Omit-linking-to-layout_proto_cc-if-protobuf-linkage-.patch
       - patches/0012-Fix-further-abseil-linkage.patch
 
-  - url: https://github.com/tensorflow/estimator/archive/refs/tags/v{{ version.replace(".rc", "-rc") }}.tar.gz
+  - url: https://github.com/tensorflow/estimator/archive/refs/tags/v{{ estimator_version.replace(".rc", "-rc") }}.tar.gz
     sha256: 4175e9276a1eb8b5e4e876d228e4605871832e7bd8517965d6a47f1481af2c3e
     folder: tensorflow-estimator
 
