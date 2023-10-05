@@ -1,7 +1,5 @@
-{% set tensorflow_cpu_gpu = "tensorflow-gpu" %}  # [cuda_compiler_version != "None"]
-{% set tensorflow_cpu_gpu = "tensorflow-cpu" %}  # [cuda_compiler_version == "None" or cuda_compiler_version is undefined]
 {% set version = "2.14.0" %}
-{% set estimator_version = "2.13.0" %}
+{% set estimator_version = "2.14.0" %}
 
 package:
   name: tensorflow-split
@@ -13,17 +11,14 @@ source:
     patches:
       - patches/0001-loosen-requirements.patch
       - patches/0002-fix-genproto.patch
-      - patches/0003-fix-absl-py.patch
-      - patches/0004-Add-additional-absl_synchronization-linkage-to-gRPC.patch
-      - patches/0005-Add-missing-any_invocable-target-to-absel-bazel.patch
-      - patches/0006-Fix-missing-abseil-linkages.patch
-      ## backport https://github.com/tensorflow/tensorflow/pull/61134
-      - patches/0007-unpin-gast-dependency-for-pip_package.patch
-      - patches/0008-Use-basename-instead-of-realpath.patch
-      - patches/0009-Fix-protobuf_python-for-systemlibs.patch
-      - patches/0010-Add-absl_log-systemlib.patch
-      - patches/0011-Omit-linking-to-layout_proto_cc-if-protobuf-linkage-.patch
-      - patches/0012-Fix-further-abseil-linkage.patch
+      - patches/0003-Add-additional-absl_synchronization-linkage-to-gRPC.patch
+      - patches/0004-Add-missing-any_invocable-target-to-absel-bazel.patch
+      - patches/0005-Fix-missing-abseil-linkages.patch
+      - patches/0006-Use-basename-instead-of-realpath.patch
+      - patches/0007-Fix-protobuf_python-for-systemlibs.patch
+      - patches/0008-Add-absl_log-systemlib.patch
+      - patches/0009-Omit-linking-to-layout_proto_cc-if-protobuf-linkage-.patch
+      - patches/0010-Fix-further-abseil-linkage.patch
 
   - url: https://github.com/tensorflow/estimator/archive/refs/tags/v{{ estimator_version.replace(".rc", "-rc") }}.tar.gz
     sha256: 4175e9276a1eb8b5e4e876d228e4605871832e7bd8517965d6a47f1481af2c3e
