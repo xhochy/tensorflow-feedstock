@@ -21,7 +21,7 @@ flatbuffers:
 giflib:
 - '5.2'
 icu:
-- '72'
+- '73'
 libabseil:
 - '20230125'
 libcurl:
@@ -29,7 +29,7 @@ libcurl:
 libgrpc:
 - '1.54'
 libjpeg_turbo:
-- 2.1.5
+- '3'
 libpng:
 - '1.6'
 libprotobuf:
@@ -37,7 +37,7 @@ libprotobuf:
 macos_machine:
 - x86_64-apple-darwin13.4.0
 numpy:
-- '1.21'
+- '1.22'
 openssl:
 - '3'
 pin_run_as_build:
@@ -45,7 +45,7 @@ pin_run_as_build:
     min_pin: x.x
     max_pin: x.x
 python:
-- 3.10.* *_cpython
+- 3.9.* *_cpython
 python_impl:
 - cpython
 snappy:

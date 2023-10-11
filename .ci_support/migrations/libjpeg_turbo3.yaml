@@ -2,6 +2,6 @@ __migrator:
   build_number: 1
   kind: version
   migration_number: 1
-libgrpc:
-- '1.54'
-migrator_ts: 1681882973.1792915
+libjpeg_turbo:
+- '3'
+migrator_ts: 1693842343.429878
