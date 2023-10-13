@@ -21,7 +21,7 @@ flatbuffers:
 giflib:
 - '5.2'
 icu:
-- '72'
+- '73'
 libabseil:
 - '20230125'
 libcurl:
@@ -29,7 +29,7 @@ libcurl:
 libgrpc:
 - '1.56'
 libjpeg_turbo:
-- 2.1.5
+- '3'
 libpng:
 - '1.6'
 libprotobuf:
