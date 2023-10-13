@@ -23,7 +23,7 @@ giflib:
 icu:
 - '73'
 libabseil:
-- '20230802'
+- '20230125'
 libcurl:
 - '8'
 libgrpc:
