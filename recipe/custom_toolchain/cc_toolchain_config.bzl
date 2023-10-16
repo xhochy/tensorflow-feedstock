@@ -284,6 +284,7 @@ def _impl(ctx):
             "${CONDA_BUILD_SYSROOT}/System/Library/Frameworks",
             "${CONDA_BUILD_SYSROOT}/usr/include",
             "${BUILD_PREFIX}/lib/clang/${COMPILER_VERSION}/include",
+            "${BUILD_PREFIX}/lib/clang/${SHORT_COMPILER_VERSION}/include",
             "${BUILD_PREFIX}/include/c++/v1",
             "${PREFIX}/include",
         ]

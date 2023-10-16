@@ -176,8 +176,8 @@ EOF
 pushd tensorflow/lite/schema
 flatc --cpp --gen-object-api schema.fbs
 popd
-rm tensorflow/lite/schema/conversion_metadata_generated.h
-rm tensorflow/lite/experimental/acceleration/configuration/configuration_generated.h
+rm -f tensorflow/lite/schema/conversion_metadata_generated.h
+rm -f tensorflow/lite/experimental/acceleration/configuration/configuration_generated.h
 
 # build using bazel
 bazel ${BAZEL_OPTS} build ${BUILD_TARGET}
