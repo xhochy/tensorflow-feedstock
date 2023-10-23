@@ -1,4 +1,6 @@
-{% set version = "2.13.1" %}
+{% set tensorflow_cpu_gpu = "tensorflow-gpu" %}  # [cuda_compiler_version != "None"]
+{% set tensorflow_cpu_gpu = "tensorflow-cpu" %}  # [cuda_compiler_version == "None" or cuda_compiler_version is undefined]
+{% set version = "2.14.0" %}
 {% set estimator_version = "2.13.0" %}
 
 package:
@@ -7,7 +9,7 @@ package:
 
 source:
   - url: https://github.com/tensorflow/tensorflow/archive/refs/tags/v{{ version.replace(".rc", "-rc") }}.tar.gz
-    sha256: 89c07aebd4f41fbe0d08cc88aef00305542134f2f16d3b62918dc3c1182f33e2
+    sha256: ce357fd0728f0d1b0831d1653f475591662ec5bca736a94ff789e6b1944df19f
     patches:
       - patches/0001-loosen-requirements.patch
       - patches/0002-fix-genproto.patch
@@ -28,7 +30,7 @@ source:
     folder: tensorflow-estimator
 
 build:
-  number: 1
+  number: 0
   skip: true  # [win]
   skip: true  # [python_impl == 'pypy']
 
@@ -129,11 +131,11 @@ outputs:
   # circularity is broken upstream by the fact that they have to bootstrap
   # their builds
   - name: tensorflow-base
-    script: build_pkg.sh   # [unix]
+    script: build_pkg.sh  # [unix]
     script: build_pkg.bat  # [win]
     build:
       string: cuda{{ cuda_compiler_version | replace('.', '') }}py{{ CONDA_PY }}h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}  # [cuda_compiler_version != "None"]
-      string: cpu_py{{ CONDA_PY }}h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}                                                # [cuda_compiler_version == "None"]
+      string: cpu_py{{ CONDA_PY }}h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}  # [cuda_compiler_version == "None"]
       # weigh down cpu implementation and give cuda preference
       track_features:
         - tensorflow-cpu          # [cuda_compiler_version == "None"]
@@ -234,7 +236,7 @@ outputs:
   - name: tensorflow
     build:
       string: cuda{{ cuda_compiler_version | replace('.', '') }}py{{ CONDA_PY }}h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}  # [cuda_compiler_version != "None"]
-      string: cpu_py{{ CONDA_PY }}h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}                                                # [cuda_compiler_version == "None"]
+      string: cpu_py{{ CONDA_PY }}h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}  # [cuda_compiler_version == "None"]
       # weigh down cpu implementation and give cuda preference
       track_features:
         - tensorflow-cpu          # [cuda_compiler_version == "None"]
@@ -268,11 +270,11 @@ outputs:
         - toco --help                # [build_platform == target_platform]
 
   - name: tensorflow-estimator
-    script: build_estimator.sh   # [unix]
+    script: build_estimator.sh  # [unix]
     script: build_estimator.bat  # [win]
     build:
       string: cuda{{ cuda_compiler_version | replace('.', '') }}py{{ CONDA_PY }}h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}  # [cuda_compiler_version != "None"]
-      string: cpu_py{{ CONDA_PY }}h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}                                                # [cuda_compiler_version == "None"]
+      string: cpu_py{{ CONDA_PY }}h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}  # [cuda_compiler_version == "None"]
     requirements:
       build:
         - {{ compiler('c') }}
@@ -313,7 +315,7 @@ outputs:
     build:
       skip: true  # [win]
       string: cuda{{ cuda_compiler_version | replace('.', '') }}h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}  # [cuda_compiler_version != "None"]
-      string: cpu_h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}                                                # [cuda_compiler_version == "None"]
+      string: cpu_h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}  # [cuda_compiler_version == "None"]
       run_exports:
         # tensorflow makes no ABI guarantees, need to pin to what we built with
         - libtensorflow {{ version }}
@@ -358,7 +360,7 @@ outputs:
     build:
       skip: true  # [win]
       string: cuda{{ cuda_compiler_version | replace('.', '') }}h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}  # [cuda_compiler_version != "None"]
-      string: cpu_h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}                                                # [cuda_compiler_version == "None"]
+      string: cpu_h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}  # [cuda_compiler_version == "None"]
       run_exports:
         # tensorflow makes no ABI guarantees, need to pin to what we built with
         - libtensorflow_cc {{ version }}
@@ -407,7 +409,7 @@ outputs:
   - name: {{ tensorflow_cpu_gpu }}
     build:
       string: cuda{{ cuda_compiler_version | replace('.', '') }}py{{ CONDA_PY }}h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}  # [cuda_compiler_version != "None"]
-      string: cpu_py{{ CONDA_PY }}h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}                                                # [cuda_compiler_version == "None"]
+      string: cpu_py{{ CONDA_PY }}h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}  # [cuda_compiler_version == "None"]
       detect_binary_files_with_prefix: false
     requirements:
       run:
