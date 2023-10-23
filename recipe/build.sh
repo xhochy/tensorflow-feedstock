@@ -2,6 +2,14 @@
 
 set -ex
 
+# Make libprotobuf-python-headers visible for pybind11_protobuf
+# These files will be deleted at the end of the build.
+mkdir -p $PREFIX/include/python
+cp -r $PREFIX/include/google $PREFIX/include/python/
+
+sed -i "s;@@PREFIX@@;$PREFIX;" third_party/pybind11_protobuf/0001-Add-Python-include-path.patch
+sed -i "s;@@PY_VER@@;$PY_VER;" third_party/pybind11_protobuf/0001-Add-Python-include-path.patch
+
 export PATH="$PWD:$PATH"
 export CC=$(basename $CC)
 export CXX=$(basename $CXX)
@@ -140,6 +148,8 @@ if [[ ${cuda_compiler_version} != "None" ]]; then
         export TF_CUDA_COMPUTE_CAPABILITIES=sm_35,sm_50,sm_60,sm_62,sm_70,sm_72,sm_75,sm_80,sm_86,compute_86
     elif [[ ${cuda_compiler_version} == 11.2 ]]; then
         export TF_CUDA_COMPUTE_CAPABILITIES=sm_35,sm_50,sm_60,sm_62,sm_70,sm_72,sm_75,sm_80,sm_86,compute_86
+    elif [[ ${cuda_compiler_version} == 11.8 ]]; then
+        export TF_CUDA_COMPUTE_CAPABILITIES=sm_35,sm_50,sm_60,sm_62,sm_70,sm_72,sm_75,sm_80,sm_86,sm_87,sm_89,sm_90,compute_90
     else
         echo "unsupported cuda version."
         exit 1
@@ -162,6 +172,12 @@ build --cpu=${TARGET_CPU}
 build --local_cpu_resources=${CPU_COUNT}
 EOF
 
+# Update TF lite schema with latest flatbuffers version
+pushd tensorflow/lite/schema
+flatc --cpp --gen-object-api schema.fbs
+popd
+rm -f tensorflow/lite/schema/conversion_metadata_generated.h
+rm -f tensorflow/lite/experimental/acceleration/configuration/configuration_generated.h
 
 # build using bazel
 bazel ${BAZEL_OPTS} build ${BUILD_TARGET}
@@ -198,3 +214,6 @@ popd
 rm -r $SRC_DIR/libtensorflow_cc_output
 
 bazel clean
+
+# This was only needed for protobuf_python
+rm -rf $PREFIX/include/python

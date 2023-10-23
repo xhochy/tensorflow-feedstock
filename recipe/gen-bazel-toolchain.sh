@@ -15,6 +15,7 @@ function apply_cc_template() {
   sed -ie "s:TARGET_PLATFORM:${target_platform}:" $1
   sed -ie "s:\${CONDA_BUILD_SYSROOT}:${CONDA_BUILD_SYSROOT}:" $1
   sed -ie "s:\${COMPILER_VERSION}:${BAZEL_TOOLCHAIN_COMPILER_VERSION:-}:" $1
+  sed -ie "s:\${SHORT_COMPILER_VERSION}:${SHORT_BAZEL_TOOLCHAIN_COMPILER_VERSION:-}:" $1
   sed -ie "s:\${GCC_COMPILER_PATH}:${GCC:-}:" $1
   sed -ie "s:\${BAZEL_TOOLCHAIN_GCC}:${BAZEL_TOOLCHAIN_GCC}:" $1
   sed -ie "s:\${CUDA_VERSION}:${cuda_compiler_version:-}:" $1
@@ -41,6 +42,7 @@ cp -r ${RECIPE_DIR}/custom_toolchain .
 pushd custom_toolchain
   if [[ "${target_platform}" == osx-* ]]; then
     export BAZEL_TOOLCHAIN_COMPILER_VERSION=$($CC -v 2>&1 | head -n1 | cut -d' ' -f3)
+    export SHORT_BAZEL_TOOLCHAIN_COMPILER_VERSION=$(echo ${BAZEL_TOOLCHAIN_COMPILER_VERSION} | cut -d. -f1)
     sed -e "s:\${CLANG}:${CLANG}:" \
         -e "s:\${target_platform}:${target_platform}:" \
         -e "s:\${INSTALL_NAME_TOOL}:${INSTALL_NAME_TOOL}:" \
@@ -63,6 +65,7 @@ pushd custom_toolchain
     export BAZEL_TOOLCHAIN_AR=${LIBTOOL}
   else
     export BAZEL_TOOLCHAIN_COMPILER_VERSION=$(${CC} -v 2>&1|tail -n1|cut -d' ' -f3)
+    export SHORT_BAZEL_TOOLCHAIN_COMPILER_VERSION=${BAZEL_TOOLCHAIN_COMPILER_VERSION}
     export BAZEL_TOOLCHAIN_AR=$(basename ${AR})
     touch cc_wrapper.sh
 
