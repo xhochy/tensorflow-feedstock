@@ -17,6 +17,7 @@ export LIBDIR=$PREFIX/lib
 export INCLUDEDIR=$PREFIX/include
 
 export TF_IGNORE_MAX_BAZEL_VERSION="1"
+export TF_PYTHON_VERSION=$PY_VER
 
 # Upstream docstring for TF_SYSTEM_LIBS in:
 # https://github.com/tensorflow/tensorflow/blob/v{{ version }}/third_party/systemlibs/syslibs_configure.bzl

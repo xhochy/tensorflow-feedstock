@@ -19,9 +19,13 @@ source:
       - patches/0008-Add-absl_log-systemlib.patch
       - patches/0009-Omit-linking-to-layout_proto_cc-if-protobuf-linkage-.patch
       - patches/0010-Fix-further-abseil-linkage.patch
+      - patches/0001-Add-constraint-to-pybind11-systemlib.patch
+      - patches/0002-Different-file-ending-for-flatbuffers-LICENSE.patch
+      - patches/0003-Use-correct-hermetic-python.patch
+      - patches/0004-Add-python-runtimes-as-static-deps.patch
 
   - url: https://github.com/tensorflow/estimator/archive/refs/tags/v{{ estimator_version.replace(".rc", "-rc") }}.tar.gz
-    sha256: 4175e9276a1eb8b5e4e876d228e4605871832e7bd8517965d6a47f1481af2c3e
+    sha256: 622797bf5311f239c2b123364fa360868ae97d16b678413e5e0633241f7d7d5c
     folder: tensorflow-estimator
 
 build:
