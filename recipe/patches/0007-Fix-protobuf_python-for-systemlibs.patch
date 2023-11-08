@@ -1,7 +1,7 @@
-From f332287c810329b6b07e4c9275319f1ce3a24f5b Mon Sep 17 00:00:00 2001
+From 5ae0271211ed687be8441bf5a505934cd2a48b51 Mon Sep 17 00:00:00 2001
 From: "Uwe L. Korn" <uwe.korn@quantco.com>
 Date: Wed, 30 Aug 2023 16:58:41 +0200
-Subject: [PATCH 07/10] Fix protobuf_python for systemlibs
+Subject: [PATCH 07/15] Fix protobuf_python for systemlibs
 
 ---
  tensorflow/workspace2.bzl                     |  9 ++++---
@@ -82,5 +82,5 @@ index 00000000..982617a7
 +    visibility = ["//visibility:public"],
 +)
 -- 
-2.39.3 (Apple Git-145)
+2.42.0
 

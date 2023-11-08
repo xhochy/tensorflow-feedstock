@@ -1,7 +1,7 @@
-From 5fd5eefff8d43b6bf53336f4722ab04287707f31 Mon Sep 17 00:00:00 2001
+From 76f846a34d105c35a1382225b2a3cd15d89c3597 Mon Sep 17 00:00:00 2001
 From: "Uwe L. Korn" <uwe.korn@quantco.com>
 Date: Mon, 18 Sep 2023 14:47:08 +0000
-Subject: [PATCH 10/10] Fix further abseil linkage
+Subject: [PATCH 10/15] Fix further abseil linkage
 
 ---
  third_party/absl/system.absl.base.BUILD | 14 ++++++++++++--
@@ -37,5 +37,5 @@ index d6bf8748..b3e42f4d 100644
          "//absl:__subpackages__",
      ],
 -- 
-2.39.3 (Apple Git-145)
+2.42.0
 

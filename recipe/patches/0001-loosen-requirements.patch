@@ -1,7 +1,7 @@
-From ac70ea17bab1e49d047fae473fac6fcfc9f0559a Mon Sep 17 00:00:00 2001
+From 17c46d21b731c0f80bdc842af7ef17ada762d799 Mon Sep 17 00:00:00 2001
 From: "Uwe L. Korn" <uwe.korn@quantco.com>
 Date: Thu, 30 Dec 2021 06:57:09 +0200
-Subject: [PATCH 01/10] loosen requirements
+Subject: [PATCH 01/15] loosen requirements
 
 * Remove unused libclang requirement
 * Remove unecessary tensorflow-io-gcs-filesystem
@@ -34,5 +34,5 @@ index 2475ee5d..4438d799 100644
      # BoringSSL support.
      # See https://github.com/tensorflow/tensorflow/issues/17882.
 -- 
-2.39.3 (Apple Git-145)
+2.42.0
 
