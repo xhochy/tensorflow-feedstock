@@ -120,6 +120,9 @@ export TF_NEED_OPENCL_SYCL=0
 export TF_NEED_COMPUTECPP=0
 export TF_NEED_CUDA=0
 export TF_CUDA_CLANG=0
+if [[ "${target_platform}" == linux-* ]]; then
+  export TF_NEED_CLANG=0
+fi
 export TF_NEED_TENSORRT=0
 export TF_NEED_ROCM=0
 export TF_NEED_MPI=0
