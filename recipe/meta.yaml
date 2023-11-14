@@ -1,5 +1,5 @@
-{% set version = "2.13.1" %}
-{% set estimator_version = "2.13.0" %}
+{% set version = "2.14.0" %}
+{% set estimator_version = "2.14.0" %}
 
 package:
   name: tensorflow-split
@@ -7,30 +7,37 @@ package:
 
 source:
   - url: https://github.com/tensorflow/tensorflow/archive/refs/tags/v{{ version.replace(".rc", "-rc") }}.tar.gz
-    sha256: 89c07aebd4f41fbe0d08cc88aef00305542134f2f16d3b62918dc3c1182f33e2
+    sha256: ce357fd0728f0d1b0831d1653f475591662ec5bca736a94ff789e6b1944df19f
     patches:
       - patches/0001-loosen-requirements.patch
       - patches/0002-fix-genproto.patch
-      - patches/0003-fix-absl-py.patch
-      - patches/0004-Add-additional-absl_synchronization-linkage-to-gRPC.patch
-      - patches/0005-Add-missing-any_invocable-target-to-absel-bazel.patch
-      - patches/0006-Fix-missing-abseil-linkages.patch
-      ## backport https://github.com/tensorflow/tensorflow/pull/61134
-      - patches/0007-unpin-gast-dependency-for-pip_package.patch
-      - patches/0008-Use-basename-instead-of-realpath.patch
-      - patches/0009-Fix-protobuf_python-for-systemlibs.patch
-      - patches/0010-Add-absl_log-systemlib.patch
-      - patches/0011-Omit-linking-to-layout_proto_cc-if-protobuf-linkage-.patch
-      - patches/0012-Fix-further-abseil-linkage.patch
+      - patches/0003-Add-additional-absl_synchronization-linkage-to-gRPC.patch
+      - patches/0004-Add-missing-any_invocable-target-to-absel-bazel.patch
+      - patches/0005-Fix-missing-abseil-linkages.patch
+      - patches/0006-Use-basename-instead-of-realpath.patch
+      - patches/0007-Fix-protobuf_python-for-systemlibs.patch
+      - patches/0008-Add-absl_log-systemlib.patch
+      - patches/0009-Omit-linking-to-layout_proto_cc-if-protobuf-linkage-.patch
+      - patches/0010-Fix-further-abseil-linkage.patch
+      - patches/0011-Add-constraint-to-pybind11-systemlib.patch
+      - patches/0012-Different-file-ending-for-flatbuffers-LICENSE.patch
+      - patches/0013-Use-correct-hermetic-python.patch
+      - patches/0014-Add-python-runtimes-as-static-deps.patch
+      - patches/0015-Fix-ml_dtypes-linkage.patch
 
   - url: https://github.com/tensorflow/estimator/archive/refs/tags/v{{ estimator_version.replace(".rc", "-rc") }}.tar.gz
-    sha256: 4175e9276a1eb8b5e4e876d228e4605871832e7bd8517965d6a47f1481af2c3e
+    sha256: 622797bf5311f239c2b123364fa360868ae97d16b678413e5e0633241f7d7d5c
     folder: tensorflow-estimator
+  - url: https://raw.githubusercontent.com/jax-ml/ml_dtypes/v0.2.0/ml_dtypes/include/float8.h
+    fn: float8.h
+    sha256: 7c3d32809adf01e1568434760bf3c347d0ef21d5fc4c5009815a5dd54635ed25
 
 build:
-  number: 1
+  number: 0
   skip: true  # [win]
   skip: true  # [python_impl == 'pypy']
+  skip: true  # [py<39]
+  skip: true  # [cuda_compiler_version == "11.2"]
 
 requirements:
   build:
@@ -110,17 +117,18 @@ requirements:
     - gast >=0.2.1,!=0.5.0,!=0.5.1,!=0.5.2
     - google-pasta >=0.1.1
     - h5py >=2.9.0
+    - ml_dtypes 0.2.0
     - numpy
     - opt_einsum >=2.3.2
     - protobuf >=3.20.3,<5,!=4.21.0,!=4.21.1,!=4.21.2,!=4.21.3,!=4.21.4,!=4.21.5
-    - python-flatbuffers >=2
+    - python-flatbuffers >=23.5.26
     - six >=1.12
     - termcolor >=1.1.0
-    - typing_extensions >=3.6.6,<4.6.0
-    - wrapt >=1.11.0
+    - typing_extensions >=3.6.6
+    - wrapt >=1.11.0,<1.15
     # TF-API needs to move in sync
-    - tensorboard >=2.13,<2.14
-    - keras >=2.13,<2.14
+    - tensorboard >=2.14,<2.15
+    - keras >=2.14,<2.15
 
 outputs:
   # 2021/12/29: hmaarrfk
@@ -129,11 +137,11 @@ outputs:
   # circularity is broken upstream by the fact that they have to bootstrap
   # their builds
   - name: tensorflow-base
-    script: build_pkg.sh   # [unix]
+    script: build_pkg.sh  # [unix]
     script: build_pkg.bat  # [win]
     build:
       string: cuda{{ cuda_compiler_version | replace('.', '') }}py{{ CONDA_PY }}h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}  # [cuda_compiler_version != "None"]
-      string: cpu_py{{ CONDA_PY }}h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}                                                # [cuda_compiler_version == "None"]
+      string: cpu_py{{ CONDA_PY }}h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}  # [cuda_compiler_version == "None"]
       # weigh down cpu implementation and give cuda preference
       track_features:
         - tensorflow-cpu          # [cuda_compiler_version == "None"]
@@ -188,17 +196,18 @@ outputs:
         - gast >=0.2.1,!=0.5.0,!=0.5.1,!=0.5.2
         - google-pasta >=0.1.1
         - h5py >=2.9.0
+        - ml_dtypes 0.2.0
         - numpy
         - opt_einsum >=2.3.2
         - protobuf >=3.20.3,<5,!=4.21.0,!=4.21.1,!=4.21.2,!=4.21.3,!=4.21.4,!=4.21.5
-        - python-flatbuffers >=2
+        - python-flatbuffers >=23.5.26
         - six >=1.12
         - termcolor >=1.1.0
-        - typing_extensions >=3.6.6,<4.6.0
-        - wrapt >=1.11.0
+        - typing_extensions >=3.6.6
+        - wrapt >=1.11.0,<1.15
         # TF-API needs to move in sync
-        - tensorboard >=2.13,<2.14
-        - keras >=2.13,<2.14
+        - tensorboard >=2.14,<2.15
+        - keras >=2.14,<2.15
       run:
         - python
         - packaging
@@ -208,17 +217,18 @@ outputs:
         - google-pasta >=0.1.1
         - grpcio {{ libgrpc }}.*
         - h5py >=2.9.0
+        - ml_dtypes 0.2.0
         - {{ pin_compatible('numpy', lower_bound='1.22') }}
         - opt_einsum >=2.3.2
         - protobuf >=3.20.3,<5,!=4.21.0,!=4.21.1,!=4.21.2,!=4.21.3,!=4.21.4,!=4.21.5
-        - python-flatbuffers >=2
+        - python-flatbuffers >=23.5.26
         - six >=1.12
         - termcolor >=1.1.0
-        - typing_extensions >=3.6.6,<4.6.0
-        - wrapt >=1.11.0
+        - typing_extensions >=3.6.6
+        - wrapt >=1.11.0,<1.15
         # TF-API needs to move in sync
-        - tensorboard >=2.13,<2.14
-        - keras >=2.13,<2.14
+        - tensorboard >=2.14,<2.15
+        - keras >=2.14,<2.15
         # avoid that people without GPUs needlessly download ~0.5-1GB
         - __cuda                                                  # [cuda_compiler_version != "None"]
         - __osx >={{ MACOSX_DEPLOYMENT_TARGET|default("10.9") }}  # [osx and x86_64]
@@ -234,7 +244,7 @@ outputs:
   - name: tensorflow
     build:
       string: cuda{{ cuda_compiler_version | replace('.', '') }}py{{ CONDA_PY }}h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}  # [cuda_compiler_version != "None"]
-      string: cpu_py{{ CONDA_PY }}h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}                                                # [cuda_compiler_version == "None"]
+      string: cpu_py{{ CONDA_PY }}h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}  # [cuda_compiler_version == "None"]
       # weigh down cpu implementation and give cuda preference
       track_features:
         - tensorflow-cpu          # [cuda_compiler_version == "None"]
@@ -268,11 +278,11 @@ outputs:
         - toco --help                # [build_platform == target_platform]
 
   - name: tensorflow-estimator
-    script: build_estimator.sh   # [unix]
+    script: build_estimator.sh  # [unix]
     script: build_estimator.bat  # [win]
     build:
       string: cuda{{ cuda_compiler_version | replace('.', '') }}py{{ CONDA_PY }}h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}  # [cuda_compiler_version != "None"]
-      string: cpu_py{{ CONDA_PY }}h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}                                                # [cuda_compiler_version == "None"]
+      string: cpu_py{{ CONDA_PY }}h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}  # [cuda_compiler_version == "None"]
     requirements:
       build:
         - {{ compiler('c') }}
@@ -313,7 +323,7 @@ outputs:
     build:
       skip: true  # [win]
       string: cuda{{ cuda_compiler_version | replace('.', '') }}h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}  # [cuda_compiler_version != "None"]
-      string: cpu_h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}                                                # [cuda_compiler_version == "None"]
+      string: cpu_h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}  # [cuda_compiler_version == "None"]
       run_exports:
         # tensorflow makes no ABI guarantees, need to pin to what we built with
         - libtensorflow {{ version }}
@@ -358,7 +368,7 @@ outputs:
     build:
       skip: true  # [win]
       string: cuda{{ cuda_compiler_version | replace('.', '') }}h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}  # [cuda_compiler_version != "None"]
-      string: cpu_h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}                                                # [cuda_compiler_version == "None"]
+      string: cpu_h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}  # [cuda_compiler_version == "None"]
       run_exports:
         # tensorflow makes no ABI guarantees, need to pin to what we built with
         - libtensorflow_cc {{ version }}
@@ -407,7 +417,7 @@ outputs:
   - name: {{ tensorflow_cpu_gpu }}
     build:
       string: cuda{{ cuda_compiler_version | replace('.', '') }}py{{ CONDA_PY }}h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}  # [cuda_compiler_version != "None"]
-      string: cpu_py{{ CONDA_PY }}h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}                                                # [cuda_compiler_version == "None"]
+      string: cpu_py{{ CONDA_PY }}h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}  # [cuda_compiler_version == "None"]
       detect_binary_files_with_prefix: false
     requirements:
       run:

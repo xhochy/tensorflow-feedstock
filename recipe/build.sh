@@ -17,6 +17,7 @@ export LIBDIR=$PREFIX/lib
 export INCLUDEDIR=$PREFIX/include
 
 export TF_IGNORE_MAX_BAZEL_VERSION="1"
+export TF_PYTHON_VERSION=$PY_VER
 
 # Upstream docstring for TF_SYSTEM_LIBS in:
 # https://github.com/tensorflow/tensorflow/blob/v{{ version }}/third_party/systemlibs/syslibs_configure.bzl
@@ -119,6 +120,9 @@ export TF_NEED_OPENCL_SYCL=0
 export TF_NEED_COMPUTECPP=0
 export TF_NEED_CUDA=0
 export TF_CUDA_CLANG=0
+if [[ "${target_platform}" == linux-* ]]; then
+  export TF_NEED_CLANG=0
+fi
 export TF_NEED_TENSORRT=0
 export TF_NEED_ROCM=0
 export TF_NEED_MPI=0
