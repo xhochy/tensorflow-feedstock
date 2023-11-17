@@ -6,25 +6,22 @@ package:
   version: {{ version }}
 
 source:
-  - url: https://github.com/tensorflow/tensorflow/archive/edb35e8ec17c423faee8e91f86bdcb8197d45884.zip
-    sha256: 4bffee8e060fea4ea90aa55eab50fa681948087343e7ee6fdd4e3c23ca5f8278
+  - url: https://github.com/tensorflow/tensorflow/archive/5e2d5c50c2e9a7ecce00c8859d8f7fa1fddb752c.zip
+    sha256: a7687912fd2d7414c1ebeec723d20eed5947669e0fa5189afbaaf39b0650f6dd
     patches:
       - patches/0001-loosen-requirements.patch
       - patches/0002-fix-genproto.patch
       - patches/0003-Add-additional-absl_synchronization-linkage-to-gRPC.patch
       - patches/0004-Add-missing-any_invocable-target-to-absel-bazel.patch
       - patches/0005-Fix-missing-abseil-linkages.patch
-      - patches/0006-Use-basename-instead-of-realpath.patch
-      - patches/0007-Fix-protobuf_python-for-systemlibs.patch
-      - patches/0008-Add-absl_log-systemlib.patch
-      - patches/0009-Omit-linking-to-layout_proto_cc-if-protobuf-linkage-.patch
-      - patches/0010-Fix-further-abseil-linkage.patch
-      - patches/0011-Add-constraint-to-pybind11-systemlib.patch
-      - patches/0012-Different-file-ending-for-flatbuffers-LICENSE.patch
-      - patches/0013-Use-correct-hermetic-python.patch
-      - patches/0014-Add-python-runtimes-as-static-deps.patch
-      - patches/0015-Fix-ml_dtypes-linkage.patch
-      - patches/0001-Add-ducc-to-static_deps.patch
+      - patches/0006-Fix-protobuf_python-for-systemlibs.patch
+      - patches/0007-Add-absl_log-systemlib.patch
+      - patches/0008-Omit-linking-to-layout_proto_cc-if-protobuf-linkage-.patch
+      - patches/0009-Fix-further-abseil-linkage.patch
+      - patches/0010-Add-constraint-to-pybind11-systemlib.patch
+      - patches/0011-Different-file-ending-for-flatbuffers-LICENSE.patch
+      - patches/0012-Use-correct-hermetic-python.patch
+      - patches/0013-Add-ducc-to-static_deps.patch
 
   - url: https://github.com/tensorflow/estimator/archive/refs/tags/v{{ estimator_version.replace(".rc", "-rc") }}.tar.gz
     sha256: 4175e9276a1eb8b5e4e876d228e4605871832e7bd8517965d6a47f1481af2c3e

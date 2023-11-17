@@ -1,7 +1,7 @@
-From cb336874922415ac357bf09bb51befae8febe83f Mon Sep 17 00:00:00 2001
+From 6e39d7517176ea0ad31f4ff42c1dc83b38567e41 Mon Sep 17 00:00:00 2001
 From: "Uwe L. Korn" <uwe.korn@quantco.com>
 Date: Thu, 30 Dec 2021 06:57:09 +0200
-Subject: [PATCH 01/15] loosen requirements
+Subject: [PATCH 01/13] loosen requirements
 
 * Remove unused libclang requirement
 * Remove unecessary tensorflow-io-gcs-filesystem
@@ -10,11 +10,11 @@ Subject: [PATCH 01/15] loosen requirements
 Co-authored-by: Mark Harfouche <mark.harfouche@gmail.com>
 Co-authored-by: ngam
 ---
- tensorflow/tools/pip_package/setup.py | 6 ------
- 1 file changed, 6 deletions(-)
+ tensorflow/tools/pip_package/setup.py | 2 --
+ 1 file changed, 2 deletions(-)
 
 diff --git a/tensorflow/tools/pip_package/setup.py b/tensorflow/tools/pip_package/setup.py
-index 6d3e9383..2715d10b 100644
+index 80b6e28e..04becacc 100644
 --- a/tensorflow/tools/pip_package/setup.py
 +++ b/tensorflow/tools/pip_package/setup.py
 @@ -88,7 +88,6 @@ REQUIRED_PACKAGES = [
@@ -25,15 +25,11 @@ index 6d3e9383..2715d10b 100644
      'ml_dtypes >= 0.2.0',
      'numpy >= 1.23.5',
      'opt_einsum >= 2.3.2',
-@@ -102,11 +101,6 @@ REQUIRED_PACKAGES = [
+@@ -102,7 +101,6 @@ REQUIRED_PACKAGES = [
      'termcolor >= 1.1.0',
      'typing_extensions >= 3.6.6',
      'wrapt >= 1.11.0, < 1.15',
--    # This looks worse as a wrapped line. pylint:disable=line-too-long
--    (
--        'tensorflow-io-gcs-filesystem >= 0.23.1;platform_machine!="arm64" or'
--        ' platform_system!="Darwin"'
--    ),
+-    'tensorflow-io-gcs-filesystem >= 0.23.1',
      # grpcio does not build correctly on big-endian machines due to lack of
      # BoringSSL support.
      # See https://github.com/tensorflow/tensorflow/issues/17882.
