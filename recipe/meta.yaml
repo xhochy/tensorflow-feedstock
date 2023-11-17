@@ -1,13 +1,13 @@
-{% set version = "2.14.0" %}
-{% set estimator_version = "2.13.0" %}
+{% set version = "2.14.99" %}
+{% set estimator_version = "2.14.0" %}
 
 package:
   name: tensorflow-split
   version: {{ version }}
 
 source:
-  - url: https://github.com/tensorflow/tensorflow/archive/5e2d5c50c2e9a7ecce00c8859d8f7fa1fddb752c.zip
-    sha256: a7687912fd2d7414c1ebeec723d20eed5947669e0fa5189afbaaf39b0650f6dd
+  - url: https://github.com/tensorflow/tensorflow/archive/055de2ca51395eb86aa3ef084b858c1e0e02c948.zip
+    sha256: f931f5343d907059568fce839e631bbd2fb7ce1f2462464040b3fc2be6dbf566
     patches:
       - patches/0001-loosen-requirements.patch
       - patches/0002-fix-genproto.patch
@@ -24,7 +24,7 @@ source:
       - patches/0013-Add-ducc-to-static_deps.patch
 
   - url: https://github.com/tensorflow/estimator/archive/refs/tags/v{{ estimator_version.replace(".rc", "-rc") }}.tar.gz
-    sha256: 4175e9276a1eb8b5e4e876d228e4605871832e7bd8517965d6a47f1481af2c3e
+    sha256: 622797bf5311f239c2b123364fa360868ae97d16b678413e5e0633241f7d7d5c
     folder: tensorflow-estimator
   - url: https://raw.githubusercontent.com/jax-ml/ml_dtypes/v0.2.0/ml_dtypes/include/float8.h
     fn: float8.h
