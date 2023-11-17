@@ -6,8 +6,8 @@ package:
   version: {{ version }}
 
 source:
-  - url: https://github.com/tensorflow/tensorflow/archive/f0fade7bb11303567a60c127343bec7755e1f7b5.zip
-    sha256: 7dee860743d715f9ebc11f2da3a26a7f08752d4394c2421dff3f0bbe41a336df
+  - url: https://github.com/tensorflow/tensorflow/archive/edb35e8ec17c423faee8e91f86bdcb8197d45884.zip
+    sha256: 4bffee8e060fea4ea90aa55eab50fa681948087343e7ee6fdd4e3c23ca5f8278
     patches:
       - patches/0001-loosen-requirements.patch
       - patches/0002-fix-genproto.patch
@@ -24,6 +24,7 @@ source:
       - patches/0013-Use-correct-hermetic-python.patch
       - patches/0014-Add-python-runtimes-as-static-deps.patch
       - patches/0015-Fix-ml_dtypes-linkage.patch
+      - patches/0001-Add-ducc-to-static_deps.patch
 
   - url: https://github.com/tensorflow/estimator/archive/refs/tags/v{{ estimator_version.replace(".rc", "-rc") }}.tar.gz
     sha256: 4175e9276a1eb8b5e4e876d228e4605871832e7bd8517965d6a47f1481af2c3e
