@@ -1,4 +1,4 @@
-From 57903e9448e35c253c19221bd90efab2bf19fe43 Mon Sep 17 00:00:00 2001
+From fb05d7e655eba7af9ce4906774246036cef74617 Mon Sep 17 00:00:00 2001
 From: "Uwe L. Korn" <uwe.korn@quantco.com>
 Date: Sun, 29 Oct 2023 16:11:16 +0100
 Subject: [PATCH 15/15] Fix ml_dtypes linkage
@@ -8,7 +8,7 @@ Subject: [PATCH 15/15] Fix ml_dtypes linkage
  1 file changed, 4 insertions(+), 2 deletions(-)
 
 diff --git a/tensorflow/tools/pip_package/build_pip_package.sh b/tensorflow/tools/pip_package/build_pip_package.sh
-index 4a2d42bb..76a5e05f 100755
+index 7cf9bc4b..a1d54917 100755
 --- a/tensorflow/tools/pip_package/build_pip_package.sh
 +++ b/tensorflow/tools/pip_package/build_pip_package.sh
 @@ -246,8 +246,10 @@ function prepare_src() {
@@ -25,5 +25,5 @@ index 4a2d42bb..76a5e05f 100755
        chmod +rw ${TMPDIR}/tensorflow/tsl/python/lib/core/pywrap_ml_dtypes.so
        chmod +rw ${TMPDIR}/tensorflow/python/_pywrap_tensorflow_internal.so
 -- 
-2.42.0
+2.39.3 (Apple Git-145)
 

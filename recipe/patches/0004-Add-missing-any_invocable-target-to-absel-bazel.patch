@@ -1,4 +1,4 @@
-From caacd048fcaf56626fc5283b1a3513c6cde0f78f Mon Sep 17 00:00:00 2001
+From 41596639730f77892d2ced9134ebcd93b441e20e Mon Sep 17 00:00:00 2001
 From: "Uwe L. Korn" <uwe.korn@quantco.com>
 Date: Sun, 2 Jul 2023 05:36:41 +0000
 Subject: [PATCH 04/15] Add missing any_invocable target to absel bazel
@@ -20,5 +20,5 @@ index a4f70acf..f05aa98d 100644
 +    name = "any_invocable",
 +)
 -- 
-2.42.0
+2.39.3 (Apple Git-145)
 

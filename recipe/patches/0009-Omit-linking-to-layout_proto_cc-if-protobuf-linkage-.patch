@@ -1,4 +1,4 @@
-From 1c5c555f87094bfdac233da8a0a327a5e0f3e137 Mon Sep 17 00:00:00 2001
+From 464cd00bd97dda8afb68ecdc5e451782843b02bf Mon Sep 17 00:00:00 2001
 From: "Uwe L. Korn" <uwe.korn@quantco.com>
 Date: Fri, 15 Sep 2023 11:06:27 +0200
 Subject: [PATCH 09/15] Omit linking to layout_proto_cc if protobuf linkage is
@@ -21,5 +21,5 @@ index c1b7eb7c..3bab632c 100644
          "//tensorflow/python/lib/core:pybind11_status_headers",
          "//third_party/python_runtime:headers",  # buildcleaner: keep
 -- 
-2.42.0
+2.39.3 (Apple Git-145)
 

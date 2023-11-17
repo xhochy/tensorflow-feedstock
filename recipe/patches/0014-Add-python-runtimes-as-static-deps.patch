@@ -1,4 +1,4 @@
-From a8c40f7af58e01eff54b02e2303abdfb0004a917 Mon Sep 17 00:00:00 2001
+From ea022e52254792877051cc0ff1f12acadfefe277 Mon Sep 17 00:00:00 2001
 From: "Uwe L. Korn" <uwe.korn@quantco.com>
 Date: Fri, 27 Oct 2023 11:38:30 +0200
 Subject: [PATCH 14/15] Add python runtimes as static deps
@@ -90,5 +90,5 @@ index 9b7cc3fb..ba4df1b1 100644
      deps = [
          ":ml_dtypes_lib",
 -- 
-2.42.0
+2.39.3 (Apple Git-145)
 

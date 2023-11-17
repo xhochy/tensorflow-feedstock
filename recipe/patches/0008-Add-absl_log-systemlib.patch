@@ -1,4 +1,4 @@
-From 116c06acf1237544f29b37a834885019062c160d Mon Sep 17 00:00:00 2001
+From 9ff31771d0023b48975103f93d16317a161d3bb8 Mon Sep 17 00:00:00 2001
 From: "Uwe L. Korn" <uwe.korn@quantco.com>
 Date: Wed, 30 Aug 2023 16:59:28 +0200
 Subject: [PATCH 08/15] Add absl_log systemlib
@@ -50,5 +50,5 @@ index 07f49ceb..a7f4e5ff 100644
          "meta",
          "numeric",
 -- 
-2.42.0
+2.39.3 (Apple Git-145)
 

@@ -1,4 +1,4 @@
-From 3aa9b75f488d97d5890b29ff96304c725090c741 Mon Sep 17 00:00:00 2001
+From fa1f78569a842d9c18e3cc0194580afc1f296c2d Mon Sep 17 00:00:00 2001
 From: "Uwe L. Korn" <uwe.korn@quantco.com>
 Date: Fri, 27 Oct 2023 11:20:12 +0200
 Subject: [PATCH 11/15] Add constraint to pybind11 systemlib
@@ -22,5 +22,5 @@ index 79a483d7..463dd1a8 100644
 +    constraint_values = ["@platforms//os:osx"],
 +)
 -- 
-2.42.0
+2.39.3 (Apple Git-145)
 
