@@ -1,0 +1,42 @@
+From 90e255cfc5cfe4843e5b4007f9557a83612fc62a Mon Sep 17 00:00:00 2001
+From: "Uwe L. Korn" <uwe.korn@quantco.com>
+Date: Wed, 15 Nov 2023 10:32:41 +0000
+Subject: [PATCH 1/2] Add protobuf toolchain
+
+---
+ third_party/systemlibs/protobuf.BUILD | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
+
+diff --git a/third_party/systemlibs/protobuf.BUILD b/third_party/systemlibs/protobuf.BUILD
+index 4d05ab28..5209b651 100644
+--- a/third_party/systemlibs/protobuf.BUILD
++++ b/third_party/systemlibs/protobuf.BUILD
+@@ -65,12 +65,25 @@ cc_library(
+     visibility = ["//visibility:public"],
+ )
+ 
++cc_library(
++    name = "protobuf_lite",
++    linkopts = ["-lprotobuf-lite"],
++    visibility = ["//visibility:public"],
++)
++
+ cc_library(
+     name = "protobuf_headers",
+     linkopts = ["-lprotobuf"],
+     visibility = ["//visibility:public"],
+ )
+ 
++proto_lang_toolchain(
++    name = "cc_toolchain",
++    command_line = "--cpp_out=$(OUT)",
++    runtime = ":protobuf",
++    visibility = ["//visibility:public"],
++)
++
+ cc_library(
+     name = "protoc_lib",
+     linkopts = ["-lprotoc"],
+-- 
+2.30.2
+

@@ -1,0 +1,24 @@
+From e0f9c8e6afcaa0c762c66254f359c38a075c045a Mon Sep 17 00:00:00 2001
+From: "Uwe L. Korn" <uwe.korn@quantco.com>
+Date: Sat, 18 Nov 2023 07:45:20 +0000
+Subject: [PATCH] Add another wrapt hash
+
+---
+ requirements_lock_3_11.txt | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/requirements_lock_3_11.txt b/requirements_lock_3_11.txt
+index 39e79645..45ed1617 100644
+--- a/requirements_lock_3_11.txt
++++ b/requirements_lock_3_11.txt
+@@ -473,6 +473,7 @@ wheel==0.38.4 \
+     #   astunparse
+     #   tb-nightly
+ wrapt==1.14.1 \
++    --hash=sha256:a9008dad07d71f68487c91e96579c8567c98ca4c3881b9b113bc7b33e9fd78b8 \
+     --hash=sha256:00b6d4ea20a906c0ca56d84f93065b398ab74b927a7a3dbd470f6fc503f95dc3 \
+     --hash=sha256:01c205616a89d09827986bc4e859bcabd64f5a0662a7fe95e0d359424e0e071b \
+     --hash=sha256:02b41b633c6261feff8ddd8d11c711df6842aba629fdd3da10249a53211a72c4 \
+-- 
+2.30.2
+

@@ -43,7 +43,6 @@ export TF_PYTHON_VERSION=$PY_VER
 # Needs c++17, try on linux
 #  com_googlesource_code_re2
 export TF_SYSTEM_LIBS="
-  absl_py
   astor_archive
   astunparse_archive
   boringssl
