@@ -6,8 +6,8 @@ package:
   version: {{ version }}
 
 source:
-  - url: https://github.com/tensorflow/tensorflow/archive/72c4b7675c51b946485c5fef7c78e07271c629b7.zip
-    sha256: ed7817474b5eb308b07d501df5af37bcf44964523873022c53333557e63ee572
+  - url: https://github.com/tensorflow/tensorflow/archive/c45c4c9f39b35d8b64ed0545da66a3042cb67a52.zip
+    sha256: 8e6a95fa29b687382ad6945429dff784963cc02b5b3a0028138387bf07ac6553
     patches:
       - patches/0001-loosen-requirements.patch
       - patches/0002-fix-genproto.patch
