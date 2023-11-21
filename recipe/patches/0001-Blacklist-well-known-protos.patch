@@ -1,0 +1,26 @@
+From 9e6d16913eedc72aad7ced7f9cdf07374c84fc8f Mon Sep 17 00:00:00 2001
+From: "Uwe L. Korn" <uwe.korn@quantco.com>
+Date: Sun, 19 Nov 2023 20:50:29 +0000
+Subject: [PATCH] Blacklist well-known protos
+
+---
+ third_party/systemlibs/protobuf.BUILD | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/third_party/systemlibs/protobuf.BUILD b/third_party/systemlibs/protobuf.BUILD
+index aec4df34..b122a753 100644
+--- a/third_party/systemlibs/protobuf.BUILD
++++ b/third_party/systemlibs/protobuf.BUILD
+@@ -80,7 +80,8 @@ cc_library(
+ proto_lang_toolchain(
+     name = "cc_toolchain",
+     command_line = "--cpp_out=$(OUT)",
+-    # runtime = ":protobuf",
++    blacklisted_protos = [proto + "_proto" for proto in WELL_KNOWN_PROTO_MAP.keys()],
++    runtime = ":protobuf",
+     visibility = ["//visibility:public"],
+ )
+ 
+-- 
+2.30.2
+

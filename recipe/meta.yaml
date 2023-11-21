@@ -23,12 +23,17 @@ source:
       - patches/0012-Add-well_known_types_py_pb2-to-protobuf-systemlib.patch
       - patches/0001-Add-protobuf-toolchain.patch
       - patches/0001-fix-genproto.patch
+      - patches/0001-Blacklist-well-known-protos.patch
   - url: https://github.com/tensorflow/estimator/archive/refs/tags/v{{ estimator_version.replace(".rc", "-rc") }}.tar.gz
     sha256: 2d7e100b1878084da34b5e23b49a0cbb5ee8a7add74b7dd189a82ada1cf85530
     folder: tensorflow-estimator
-  - url: https://raw.githubusercontent.com/jax-ml/ml_dtypes/v0.2.0/ml_dtypes/include/float8.h
+  # yes, the headers come from a different version than the python package required below.
+  - url: https://raw.githubusercontent.com/jax-ml/ml_dtypes/v0.3.1/ml_dtypes/include/float8.h
     fn: float8.h
-    sha256: 7c3d32809adf01e1568434760bf3c347d0ef21d5fc4c5009815a5dd54635ed25
+    sha256: d2798fad4e64375b566b1df1d7bc440313e4b1024ca08f12cead3eaa4b73ff72
+  - url: https://raw.githubusercontent.com/jax-ml/ml_dtypes/v0.3.1/ml_dtypes/include/int4.h
+    fn: int4.h
+    sha256: b3a9970c3c6b169c41ac2fd4375f668d3fd1b492d48b912d89415fa1522a8f50
 
 build:
   number: 0
@@ -379,6 +384,7 @@ outputs:
         # decide on the cuda variant
         # https://github.com/conda-forge/tensorflow-feedstock/issues/162
         - {{ compiler('cuda') }}  # [cuda_compiler_version != "None"]
+        - rsync
       # host requirements to pick up run_exports
       host:
         - flatbuffers
