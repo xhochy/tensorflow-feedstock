@@ -84,6 +84,7 @@ if [[ "${target_platform}" == osx-* ]]; then
 else
   export LDFLAGS="${LDFLAGS} -lrt"
 fi
+export LDFLAGS="${LDFLAGS} -lrt -lcusparse"
 
 source ${RECIPE_DIR}/gen-bazel-toolchain.sh
 
@@ -138,7 +139,9 @@ if [[ ${cuda_compiler_version} != "None" ]]; then
     export TF_NEED_CUDA=1
     export TF_CUDA_VERSION="${cuda_compiler_version}"
     export TF_CUDNN_VERSION="${cudnn}"
-    export TF_NCCL_VERSION=$(pkg-config nccl --modversion | grep -Po '\d+\.\d+')
+    # This is auto-detected, setting it explicitly will make things fail.
+    # FIXME: Re-check this.
+    # export TF_NCCL_VERSION=$(pkg-config nccl --modversion | grep -Po '\d+\.\d+')
 
     export LDFLAGS="${LDFLAGS//-Wl,-z,now/-Wl,-z,lazy}"
     export CC_OPT_FLAGS="-march=nocona -mtune=haswell"
@@ -166,6 +169,7 @@ fi
 
 cat >> .bazelrc <<EOF
 build --crosstool_top=//custom_toolchain:toolchain
+build --extra_toolchains=//py_toolchain:py_toolchain
 build --logging=6
 build --verbose_failures
 build --define=PREFIX=${PREFIX}
@@ -175,12 +179,22 @@ build --cpu=${TARGET_CPU}
 build --local_cpu_resources=${CPU_COUNT}
 EOF
 
-# Update TF lite schema with latest flatbuffers version
-pushd tensorflow/lite/schema
-flatc --cpp --gen-object-api schema.fbs
-popd
-rm -f tensorflow/lite/schema/conversion_metadata_generated.h
-rm -f tensorflow/lite/experimental/acceleration/configuration/configuration_generated.h
+mkdir -p py_toolchain
+cp $RECIPE_DIR/py_toolchain.bzl py_toolchain/BUILD
+sed -i "s;@@SRC_DIR@@;$SRC_DIR;" py_toolchain/BUILD
+
+cat > python.shebang <<EOF
+#!/bin/bash
+exec ${PYTHON} \$*
+EOF
+chmod +x python.shebang
+## 
+## # Update TF lite schema with latest flatbuffers version
+## pushd tensorflow/lite/schema
+## flatc --cpp --gen-object-api schema.fbs
+## popd
+## rm -f tensorflow/lite/schema/conversion_metadata_generated.h
+## rm -f tensorflow/lite/experimental/acceleration/configuration/configuration_generated.h
 
 # build using bazel
 bazel ${BAZEL_OPTS} build ${BUILD_TARGET}
