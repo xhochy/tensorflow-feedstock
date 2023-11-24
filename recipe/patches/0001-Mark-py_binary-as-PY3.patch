@@ -1,0 +1,33 @@
+From 61b5acea0427365f5450868ee78a64daf79c0d49 Mon Sep 17 00:00:00 2001
+From: "Uwe L. Korn" <uwe.korn@quantco.com>
+Date: Fri, 24 Nov 2023 06:46:07 +0000
+Subject: [PATCH] Mark py_binary as PY3
+
+---
+ tensorflow/python/tools/api/generator2/extractor/BUILD | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/tensorflow/python/tools/api/generator2/extractor/BUILD b/tensorflow/python/tools/api/generator2/extractor/BUILD
+index fc6c4f74..b4ee4f83 100644
+--- a/tensorflow/python/tools/api/generator2/extractor/BUILD
++++ b/tensorflow/python/tools/api/generator2/extractor/BUILD
+@@ -11,6 +11,7 @@ pytype_strict_library(
+     name = "extractor",
+     srcs = ["extractor.py"],
+     visibility = ["//visibility:public"],
++    srcs_version = "PY3",
+     deps = [
+         "//tensorflow/python/tools/api/generator2/shared:exported_api",
+         "@absl_py//absl/flags",
+@@ -22,6 +23,8 @@ pytype_strict_binary(
+     name = "main",
+     srcs = ["main.py"],
+     visibility = ["//visibility:public"],
++    python_version = "PY3",
++    srcs_version = "PY3",
+     deps = [
+         ":extractor",
+         "@absl_py//absl:app",
+-- 
+2.30.2
+
