@@ -85,6 +85,10 @@ else
   export LDFLAGS="${LDFLAGS} -lrt"
 fi
 
+if [[ ${cuda_compiler_version} != "None" ]]; then
+  export LDFLAGS="${LDFLAGS} -lcusparse"
+fi
+
 source ${RECIPE_DIR}/gen-bazel-toolchain.sh
 
 if [[ "${target_platform}" == "osx-64" ]]; then
