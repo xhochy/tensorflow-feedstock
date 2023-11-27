@@ -168,6 +168,8 @@ fi
 
 ./configure
 
+$RECIPE_DIR/add_py_toolchain.sh
+
 cat >> .bazelrc <<EOF
 build --crosstool_top=//custom_toolchain:toolchain
 build --logging=6
