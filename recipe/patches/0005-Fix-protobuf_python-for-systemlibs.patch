@@ -1,7 +1,7 @@
-From 64965bdce6982843df80e29e54514c2ac46b9a49 Mon Sep 17 00:00:00 2001
+From 34e579f7b05abfee250b2934cde57ac9810cb2ff Mon Sep 17 00:00:00 2001
 From: "Uwe L. Korn" <uwe.korn@quantco.com>
 Date: Wed, 30 Aug 2023 16:58:41 +0200
-Subject: [PATCH 05/12] Fix protobuf_python for systemlibs
+Subject: [PATCH 05/18] Fix protobuf_python for systemlibs
 
 ---
  tensorflow/workspace2.bzl                     |  9 ++++---
@@ -12,7 +12,7 @@ Subject: [PATCH 05/12] Fix protobuf_python for systemlibs
  create mode 100644 third_party/systemlibs/protobuf_python.bzl
 
 diff --git a/tensorflow/workspace2.bzl b/tensorflow/workspace2.bzl
-index 8601192e..fe422018 100644
+index 8601192edf7..fe422018d7d 100644
 --- a/tensorflow/workspace2.bzl
 +++ b/tensorflow/workspace2.bzl
 @@ -373,6 +373,7 @@ def _tf_repositories():
@@ -40,7 +40,7 @@ index 8601192e..fe422018 100644
      tf_http_archive(
 diff --git a/third_party/pybind11_protobuf/0001-Add-Python-include-path.patch b/third_party/pybind11_protobuf/0001-Add-Python-include-path.patch
 new file mode 100644
-index 00000000..18a1ddf8
+index 00000000000..18a1ddf84f3
 --- /dev/null
 +++ b/third_party/pybind11_protobuf/0001-Add-Python-include-path.patch
 @@ -0,0 +1,26 @@
@@ -72,7 +72,7 @@ index 00000000..18a1ddf8
 +
 diff --git a/third_party/systemlibs/protobuf_python.bzl b/third_party/systemlibs/protobuf_python.bzl
 new file mode 100644
-index 00000000..982617a7
+index 00000000000..982617a765c
 --- /dev/null
 +++ b/third_party/systemlibs/protobuf_python.bzl
 @@ -0,0 +1,5 @@
@@ -81,6 +81,3 @@ index 00000000..982617a7
 +   #  hdrs = ["google/protobuf/proto_api.h"],
 +    visibility = ["//visibility:public"],
 +)
--- 
-2.39.3 (Apple Git-145)
-

@@ -21,13 +21,12 @@ source:
       - patches/0010-Different-file-ending-for-flatbuffers-LICENSE.patch
       - patches/0011-Use-correct-hermetic-python.patch
       - patches/0012-Add-well_known_types_py_pb2-to-protobuf-systemlib.patch
-      - patches/0001-Add-protobuf-toolchain.patch
-      - patches/0001-fix-genproto.patch
-      - patches/0001-Blacklist-well-known-protos.patch
-      - patches/0001-Remove-some-usage-of-absl-str_format-in-CUDA.patch
-      - patches/0001-Patch-ml_dtype-to-make-constructor-unambiguous.patch
-      - patches/0001-Load-cuda_build_defs-from-tsl.patch
-      - patches/0001-Use-PYTHON-for-build-wheel.patch
+      - patches/0013-Add-protobuf-toolchain.patch
+      - patches/0014-fix-genproto.patch
+      - patches/0015-Remove-some-usage-of-absl-str_format-in-CUDA.patch
+      - patches/0016-Patch-ml_dtype-to-make-constructor-unambiguous.patch
+      - patches/0017-Load-cuda_build_defs-from-tsl.patch
+      - patches/0018-Use-PYTHON-for-build-wheel.patch
   - url: https://github.com/tensorflow/estimator/archive/refs/tags/v{{ estimator_version.replace(".rc", "-rc") }}.tar.gz
     sha256: 2d7e100b1878084da34b5e23b49a0cbb5ee8a7add74b7dd189a82ada1cf85530
     folder: tensorflow-estimator

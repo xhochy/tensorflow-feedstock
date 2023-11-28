@@ -1,14 +1,14 @@
-From 0de939c9c602deeb634be0e69e25fcf455025c38 Mon Sep 17 00:00:00 2001
+From f49e745938c2ca649f73d338b8cf614ed96ac9df Mon Sep 17 00:00:00 2001
 From: "Uwe L. Korn" <uwe.korn@quantco.com>
 Date: Fri, 27 Oct 2023 11:20:12 +0200
-Subject: [PATCH 09/12] Add constraint to pybind11 systemlib
+Subject: [PATCH 09/18] Add constraint to pybind11 systemlib
 
 ---
  third_party/systemlibs/pybind11.BUILD | 6 ++++++
  1 file changed, 6 insertions(+)
 
 diff --git a/third_party/systemlibs/pybind11.BUILD b/third_party/systemlibs/pybind11.BUILD
-index 79a483d7..463dd1a8 100644
+index 79a483d7b5d..463dd1a8ec7 100644
 --- a/third_party/systemlibs/pybind11.BUILD
 +++ b/third_party/systemlibs/pybind11.BUILD
 @@ -6,3 +6,9 @@ cc_library(
@@ -21,6 +21,3 @@ index 79a483d7..463dd1a8 100644
 +    name = "osx",
 +    constraint_values = ["@platforms//os:osx"],
 +)
--- 
-2.39.3 (Apple Git-145)
-
