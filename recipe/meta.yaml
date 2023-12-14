@@ -27,6 +27,7 @@ source:
       - patches/0016-Patch-ml_dtype-to-make-constructor-unambiguous.patch
       - patches/0017-Load-cuda_build_defs-from-tsl.patch
       - patches/0018-Use-PYTHON-for-build-wheel.patch
+      - patches/0019-Always-use-Linux-sed-style.patch
   - url: https://github.com/tensorflow/estimator/archive/refs/tags/v{{ estimator_version.replace(".rc", "-rc") }}.tar.gz
     sha256: 2d7e100b1878084da34b5e23b49a0cbb5ee8a7add74b7dd189a82ada1cf85530
     folder: tensorflow-estimator
