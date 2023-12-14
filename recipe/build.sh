@@ -170,7 +170,9 @@ if [[ "${cuda_compiler_version}" == 12* ]]; then
     sed -i '/CUDA_TOOLKIT_PATH/d' .tf_configure.bazelrc
 fi
 
-$RECIPE_DIR/add_py_toolchain.sh
+if [[ "${build_platform}" == linux-* ]]; then
+  $RECIPE_DIR/add_py_toolchain.sh
+fi
 
 cat >> .bazelrc <<EOF
 build --crosstool_top=//custom_toolchain:toolchain
