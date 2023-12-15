@@ -170,7 +170,7 @@ if [[ "${cuda_compiler_version}" == 12* ]]; then
     sed -i '/CUDA_TOOLKIT_PATH/d' .tf_configure.bazelrc
 fi
 
-if [[ "${build_platform}" == linux-* ]]; then
+if [[ "${build_platform}" == linux-* ]]; then
   $RECIPE_DIR/add_py_toolchain.sh
 fi
 
