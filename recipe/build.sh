@@ -43,7 +43,6 @@ export TF_PYTHON_VERSION=$PY_VER
 # Needs c++17, try on linux
 #  com_googlesource_code_re2
 export TF_SYSTEM_LIBS="
-  absl_py
   astor_archive
   astunparse_archive
   boringssl
@@ -84,6 +83,36 @@ if [[ "${target_platform}" == osx-* ]]; then
   export LDFLAGS="${LDFLAGS} -lz -framework CoreFoundation -Xlinker -undefined -Xlinker dynamic_lookup"
 else
   export LDFLAGS="${LDFLAGS} -lrt"
+fi
+
+if [[ ${cuda_compiler_version} != "None" ]]; then
+    export LDFLAGS="${LDFLAGS} -lcusparse"
+    export GCC_HOST_COMPILER_PATH="${GCC}"
+    export GCC_HOST_COMPILER_PREFIX="$(dirname ${GCC})"
+
+    export TF_NEED_CUDA=1
+    export TF_CUDA_VERSION="${cuda_compiler_version}"
+    export TF_CUDNN_VERSION="${cudnn}"
+    export TF_NCCL_VERSION=$(pkg-config nccl --modversion | grep -Po '\d+\.\d+')
+
+    export LDFLAGS="${LDFLAGS//-Wl,-z,now/-Wl,-z,lazy}"
+    export CC_OPT_FLAGS="-march=nocona -mtune=haswell"
+
+    if [[ ${cuda_compiler_version} == 11.8 ]]; then
+        export TF_CUDA_COMPUTE_CAPABILITIES=sm_35,sm_50,sm_60,sm_62,sm_70,sm_72,sm_75,sm_80,sm_86,sm_87,sm_89,sm_90,compute_90
+        export TF_CUDA_PATHS="${PREFIX},${CUDA_HOME}"
+    elif [[ "${cuda_compiler_version}" == 12* ]]; then
+        export TF_CUDA_COMPUTE_CAPABILITIES=sm_60,sm_70,sm_75,sm_80,sm_86,sm_89,sm_90,compute_90
+	export CUDNN_INSTALL_PATH=$PREFIX
+	export NCCL_INSTALL_PATH=$PREFIX
+	export CUDA_HOME="${BUILD_PREFIX}/targets/x86_64-linux"
+        export TF_CUDA_PATHS="${BUILD_PREFIX}/targets/x86_64-linux,${PREFIX}/targets/x86_64-linux"
+	# XLA can only cope with a single cuda header include directory, merge both
+	rsync -a ${PREFIX}/targets/x86_64-linux/include/ ${BUILD_PREFIX}/targets/x86_64-linux/include/
+    else
+        echo "unsupported cuda version."
+        exit 1
+    fi
 fi
 
 source ${RECIPE_DIR}/gen-bazel-toolchain.sh
@@ -131,39 +160,19 @@ export TF_SET_ANDROID_WORKSPACE=0
 export TF_CONFIGURE_IOS=0
 
 
-if [[ ${cuda_compiler_version} != "None" ]]; then
-    export GCC_HOST_COMPILER_PATH="${GCC}"
-    export GCC_HOST_COMPILER_PREFIX="$(dirname ${GCC})"
-
-    export TF_CUDA_PATHS="${PREFIX},${CUDA_HOME}"
-    export TF_NEED_CUDA=1
-    export TF_CUDA_VERSION="${cuda_compiler_version}"
-    export TF_CUDNN_VERSION="${cudnn}"
-    export TF_NCCL_VERSION=$(pkg-config nccl --modversion | grep -Po '\d+\.\d+')
-
-    export LDFLAGS="${LDFLAGS//-Wl,-z,now/-Wl,-z,lazy}"
-    export CC_OPT_FLAGS="-march=nocona -mtune=haswell"
-
-    if [[ ${cuda_compiler_version} == 10.* ]]; then
-        export TF_CUDA_COMPUTE_CAPABILITIES=sm_35,sm_50,sm_60,sm_62,sm_70,sm_72,sm_75,compute_75
-    elif [[ ${cuda_compiler_version} == 11.0* ]]; then
-        export TF_CUDA_COMPUTE_CAPABILITIES=sm_35,sm_50,sm_60,sm_62,sm_70,sm_72,sm_75,sm_80,compute_80
-    elif [[ ${cuda_compiler_version} == 11.1 ]]; then
-        export TF_CUDA_COMPUTE_CAPABILITIES=sm_35,sm_50,sm_60,sm_62,sm_70,sm_72,sm_75,sm_80,sm_86,compute_86
-    elif [[ ${cuda_compiler_version} == 11.2 ]]; then
-        export TF_CUDA_COMPUTE_CAPABILITIES=sm_35,sm_50,sm_60,sm_62,sm_70,sm_72,sm_75,sm_80,sm_86,compute_86
-    elif [[ ${cuda_compiler_version} == 11.8 ]]; then
-        export TF_CUDA_COMPUTE_CAPABILITIES=sm_35,sm_50,sm_60,sm_62,sm_70,sm_72,sm_75,sm_80,sm_86,sm_87,sm_89,sm_90,compute_90
-    else
-        echo "unsupported cuda version."
-        exit 1
-    fi
-fi
-
 #bazel clean --expunge
 #bazel shutdown
 
 ./configure
+
+# Remove legacy flags set by configure that conflicts with CUDA 12's multi-directory approach.
+if [[ "${cuda_compiler_version}" == 12* ]]; then
+    sed -i '/CUDA_TOOLKIT_PATH/d' .tf_configure.bazelrc
+fi
+
+if [[ "${build_platform}" == linux-* ]]; then
+  $RECIPE_DIR/add_py_toolchain.sh
+fi
 
 cat >> .bazelrc <<EOF
 build --crosstool_top=//custom_toolchain:toolchain
@@ -208,7 +217,7 @@ mkdir -p $SRC_DIR/libtensorflow_cc_output/include/tensorflow
 rsync -r --chmod=D777,F666 --exclude '_solib*' --exclude '_virtual_includes/' --exclude 'pip_package/' --exclude 'lib_package/' --include '*/' --include '*.h' --include '*.inc' --exclude '*' bazel-bin/ $SRC_DIR/libtensorflow_cc_output/include
 rsync -r --chmod=D777,F666 --include '*/' --include '*.h' --include '*.inc' --exclude '*' tensorflow/cc $SRC_DIR/libtensorflow_cc_output/include/tensorflow/
 rsync -r --chmod=D777,F666 --include '*/' --include '*.h' --include '*.inc' --exclude '*' tensorflow/core $SRC_DIR/libtensorflow_cc_output/include/tensorflow/
-rsync -r --chmod=D777,F666 --include '*/' --include '*.h' --include '*.inc' --exclude '*' tensorflow/tsl $SRC_DIR/libtensorflow_cc_output/include/tensorflow/
+rsync -r --chmod=D777,F666 --include '*/' --include '*.h' --include '*.inc' --exclude '*' third_party/xla/third_party/tsl/ $SRC_DIR/libtensorflow_cc_output/include/
 rsync -r --chmod=D777,F666 --include '*/' --include '*' --exclude '*.cc' third_party/ $SRC_DIR/libtensorflow_cc_output/include/third_party/
 rsync -r --chmod=D777,F666 --include '*/' --include '*' --exclude '*.txt' bazel-work/external/eigen_archive/Eigen/ $SRC_DIR/libtensorflow_cc_output/include/Eigen/
 rsync -r --chmod=D777,F666 --include '*/' --include '*' --exclude '*.txt' bazel-work/external/eigen_archive/unsupported/ $SRC_DIR/libtensorflow_cc_output/include/unsupported/

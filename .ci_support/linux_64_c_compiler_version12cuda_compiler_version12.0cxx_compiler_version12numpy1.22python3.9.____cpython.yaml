@@ -1,7 +1,7 @@
 c_compiler:
 - gcc
 c_compiler_version:
-- '11'
+- '12'
 cdt_name:
 - cos7
 channel_sources:
@@ -9,17 +9,17 @@ channel_sources:
 channel_targets:
 - conda-forge main
 cuda_compiler:
-- nvcc
+- cuda-nvcc
 cuda_compiler_version:
-- '11.8'
+- '12.0'
 cudnn:
 - '8'
 cxx_compiler:
 - gxx
 cxx_compiler_version:
-- '11'
+- '12'
 docker_image:
-- quay.io/condaforge/linux-anvil-cuda:11.8
+- quay.io/condaforge/linux-anvil-cos7-x86_64
 flatbuffers:
 - 23.5.26
 giflib:
@@ -51,7 +51,7 @@ pin_run_as_build:
     min_pin: x.x
     max_pin: x.x
 python:
-- 3.10.* *_cpython
+- 3.9.* *_cpython
 python_impl:
 - cpython
 snappy:
@@ -60,6 +60,8 @@ sqlite:
 - '3'
 target_platform:
 - linux-64
+tensorflow:
+- '2.14'
 zip_keys:
 - - c_compiler_version
   - cxx_compiler_version
