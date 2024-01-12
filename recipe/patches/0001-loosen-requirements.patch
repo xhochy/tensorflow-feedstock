@@ -1,7 +1,7 @@
-From 5eefe47f14ec189181974554fc58f4bbe9ae3c9d Mon Sep 17 00:00:00 2001
+From 9a99881552b7271bb6024d00488752f41fa7ee34 Mon Sep 17 00:00:00 2001
 From: "Uwe L. Korn" <uwe.korn@quantco.com>
 Date: Thu, 30 Dec 2021 06:57:09 +0200
-Subject: [PATCH 01/18] loosen requirements
+Subject: [PATCH 01/19] loosen requirements
 
 * Remove unused libclang requirement
 * Remove unecessary tensorflow-io-gcs-filesystem
@@ -14,7 +14,7 @@ Co-authored-by: ngam
  1 file changed, 2 deletions(-)
 
 diff --git a/tensorflow/tools/pip_package/setup.py b/tensorflow/tools/pip_package/setup.py
-index b416731380f..d3ff114624a 100644
+index b4167313..d3ff1146 100644
 --- a/tensorflow/tools/pip_package/setup.py
 +++ b/tensorflow/tools/pip_package/setup.py
 @@ -88,7 +88,6 @@ REQUIRED_PACKAGES = [
