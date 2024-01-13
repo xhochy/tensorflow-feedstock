@@ -112,6 +112,7 @@ if [[ ${cuda_compiler_version} != "None" ]]; then
 
 	# hmaarrfk -- 2023/12/30
         # This logic should be safe to keep in even when the underlying issue is resolved
+        # xref: https://github.com/conda-forge/cuda-nvcc-impl-feedstock/issues/9
         if [[ -x ${BUILD_PREFIX}/nvvm/bin/cicc ]]; then
             cp ${BUILD_PREFIX}/nvvm/bin/cicc ${BUILD_PREFIX}/bin/cicc
         fi
