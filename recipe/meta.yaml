@@ -306,7 +306,8 @@ outputs:
         - tflite_convert --help      # [build_platform == target_platform]
         - toco_from_protos --help    # [build_platform == target_platform]
         - toco --help                # [build_platform == target_platform]
-        - python -c 'import tensorflow as tf; assert tf.test.is_built_with_cuda()'  # [cuda_compiler_version != "None"]
+        - python -c 'import tensorflow as tf; assert tf.test.is_built_with_cuda()'      # [cuda_compiler_version != "None"]
+        - python -c 'import tensorflow as tf; assert not tf.test.is_built_with_cuda()'  # [cuda_compiler_version == "None"]
 
   - name: tensorflow-estimator
     script: build_estimator.sh  # [unix]
