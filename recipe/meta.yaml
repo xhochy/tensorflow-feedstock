@@ -23,7 +23,7 @@ source:
       - patches/0012-Add-well_known_types_py_pb2-to-protobuf-systemlib.patch
       - patches/0013-Add-protobuf-toolchain.patch
       - patches/0014-fix-genproto.patch
-      - patches/0015-Remove-some-usage-of-absl-str_format-in-CUDA.patch
+      - patches/0015-Remove-some-usage-of-absl-str_format-in-CUDA.patch  # [(cuda_compiler_version or "").startswith("11")]
       - patches/0016-Patch-ml_dtype-to-make-constructor-unambiguous.patch
       - patches/0017-Load-cuda_build_defs-from-tsl.patch
       - patches/0018-Use-PYTHON-for-build-wheel.patch
