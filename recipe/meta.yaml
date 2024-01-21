@@ -23,11 +23,13 @@ source:
       - patches/0012-Add-well_known_types_py_pb2-to-protobuf-systemlib.patch
       - patches/0013-Add-protobuf-toolchain.patch
       - patches/0014-fix-genproto.patch
-      - patches/0015-Remove-some-usage-of-absl-str_format-in-CUDA.patch
+      - patches/0015-Remove-some-usage-of-absl-str_format-in-CUDA.patch  # [(cuda_compiler_version or "").startswith("11")]
       - patches/0016-Patch-ml_dtype-to-make-constructor-unambiguous.patch
       - patches/0017-Load-cuda_build_defs-from-tsl.patch
       - patches/0018-Use-PYTHON-for-build-wheel.patch
       - patches/0019-Always-use-Linux-sed-style.patch
+      # https://github.com/tensorflow/tensorflow/pull/62684
+      - patches/62684.patch
   - url: https://github.com/tensorflow/estimator/archive/refs/tags/v{{ estimator_version.replace(".rc", "-rc") }}.tar.gz
     sha256: 2d7e100b1878084da34b5e23b49a0cbb5ee8a7add74b7dd189a82ada1cf85530
     folder: tensorflow-estimator
@@ -40,11 +42,13 @@ source:
     sha256: b3a9970c3c6b169c41ac2fd4375f668d3fd1b492d48b912d89415fa1522a8f50
 
 build:
-  number: 1
+  number: 2
   skip: true  # [win]
   skip: true  # [python_impl == 'pypy']
   skip: true  # [py<39]
   skip: true  # [cuda_compiler_version == "11.2"]
+  # The following skip can be removed when the absl::StrFormat build issues are fixed.
+  skip: true  # [cuda_compiler_version == "11.8"]
 
 requirements:
   build:
@@ -306,6 +310,10 @@ outputs:
         - tflite_convert --help      # [build_platform == target_platform]
         - toco_from_protos --help    # [build_platform == target_platform]
         - toco --help                # [build_platform == target_platform]
+        - python -c 'import tensorflow as tf; assert tf.test.is_built_with_cuda()'      # [cuda_compiler_version != "None"]
+        - python -c 'import tensorflow as tf; assert not tf.test.is_built_with_cuda()'  # [cuda_compiler_version == "None"]
+        # See https://github.com/conda-forge/tensorflow-feedstock/issues/364
+        - python -c "import tensorflow as tf;graph = tf.function(lambda x:x).get_concrete_function(1.).graph;tf.compat.v1.train.export_meta_graph(graph=graph,graph_def=graph.as_graph_def())"
 
   - name: tensorflow-estimator
     script: build_estimator.sh  # [unix]

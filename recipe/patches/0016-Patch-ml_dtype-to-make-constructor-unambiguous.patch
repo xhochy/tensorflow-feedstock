@@ -1,7 +1,7 @@
-From 5885eb332d7ed41e150dfbaea631fd6a0d32e2fe Mon Sep 17 00:00:00 2001
+From 661870ce07536134d415fa92911daca1efdb5c20 Mon Sep 17 00:00:00 2001
 From: "Uwe L. Korn" <uwe.korn@quantco.com>
 Date: Thu, 23 Nov 2023 20:50:37 +0000
-Subject: [PATCH 16/18] Patch ml_dtype to make constructor unambiguous
+Subject: [PATCH 16/19] Patch ml_dtype to make constructor unambiguous
 
 Both constructors can be used and sadly, it seems there is no way to
 force the use of one of them as part of the macros Tensorflow uses. As
@@ -15,7 +15,7 @@ to make it explicit.
 
 diff --git a/third_party/py/ml_dtypes/int4.patch b/third_party/py/ml_dtypes/int4.patch
 new file mode 100644
-index 00000000000..d91c68cbf88
+index 00000000..d91c68cb
 --- /dev/null
 +++ b/third_party/py/ml_dtypes/int4.patch
 @@ -0,0 +1,15 @@
@@ -35,7 +35,7 @@ index 00000000000..d91c68cbf88
 +   static constexpr i4 lowest() {
 +     return std::is_signed<UnderlyingTy>::value ? i4(-8) : i4(0);
 diff --git a/third_party/py/ml_dtypes/workspace.bzl b/third_party/py/ml_dtypes/workspace.bzl
-index 84aeb00edbe..5e6abdfc4c9 100644
+index 84aeb00e..5e6abdfc 100644
 --- a/third_party/py/ml_dtypes/workspace.bzl
 +++ b/third_party/py/ml_dtypes/workspace.bzl
 @@ -12,6 +12,9 @@ def repo():

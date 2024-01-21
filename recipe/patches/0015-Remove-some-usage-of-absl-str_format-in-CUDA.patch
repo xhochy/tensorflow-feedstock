@@ -1,7 +1,7 @@
-From c5cfae7598150b1dcbb7bcfbc881479575199a64 Mon Sep 17 00:00:00 2001
+From 16f275bed08a13bfad3f7b3644e036959be983cf Mon Sep 17 00:00:00 2001
 From: "Uwe L. Korn" <uwe.korn@quantco.com>
 Date: Thu, 23 Nov 2023 09:05:37 +0000
-Subject: [PATCH 15/18] Remove some usage of absl::str_format in CUDA
+Subject: [PATCH 15/19] Remove some usage of absl::str_format in CUDA
 
 nvcc from CUDA 11 is unable to correctly handle the new C++ features
 used in this template. We use a different implementation that should
@@ -9,10 +9,11 @@ yield the same results without the usage of absl.
 ---
  tensorflow/core/framework/resource_base.h | 10 ++++++++--
  tensorflow/core/framework/resource_var.cc |  2 ++
- 2 files changed, 10 insertions(+), 2 deletions(-)
+ tensorflow/core/kernels/conv_ops_gpu.h    |  2 +-
+ 3 files changed, 11 insertions(+), 3 deletions(-)
 
 diff --git a/tensorflow/core/framework/resource_base.h b/tensorflow/core/framework/resource_base.h
-index 46a76ea094c..2f8d0a21878 100644
+index 46a76ea0..2f8d0a21 100644
 --- a/tensorflow/core/framework/resource_base.h
 +++ b/tensorflow/core/framework/resource_base.h
 @@ -18,8 +18,9 @@ limitations under the License.
@@ -41,7 +42,7 @@ index 46a76ea094c..2f8d0a21878 100644
  
    // Returns memory used by this resource.
 diff --git a/tensorflow/core/framework/resource_var.cc b/tensorflow/core/framework/resource_var.cc
-index 0f5ed5560d6..b1adf7180a7 100644
+index 0f5ed556..b1adf718 100644
 --- a/tensorflow/core/framework/resource_var.cc
 +++ b/tensorflow/core/framework/resource_var.cc
 @@ -18,6 +18,8 @@ limitations under the License.
@@ -53,3 +54,16 @@ index 0f5ed5560d6..b1adf7180a7 100644
  namespace tensorflow {
  
  Status Var::AsGraphDef(GraphDefBuilder* builder, Node** out) const {
+diff --git a/tensorflow/core/kernels/conv_ops_gpu.h b/tensorflow/core/kernels/conv_ops_gpu.h
+index 80646bad..b47e8a73 100644
+--- a/tensorflow/core/kernels/conv_ops_gpu.h
++++ b/tensorflow/core/kernels/conv_ops_gpu.h
+@@ -22,7 +22,7 @@ limitations under the License.
+ #include <unordered_map>
+ 
+ #include "absl/strings/str_cat.h"
+-#include "absl/strings/str_format.h"
++// #include "absl/strings/str_format.h"
+ #include "tensorflow/core/framework/op_kernel.h"
+ #include "tensorflow/core/kernels/gpu_utils.h"
+ #include "tensorflow/core/lib/gtl/inlined_vector.h"

@@ -109,10 +109,19 @@ if [[ ${cuda_compiler_version} != "None" ]]; then
         export TF_CUDA_PATHS="${BUILD_PREFIX}/targets/x86_64-linux,${PREFIX}/targets/x86_64-linux"
 	# XLA can only cope with a single cuda header include directory, merge both
 	rsync -a ${PREFIX}/targets/x86_64-linux/include/ ${BUILD_PREFIX}/targets/x86_64-linux/include/
+
+	# hmaarrfk -- 2023/12/30
+        # This logic should be safe to keep in even when the underlying issue is resolved
+        # xref: https://github.com/conda-forge/cuda-nvcc-impl-feedstock/issues/9
+        if [[ -x ${BUILD_PREFIX}/nvvm/bin/cicc ]]; then
+            cp ${BUILD_PREFIX}/nvvm/bin/cicc ${BUILD_PREFIX}/bin/cicc
+        fi
     else
         echo "unsupported cuda version."
         exit 1
     fi
+else
+    export TF_NEED_CUDA=0
 fi
 
 source ${RECIPE_DIR}/gen-bazel-toolchain.sh
@@ -147,7 +156,6 @@ export USE_DEFAULT_PYTHON_LIB_PATH=1
 export TF_NEED_OPENCL=0
 export TF_NEED_OPENCL_SYCL=0
 export TF_NEED_COMPUTECPP=0
-export TF_NEED_CUDA=0
 export TF_CUDA_CLANG=0
 if [[ "${target_platform}" == linux-* ]]; then
   export TF_NEED_CLANG=0

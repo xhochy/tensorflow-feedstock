@@ -1,4 +1,4 @@
-From cb7e7a25bfe13a4cdcc03d2826c3ba631cd4ca8d Mon Sep 17 00:00:00 2001
+From 2be3883b2294cd63b14eada4cfaa5f0ab1a99e64 Mon Sep 17 00:00:00 2001
 From: "Uwe L. Korn" <uwe.korn@quantco.com>
 Date: Thu, 14 Dec 2023 14:17:28 +0100
 Subject: [PATCH 19/19] Always use Linux-sed style
@@ -8,7 +8,7 @@ Subject: [PATCH 19/19] Always use Linux-sed style
  1 file changed, 3 insertions(+), 9 deletions(-)
 
 diff --git a/tensorflow/tools/pip_package/build_pip_package.sh b/tensorflow/tools/pip_package/build_pip_package.sh
-index ffac1e25e47..603f872ab46 100755
+index ffac1e25..603f872a 100755
 --- a/tensorflow/tools/pip_package/build_pip_package.sh
 +++ b/tensorflow/tools/pip_package/build_pip_package.sh
 @@ -289,15 +289,9 @@ function prepare_src() {
@@ -30,6 +30,3 @@ index ffac1e25e47..603f872ab46 100755
  
    mkdir -p ${TMPDIR}/third_party
    cp -R $RUNFILES/third_party/eigen3 ${TMPDIR}/third_party
--- 
-2.43.0
-
