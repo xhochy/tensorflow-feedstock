@@ -42,7 +42,7 @@ source:
     sha256: b3a9970c3c6b169c41ac2fd4375f668d3fd1b492d48b912d89415fa1522a8f50
 
 build:
-  number: 2
+  number: 3
   skip: true  # [win]
   skip: true  # [python_impl == 'pypy']
   skip: true  # [py<39]
@@ -83,7 +83,8 @@ requirements:
     # GPU requirements for CUDA
     - cudnn      # [cuda_compiler_version != "None"]
     - nccl       # [cuda_compiler_version != "None"]
-    - cuda-version {{ cuda_compiler_version }}  # [cuda_compiler_version != "None"]
+    - cuda-version {{ cuda_compiler_version }}  # [cuda_compiler_version == "11.8"]
+    - cuda-version 12   # [(cuda_compiler_version or "").startswith("12")]
     - cuda-cupti-dev    # [(cuda_compiler_version or "").startswith("12")]
     - cuda-cudart-dev   # [(cuda_compiler_version or "").startswith("12")]
     - cuda-nvml-dev     # [(cuda_compiler_version or "").startswith("12")]
@@ -187,7 +188,8 @@ outputs:
         # GPU reuqirements
         - cudnn                   # [cuda_compiler_version != "None"]
         - nccl                    # [cuda_compiler_version != "None"]
-        - cuda-version {{ cuda_compiler_version }}  # [cuda_compiler_version != "None"]
+        - cuda-version {{ cuda_compiler_version }}  # [cuda_compiler_version == "11.8"]
+        - cuda-version 12   # [(cuda_compiler_version or "").startswith("12")]
         - cuda-cupti-dev    # [(cuda_compiler_version or "").startswith("12")]
         - cuda-cudart-dev   # [(cuda_compiler_version or "").startswith("12")]
         - cuda-nvml-dev     # [(cuda_compiler_version or "").startswith("12")]
@@ -291,7 +293,8 @@ outputs:
         - {{ pin_subpackage('tensorflow-estimator', exact=True) }}
         # avoid that people without GPUs needlessly download ~0.5-1GB
         # This also helps mamba give preference to the CPU build
-        - cuda-version {{ cuda_compiler_version }}  # [cuda_compiler_version != "None"]
+        - cuda-version {{ cuda_compiler_version }}  # [cuda_compiler_version == "11.8"]
+        - cuda-version 12   # [(cuda_compiler_version or "").startswith("12")]
         - __cuda  # [cuda_compiler_version != "None"]
     test:
       files:
@@ -349,7 +352,8 @@ outputs:
         - {{ pin_subpackage('tensorflow-base', exact=True) }}
         # Keep the cuda version here since it helps package solvers
         # decide on the cuda variant
-        - cuda-version {{ cuda_compiler_version }}  # [cuda_compiler_version != "None"]
+        - cuda-version {{ cuda_compiler_version }}  # [cuda_compiler_version == "11.8"]
+        - cuda-version 12   # [(cuda_compiler_version or "").startswith("12")]
       run:
         - python
         - {{ pin_subpackage('tensorflow-base', exact=True) }}
