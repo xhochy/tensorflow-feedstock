@@ -16,7 +16,7 @@ index ed2ffece..271f3141 100644
      // 'python' subdirectory (for pywrap libs). So we check two possible paths
      // relative to the current binary for the wheel-based nvcc package.
 -    for (auto path : {"/../nvidia/cuda_nvcc", "/../../nvidia/cuda_nvcc"})
-+    for (auto path : {"/../nvidia/cuda_nvcc", "/../../nvidia/cuda_nvcc", "../../../../nvvm/libdevice"})
++    for (auto path : {"/../nvidia/cuda_nvcc", "/../../nvidia/cuda_nvcc", "/../../../../nvvm/libdevice"})
        roots.emplace_back(std::string(dir) + path);
    }
  #endif  // defined(PLATFORM_POSIX) && !defined(__APPLE__)
