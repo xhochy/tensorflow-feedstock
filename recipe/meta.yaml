@@ -286,14 +286,15 @@ outputs:
       host:
         # Require python so that the CONDA_PY gets populated
         - python
+        # Keep the cuda version here since it helps package solvers
+        # decide on the cuda variant
+        - cuda-version {{ cuda_compiler_version }}  # [cuda_compiler_version != "None"]
       run:
         - python
         - {{ pin_subpackage('tensorflow-base', exact=True) }}
         - {{ pin_subpackage('tensorflow-estimator', exact=True) }}
         # avoid that people without GPUs needlessly download ~0.5-1GB
         # This also helps mamba give preference to the CPU build
-        - cuda-version {{ cuda_compiler_version }}  # [cuda_compiler_version == "11.8"]
-        - cuda-version 12   # [(cuda_compiler_version or "").startswith("12")]
         - __cuda  # [cuda_compiler_version != "None"]
     test:
       files:
