@@ -28,6 +28,7 @@ source:
       - patches/0017-Load-cuda_build_defs-from-tsl.patch
       - patches/0018-Use-PYTHON-for-build-wheel.patch
       - patches/0019-Always-use-Linux-sed-style.patch
+      - patches/0020-Adjust-relative-path-for-libdevice.patch  # [(cuda_compiler_version or "").startswith("12")]
       # https://github.com/tensorflow/tensorflow/pull/62684
       - patches/62684.patch
   - url: https://github.com/tensorflow/estimator/archive/refs/tags/v{{ estimator_version.replace(".rc", "-rc") }}.tar.gz
@@ -42,7 +43,7 @@ source:
     sha256: b3a9970c3c6b169c41ac2fd4375f668d3fd1b492d48b912d89415fa1522a8f50
 
 build:
-  number: 2
+  number: 3
   skip: true  # [win]
   skip: true  # [python_impl == 'pypy']
   skip: true  # [py<39]
@@ -285,13 +286,15 @@ outputs:
       host:
         # Require python so that the CONDA_PY gets populated
         - python
+        # Keep the cuda version here since it helps package solvers
+        # decide on the cuda variant
+        - cuda-version {{ cuda_compiler_version }}  # [cuda_compiler_version != "None"]
       run:
         - python
         - {{ pin_subpackage('tensorflow-base', exact=True) }}
         - {{ pin_subpackage('tensorflow-estimator', exact=True) }}
         # avoid that people without GPUs needlessly download ~0.5-1GB
         # This also helps mamba give preference to the CPU build
-        - cuda-version {{ cuda_compiler_version }}  # [cuda_compiler_version != "None"]
         - __cuda  # [cuda_compiler_version != "None"]
     test:
       files:
