@@ -27,13 +27,13 @@ libabseil:
 libcurl:
 - '8'
 libgrpc:
-- '1.61'
+- '1.62'
 libjpeg_turbo:
 - '3'
 libpng:
 - '1.6'
 libprotobuf:
-- 4.25.2
+- 4.25.3
 macos_machine:
 - x86_64-apple-darwin13.4.0
 numpy:
