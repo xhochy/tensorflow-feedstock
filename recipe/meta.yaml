@@ -1,4 +1,4 @@
-{% set version = "2.15.0" %}
+{% set version = "2.16.1" %}
 {% set estimator_version = "2.15.0" %}
 
 package:
@@ -7,7 +7,7 @@ package:
 
 source:
   - url: https://github.com/tensorflow/tensorflow/archive/refs/tags/v{{ version.replace(".rc", "-rc") }}.tar.gz
-    sha256: 9cec5acb0ecf2d47b16891f8bc5bc6fbfdffe1700bdadc0d9ebe27ea34f0c220
+    sha256: c729e56efc945c6df08efe5c9f5b8b89329c7c91b8f40ad2bb3e13900bd4876d
     patches:
       - patches/0001-loosen-requirements.patch
       - patches/0002-Add-additional-absl_synchronization-linkage-to-gRPC.patch
@@ -29,8 +29,6 @@ source:
       - patches/0018-Use-PYTHON-for-build-wheel.patch
       - patches/0019-Always-use-Linux-sed-style.patch
       - patches/0020-Adjust-relative-path-for-libdevice.patch  # [(cuda_compiler_version or "").startswith("12")]
-      # https://github.com/tensorflow/tensorflow/pull/62684
-      - patches/62684.patch
       - patches/0023-Fix-missing-includes-needed-for-Abseil-lts_2024_01_1.patch
       - patches/0024-Link-to-absl_log_flags-instead-of-absl_flags.patch
       - patches/0025-Update-ABSL-Log-Definition-for-libabsl_vlog_config_i.patch
@@ -38,6 +36,7 @@ source:
     sha256: 2d7e100b1878084da34b5e23b49a0cbb5ee8a7add74b7dd189a82ada1cf85530
     folder: tensorflow-estimator
   # yes, the headers come from a different version than the python package required below.
+  # TODO: Check that these are still up to date
   - url: https://raw.githubusercontent.com/jax-ml/ml_dtypes/v0.3.1/ml_dtypes/include/float8.h
     fn: float8.h
     sha256: d2798fad4e64375b566b1df1d7bc440313e4b1024ca08f12cead3eaa4b73ff72
