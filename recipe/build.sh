@@ -2,6 +2,10 @@
 
 set -ex
 
+if [[ "$CI" == "github_actions" ]]; then
+  export CPU_COUNT=2
+fi
+
 # Make libprotobuf-python-headers visible for pybind11_protobuf
 # These files will be deleted at the end of the build.
 mkdir -p $PREFIX/include/python
