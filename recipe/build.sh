@@ -3,7 +3,7 @@
 set -ex
 
 if [[ "$CI" == "github_actions" ]]; then
-  export CPU_COUNT=2
+  export CPU_COUNT=4
 fi
 
 # Make libprotobuf-python-headers visible for pybind11_protobuf
