@@ -19,7 +19,7 @@ flatbuffers:
 giflib:
 - '5.2'
 github_actions_labels:
-- cirun-openstack-cpu-large
+- cirun-openstack-cpu-xlarge
 icu:
 - '73'
 libabseil:
