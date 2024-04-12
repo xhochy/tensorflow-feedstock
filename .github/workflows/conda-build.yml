@@ -16,7 +16,7 @@ jobs:
   build:
     name: ${{ matrix.CONFIG }}
     runs-on: ${{ matrix.runs_on }}
-    timeout-minutes: 360
+    timeout-minutes: 720
     strategy:
       fail-fast: false
       matrix:
@@ -54,7 +54,7 @@ jobs:
     steps:
 
     - name: Checkout code
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
 
     - name: Build on Linux
       if: matrix.os == 'ubuntu'
