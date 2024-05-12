@@ -1,7 +1,7 @@
 From cd1fce87063081da7f3643dffc2a69e0f0026500 Mon Sep 17 00:00:00 2001
 From: Mark Harfouche <mark.harfouche@gmail.com>
 Date: Wed, 13 Mar 2024 06:24:35 -0400
-Subject: [PATCH 23/24] Update flatbuffers static assert
+Subject: [PATCH 23/25] Update flatbuffers static assert
 
 ---
  .../acceleration/configuration/configuration_generated.h    | 6 +++---
@@ -20,7 +20,7 @@ index 675dfc9d8c9..6772d01b7d3 100644
 -              FLATBUFFERS_VERSION_REVISION == 26,
 +static_assert(FLATBUFFERS_VERSION_MAJOR == 24 &&
 +              FLATBUFFERS_VERSION_MINOR == 3 &&
-+              FLATBUFFERS_VERSION_REVISION == 25,
++              FLATBUFFERS_VERSION_REVISION == 7,
               "Non-compatible flatbuffers version included");
  
  namespace tflite {
