@@ -1,0 +1,22 @@
+From 6c666e6ff7a51ed5518bbb96229f7556dd3c728b Mon Sep 17 00:00:00 2001
+From: "Uwe L. Korn" <uwe.korn@quantco.com>
+Date: Fri, 15 Sep 2023 11:06:27 +0200
+Subject: [PATCH 07/21] Omit linking to layout_proto_cc if protobuf linkage is
+ shared
+
+---
+ tensorflow/python/BUILD | 1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git a/tensorflow/python/BUILD b/tensorflow/python/BUILD
+index 675709d4314..4c713a9374c 100644
+--- a/tensorflow/python/BUILD
++++ b/tensorflow/python/BUILD
+@@ -1358,7 +1358,6 @@ tf_python_pybind_extension(
+     features = ["-layering_check"],
+     deps = [
+         ":pywrap_densor_device_headers",
+-        "//tensorflow/dtensor/proto:layout_proto_cc",
+         "//tensorflow/python/lib/core:pybind11_lib",
+         "//tensorflow/python/lib/core:pybind11_status_headers",
+         "//third_party/python_runtime:headers",  # buildcleaner: keep
