@@ -1,7 +1,7 @@
 From 8b973e939c1c41bf85504d80e3c9cf193893d5e7 Mon Sep 17 00:00:00 2001
 From: "Uwe L. Korn" <uwe.korn@quantco.com>
 Date: Mon, 27 Nov 2023 10:35:53 +0000
-Subject: [PATCH 17/21] Use PYTHON for build wheel
+Subject: [PATCH 17/23] Use PYTHON for build wheel
 
 Tensorflow tries to use a Python binary it downloaded as part of its
 hermetic Python approach. As we use our own Python toolchain, this is

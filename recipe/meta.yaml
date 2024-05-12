@@ -30,12 +30,9 @@ source:
       - patches/0019-Adjust-relative-path-for-libdevice.patch
       # https://github.com/tensorflow/tensorflow/pull/62684
       - patches/0020-Fix-protobuf-errors-when-using-system-protobuf.patch
-      - patches/0021-Update-flatbuffers-static-assert.patch
-
-      # Not ported yet
-      # - patches/0023-Fix-missing-includes-needed-for-Abseil-lts_2024_01_1.patch
-      # - patches/0024-Link-to-absl_log_flags-instead-of-absl_flags.patch
-      # - patches/0025-Update-ABSL-Log-Definition-for-libabsl_vlog_config_i.patch
+      - patches/0021-Link-to-absl_log_flags-instead-of-absl_flags.patch
+      - patches/0022-Update-ABSL-Log-Definition-for-libabsl_vlog_config_i.patch
+      - patches/0023-Update-flatbuffers-static-assert.patch
   - url: https://github.com/tensorflow/estimator/archive/refs/tags/v{{ estimator_version.replace(".rc", "-rc") }}.tar.gz
     sha256: 2d7e100b1878084da34b5e23b49a0cbb5ee8a7add74b7dd189a82ada1cf85530
     folder: tensorflow-estimator

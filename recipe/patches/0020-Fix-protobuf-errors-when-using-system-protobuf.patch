@@ -1,7 +1,7 @@
 From 15ac3aa2f2c73fc7cc95d4c805b744cb6df0257f Mon Sep 17 00:00:00 2001
 From: Jinzhe Zeng <jinzhe.zeng@rutgers.edu>
 Date: Sat, 23 Dec 2023 00:59:32 -0500
-Subject: [PATCH 20/21] Fix protobuf errors when using system protobuf
+Subject: [PATCH 20/23] Fix protobuf errors when using system protobuf
 
 ---
  tensorflow/api_template.__init__.py | 2 ++
