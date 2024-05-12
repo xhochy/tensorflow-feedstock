@@ -1,7 +1,7 @@
 From 5f9de4d19f32770ed47e3afbda687649107882ee Mon Sep 17 00:00:00 2001
 From: "Uwe L. Korn" <uwe.korn@quantco.com>
 Date: Thu, 23 Nov 2023 20:50:37 +0000
-Subject: [PATCH 16/23] Patch ml_dtype to make constructor unambiguous
+Subject: [PATCH 16/24] Patch ml_dtype to make constructor unambiguous
 
 Both constructors can be used and sadly, it seems there is no way to
 force the use of one of them as part of the macros Tensorflow uses. As
