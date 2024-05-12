@@ -26,8 +26,8 @@ source:
       - patches/0015-Remove-some-usage-of-absl-str_format-in-CUDA.patch  # [(cuda_compiler_version or "").startswith("11")]
       - patches/0016-Patch-ml_dtype-to-make-constructor-unambiguous.patch
       - patches/0017-Use-PYTHON-for-build-wheel.patch
-      - patches/0018-Always-use-linux-sed-style.patch
-      - patches/0019-Adjust-relative-path-for-libdevice.patch
+      - patches/0018-Always-use-Linux-sed-style.patch
+      - patches/0019-Adjust-relative-path-for-libdevice.patch  # [(cuda_compiler_version or "").startswith("12")]
       # https://github.com/tensorflow/tensorflow/pull/62684
       - patches/0020-Fix-protobuf-errors-when-using-system-protobuf.patch
       - patches/0021-Link-to-absl_log_flags-instead-of-absl_flags.patch
