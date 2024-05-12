@@ -1,7 +1,7 @@
 From aa0139ad3c62e5f1a676a9d81bd6845557975e4a Mon Sep 17 00:00:00 2001
 From: "Uwe L. Korn" <uwe.korn@quantco.com>
 Date: Thu, 23 Nov 2023 09:05:37 +0000
-Subject: [PATCH 15/26] Remove some usage of absl::str_format in CUDA
+Subject: [PATCH 15/27] Remove some usage of absl::str_format in CUDA
 
 nvcc from CUDA 11 is unable to correctly handle the new C++ features
 used in this template. We use a different implementation that should

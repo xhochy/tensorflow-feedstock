@@ -1,7 +1,7 @@
 From cd1fce87063081da7f3643dffc2a69e0f0026500 Mon Sep 17 00:00:00 2001
 From: Mark Harfouche <mark.harfouche@gmail.com>
 Date: Wed, 13 Mar 2024 06:24:35 -0400
-Subject: [PATCH 23/26] Update flatbuffers static assert
+Subject: [PATCH 23/27] Update flatbuffers static assert
 
 ---
  .../acceleration/configuration/configuration_generated.h    | 6 +++---
