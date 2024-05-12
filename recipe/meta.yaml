@@ -11,7 +11,7 @@ source:
     patches:
       - patches/0001-loosen-requirements.patch
       - patches/0002-Add-additional-absl_synchronization-linkage-to-gRPC.patch
-      - patches/0003-Add-missing-any_invocable-target-to-absel-bazel.patch
+      # - patches/0003-Add-missing-any_invocable-target-to-absel-bazel.patch
       - patches/0004-Fix-missing-abseil-linkages.patch
       - patches/0005-Fix-protobuf_python-for-systemlibs.patch
       - patches/0006-Add-absl_log-systemlib.patch
