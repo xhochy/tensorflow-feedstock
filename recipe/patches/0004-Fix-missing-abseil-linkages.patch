@@ -1,7 +1,7 @@
 From 2bf472062fe84caad1cb2c72e4547e47f77a5331 Mon Sep 17 00:00:00 2001
 From: "Uwe L. Korn" <uwe.korn@quantco.com>
 Date: Mon, 3 Jul 2023 04:45:46 +0000
-Subject: [PATCH 04/28] Fix missing abseil linkages
+Subject: [PATCH 04/29] Fix missing abseil linkages
 
 ---
  third_party/absl/system.absl.strings.BUILD | 2 +-
