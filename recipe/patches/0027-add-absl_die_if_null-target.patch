@@ -1,14 +1,14 @@
-From 70b435a5337e7660c746f8fd8d0c72b9a12e69b7 Mon Sep 17 00:00:00 2001
+From 79c2aa021c104391d7db6e1f21cb1fb5855a9641 Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Sun, 12 May 2024 22:46:04 +1100
-Subject: [PATCH 27/29] add absl_die_if_null target
+Subject: [PATCH 27/30] add absl_die_if_null target
 
 ---
  third_party/absl/system.absl.log.BUILD | 11 +++++++++++
  1 file changed, 11 insertions(+)
 
 diff --git a/third_party/absl/system.absl.log.BUILD b/third_party/absl/system.absl.log.BUILD
-index 1fe1e342594..d6c3b50b01b 100644
+index 1fe1e342594..6606aaa5dd0 100644
 --- a/third_party/absl/system.absl.log.BUILD
 +++ b/third_party/absl/system.absl.log.BUILD
 @@ -2,6 +2,17 @@ load("@rules_cc//cc:defs.bzl", "cc_library")
@@ -17,7 +17,7 @@ index 1fe1e342594..d6c3b50b01b 100644
  
 +cc_library(
 +    name = "die_if_null",
-+    linkopts = ["-libabsl_die_if_null"],
++    linkopts = ["-labsl_die_if_null"],
 +    deps = [
 +        ":log",
 +        "//absl/base:config",

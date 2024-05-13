@@ -1,7 +1,7 @@
-From b3126ec5872366856b0d564ed92e423ed8a8ba23 Mon Sep 17 00:00:00 2001
+From ccbf4bd71b3934f88120ccbaef189b22f0bf0260 Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Mon, 13 May 2024 15:01:23 +1100
-Subject: [PATCH 29/29] avoid ambiguity in conversion to absl::StatusOr<T>
+Subject: [PATCH 29/30] avoid ambiguity in conversion to absl::StatusOr<T>
 
 The function in question wants to return a `TritonWrapperResult`, see
 https://github.com/tensorflow/tensorflow/blob/v2.16.1/third_party/xla/xla/service/gpu/ir_emitter_triton.cc#L2063

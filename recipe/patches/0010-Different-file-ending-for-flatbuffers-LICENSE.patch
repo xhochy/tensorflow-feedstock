@@ -1,7 +1,7 @@
 From b5086d59abd073469b65ba22ca29934bae2b3302 Mon Sep 17 00:00:00 2001
 From: "Uwe L. Korn" <uwe.korn@quantco.com>
 Date: Fri, 27 Oct 2023 11:21:11 +0200
-Subject: [PATCH 10/29] Different file ending for flatbuffers LICENSE
+Subject: [PATCH 10/30] Different file ending for flatbuffers LICENSE
 
 ---
  third_party/flatbuffers/BUILD.system | 5 +++++

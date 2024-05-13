@@ -1,7 +1,7 @@
 From f923273f8daabdcec4b4b570cd0158a79ae49f51 Mon Sep 17 00:00:00 2001
 From: "Uwe L. Korn" <uwe.korn@quantco.com>
 Date: Thu, 14 Dec 2023 14:17:28 +0100
-Subject: [PATCH 18/29] Always use Linux-sed style
+Subject: [PATCH 18/30] Always use Linux-sed style
 
 ---
  tensorflow/tools/pip_package/build_pip_package.sh | 12 +++---------
