@@ -447,6 +447,7 @@ outputs:
         - sqlite
         - zlib
       run:
+        - libml_dtypes-headers <0.4
         # avoid that people without GPUs needlessly download ~200-300MB
         - __cuda  # [cuda_compiler_version != "None"]
     test:
