@@ -47,7 +47,7 @@ libprotobuf:
 nccl:
 - '2'
 numpy:
-- '1.23'
+- '1.26'
 openssl:
 - '3'
 perl:
@@ -57,11 +57,11 @@ pin_run_as_build:
     min_pin: x.x
     max_pin: x.x
 python:
-- 3.11.* *_cpython
+- 3.12.* *_cpython
 python_impl:
 - cpython
 snappy:
-- '1.1'
+- '1.2'
 sqlite:
 - '3'
 target_platform:
