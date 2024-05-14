@@ -1,5 +1,6 @@
 {% set version = "2.16.1" %}
 {% set estimator_version = "2.15.0" %}
+{% set ml_dtypes_version = "0.3.1" %}
 
 package:
   name: tensorflow-split
@@ -141,7 +142,7 @@ requirements:
     - gast >=0.2.1,!=0.5.0,!=0.5.1,!=0.5.2
     - google-pasta >=0.1.1
     - h5py >=3.10
-    - ml_dtypes >=0.3.1,<0.4
+    - ml_dtypes >={{ ml_dtypes_version }},<0.4
     - numpy
     - opt_einsum >=2.3.2
     - protobuf >=3.20.3,<5,!=4.21.0,!=4.21.1,!=4.21.2,!=4.21.3,!=4.21.4,!=4.21.5
@@ -231,7 +232,7 @@ outputs:
         - gast >=0.2.1,!=0.5.0,!=0.5.1,!=0.5.2
         - google-pasta >=0.1.1
         - h5py >=3.10
-        - ml_dtypes >=0.3.1,<0.4
+        - ml_dtypes >={{ ml_dtypes_version }},<0.4
         - numpy
         - opt_einsum >=2.3.2
         - protobuf >=3.20.3,<5,!=4.21.0,!=4.21.1,!=4.21.2,!=4.21.3,!=4.21.4,!=4.21.5
@@ -252,7 +253,7 @@ outputs:
         - google-pasta >=0.1.1
         - grpcio {{ libgrpc }}.*
         - h5py >=3.10
-        - ml_dtypes >=0.3.1,<0.4
+        - ml_dtypes >={{ ml_dtypes_version }},<0.4
         - {{ pin_compatible('numpy', lower_bound='1.22') }}
         - opt_einsum >=2.3.2
         - protobuf >=3.20.3,<5,!=4.21.0,!=4.21.1,!=4.21.2,!=4.21.3,!=4.21.4,!=4.21.5
@@ -447,7 +448,7 @@ outputs:
         - sqlite
         - zlib
       run:
-        - libml_dtypes-headers <0.4
+        - libml_dtypes-headers >={{ ml_dtypes_version }},<0.4
         # avoid that people without GPUs needlessly download ~200-300MB
         - __cuda  # [cuda_compiler_version != "None"]
     test:
