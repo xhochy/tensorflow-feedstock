@@ -1,7 +1,7 @@
 From c22619432afb58caf2b50814a7fbc3a72552c3b2 Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Sun, 12 May 2024 18:45:03 +1100
-Subject: [PATCH 24/30] add absl_string_view target
+Subject: [PATCH 24/31] add absl_string_view target
 
 ---
  third_party/absl/system.absl.strings.BUILD | 12 ++++++++++++
