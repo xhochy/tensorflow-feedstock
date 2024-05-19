@@ -1,6 +1,2 @@
-c_compiler_version:     # [osx]
-  - 18                  # [osx]
-cxx_compiler_version:   # [osx]
-  - 18                  # [osx]
 github_actions_labels:
 - cirun-openstack-cpu-xlarge
