@@ -18,7 +18,7 @@ index 315669e7930..7452644639c 100644
  build:ios --copt=-w
  build:linux --host_copt=-w
 -build:macos --copt=-w
-+build:macos --copt=-w -Wno-c++11-narrowing
++build:macos --copt=-w --copt=-Wno-c++11-narrowing
  build:windows --copt=/W0
  build:windows --host_copt=/W0
  
