@@ -1,5 +1,6 @@
-{% set version = "2.15.0" %}
+{% set version = "2.16.1" %}
 {% set estimator_version = "2.15.0" %}
+{% set ml_dtypes_version = "0.3.1" %}
 
 package:
   name: tensorflow-split
@@ -7,11 +8,11 @@ package:
 
 source:
   - url: https://github.com/tensorflow/tensorflow/archive/refs/tags/v{{ version.replace(".rc", "-rc") }}.tar.gz
-    sha256: 9cec5acb0ecf2d47b16891f8bc5bc6fbfdffe1700bdadc0d9ebe27ea34f0c220
+    sha256: c729e56efc945c6df08efe5c9f5b8b89329c7c91b8f40ad2bb3e13900bd4876d
     patches:
       - patches/0001-loosen-requirements.patch
       - patches/0002-Add-additional-absl_synchronization-linkage-to-gRPC.patch
-      - patches/0003-Add-missing-any_invocable-target-to-absel-bazel.patch
+      # - patches/0003-Add-missing-any_invocable-target-to-absel-bazel.patch
       - patches/0004-Fix-missing-abseil-linkages.patch
       - patches/0005-Fix-protobuf_python-for-systemlibs.patch
       - patches/0006-Add-absl_log-systemlib.patch
@@ -25,29 +26,31 @@ source:
       - patches/0014-fix-genproto.patch
       - patches/0015-Remove-some-usage-of-absl-str_format-in-CUDA.patch  # [(cuda_compiler_version or "").startswith("11")]
       - patches/0016-Patch-ml_dtype-to-make-constructor-unambiguous.patch
-      - patches/0017-Load-cuda_build_defs-from-tsl.patch
-      - patches/0018-Use-PYTHON-for-build-wheel.patch
-      - patches/0019-Always-use-Linux-sed-style.patch
-      - patches/0020-Adjust-relative-path-for-libdevice.patch  # [(cuda_compiler_version or "").startswith("12")]
+      - patches/0017-Use-PYTHON-for-build-wheel.patch
+      - patches/0018-Always-use-Linux-sed-style.patch
+      - patches/0019-Adjust-relative-path-for-libdevice.patch  # [(cuda_compiler_version or "").startswith("12")]
       # https://github.com/tensorflow/tensorflow/pull/62684
-      - patches/62684.patch
+      - patches/0020-Fix-protobuf-errors-when-using-system-protobuf.patch
+      - patches/0021-Link-to-absl_log_flags-instead-of-absl_flags.patch
+      - patches/0022-Update-ABSL-Log-Definition-for-libabsl_vlog_config_i.patch
+      - patches/0023-Update-flatbuffers-static-assert.patch
+      - patches/0024-add-absl_string_view-target.patch
+      - patches/0025-add-absl_nullability-target.patch
+      - patches/0026-add-absl_prefetch-target.patch
+      - patches/0027-add-absl_die_if_null-target.patch
+      - patches/0028-add-absl_crc32c-targets.patch
+      - patches/0029-avoid-ambiguity-in-conversion-to-absl-StatusOr-T.patch
+      - patches/0030-add-kernel_timeout_internal-target.patch
+      - patches/0031-work-around-for-warning-that-clang-falsely-treats-as.patch
   - url: https://github.com/tensorflow/estimator/archive/refs/tags/v{{ estimator_version.replace(".rc", "-rc") }}.tar.gz
     sha256: 2d7e100b1878084da34b5e23b49a0cbb5ee8a7add74b7dd189a82ada1cf85530
     folder: tensorflow-estimator
-  # yes, the headers come from a different version than the python package required below.
-  - url: https://raw.githubusercontent.com/jax-ml/ml_dtypes/v0.3.1/ml_dtypes/include/float8.h
-    fn: float8.h
-    sha256: d2798fad4e64375b566b1df1d7bc440313e4b1024ca08f12cead3eaa4b73ff72
-  - url: https://raw.githubusercontent.com/jax-ml/ml_dtypes/v0.3.1/ml_dtypes/include/int4.h
-    fn: int4.h
-    sha256: b3a9970c3c6b169c41ac2fd4375f668d3fd1b492d48b912d89415fa1522a8f50
 
 build:
-  number: 3
+  number: 0
   skip: true  # [win]
   skip: true  # [python_impl == 'pypy']
   skip: true  # [py<39]
-  skip: true  # [cuda_compiler_version == "11.2"]
   # The following skip can be removed when the absl::StrFormat build issues are fixed.
   skip: true  # [cuda_compiler_version == "11.8"]
 
@@ -69,6 +72,7 @@ requirements:
     - pybind11                               # [build_platform != target_platform]
     - numpy                                  # [build_platform != target_platform]
     - {{ compiler('c') }}
+    - {{ stdlib("c") }}
     - {{ compiler('cxx') }}
     - {{ compiler('cuda') }}                 # [cuda_compiler_version != "None"]
     - bazel 6.1.2
@@ -132,25 +136,6 @@ requirements:
     - sqlite
     - snappy
     - zlib
-    # requirements specified by the package itself, see
-    # github.com/tensorflow/tensorflow/blob/v{{ version }}/tensorflow/tools/pip_package/setup.py
-    - absl-py >=1.0.0
-    - astunparse >=1.6.0
-    - gast >=0.2.1,!=0.5.0,!=0.5.1,!=0.5.2
-    - google-pasta >=0.1.1
-    - h5py >=2.9.0
-    - ml_dtypes 0.2.0
-    - numpy
-    - opt_einsum >=2.3.2
-    - protobuf >=3.20.3,<5,!=4.21.0,!=4.21.1,!=4.21.2,!=4.21.3,!=4.21.4,!=4.21.5
-    - python-flatbuffers >=23.5.26
-    - six >=1.12
-    - termcolor >=1.1.0
-    - typing_extensions >=3.6.6
-    - wrapt >=1.11.0,<1.15
-    # TF-API needs to move in sync
-    - tensorboard >=2.15,<2.16
-    - keras >=2.15,<2.16
 
 outputs:
   # 2021/12/29: hmaarrfk
@@ -180,6 +165,7 @@ outputs:
       # build requirements needs to pick up the compiler run_exports
       build:
         - {{ compiler('c') }}
+        - {{ stdlib("c") }}
         - {{ compiler('cxx') }}
         - {{ compiler('cuda') }}              # [cuda_compiler_version != "None"]
         - python                              # [build_platform != target_platform]
@@ -222,24 +208,26 @@ outputs:
         - snappy
         - sqlite
         - zlib
-        # requirements specified by the package itself
+        # requirements specified by the package itself, see
+        # github.com/tensorflow/tensorflow/blob/v{{ version }}/tensorflow/tools/pip_package/setup.py
         - absl-py >=1.0.0
         - astunparse >=1.6.0
         - gast >=0.2.1,!=0.5.0,!=0.5.1,!=0.5.2
         - google-pasta >=0.1.1
-        - h5py >=2.9.0
-        - ml_dtypes 0.2.0
+        - h5py >=3.10
+        - ml_dtypes >={{ ml_dtypes_version }},<0.4
         - numpy
         - opt_einsum >=2.3.2
         - protobuf >=3.20.3,<5,!=4.21.0,!=4.21.1,!=4.21.2,!=4.21.3,!=4.21.4,!=4.21.5
         - python-flatbuffers >=23.5.26
+        - requests >=2.21.0,<3
         - six >=1.12
         - termcolor >=1.1.0
         - typing_extensions >=3.6.6
-        - wrapt >=1.11.0,<1.15
+        - wrapt >=1.11.0
         # TF-API needs to move in sync
-        - tensorboard >=2.15,<2.16
-        - keras >=2.15,<2.16
+        - tensorboard >=2.16,<2.17
+        - keras >=3.0
       run:
         - python
         - packaging
@@ -248,24 +236,24 @@ outputs:
         - gast >=0.2.1,!=0.5.0,!=0.5.1,!=0.5.2
         - google-pasta >=0.1.1
         - grpcio {{ libgrpc }}.*
-        - h5py >=2.9.0
-        - ml_dtypes 0.2.0
+        - h5py >=3.10
+        - ml_dtypes >={{ ml_dtypes_version }},<0.4
         - {{ pin_compatible('numpy', lower_bound='1.22') }}
         - opt_einsum >=2.3.2
         - protobuf >=3.20.3,<5,!=4.21.0,!=4.21.1,!=4.21.2,!=4.21.3,!=4.21.4,!=4.21.5
         - python-flatbuffers >=23.5.26
+        - requests >=2.21.0,<3
         - six >=1.12
         - termcolor >=1.1.0
         - typing_extensions >=3.6.6
-        - wrapt >=1.11.0,<1.15
+        - wrapt >=1.11.0
         # TF-API needs to move in sync
-        - tensorboard >=2.15,<2.16
-        - keras >=2.15,<2.16
+        - tensorboard >=2.16,<2.17
+        - keras >=3.0
         # avoid that people without GPUs needlessly download ~0.5-1GB
         - __cuda                                                  # [cuda_compiler_version != "None"]
         # https://github.com/conda-forge/tensorflow-feedstock/issues/296#issuecomment-1835781851
         - cuda-nvcc-tools                                         # [(cuda_compiler_version or "").startswith("12")]
-        - __osx >={{ MACOSX_DEPLOYMENT_TARGET|default("10.9") }}  # [osx and x86_64]
     # TODO: decide on the name of the package
     # run_constrained:
     #   What is the difference between these two packages?
@@ -327,6 +315,7 @@ outputs:
     requirements:
       build:
         - {{ compiler('c') }}
+        - {{ stdlib("c") }}
         - {{ compiler('cxx') }}
         # Keep the cuda compiler here since it helps package solvers
         # decide on the cuda variant
@@ -375,6 +364,7 @@ outputs:
       # build requirements needs to pick up the compiler run_exports
       build:
         - {{ compiler('c') }}
+        - {{ stdlib("c") }}
         - {{ compiler('cxx') }}
         # Keep the cuda compiler here since it helps package solvers
         # decide on the cuda variant
@@ -420,6 +410,7 @@ outputs:
       # build requirements needs to pick up the compiler run_exports
       build:
         - {{ compiler('c') }}
+        - {{ stdlib("c") }}
         - {{ compiler('cxx') }}
         # Keep the cuda compiler here since it helps package solvers
         # decide on the cuda variant
@@ -442,6 +433,7 @@ outputs:
         - sqlite
         - zlib
       run:
+        - libml_dtypes-headers >={{ ml_dtypes_version }},<0.4
         # avoid that people without GPUs needlessly download ~200-300MB
         - __cuda  # [cuda_compiler_version != "None"]
     test:

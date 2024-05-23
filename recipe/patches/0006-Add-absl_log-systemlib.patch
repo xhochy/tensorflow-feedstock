@@ -1,7 +1,7 @@
-From 12590977bfcd91d7be12314ef3f0505284d6f25d Mon Sep 17 00:00:00 2001
+From 35c2cf9c9fb669ba9eb4e60be87b5153da23da1d Mon Sep 17 00:00:00 2001
 From: "Uwe L. Korn" <uwe.korn@quantco.com>
 Date: Wed, 30 Aug 2023 16:59:28 +0200
-Subject: [PATCH 06/19] Add absl_log systemlib
+Subject: [PATCH 06/31] Add absl_log systemlib
 
 ---
  third_party/absl/system.absl.log.BUILD | 22 ++++++++++++++++++++++
@@ -11,7 +11,7 @@ Subject: [PATCH 06/19] Add absl_log systemlib
 
 diff --git a/third_party/absl/system.absl.log.BUILD b/third_party/absl/system.absl.log.BUILD
 new file mode 100644
-index 00000000..0248bda0
+index 00000000000..0248bda0f52
 --- /dev/null
 +++ b/third_party/absl/system.absl.log.BUILD
 @@ -0,0 +1,22 @@
@@ -38,7 +38,7 @@ index 00000000..0248bda0
 +    ],
 +)
 diff --git a/third_party/absl/workspace.bzl b/third_party/absl/workspace.bzl
-index 07f49ceb..a7f4e5ff 100644
+index 06f75166ce4..c54df3cfbae 100644
 --- a/third_party/absl/workspace.bzl
 +++ b/third_party/absl/workspace.bzl
 @@ -20,6 +20,7 @@ def repo():

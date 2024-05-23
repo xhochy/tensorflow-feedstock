@@ -1,7 +1,7 @@
-From d5decb66a3a3dc8f11cb77aad83b4aa65e2819e6 Mon Sep 17 00:00:00 2001
+From 6c666e6ff7a51ed5518bbb96229f7556dd3c728b Mon Sep 17 00:00:00 2001
 From: "Uwe L. Korn" <uwe.korn@quantco.com>
 Date: Fri, 15 Sep 2023 11:06:27 +0200
-Subject: [PATCH 07/19] Omit linking to layout_proto_cc if protobuf linkage is
+Subject: [PATCH 07/31] Omit linking to layout_proto_cc if protobuf linkage is
  shared
 
 ---
@@ -9,10 +9,10 @@ Subject: [PATCH 07/19] Omit linking to layout_proto_cc if protobuf linkage is
  1 file changed, 1 deletion(-)
 
 diff --git a/tensorflow/python/BUILD b/tensorflow/python/BUILD
-index 9810f8ac..c7feacb6 100644
+index 675709d4314..4c713a9374c 100644
 --- a/tensorflow/python/BUILD
 +++ b/tensorflow/python/BUILD
-@@ -1330,7 +1330,6 @@ tf_python_pybind_extension(
+@@ -1358,7 +1358,6 @@ tf_python_pybind_extension(
      features = ["-layering_check"],
      deps = [
          ":pywrap_densor_device_headers",

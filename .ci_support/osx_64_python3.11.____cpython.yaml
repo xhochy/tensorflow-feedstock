@@ -1,9 +1,13 @@
 MACOSX_DEPLOYMENT_TARGET:
-- '11.0'
+- '10.13'
 c_compiler:
 - clang
 c_compiler_version:
 - '16'
+c_stdlib:
+- macosx_deployment_target
+c_stdlib_version:
+- '10.13'
 channel_sources:
 - conda-forge
 channel_targets:
@@ -15,7 +19,7 @@ cxx_compiler:
 cxx_compiler_version:
 - '16'
 flatbuffers:
-- 23.5.26
+- 24.3.25
 giflib:
 - '5.2'
 github_actions_labels:
@@ -23,21 +27,21 @@ github_actions_labels:
 icu:
 - '73'
 libabseil:
-- '20230802'
+- '20240116'
 libcurl:
 - '8'
 libgrpc:
-- '1.59'
+- '1.62'
 libjpeg_turbo:
 - '3'
 libpng:
 - '1.6'
 libprotobuf:
-- 4.24.4
+- 4.25.3
 macos_machine:
-- arm64-apple-darwin20.0.0
+- x86_64-apple-darwin13.4.0
 numpy:
-- '1.22'
+- '1.23'
 openssl:
 - '3'
 pin_run_as_build:
@@ -45,22 +49,20 @@ pin_run_as_build:
     min_pin: x.x
     max_pin: x.x
 python:
-- 3.9.* *_cpython
+- 3.11.* *_cpython
 python_impl:
 - cpython
 snappy:
-- '1'
+- '1.2'
 sqlite:
 - '3'
 target_platform:
-- osx-arm64
+- osx-64
 tensorflow:
 - '2.15'
 zip_keys:
 - - c_compiler_version
   - cxx_compiler_version
-- - libgrpc
-  - libprotobuf
 - - python
   - numpy
   - python_impl

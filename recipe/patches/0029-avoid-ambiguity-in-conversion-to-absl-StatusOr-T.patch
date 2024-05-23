@@ -1,0 +1,29 @@
+From ccbf4bd71b3934f88120ccbaef189b22f0bf0260 Mon Sep 17 00:00:00 2001
+From: "H. Vetinari" <h.vetinari@gmx.com>
+Date: Mon, 13 May 2024 15:01:23 +1100
+Subject: [PATCH 29/31] avoid ambiguity in conversion to absl::StatusOr<T>
+
+The function in question wants to return a `TritonWrapperResult`, see
+https://github.com/tensorflow/tensorflow/blob/v2.16.1/third_party/xla/xla/service/gpu/ir_emitter_triton.cc#L2063
+where the inner type (in case of success) is just a simple struct, see
+https://github.com/tensorflow/tensorflow/blob/v2.16.1/third_party/xla/xla/service/gpu/ir_emitter_triton.h#L40-L42
+
+Explicitly instantiate the right type, rather than relying on finding
+the right one in C++'s _many_ initialisation flavours.
+---
+ third_party/xla/xla/service/gpu/ir_emitter_triton.cc | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/third_party/xla/xla/service/gpu/ir_emitter_triton.cc b/third_party/xla/xla/service/gpu/ir_emitter_triton.cc
+index d535a52d42f..998e446d623 100644
+--- a/third_party/xla/xla/service/gpu/ir_emitter_triton.cc
++++ b/third_party/xla/xla/service/gpu/ir_emitter_triton.cc
+@@ -2219,7 +2219,7 @@ absl::StatusOr<TritonWrapperResult> TritonWrapper(
+     VerifyModule(*llvm_module);
+   }
+ 
+-  return {{shared_mem_bytes}};
++  return TritonWrapperResult{shared_mem_bytes};
+ }
+ 
+ }  // namespace gpu
