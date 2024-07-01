@@ -1,4 +1,4 @@
-{% set version = "2.16.1" %}
+{% set version = "2.16.2" %}
 {% set estimator_version = "2.15.0" %}
 {% set ml_dtypes_version = "0.3.1" %}
 
@@ -8,7 +8,7 @@ package:
 
 source:
   - url: https://github.com/tensorflow/tensorflow/archive/refs/tags/v{{ version.replace(".rc", "-rc") }}.tar.gz
-    sha256: c729e56efc945c6df08efe5c9f5b8b89329c7c91b8f40ad2bb3e13900bd4876d
+    sha256: 023849bf253080cb1e4f09386f5eb900492da2288274086ed6cfecd6d99da9eb
     patches:
       - patches/0001-loosen-requirements.patch
       - patches/0002-Add-additional-absl_synchronization-linkage-to-gRPC.patch
