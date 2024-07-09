@@ -20,7 +20,6 @@ export CXX=$(basename $CXX)
 export LIBDIR=$PREFIX/lib
 export INCLUDEDIR=$PREFIX/include
 
-export TF_IGNORE_MAX_BAZEL_VERSION="1"
 export TF_PYTHON_VERSION=$PY_VER
 
 # Upstream docstring for TF_SYSTEM_LIBS in:
