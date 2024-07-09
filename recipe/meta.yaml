@@ -79,6 +79,7 @@ requirements:
     - libgrpc
     - libprotobuf
     - nasm
+    - patchelf
     - sed
     - rsync
     # realpath is not available from the docker image for cuda <= 10.2
