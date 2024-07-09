@@ -30,7 +30,6 @@ source:
       - patches/0013-Add-protobuf-toolchain.patch
       - patches/0014-fix-genproto.patch
       - patches/0015-Remove-some-usage-of-absl-str_format-in-CUDA.patch  # [(cuda_compiler_version or "").startswith("11")]
-      - patches/0016-Patch-ml_dtype-to-make-constructor-unambiguous.patch
       - patches/0019-Adjust-relative-path-for-libdevice.patch  # [(cuda_compiler_version or "").startswith("12")]
       - patches/0021-Link-to-absl_log_flags-instead-of-absl_flags.patch
       - patches/0022-Update-ABSL-Log-Definition-for-libabsl_vlog_config_i.patch
