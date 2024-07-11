@@ -1,4 +1,4 @@
-{% set version = "2.17.0.rc1" %}
+{% set version = "2.17.0" %}
 {% set estimator_version = "2.15.0" %}
 
 # 2.17.0.rc1 uses unreleased commit
@@ -13,7 +13,7 @@ package:
 
 source:
   - url: https://github.com/tensorflow/tensorflow/archive/refs/tags/v{{ version.replace(".rc", "-rc") }}.tar.gz
-    sha256: 0fc0e2575e2406359066a063b7d8a913ffcf77ba29c53822e66094c90c4446dd
+    sha256: 9cc4d5773b8ee910079baaecb4086d0c28939f024dd74b33fc5e64779b6533dc
     patches:
       - patches/0001-loosen-requirements.patch
       - patches/0002-Add-additional-absl_synchronization-linkage-to-gRPC.patch
