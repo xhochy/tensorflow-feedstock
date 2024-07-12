@@ -202,6 +202,7 @@ flatc --cpp --gen-object-api schema.fbs
 popd
 rm -f tensorflow/lite/schema/conversion_metadata_generated.h
 rm -f tensorflow/lite/experimental/acceleration/configuration/configuration_generated.h
+sed -ie "s;BUILD_PREFIX;${BUILD_PREFIX};g" tensorflow/tools/pip_package/build_pip_package.py
 
 # build using bazel
 bazel ${BAZEL_OPTS} build ${BUILD_TARGET}
