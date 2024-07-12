@@ -209,7 +209,7 @@ bazel ${BAZEL_OPTS} build ${BUILD_TARGET}
 
 # build a whl file
 mkdir -p $SRC_DIR/tensorflow_pkg
-bash -x bazel-bin/tensorflow/tools/pip_package/build_pip_package $SRC_DIR/tensorflow_pkg
+cp bazel-bin/tensorflow/tools/pip_package/wheel_house/tensorflow*.whl $SRC_DIR/tensorflow_pkg
 
 # Build libtensorflow(_cc)
 cp $SRC_DIR/bazel-bin/tensorflow/tools/lib_package/libtensorflow.tar.gz $SRC_DIR
