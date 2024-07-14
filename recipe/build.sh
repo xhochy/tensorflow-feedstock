@@ -211,6 +211,12 @@ bazel ${BAZEL_OPTS} build ${BUILD_TARGET}
 mkdir -p $SRC_DIR/tensorflow_pkg
 cp bazel-bin/tensorflow/tools/pip_package/wheel_house/tensorflow*.whl $SRC_DIR/tensorflow_pkg
 
+python -m pip install $SRC_DIR/tensorflow_pkg/*.whl
+pushd $SRC_DIR/tensorflow_pkg
+python -c 'import tensorflow'
+popd
+
+
 # Build libtensorflow(_cc)
 cp $SRC_DIR/bazel-bin/tensorflow/tools/lib_package/libtensorflow.tar.gz $SRC_DIR
 mkdir -p $SRC_DIR/libtensorflow_cc_output/lib

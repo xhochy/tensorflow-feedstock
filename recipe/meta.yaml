@@ -53,7 +53,8 @@ build:
   # The following skip can be removed when the absl::StrFormat build issues are fixed.
   skip: true  # [cuda_compiler_version == "11.8"]
   # debug
-  skip: true  # [not (py==312 and cuda_compiler_version == "12.0")]
+  skip: true  # [not osx]
+  # skip: true  # [not (py==312 and cuda_compiler_version == "12.0")]
 
 requirements:
   build:
@@ -138,6 +139,26 @@ requirements:
     - sqlite
     - snappy
     - zlib
+    # requirements specified by the package itself, see
+    # github.com/tensorflow/tensorflow/blob/v{{ version }}/tensorflow/tools/pip_package/setup.py
+    - absl-py >=1.0.0
+    - astunparse >=1.6.0
+    - gast >=0.2.1,!=0.5.0,!=0.5.1,!=0.5.2
+    - google-pasta >=0.1.1
+    - h5py >=3.10
+    - ml_dtypes >={{ ml_dtypes_version }},<0.5
+    - numpy
+    - opt_einsum >=2.3.2
+    - protobuf >=3.20.3,<5,!=4.21.0,!=4.21.1,!=4.21.2,!=4.21.3,!=4.21.4,!=4.21.5
+    - python-flatbuffers >=24.3.25
+    - requests >=2.21.0,<3
+    - six >=1.12
+    - termcolor >=1.1.0
+    - typing_extensions >=3.6.6
+    - wrapt >=1.11.0
+    # TF-API needs to move in sync
+    - tensorboard >=2.17,<2.18
+    - keras >=3.0
 
 outputs:
   # 2021/12/29: hmaarrfk
