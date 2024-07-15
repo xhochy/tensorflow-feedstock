@@ -149,7 +149,7 @@ if [[ "${target_platform}" == "osx-arm64" ]]; then
   export CXXFLAGS="${CXXFLAGS} -D_LIBCPP_DISABLE_AVAILABILITY"
 fi
 export TF_ENABLE_XLA=1
-export BUILD_TARGET="//tensorflow/tools/pip_package:build_pip_package //tensorflow/tools/lib_package:libtensorflow //tensorflow:libtensorflow_cc${SHLIB_EXT}"
+export BUILD_TARGET="//tensorflow/tools/pip_package:wheel //tensorflow/tools/lib_package:libtensorflow //tensorflow:libtensorflow_cc${SHLIB_EXT}"
 
 # Python settings
 export PYTHON_BIN_PATH=${PYTHON}
@@ -203,15 +203,15 @@ flatc --cpp --gen-object-api schema.fbs
 popd
 rm -f tensorflow/lite/schema/conversion_metadata_generated.h
 rm -f tensorflow/lite/experimental/acceleration/configuration/configuration_generated.h
-# sed -ie "s;BUILD_PREFIX;${BUILD_PREFIX};g" tensorflow/tools/pip_package/build_pip_package.py
+sed -ie "s;BUILD_PREFIX;${BUILD_PREFIX};g" tensorflow/tools/pip_package/build_pip_package.py
 
 # build using bazel
 bazel ${BAZEL_OPTS} build ${BUILD_TARGET}
 
 # build a whl file
 mkdir -p $SRC_DIR/tensorflow_pkg
-# cp bazel-bin/tensorflow/tools/pip_package/wheel_house/tensorflow*.whl $SRC_DIR/tensorflow_pkg
-bash -x bazel-bin/tensorflow/tools/pip_package/build_pip_package $SRC_DIR/tensorflow_pkg
+cp bazel-bin/tensorflow/tools/pip_package/wheel_house/tensorflow*.whl $SRC_DIR/tensorflow_pkg
+# bash -x bazel-bin/tensorflow/tools/pip_package/build_pip_package $SRC_DIR/tensorflow_pkg
 
 python -m pip install $SRC_DIR/tensorflow_pkg/*.whl
 pushd $SRC_DIR/tensorflow_pkg

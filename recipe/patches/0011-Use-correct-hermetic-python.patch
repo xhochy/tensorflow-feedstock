@@ -1,7 +1,7 @@
-From da2b2071a359cb0fa3a66c2488bc1a0935b6e17d Mon Sep 17 00:00:00 2001
+From 8fe562344ddc5d37bb9856790fa4e8b4fc4bd657 Mon Sep 17 00:00:00 2001
 From: "Uwe L. Korn" <uwe.korn@quantco.com>
 Date: Fri, 27 Oct 2023 11:21:38 +0200
-Subject: [PATCH 11/31] Use correct, hermetic python
+Subject: [PATCH 11/28] Use correct, hermetic python
 
 ---
  .../tensorflow/gen_quantized_function_library.py             | 5 +++++
@@ -37,3 +37,6 @@ index cd76ae73f77..c12533c9b57 100644
  
  from tensorflow.python.tools.api.generator import doc_srcs
  from tensorflow.python.util import tf_decorator
+-- 
+2.39.3 (Apple Git-146)
+
