@@ -13,8 +13,8 @@ package:
 
 source:
   # - url: https://github.com/tensorflow/tensorflow/archive/refs/tags/v{{ version.replace(".rc", "-rc") }}.tar.gz
-  - url: https://github.com/tensorflow/tensorflow/archive/9a5b9f2dcba4c1c6380c7ce1d74f9fa8f4999d2e.tar.gz
-    sha256: 36244b7eaf6c1c5335588ecb4cf71ce40c1a859d917b1db7f1c1ed188fc7940e
+  - url: https://github.com/tensorflow/tensorflow/archive/3c92d1e861d76ce5a8ed10d0d36d03de5c260021.tar.gz
+    sha256: 86cdf04e44a17a4a4976c3565d5a6a3b570ee92e6e14ade93279cf5c6fd94360
     patches:
       - patches/0001-loosen-requirements.patch
       - patches/0002-Add-additional-absl_synchronization-linkage-to-gRPC.patch
@@ -41,9 +41,7 @@ source:
       - patches/0023-add-absl_crc32c-targets.patch
       - patches/0024-add-kernel_timeout_internal-target.patch
       - patches/0025-work-around-for-warning-that-clang-falsely-treats-as.patch
-      # - patches/0026-Patch-ml_dtype-to-make-constructor-unambiguous.patch
-      - patches/0027-Update-flatbuffers-static-assert.patch
-      - patches/0028-Hardcode-BUILD_PREFIX-in-build_pip_package.patch
+      - patches/0026-Hardcode-BUILD_PREFIX-in-build_pip_package.patch
   - url: https://github.com/tensorflow/estimator/archive/refs/tags/v{{ estimator_version.replace(".rc", "-rc") }}.tar.gz
     sha256: 2d7e100b1878084da34b5e23b49a0cbb5ee8a7add74b7dd189a82ada1cf85530
     folder: tensorflow-estimator

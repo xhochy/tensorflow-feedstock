@@ -1,7 +1,7 @@
-From bd561cac85fc75389c4a679982d70ea2c340dbbc Mon Sep 17 00:00:00 2001
+From 9a0861472b08553335b78dc4a4c55f5b0a4aa25c Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Sun, 12 May 2024 22:29:25 +1100
-Subject: [PATCH 21/28] add absl_prefetch target
+Subject: [PATCH 21/26] add absl_prefetch target
 
 ---
  third_party/absl/system.absl.base.BUILD | 8 ++++++++

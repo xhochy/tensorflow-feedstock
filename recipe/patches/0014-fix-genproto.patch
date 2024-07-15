@@ -1,7 +1,7 @@
-From e1a143c2aa0eadb012a79d87ae6dc3c0c08afb6c Mon Sep 17 00:00:00 2001
+From 696d464b271ef74d5f28d7e32df1d8ea5de8a733 Mon Sep 17 00:00:00 2001
 From: "Uwe L. Korn" <uwe.korn@quantco.com>
 Date: Thu, 16 Nov 2023 06:38:27 +0000
-Subject: [PATCH 14/28] fix genproto
+Subject: [PATCH 14/26] fix genproto
 
 ---
  .../third_party/tsl/tsl/platform/default/build_config.bzl    | 5 +----

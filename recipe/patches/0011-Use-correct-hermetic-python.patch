@@ -1,7 +1,7 @@
-From 50336beae6f24531d3accbac83d8579a6117b29f Mon Sep 17 00:00:00 2001
+From a1328e7c7a0e3df86f8acafb9c6481554ba7dc55 Mon Sep 17 00:00:00 2001
 From: "Uwe L. Korn" <uwe.korn@quantco.com>
 Date: Fri, 27 Oct 2023 11:21:38 +0200
-Subject: [PATCH 11/28] Use correct, hermetic python
+Subject: [PATCH 11/26] Use correct, hermetic python
 
 ---
  .../tensorflow/gen_quantized_function_library.py             | 5 +++++

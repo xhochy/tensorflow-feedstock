@@ -1,7 +1,7 @@
-From 29eda0f859c0e71bb309170bd2584719b6528e2e Mon Sep 17 00:00:00 2001
+From 969a84c64fbb1fef428c03a13e8f847966b63a0d Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Mon, 13 May 2024 23:36:48 +1100
-Subject: [PATCH 24/28] add kernel_timeout_internal target
+Subject: [PATCH 24/26] add kernel_timeout_internal target
 
 ---
  .../absl/system.absl.synchronization.BUILD        | 15 +++++++++++++++
