@@ -1,7 +1,7 @@
-From 1a923b59e4137fd1f8750fd299982a948fa115e6 Mon Sep 17 00:00:00 2001
+From d6b67367c59d2f0779d80117df603fb0f3b9175c Mon Sep 17 00:00:00 2001
 From: "Uwe L. Korn" <uwe.korn@quantco.com>
 Date: Thu, 23 Nov 2023 09:05:37 +0000
-Subject: [PATCH 15/26] Remove some usage of absl::str_format in CUDA
+Subject: [PATCH 15/31] Remove some usage of absl::str_format in CUDA
 
 nvcc from CUDA 11 is unable to correctly handle the new C++ features
 used in this template. We use a different implementation that should
@@ -42,7 +42,7 @@ index 46a76ea094c..2f8d0a21878 100644
  
    // Returns memory used by this resource.
 diff --git a/tensorflow/core/framework/resource_var.cc b/tensorflow/core/framework/resource_var.cc
-index c441a8e2648..7e1f1fdf0ea 100644
+index 0f5ed5560d6..b1adf7180a7 100644
 --- a/tensorflow/core/framework/resource_var.cc
 +++ b/tensorflow/core/framework/resource_var.cc
 @@ -18,6 +18,8 @@ limitations under the License.

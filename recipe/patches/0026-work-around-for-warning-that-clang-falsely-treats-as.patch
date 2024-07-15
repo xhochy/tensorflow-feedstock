@@ -1,0 +1,24 @@
+From 4a1c80684145baa4d18faacc66ac185d5f71ccaf Mon Sep 17 00:00:00 2001
+From: "H. Vetinari" <h.vetinari@gmx.com>
+Date: Sun, 19 May 2024 20:52:35 +1100
+Subject: [PATCH 26/31] work around for warning that clang falsely treats as
+ error
+
+see https://github.com/llvm/llvm-project/issues/92630
+---
+ .bazelrc | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/.bazelrc b/.bazelrc
+index 15f6d50e860..34e797bd2f5 100644
+--- a/.bazelrc
++++ b/.bazelrc
+@@ -311,7 +311,7 @@ build:ios --noenable_platform_specific_config
+ build:android --copt=-w
+ build:ios --copt=-w
+ build:linux --host_copt=-w
+-build:macos --copt=-w
++build:macos --copt=-w --copt=-Wno-c++11-narrowing
+ build:windows --copt=/W0
+ build:windows --host_copt=/W0
+ 

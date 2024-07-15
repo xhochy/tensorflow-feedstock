@@ -5,15 +5,16 @@
 # https://github.com/jax-ml/ml_dtypes/commit/24084d9ed2c3d45bf83b7a9bff833aa185bf9172
 # see
 # https://github.com/tensorflow/tensorflow/blob/v2.17.0-rc1/third_party/py/ml_dtypes/workspace.bzl
-{% set ml_dtypes_version = "0.4.0" %}
+{% set ml_dtypes_version = "0.3.1" %}
 
 package:
   name: tensorflow-split
   version: {{ version }}
 
 source:
-  - url: https://github.com/tensorflow/tensorflow/archive/refs/tags/v{{ version.replace(".rc", "-rc") }}.tar.gz
-    sha256: 9cc4d5773b8ee910079baaecb4086d0c28939f024dd74b33fc5e64779b6533dc
+  # - url: https://github.com/tensorflow/tensorflow/archive/refs/tags/v{{ version.replace(".rc", "-rc") }}.tar.gz
+  - url: https://github.com/tensorflow/tensorflow/archive/56d20ebbe4da95fcb38e700970895fe121d49471.tar.gz
+    sha256: fb71a2aa738578b44e7b81bbac1466c48471939f75728afd242ed3eaa8249239
     patches:
       - patches/0001-loosen-requirements.patch
       - patches/0002-Add-additional-absl_synchronization-linkage-to-gRPC.patch
@@ -29,18 +30,23 @@ source:
       - patches/0012-Add-well_known_types_py_pb2-to-protobuf-systemlib.patch
       - patches/0013-Add-protobuf-toolchain.patch
       - patches/0014-fix-genproto.patch
-      - patches/0015-Remove-some-usage-of-absl-str_format-in-CUDA.patch  # [(cuda_compiler_version or "").startswith("11")]
-      - patches/0019-Adjust-relative-path-for-libdevice.patch  # [(cuda_compiler_version or "").startswith("12")]
-      - patches/0021-Link-to-absl_log_flags-instead-of-absl_flags.patch
-      - patches/0022-Update-ABSL-Log-Definition-for-libabsl_vlog_config_i.patch
-      - patches/0024-add-absl_string_view-target.patch
-      - patches/0025-add-absl_nullability-target.patch
-      - patches/0026-add-absl_prefetch-target.patch
-      - patches/0027-add-absl_die_if_null-target.patch
-      - patches/0028-add-absl_crc32c-targets.patch
-      - patches/0030-add-kernel_timeout_internal-target.patch
-      - patches/0031-work-around-for-warning-that-clang-falsely-treats-as.patch
-      - patches/0001-Hardcode-BUILD_PREFIX-in-build_pip_package.patch
+      - patches/0015-Remove-some-usage-of-absl-str_format-in-CUDA.patch
+      - patches/0016-Adjust-relative-path-for-libdevice.patch
+      - patches/0017-Fix-protobuf-errors-when-using-system-protobuf.patch
+      - patches/0018-Link-to-absl_log_flags-instead-of-absl_flags.patch
+      - patches/0019-Update-ABSL-Log-Definition-for-libabsl_vlog_config_i.patch
+      - patches/0020-add-absl_string_view-target.patch
+      - patches/0021-add-absl_nullability-target.patch
+      - patches/0022-add-absl_prefetch-target.patch
+      - patches/0023-add-absl_die_if_null-target.patch
+      - patches/0024-add-absl_crc32c-targets.patch
+      - patches/0025-add-kernel_timeout_internal-target.patch
+      - patches/0026-work-around-for-warning-that-clang-falsely-treats-as.patch
+      - patches/0027-Patch-ml_dtype-to-make-constructor-unambiguous.patch
+      - patches/0028-Use-PYTHON-for-build-wheel.patch
+      - patches/0029-Always-use-Linux-sed-style.patch
+      - patches/0030-Update-flatbuffers-static-assert.patch
+      - patches/0031-avoid-ambiguity-in-conversion-to-absl-StatusOr-T.patch
   - url: https://github.com/tensorflow/estimator/archive/refs/tags/v{{ estimator_version.replace(".rc", "-rc") }}.tar.gz
     sha256: 2d7e100b1878084da34b5e23b49a0cbb5ee8a7add74b7dd189a82ada1cf85530
     folder: tensorflow-estimator
@@ -158,7 +164,7 @@ requirements:
     - wrapt >=1.11.0
     # TF-API needs to move in sync
     - tensorboard >=2.17,<2.18
-    - keras >=3.0
+    # - keras >=3.0
 
 outputs:
   # 2021/12/29: hmaarrfk
@@ -250,7 +256,7 @@ outputs:
         - wrapt >=1.11.0
         # TF-API needs to move in sync
         - tensorboard >=2.17,<2.18
-        - keras >=3.0
+        # - keras >=3.0
       run:
         - python
         - packaging
@@ -271,7 +277,7 @@ outputs:
         - wrapt >=1.11.0
         # TF-API needs to move in sync
         - tensorboard >=2.17,<2.18
-        - keras >=3.0
+        # - keras >=3.0
         # avoid that people without GPUs needlessly download ~0.5-1GB
         - __cuda                                                  # [cuda_compiler_version != "None"]
         # https://github.com/conda-forge/tensorflow-feedstock/issues/296#issuecomment-1835781851
