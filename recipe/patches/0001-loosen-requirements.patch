@@ -1,7 +1,7 @@
-From 6aab5c9e7f9f4387a03d5f327173b808b44933d1 Mon Sep 17 00:00:00 2001
+From b8a5c5691d5e40955d91354ca976ff9d5f73a3a5 Mon Sep 17 00:00:00 2001
 From: "Uwe L. Korn" <uwe.korn@quantco.com>
 Date: Thu, 30 Dec 2021 06:57:09 +0200
-Subject: [PATCH 01/26] loosen requirements
+Subject: [PATCH 01/25] loosen requirements
 
 * Remove unused libclang requirement
 * Remove unecessary tensorflow-io-gcs-filesystem

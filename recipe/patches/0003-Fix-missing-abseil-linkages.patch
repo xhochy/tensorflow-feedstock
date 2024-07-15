@@ -1,0 +1,25 @@
+From 9881538b46fe881a9ebdcbe65dada9e71cfdd4c8 Mon Sep 17 00:00:00 2001
+From: "Uwe L. Korn" <uwe.korn@quantco.com>
+Date: Mon, 3 Jul 2023 04:45:46 +0000
+Subject: [PATCH 03/25] Fix missing abseil linkages
+
+---
+ third_party/absl/system.absl.strings.BUILD | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/third_party/absl/system.absl.strings.BUILD b/third_party/absl/system.absl.strings.BUILD
+index fa9a7a84f67..d04776c98bf 100644
+--- a/third_party/absl/system.absl.strings.BUILD
++++ b/third_party/absl/system.absl.strings.BUILD
+@@ -26,7 +26,7 @@ cc_library(
+ 
+ cc_library(
+     name = "cord",
+-    linkopts = ["-labsl_cord"],
++    linkopts = ["-labsl_cord", "-labsl_cordz_functions", "-labsl_cordz_info"],
+     deps = [
+         ":str_format",
+         "//absl/container:compressed_tuple",
+-- 
+2.39.3 (Apple Git-146)
+
