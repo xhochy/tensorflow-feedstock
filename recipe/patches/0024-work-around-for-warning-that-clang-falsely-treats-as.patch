@@ -1,4 +1,4 @@
-From d014324b55732519d912b599df88027390ef82fb Mon Sep 17 00:00:00 2001
+From 258cc5f9d43b1345fdba692f17ae29b00f9122e0 Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Sun, 19 May 2024 20:52:35 +1100
 Subject: [PATCH 24/25] work around for warning that clang falsely treats as

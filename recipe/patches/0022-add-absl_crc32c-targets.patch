@@ -1,4 +1,4 @@
-From 173958e1edc3b32bb8673fd94529b00edc7f7b44 Mon Sep 17 00:00:00 2001
+From 4422cdfd9ce40fe2ab09e9541358099aa4103356 Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Mon, 13 May 2024 09:41:09 +1100
 Subject: [PATCH 22/25] add absl_crc32c targets

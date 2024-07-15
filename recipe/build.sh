@@ -198,7 +198,7 @@ build --local_cpu_resources=${CPU_COUNT}
 EOF
 
 # Update TF lite schema with latest flatbuffers version
-pushd tensorflow/lite/schema
+pushd tensorflow/compiler/mlir/lite/schema
 flatc --cpp --gen-object-api schema.fbs
 popd
 rm -f tensorflow/lite/schema/conversion_metadata_generated.h

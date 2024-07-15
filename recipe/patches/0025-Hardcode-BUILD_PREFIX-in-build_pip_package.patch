@@ -1,4 +1,4 @@
-From 3686c73cd0b53780643bc231bcc373a115d450a4 Mon Sep 17 00:00:00 2001
+From 13c34cce694a96ecd0cf29e750ad948385a51133 Mon Sep 17 00:00:00 2001
 From: "Uwe L. Korn" <uwe.korn@quantco.com>
 Date: Fri, 12 Jul 2024 12:52:38 +0000
 Subject: [PATCH 25/25] Hardcode BUILD_PREFIX in build_pip_package
