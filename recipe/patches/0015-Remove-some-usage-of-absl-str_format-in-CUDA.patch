@@ -1,4 +1,4 @@
-From 84ca392c9c989193b645dab258a8063371e98bd1 Mon Sep 17 00:00:00 2001
+From e1265b5465bebd906008f35e5e1ed47563d0c557 Mon Sep 17 00:00:00 2001
 From: "Uwe L. Korn" <uwe.korn@quantco.com>
 Date: Thu, 23 Nov 2023 09:05:37 +0000
 Subject: [PATCH 15/28] Remove some usage of absl::str_format in CUDA
@@ -42,7 +42,7 @@ index 46a76ea094c..2f8d0a21878 100644
  
    // Returns memory used by this resource.
 diff --git a/tensorflow/core/framework/resource_var.cc b/tensorflow/core/framework/resource_var.cc
-index 0f5ed5560d6..b1adf7180a7 100644
+index c441a8e2648..7e1f1fdf0ea 100644
 --- a/tensorflow/core/framework/resource_var.cc
 +++ b/tensorflow/core/framework/resource_var.cc
 @@ -18,6 +18,8 @@ limitations under the License.

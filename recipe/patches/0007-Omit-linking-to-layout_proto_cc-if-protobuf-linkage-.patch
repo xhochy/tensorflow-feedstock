@@ -1,4 +1,4 @@
-From fb67e5b6cf7c915cd12cd2715a00905cd576e047 Mon Sep 17 00:00:00 2001
+From e99ad80f3e9b7e33a25e78d7bf0dd31eb6ea2279 Mon Sep 17 00:00:00 2001
 From: "Uwe L. Korn" <uwe.korn@quantco.com>
 Date: Fri, 15 Sep 2023 11:06:27 +0200
 Subject: [PATCH 07/28] Omit linking to layout_proto_cc if protobuf linkage is
@@ -9,7 +9,7 @@ Subject: [PATCH 07/28] Omit linking to layout_proto_cc if protobuf linkage is
  1 file changed, 1 deletion(-)
 
 diff --git a/tensorflow/python/BUILD b/tensorflow/python/BUILD
-index 159e6db204f..52faafc2b81 100644
+index 1311722b20b..0f6deb203ae 100644
 --- a/tensorflow/python/BUILD
 +++ b/tensorflow/python/BUILD
 @@ -1358,7 +1358,6 @@ tf_python_pybind_extension(

@@ -1,4 +1,4 @@
-From 1dfbfbe0d2ea08118b8f3ec7a1999d2cbfd204a5 Mon Sep 17 00:00:00 2001
+From 322dead657ec3ff153370e49d5b93d274c4aada7 Mon Sep 17 00:00:00 2001
 From: "Uwe L. Korn" <uwe.korn@quantco.com>
 Date: Sun, 2 Jul 2023 05:36:41 +0000
 Subject: [PATCH 03/28] Add missing any_invocable target to absel bazel

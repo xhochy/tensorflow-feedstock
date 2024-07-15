@@ -1,4 +1,4 @@
-From a52e73335b2451150f0df556d1b9163aa3a6a289 Mon Sep 17 00:00:00 2001
+From 29eda0f859c0e71bb309170bd2584719b6528e2e Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Mon, 13 May 2024 23:36:48 +1100
 Subject: [PATCH 24/28] add kernel_timeout_internal target

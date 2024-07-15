@@ -1,4 +1,4 @@
-From 50522ac8ce494643d87bde9980c113a825dc697b Mon Sep 17 00:00:00 2001
+From 48df62db9668e6bdf2aba06e6a67e7075add904b Mon Sep 17 00:00:00 2001
 From: "Uwe L. Korn" <uwe.korn@quantco.com>
 Date: Thu, 23 Nov 2023 20:50:37 +0000
 Subject: [PATCH 26/28] Patch ml_dtype to make constructor unambiguous
@@ -35,7 +35,7 @@ index 00000000000..d91c68cbf88
 +   static constexpr i4 lowest() {
 +     return std::is_signed<UnderlyingTy>::value ? i4(-8) : i4(0);
 diff --git a/third_party/py/ml_dtypes/workspace.bzl b/third_party/py/ml_dtypes/workspace.bzl
-index 84aeb00edbe..5e6abdfc4c9 100644
+index 51505bf3a14..bdd7d3640f7 100644
 --- a/third_party/py/ml_dtypes/workspace.bzl
 +++ b/third_party/py/ml_dtypes/workspace.bzl
 @@ -12,6 +12,9 @@ def repo():

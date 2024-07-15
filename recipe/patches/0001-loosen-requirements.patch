@@ -1,4 +1,4 @@
-From e11d83766718d2a7719422702749eca87890f8a4 Mon Sep 17 00:00:00 2001
+From 683b20af7fb29a757c265233a53073a956434abf Mon Sep 17 00:00:00 2001
 From: "Uwe L. Korn" <uwe.korn@quantco.com>
 Date: Thu, 30 Dec 2021 06:57:09 +0200
 Subject: [PATCH 01/28] loosen requirements
@@ -14,7 +14,7 @@ Co-authored-by: ngam
  1 file changed, 6 deletions(-)
 
 diff --git a/tensorflow/tools/pip_package/setup.py b/tensorflow/tools/pip_package/setup.py
-index 0a53c467a2f..5326df99518 100644
+index a02c7a80bb6..b10d7ee6969 100644
 --- a/tensorflow/tools/pip_package/setup.py
 +++ b/tensorflow/tools/pip_package/setup.py
 @@ -82,11 +82,7 @@ REQUIRED_PACKAGES = [

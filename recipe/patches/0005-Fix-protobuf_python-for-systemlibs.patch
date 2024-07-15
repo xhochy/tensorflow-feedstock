@@ -1,4 +1,4 @@
-From 9ce3be8386ff82b6ca59a352a6369ce20b0376c0 Mon Sep 17 00:00:00 2001
+From aaf69dcb8a48ad5d8e6e31d714f66de9e3616912 Mon Sep 17 00:00:00 2001
 From: "Uwe L. Korn" <uwe.korn@quantco.com>
 Date: Wed, 30 Aug 2023 16:58:41 +0200
 Subject: [PATCH 05/28] Fix protobuf_python for systemlibs
@@ -12,7 +12,7 @@ Subject: [PATCH 05/28] Fix protobuf_python for systemlibs
  create mode 100644 third_party/systemlibs/protobuf_python.bzl
 
 diff --git a/tensorflow/workspace2.bzl b/tensorflow/workspace2.bzl
-index 858940cd449..f55239f7844 100644
+index 21aea63f0fe..5a201cad770 100644
 --- a/tensorflow/workspace2.bzl
 +++ b/tensorflow/workspace2.bzl
 @@ -382,6 +382,7 @@ def _tf_repositories():

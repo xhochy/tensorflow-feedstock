@@ -1,4 +1,4 @@
-From 7a4b051395976b877fc4eeac18ded7c7a6425489 Mon Sep 17 00:00:00 2001
+From bd561cac85fc75389c4a679982d70ea2c340dbbc Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Sun, 12 May 2024 22:29:25 +1100
 Subject: [PATCH 21/28] add absl_prefetch target

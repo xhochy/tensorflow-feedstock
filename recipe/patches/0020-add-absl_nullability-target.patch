@@ -1,4 +1,4 @@
-From 783771d35300c9d641007042ee758b327b7fa96b Mon Sep 17 00:00:00 2001
+From 2d1013e2bdf822bb875e2483ffebffd3f920a302 Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Sun, 12 May 2024 19:30:44 +1100
 Subject: [PATCH 20/28] add absl_nullability target
