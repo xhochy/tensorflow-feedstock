@@ -1,4 +1,4 @@
-From c550d15b1b2bed8fef6003a1626eb65ed201f1ea Mon Sep 17 00:00:00 2001
+From 38b1651bae8e9df61bb2851d354c9a3e83e2a317 Mon Sep 17 00:00:00 2001
 From: "Uwe L. Korn" <uwe.korn@quantco.com>
 Date: Wed, 30 Aug 2023 16:58:41 +0200
 Subject: [PATCH 04/25] Fix protobuf_python for systemlibs
