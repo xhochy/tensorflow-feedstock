@@ -13,8 +13,8 @@ package:
 
 source:
   # - url: https://github.com/tensorflow/tensorflow/archive/refs/tags/v{{ version.replace(".rc", "-rc") }}.tar.gz
-  - url: https://github.com/tensorflow/tensorflow/archive/fe00d1747820d9a49354cd372883f594634d5ab3.tar.gz
-    sha256: 8b0e730528e10edea249b14d276f3903fbb4afc3afeff0e97c13cfaa7de824a1
+  - url: https://github.com/tensorflow/tensorflow/archive/c94d3bd3dc232b88dc3dfd3b1a2b99cd7defd94e.tar.gz
+    sha256: 845bfbfa3f0b618a72cdc64eba505168c8639c9daa555804022ee270b4dcc242
     patches:
       - patches/0001-loosen-requirements.patch
       - patches/0002-Add-additional-absl_synchronization-linkage-to-gRPC.patch
