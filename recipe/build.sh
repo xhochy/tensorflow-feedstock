@@ -211,6 +211,7 @@ bazel ${BAZEL_OPTS} build ${BUILD_TARGET}
 # build a whl file
 mkdir -p $SRC_DIR/tensorflow_pkg
 cp bazel-bin/tensorflow/tools/pip_package/wheel_house/tensorflow*.whl $SRC_DIR/tensorflow_pkg
+chmod +w $SRC_DIR/tensorflow_pkg/*.whl
 # bash -x bazel-bin/tensorflow/tools/pip_package/build_pip_package $SRC_DIR/tensorflow_pkg
 
 python -m pip install $SRC_DIR/tensorflow_pkg/*.whl

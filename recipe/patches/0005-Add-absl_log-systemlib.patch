@@ -1,4 +1,4 @@
-From 2271f56f5b26069bf1f4a0f00984a203a07f9936 Mon Sep 17 00:00:00 2001
+From 8620eabe172116ce4c569c4d877ff7b27bbca081 Mon Sep 17 00:00:00 2001
 From: "Uwe L. Korn" <uwe.korn@quantco.com>
 Date: Wed, 30 Aug 2023 16:59:28 +0200
 Subject: [PATCH 05/25] Add absl_log systemlib
