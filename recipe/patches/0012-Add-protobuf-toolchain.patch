@@ -1,4 +1,4 @@
-From 0fe7115a7dd111ccb524e4c6a26d0e166aa5c078 Mon Sep 17 00:00:00 2001
+From 167e6c100d00b78ec5805987bf09f1c4bc9838e5 Mon Sep 17 00:00:00 2001
 From: "Uwe L. Korn" <uwe.korn@quantco.com>
 Date: Wed, 15 Nov 2023 10:32:41 +0000
 Subject: [PATCH 12/25] Add protobuf toolchain

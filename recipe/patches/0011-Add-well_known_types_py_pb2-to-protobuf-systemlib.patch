@@ -1,4 +1,4 @@
-From 0f63fcf1f36d287daf0d30dfe92783fc1a3f19ff Mon Sep 17 00:00:00 2001
+From f138af8f5b7167725aa53382f1ec893de969d8ce Mon Sep 17 00:00:00 2001
 From: "Uwe L. Korn" <uwe.korn@quantco.com>
 Date: Wed, 15 Nov 2023 09:18:28 +0100
 Subject: [PATCH 11/25] Add well_known_types_py_pb2 to protobuf systemlib
