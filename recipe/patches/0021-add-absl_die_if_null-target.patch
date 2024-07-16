@@ -1,4 +1,4 @@
-From ade84559da753d5504a351055535096209e6384c Mon Sep 17 00:00:00 2001
+From 4bca94937c50c0703f726514000f3b7d25dad929 Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Sun, 12 May 2024 22:46:04 +1100
 Subject: [PATCH 21/25] add absl_die_if_null target

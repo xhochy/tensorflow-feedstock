@@ -1,4 +1,4 @@
-From d73d8160a6a3fe76547491f23a4f505074b5c442 Mon Sep 17 00:00:00 2001
+From 02f6ab356a474747ac45ed5c038242ffb52fbb21 Mon Sep 17 00:00:00 2001
 From: "Uwe L. Korn" <uwe.korn@quantco.com>
 Date: Fri, 15 Sep 2023 11:06:27 +0200
 Subject: [PATCH 06/25] Omit linking to layout_proto_cc if protobuf linkage is
