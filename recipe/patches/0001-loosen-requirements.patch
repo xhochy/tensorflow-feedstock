@@ -1,4 +1,4 @@
-From 2b31a5a1482804acc202f8bbb46f033a71e221ff Mon Sep 17 00:00:00 2001
+From d3f4b43f30ea22980ab01e7f58d37a92bdefaa76 Mon Sep 17 00:00:00 2001
 From: "Uwe L. Korn" <uwe.korn@quantco.com>
 Date: Thu, 30 Dec 2021 06:57:09 +0200
 Subject: [PATCH 01/25] loosen requirements

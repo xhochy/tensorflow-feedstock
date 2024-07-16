@@ -1,4 +1,4 @@
-From a5f60c6d551c64ca0f789a0f6b63c213902d2518 Mon Sep 17 00:00:00 2001
+From d18fde71c40d3d76bc646ace8ba36e44e2471ba8 Mon Sep 17 00:00:00 2001
 From: "Uwe L. Korn" <uwe.korn@quantco.com>
 Date: Fri, 27 Oct 2023 11:21:11 +0200
 Subject: [PATCH 09/25] Different file ending for flatbuffers LICENSE

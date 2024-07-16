@@ -1,4 +1,4 @@
-From 4103f56f878960bdf96e15a4740b0dd4543d17f7 Mon Sep 17 00:00:00 2001
+From 79cebc41fff60e1df97fe0da836dbb7031fe1047 Mon Sep 17 00:00:00 2001
 From: "Uwe L. Korn" <uwe.korn@quantco.com>
 Date: Thu, 16 Nov 2023 06:38:27 +0000
 Subject: [PATCH 13/25] fix genproto
