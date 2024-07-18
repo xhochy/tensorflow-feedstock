@@ -53,8 +53,6 @@ build:
   skip: true  # [py<39]
   # The following skip can be removed when the absl::StrFormat build issues are fixed.
   skip: true  # [cuda_compiler_version == "11.8"]
-  # debug
-  skip: true  # [not (py==312 and cuda_compiler_version == "12.0")]
 
 requirements:
   build:
