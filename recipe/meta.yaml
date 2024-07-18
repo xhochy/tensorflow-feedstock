@@ -395,7 +395,6 @@ outputs:
         - test_c.c
       requires:
         - {{ compiler('c') }}
-        - eigen
       commands:
         - test -f $PREFIX/lib/libtensorflow${SHLIB_EXT}  # [cuda_compiler_version == "None"]
         - ./test_libtensorflow.sh                        # [cuda_compiler_version == "None" and build_platform == target_platform]
@@ -445,7 +444,6 @@ outputs:
         - test_cc.cc
       requires:
         - {{ compiler('cxx') }}
-        - eigen
       commands:
         - test -f $PREFIX/lib/libtensorflow_cc${SHLIB_EXT}  # [not win and cuda_compiler_version == "None"]
         - ./test_libtensorflow_cc.sh                        # [not win and cuda_compiler_version == "None" and build_platform == target_platform]
