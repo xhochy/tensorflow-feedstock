@@ -1,6 +1,11 @@
-{% set version = "2.16.2" %}
+{% set version = "2.17.0" %}
 {% set estimator_version = "2.15.0" %}
-{% set ml_dtypes_version = "0.3.1" %}
+
+# 2.17.0.rc1 uses unreleased commit
+# https://github.com/jax-ml/ml_dtypes/commit/24084d9ed2c3d45bf83b7a9bff833aa185bf9172
+# see
+# https://github.com/tensorflow/tensorflow/blob/v2.17.0-rc1/third_party/py/ml_dtypes/workspace.bzl
+{% set ml_dtypes_version = "0.4.0" %}
 
 package:
   name: tensorflow-split
@@ -8,7 +13,7 @@ package:
 
 source:
   - url: https://github.com/tensorflow/tensorflow/archive/refs/tags/v{{ version.replace(".rc", "-rc") }}.tar.gz
-    sha256: 023849bf253080cb1e4f09386f5eb900492da2288274086ed6cfecd6d99da9eb
+    sha256: 9cc4d5773b8ee910079baaecb4086d0c28939f024dd74b33fc5e64779b6533dc
     patches:
       - patches/0001-loosen-requirements.patch
       - patches/0002-Add-additional-absl_synchronization-linkage-to-gRPC.patch
@@ -25,23 +30,18 @@ source:
       - patches/0013-Add-protobuf-toolchain.patch
       - patches/0014-fix-genproto.patch
       - patches/0015-Remove-some-usage-of-absl-str_format-in-CUDA.patch  # [(cuda_compiler_version or "").startswith("11")]
-      - patches/0016-Patch-ml_dtype-to-make-constructor-unambiguous.patch
-      - patches/0017-Use-PYTHON-for-build-wheel.patch
-      - patches/0018-Always-use-Linux-sed-style.patch
       - patches/0019-Adjust-relative-path-for-libdevice.patch  # [(cuda_compiler_version or "").startswith("12")]
-      # https://github.com/tensorflow/tensorflow/pull/62684
-      - patches/0020-Fix-protobuf-errors-when-using-system-protobuf.patch
       - patches/0021-Link-to-absl_log_flags-instead-of-absl_flags.patch
       - patches/0022-Update-ABSL-Log-Definition-for-libabsl_vlog_config_i.patch
-      - patches/0023-Update-flatbuffers-static-assert.patch
       - patches/0024-add-absl_string_view-target.patch
       - patches/0025-add-absl_nullability-target.patch
       - patches/0026-add-absl_prefetch-target.patch
       - patches/0027-add-absl_die_if_null-target.patch
       - patches/0028-add-absl_crc32c-targets.patch
-      - patches/0029-avoid-ambiguity-in-conversion-to-absl-StatusOr-T.patch
       - patches/0030-add-kernel_timeout_internal-target.patch
       - patches/0031-work-around-for-warning-that-clang-falsely-treats-as.patch
+      - patches/0001-Hardcode-BUILD_PREFIX-in-build_pip_package.patch
+      - patches/0001-Only-link-to-sparse_core_layout_proto_cc-headers.patch
   - url: https://github.com/tensorflow/estimator/archive/refs/tags/v{{ estimator_version.replace(".rc", "-rc") }}.tar.gz
     sha256: 2d7e100b1878084da34b5e23b49a0cbb5ee8a7add74b7dd189a82ada1cf85530
     folder: tensorflow-estimator
@@ -75,10 +75,11 @@ requirements:
     - {{ stdlib("c") }}
     - {{ compiler('cxx') }}
     - {{ compiler('cuda') }}                 # [cuda_compiler_version != "None"]
-    - bazel 6.1.2
+    - bazel 6.*
     - libgrpc
     - libprotobuf
     - nasm
+    - patchelf
     - sed
     - rsync
     # realpath is not available from the docker image for cuda <= 10.2
@@ -215,18 +216,18 @@ outputs:
         - gast >=0.2.1,!=0.5.0,!=0.5.1,!=0.5.2
         - google-pasta >=0.1.1
         - h5py >=3.10
-        - ml_dtypes >={{ ml_dtypes_version }},<0.4
+        - ml_dtypes >={{ ml_dtypes_version }},<0.5
         - numpy
         - opt_einsum >=2.3.2
         - protobuf >=3.20.3,<5,!=4.21.0,!=4.21.1,!=4.21.2,!=4.21.3,!=4.21.4,!=4.21.5
-        - python-flatbuffers >=23.5.26
+        - python-flatbuffers >=24.3.25
         - requests >=2.21.0,<3
         - six >=1.12
         - termcolor >=1.1.0
         - typing_extensions >=3.6.6
         - wrapt >=1.11.0
         # TF-API needs to move in sync
-        - tensorboard >=2.16,<2.17
+        - tensorboard >=2.17,<2.18
         - keras >=3.0
       run:
         - python
@@ -237,18 +238,17 @@ outputs:
         - google-pasta >=0.1.1
         - grpcio {{ libgrpc }}.*
         - h5py >=3.10
-        - ml_dtypes >={{ ml_dtypes_version }},<0.4
-        - {{ pin_compatible('numpy', lower_bound='1.22') }}
+        - ml_dtypes >={{ ml_dtypes_version }},<0.5
         - opt_einsum >=2.3.2
         - protobuf >=3.20.3,<5,!=4.21.0,!=4.21.1,!=4.21.2,!=4.21.3,!=4.21.4,!=4.21.5
-        - python-flatbuffers >=23.5.26
+        - python-flatbuffers >=24.3.25
         - requests >=2.21.0,<3
         - six >=1.12
         - termcolor >=1.1.0
         - typing_extensions >=3.6.6
         - wrapt >=1.11.0
         # TF-API needs to move in sync
-        - tensorboard >=2.16,<2.17
+        - tensorboard >=2.17,<2.18
         - keras >=3.0
         # avoid that people without GPUs needlessly download ~0.5-1GB
         - __cuda                                                  # [cuda_compiler_version != "None"]
@@ -321,7 +321,7 @@ outputs:
         # decide on the cuda variant
         # https://github.com/conda-forge/tensorflow-feedstock/issues/162
         - {{ compiler('cuda') }}                   # [cuda_compiler_version != "None"]
-        - bazel 6.1.2
+        - bazel 6.*
         - python                                   # [build_platform != target_platform]
         - cross-python_{{ target_platform }}       # [build_platform != target_platform]
         - libabseil                                # [build_platform != target_platform]
@@ -433,7 +433,7 @@ outputs:
         - sqlite
         - zlib
       run:
-        - libml_dtypes-headers >={{ ml_dtypes_version }},<0.4
+        - libml_dtypes-headers >={{ ml_dtypes_version }},<0.5
         # avoid that people without GPUs needlessly download ~200-300MB
         - __cuda  # [cuda_compiler_version != "None"]
     test:

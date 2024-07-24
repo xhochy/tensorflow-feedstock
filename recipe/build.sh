@@ -20,7 +20,6 @@ export CXX=$(basename $CXX)
 export LIBDIR=$PREFIX/lib
 export INCLUDEDIR=$PREFIX/include
 
-export TF_IGNORE_MAX_BAZEL_VERSION="1"
 export TF_PYTHON_VERSION=$PY_VER
 
 # Upstream docstring for TF_SYSTEM_LIBS in:
@@ -149,7 +148,7 @@ if [[ "${target_platform}" == "osx-arm64" ]]; then
   export CXXFLAGS="${CXXFLAGS} -D_LIBCPP_DISABLE_AVAILABILITY"
 fi
 export TF_ENABLE_XLA=1
-export BUILD_TARGET="//tensorflow/tools/pip_package:build_pip_package //tensorflow/tools/lib_package:libtensorflow //tensorflow:libtensorflow_cc${SHLIB_EXT}"
+export BUILD_TARGET="//tensorflow/tools/pip_package:wheel //tensorflow/tools/lib_package:libtensorflow //tensorflow:libtensorflow_cc${SHLIB_EXT}"
 
 # Python settings
 export PYTHON_BIN_PATH=${PYTHON}
@@ -198,18 +197,19 @@ build --local_cpu_resources=${CPU_COUNT}
 EOF
 
 # Update TF lite schema with latest flatbuffers version
-pushd tensorflow/lite/schema
+pushd tensorflow/compiler/mlir/lite/schema
 flatc --cpp --gen-object-api schema.fbs
 popd
 rm -f tensorflow/lite/schema/conversion_metadata_generated.h
 rm -f tensorflow/lite/experimental/acceleration/configuration/configuration_generated.h
+sed -ie "s;BUILD_PREFIX;${BUILD_PREFIX};g" tensorflow/tools/pip_package/build_pip_package.py
 
 # build using bazel
 bazel ${BAZEL_OPTS} build ${BUILD_TARGET}
 
 # build a whl file
 mkdir -p $SRC_DIR/tensorflow_pkg
-bash -x bazel-bin/tensorflow/tools/pip_package/build_pip_package $SRC_DIR/tensorflow_pkg
+cp bazel-bin/tensorflow/tools/pip_package/wheel_house/tensorflow*.whl $SRC_DIR/tensorflow_pkg
 
 # Build libtensorflow(_cc)
 cp $SRC_DIR/bazel-bin/tensorflow/tools/lib_package/libtensorflow.tar.gz $SRC_DIR
@@ -230,9 +230,9 @@ rsync -r --chmod=D777,F666 --exclude '_solib*' --exclude '_virtual_includes/' --
 rsync -r --chmod=D777,F666 --include '*/' --include '*.h' --include '*.inc' --exclude '*' tensorflow/cc $SRC_DIR/libtensorflow_cc_output/include/tensorflow/
 rsync -r --chmod=D777,F666 --include '*/' --include '*.h' --include '*.inc' --exclude '*' tensorflow/core $SRC_DIR/libtensorflow_cc_output/include/tensorflow/
 rsync -r --chmod=D777,F666 --include '*/' --include '*.h' --include '*.inc' --exclude '*' third_party/xla/third_party/tsl/ $SRC_DIR/libtensorflow_cc_output/include/
-rsync -r --chmod=D777,F666 --include '*/' --include '*' --exclude '*.cc' third_party/ $SRC_DIR/libtensorflow_cc_output/include/third_party/
-rsync -r --chmod=D777,F666 --include '*/' --include '*' --exclude '*.txt' bazel-work/external/eigen_archive/Eigen/ $SRC_DIR/libtensorflow_cc_output/include/Eigen/
-rsync -r --chmod=D777,F666 --include '*/' --include '*' --exclude '*.txt' bazel-work/external/eigen_archive/unsupported/ $SRC_DIR/libtensorflow_cc_output/include/unsupported/
+rsync -r --chmod=D777,F666 --include '*/' --include '*' --exclude '*.cc' third_party/ $SRC_DIR/libtensorflow_cc_output/include/tensorflow/third_party/
+rsync -r --chmod=D777,F666 --include '*/' --include '*' --exclude '*.txt' bazel-work/external/eigen_archive/Eigen/ $SRC_DIR/libtensorflow_cc_output/include/tensorflow/third_party/Eigen/
+rsync -r --chmod=D777,F666 --include '*/' --include '*' --exclude '*.txt' bazel-work/external/eigen_archive/unsupported/ $SRC_DIR/libtensorflow_cc_output/include/tensorflow/third_party/unsupported/
 pushd $SRC_DIR/libtensorflow_cc_output
   tar cf ../libtensorflow_cc_output.tar .
 popd

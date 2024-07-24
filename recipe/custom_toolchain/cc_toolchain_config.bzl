@@ -29,6 +29,10 @@ def _impl(ctx):
             path = "${BUILD_PREFIX}/bin/${AR}",
         ),
         tool_path(
+            name = "patchelf",
+            path = "${BUILD_PREFIX}/bin/patchelf",
+        ),
+        tool_path(
             name = "cpp",
             path = "/usr/bin/cpp",
         ),

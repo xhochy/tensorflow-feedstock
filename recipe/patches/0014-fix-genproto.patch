@@ -1,14 +1,14 @@
-From d2a17a710785ef883aae9ce47509e4c150797099 Mon Sep 17 00:00:00 2001
+From b1a58cff048e984fd1172fd5b76c73846c6aa131 Mon Sep 17 00:00:00 2001
 From: "Uwe L. Korn" <uwe.korn@quantco.com>
 Date: Thu, 16 Nov 2023 06:38:27 +0000
-Subject: [PATCH 14/31] fix genproto
+Subject: [PATCH 14/26] fix genproto
 
 ---
  .../third_party/tsl/tsl/platform/default/build_config.bzl    | 5 +----
  1 file changed, 1 insertion(+), 4 deletions(-)
 
 diff --git a/third_party/xla/third_party/tsl/tsl/platform/default/build_config.bzl b/third_party/xla/third_party/tsl/tsl/platform/default/build_config.bzl
-index c0826ed1517..4f5fe02cb93 100644
+index 35cdcdc503a..ca4bdd0e0da 100644
 --- a/third_party/xla/third_party/tsl/tsl/platform/default/build_config.bzl
 +++ b/third_party/xla/third_party/tsl/tsl/platform/default/build_config.bzl
 @@ -401,10 +401,7 @@ def py_proto_library(
