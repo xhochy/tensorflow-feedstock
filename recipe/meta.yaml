@@ -344,8 +344,9 @@ outputs:
         # https://github.com/conda-forge/conda-forge.github.io/issues/1528
         - openssl
         - {{ pin_subpackage('tensorflow-base', exact=True) }}
-        # avoid that people without GPUs needlessly download ~200-300MB
-        - __cuda  # [cuda_compiler_version != "None"]
+        # Keep the cuda version here since it helps package solvers
+        # decide on the cuda variant
+        - cuda-version {{ cuda_compiler_version }}  # [cuda_compiler_version != "None"]
       run:
         - python
         - {{ pin_subpackage('tensorflow-base', exact=True) }}
