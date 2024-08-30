@@ -107,6 +107,7 @@ requirements:
     # conda build requirements
     - python
     - pip
+    - setuptools
     - packaging
     - zlib
     - libpng
@@ -193,6 +194,7 @@ outputs:
         # conda build requirements
         - python
         - pip
+        - setuptools
         - packaging
         - wheel
         # TF_SYSTEM_LIBS
