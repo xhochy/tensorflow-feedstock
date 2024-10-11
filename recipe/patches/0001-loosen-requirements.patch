@@ -1,7 +1,7 @@
-From d24a4fa081de2b6489c7d7ea478a575e85446a5a Mon Sep 17 00:00:00 2001
+From e6a16ebf1cb912b32f8fa6f9b26dbe8add0d930b Mon Sep 17 00:00:00 2001
 From: "Uwe L. Korn" <uwe.korn@quantco.com>
 Date: Thu, 30 Dec 2021 06:57:09 +0200
-Subject: [PATCH 01/26] loosen requirements
+Subject: [PATCH 01/27] loosen requirements
 
 * Remove unused libclang requirement
 * Remove unecessary tensorflow-io-gcs-filesystem
@@ -9,15 +9,16 @@ Subject: [PATCH 01/26] loosen requirements
 
 Co-authored-by: Mark Harfouche <mark.harfouche@gmail.com>
 Co-authored-by: ngam
+Co-authored-by: Uwe L. Korn <uwelk@xhochy.com>
 ---
- tensorflow/tools/pip_package/setup.py | 6 ------
- 1 file changed, 6 deletions(-)
+ tensorflow/tools/pip_package/setup.py | 8 +-------
+ 1 file changed, 1 insertion(+), 7 deletions(-)
 
 diff --git a/tensorflow/tools/pip_package/setup.py b/tensorflow/tools/pip_package/setup.py
-index e6bf64aefcb..8fca642c49b 100644
+index 88da8b54..ac24634f 100644
 --- a/tensorflow/tools/pip_package/setup.py
 +++ b/tensorflow/tools/pip_package/setup.py
-@@ -82,11 +82,7 @@ REQUIRED_PACKAGES = [
+@@ -82,16 +82,12 @@ REQUIRED_PACKAGES = [
      'gast >=0.2.1,!=0.5.0,!=0.5.1,!=0.5.2',
      'google_pasta >= 0.1.1',
      'h5py >= 3.10.0',
@@ -29,6 +30,12 @@ index e6bf64aefcb..8fca642c49b 100644
      'opt_einsum >= 2.3.2',
      'packaging',
      # pylint:disable=line-too-long
+     (
+-        'protobuf>=3.20.3,<5.0.0dev,!=4.21.0,!=4.21.1,!=4.21.2,!=4.21.3,!=4.21.4,!=4.21.5'
++        'protobuf>=3.20.3,<6.0.0dev,!=4.21.0,!=4.21.1,!=4.21.2,!=4.21.3,!=4.21.4,!=4.21.5'
+     ),
+     'requests >= 2.21.0, < 3',
+     'setuptools',
 @@ -99,8 +95,6 @@ REQUIRED_PACKAGES = [
      'termcolor >= 1.1.0',
      'typing_extensions >= 3.6.6',
