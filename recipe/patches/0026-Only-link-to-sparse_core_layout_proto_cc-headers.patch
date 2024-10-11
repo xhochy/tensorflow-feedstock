@@ -1,4 +1,4 @@
-From 1aa996a04bafcb8b1413c2aa4cdefae82d94bf29 Mon Sep 17 00:00:00 2001
+From c3205a7e020e1e9ee30581b2b869ed83746136b7 Mon Sep 17 00:00:00 2001
 From: "Uwe L. Korn" <uwe.korn@quantco.com>
 Date: Tue, 16 Jul 2024 17:18:23 +0200
 Subject: [PATCH 26/27] Only link to sparse_core_layout_proto_cc headers

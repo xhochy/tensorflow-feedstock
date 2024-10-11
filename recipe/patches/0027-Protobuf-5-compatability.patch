@@ -1,21 +1,26 @@
-From e283895ada7da065acdc494d1ae7a4f78f1b3191 Mon Sep 17 00:00:00 2001
+From d98ec2c4eb0a0b58f0003d3b9d7ba7aeb413fe78 Mon Sep 17 00:00:00 2001
 From: "Uwe L. Korn" <uwe.korn@quantco.com>
 Date: Thu, 10 Oct 2024 19:59:31 +0200
 Subject: [PATCH 27/27] Protobuf 5 compatability
 
 ---
- .../compiler/mlir/lite/python/jax_to_tfl_flatbuffer.cc |  2 +-
- .../compiler/mlir/tensorflow/utils/parse_text_proto.cc |  2 +-
- tensorflow/core/debug/debug_io_utils.cc                |  4 ++++
- tensorflow/core/ir/importexport/parse_text_proto.cc    |  2 +-
- tensorflow/core/profiler/convert/hlo_to_tools_data.cc  |  4 ++++
- .../core/profiler/convert/xplane_to_memory_profile.cc  |  4 ++++
- .../core/profiler/convert/xplane_to_tools_data.cc      |  8 ++++++++
- tensorflow/core/util/proto/proto_utils.cc              | 10 +++++-----
- tensorflow/core/util/proto/proto_utils.h               |  4 ++--
- .../tools/proto_text/gen_proto_text_functions.cc       |  4 ++--
- .../tsl/tsl/platform/default/human_readable_json.cc    |  4 ++++
- 11 files changed, 36 insertions(+), 12 deletions(-)
+ .../mlir/lite/python/jax_to_tfl_flatbuffer.cc |  2 +-
+ .../mlir/tensorflow/utils/parse_text_proto.cc |  2 +-
+ tensorflow/core/debug/debug_io_utils.cc       |  4 ++
+ .../core/ir/importexport/parse_text_proto.cc  |  2 +-
+ .../profiler/convert/hlo_to_tools_data.cc     |  4 ++
+ .../convert/xplane_to_memory_profile.cc       |  4 ++
+ .../profiler/convert/xplane_to_tools_data.cc  |  8 +++
+ tensorflow/core/util/proto/proto_utils.cc     | 10 ++--
+ tensorflow/core/util/proto/proto_utils.h      |  4 +-
+ .../proto_text/gen_proto_text_functions.cc    |  4 +-
+ tensorflow/workspace2.bzl                     |  4 ++
+ ...Migrate-from-AddError-to-RecordError.patch | 33 ++++++++++++
+ ...y-with-protobuf-v26-migrate-from-dep.patch | 52 +++++++++++++++++++
+ .../platform/default/human_readable_json.cc   |  4 ++
+ 14 files changed, 125 insertions(+), 12 deletions(-)
+ create mode 100644 third_party/0001-Migrate-from-AddError-to-RecordError.patch
+ create mode 100644 third_party/0002-Fix-compatibility-with-protobuf-v26-migrate-from-dep.patch
 
 diff --git a/tensorflow/compiler/mlir/lite/python/jax_to_tfl_flatbuffer.cc b/tensorflow/compiler/mlir/lite/python/jax_to_tfl_flatbuffer.cc
 index ed968b54..71e16db6 100644
@@ -191,6 +196,118 @@ index 406e6641..d97eae73 100644
      LOG(FATAL) << "Unexpected error at " << filename << "@" << line << ":"
                 << column << " - " << message;
    }
+diff --git a/tensorflow/workspace2.bzl b/tensorflow/workspace2.bzl
+index dc78011d..a4faad8f 100644
+--- a/tensorflow/workspace2.bzl
++++ b/tensorflow/workspace2.bzl
+@@ -870,6 +870,10 @@ def _tf_repositories():
+         name = "riegeli",
+         sha256 = "1d216d5c97fa60632143d209a1bb48c2a83788efdb876902e7bbc06396d5ee1f",
+         strip_prefix = "riegeli-5d75119232cd4f6db8dfa69a1503289f050e9643",
++        patch_file = [
++                "//third_party:0001-Migrate-from-AddError-to-RecordError.patch",
++                "//third_party:0002-Fix-compatibility-with-protobuf-v26-migrate-from-dep.patch",
++        ],
+         urls = tf_mirror_urls("https://github.com/google/riegeli/archive/5d75119232cd4f6db8dfa69a1503289f050e9643.zip"),
+     )
+ 
+diff --git a/third_party/0001-Migrate-from-AddError-to-RecordError.patch b/third_party/0001-Migrate-from-AddError-to-RecordError.patch
+new file mode 100644
+index 00000000..0ed75ee8
+--- /dev/null
++++ b/third_party/0001-Migrate-from-AddError-to-RecordError.patch
+@@ -0,0 +1,33 @@
++From e75b32516c67dbcb0cd1a698d6700c3d7bd85a35 Mon Sep 17 00:00:00 2001
++From: Compression Team <noreply@google.com>
++Date: Fri, 31 May 2024 18:20:47 +0200
++Subject: [PATCH 1/2] Migrate from AddError() to RecordError()
++
++In Protobuf v22 RecordError() has been introduced and AddError() deprecated.
++In Protobuf v26 AddError() has been removed.
++
++PiperOrigin-RevId: 639057502
++---
++ riegeli/records/record_reader.cc | 6 +++---
++ 1 file changed, 3 insertions(+), 3 deletions(-)
++
++diff --git a/riegeli/records/record_reader.cc b/riegeli/records/record_reader.cc
++index 499432ab..f4d90cea 100644
++--- a/riegeli/records/record_reader.cc
+++++ b/riegeli/records/record_reader.cc
++@@ -62,9 +62,9 @@ namespace riegeli {
++ class RecordsMetadataDescriptors::ErrorCollector
++     : public google::protobuf::DescriptorPool::ErrorCollector {
++  public:
++-  void AddError(const std::string& filename, const std::string& element_name,
++-                const google::protobuf::Message* descriptor,
++-                ErrorLocation location, const std::string& message) override {
+++  void RecordError(absl::string_view filename, absl::string_view element_name,
+++                   const google::protobuf::Message* descriptor,
+++                   ErrorLocation location, absl::string_view message) override {
++     descriptors_->Fail(absl::InvalidArgumentError(
++         absl::StrCat("Error in file ", filename, ", element ", element_name,
++                      ": ", message)));
++-- 
++2.34.1
++
+diff --git a/third_party/0002-Fix-compatibility-with-protobuf-v26-migrate-from-dep.patch b/third_party/0002-Fix-compatibility-with-protobuf-v26-migrate-from-dep.patch
+new file mode 100644
+index 00000000..b5af8d2d
+--- /dev/null
++++ b/third_party/0002-Fix-compatibility-with-protobuf-v26-migrate-from-dep.patch
+@@ -0,0 +1,52 @@
++From 96dccef7210d7e182446b2db7424b16f44a66dd0 Mon Sep 17 00:00:00 2001
++From: Marcin Kowalczyk <qrczak@google.com>
++Date: Tue, 4 Jun 2024 16:50:59 +0200
++Subject: [PATCH 2/2] =?UTF-8?q?Fix=20compatibility=20with=20protobuf=20v26?=
++ =?UTF-8?q?+:=20migrate=20from=20deprecated=20`AddError()`=20to=20`RecordE?=
++ =?UTF-8?q?rror()`=20also=20in=20text=20parser=E2=80=99s=20`ErrorCollector?=
++ =?UTF-8?q?`.?=
++MIME-Version: 1.0
++Content-Type: text/plain; charset=UTF-8
++Content-Transfer-Encoding: 8bit
++
++PiperOrigin-RevId: 640152285
++---
++ riegeli/messages/text_parse.cc | 6 +++---
++ riegeli/messages/text_parse.h  | 4 ++--
++ 2 files changed, 5 insertions(+), 5 deletions(-)
++
++diff --git a/riegeli/messages/text_parse.cc b/riegeli/messages/text_parse.cc
++index 94a28180..5089c728 100644
++--- a/riegeli/messages/text_parse.cc
+++++ b/riegeli/messages/text_parse.cc
++@@ -35,9 +35,9 @@ namespace riegeli {
++ 
++ namespace messages_internal {
++ 
++-void StringErrorCollector::AddError(int line,
++-                                    google::protobuf::io::ColumnNumber column,
++-                                    const std::string& message) {
+++void StringErrorCollector::RecordError(
+++    int line, google::protobuf::io::ColumnNumber column,
+++    absl::string_view message) {
++   if (line >= 0) {
++     absl::StrAppend(&errors_, "\nAt ", line + 1, ":", column + 1, ": ",
++                     message);
++diff --git a/riegeli/messages/text_parse.h b/riegeli/messages/text_parse.h
++index e6bb4db2..ee234ec8 100644
++--- a/riegeli/messages/text_parse.h
+++++ b/riegeli/messages/text_parse.h
++@@ -39,8 +39,8 @@ namespace messages_internal {
++ 
++ class StringErrorCollector : public google::protobuf::io::ErrorCollector {
++  public:
++-  void AddError(int line, google::protobuf::io::ColumnNumber column,
++-                const std::string& message) override;
+++  void RecordError(int line, google::protobuf::io::ColumnNumber column,
+++                   absl::string_view message) override;
++ 
++   absl::string_view errors() const { return errors_; }
++ 
++-- 
++2.34.1
++
 diff --git a/third_party/xla/third_party/tsl/tsl/platform/default/human_readable_json.cc b/third_party/xla/third_party/tsl/tsl/platform/default/human_readable_json.cc
 index 4f70c155..ae746f33 100644
 --- a/third_party/xla/third_party/tsl/tsl/platform/default/human_readable_json.cc
