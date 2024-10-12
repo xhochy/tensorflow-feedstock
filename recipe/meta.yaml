@@ -226,7 +226,8 @@ outputs:
         - ml_dtypes >={{ ml_dtypes_version }},<0.5
         - numpy
         - opt_einsum >=2.3.2
-        - protobuf >=3.20.3,<6,!=4.21.0,!=4.21.1,!=4.21.2,!=4.21.3,!=4.21.4,!=4.21.5
+        # simplified compared to upstream due to constraints arising through libprotobuf
+        - protobuf >=5.26,<6
         - python-flatbuffers >=24.3.25
         - requests >=2.21.0,<3
         - six >=1.12
